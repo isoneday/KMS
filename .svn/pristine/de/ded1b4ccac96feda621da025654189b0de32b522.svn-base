@@ -1,0 +1,7 @@
+{
+    "name": "core.menu",
+    "version": "1",
+    "require": {
+        "comp.menu": "1"
+    }
+}

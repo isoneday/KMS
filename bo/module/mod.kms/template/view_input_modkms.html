@@ -1,0 +1,102 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="training" / --></th>
+        <td>
+            <input type="text" name="training" value="{TRAINING}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmstraining_userid" / --></th>
+        <td>
+            <input type="text" name="kmstraining_userid" value="{KMSTRAINING_USERID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="judul" / --></th>
+        <td>
+            <input type="text" name="judul" value="{JUDUL}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jenis" / --></th>
+        <td>
+            <input type="text" name="jenis" value="{JENIS}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="pembicara" / --></th>
+        <td>
+            <input type="text" name="pembicara" value="{PEMBICARA}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="lokasi" / --></th>
+        <td>
+            <input type="text" name="lokasi" value="{LOKASI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="peserta" / --></th>
+        <td>
+            <input type="text" name="peserta" value="{PESERTA}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="tanggal" / --></th>
+        <td>
+            <input type="text" name="tanggal" value="{TANGGAL}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_enc" / --></th>
+        <td>
+            <input type="text" name="filedata_enc" value="{FILEDATA_ENC}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_origin" / --></th>
+        <td>
+            <input type="text" name="filedata_origin" value="{FILEDATA_ORIGIN}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_path" / --></th>
+        <td>
+            <input type="text" name="filedata_path" value="{FILEDATA_PATH}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_type" / --></th>
+        <td>
+            <input type="text" name="filedata_type" value="{FILEDATA_TYPE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_size" / --></th>
+        <td>
+            <input type="text" name="filedata_size" value="{FILEDATA_SIZE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="time" / --></th>
+        <td>
+            <input type="text" name="time" value="{TIME}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

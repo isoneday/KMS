@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewVerificationApplicantRanking extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_verification_applicantranking.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantRanking = GtfwDispt()->load->business('ApplicantRanking', 'applicant.ranking');       
+	
+		$idbea = $_GET['idbea']->Integer()->Raw();
+		$AppId = $_GET['AppId']->Integer()->Raw();
+
+        $data  = $ObjApplicantRanking->getVerificationApplicantRanking($AppId, $idbea);
+        
+		//echo '<pre>'; print_r($data);die;
+        return compact('data');
+    }
+
+   function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+		$idbea = $_GET['idbea']->Integer()->Raw();
+		$AppId = $_GET['AppId']->Integer()->Raw();
+		
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+		
+        $this->mrTemplate->addVar('search', 'URL', GtfwDispt()->GetCurrentUrl() . '&display');
+        if (!empty($filter)) {
+            $this->mrTemplate->addVars('search', $filter);
+        }
+		
+        if (!empty($data) AND count($data) > 0) {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            $no = $filter['start'] + 1;
+            foreach ($data as $val) {
+			
+				if(!$val['aplikandokumen_verifikator_status']){
+					$this->mrTemplate->AddVar('item', 'CHECKEDTIDAKSESUAI', 'checked="checked"');
+				}else{
+					if($val['aplikandokumen_verifikator_status'] == 'Y'){
+						$this->mrTemplate->AddVar('item', 'CHECKEDSESUAI', 'checked="checked"');
+					}else{
+						$this->mrTemplate->AddVar('item', 'CHECKEDTIDAKSESUAI', 'checked="checked"');
+					}
+				}
+				
+                $val['no'] = $no;
+               
+                if($val['aplikandokumen_verifikator_status']=='N'){
+                   $val['row_class'] = "fail";
+                }
+				
+                $this->mrTemplate->addVars('item', $val);
+				$this->mrTemplate->AddVar('item', 'url_download', 'download.php?task=download&file='.$val['aplikandokumen_file_origin'].'&jenis=file');
+                
+				$this->mrTemplate->AddVar('content', 'APPID', $AppId);
+		
+				$this->mrTemplate->parseTemplate('item', 'a');
+				
+                $no++;
+            }
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+		
+		$this->mrTemplate->AddVar('content', 'URL_SAVE', GtfwDispt()->GetUrl('applicant.ranking', 'updateVerificationDokumen', 'do', 'json'));
+    }
+}
+?>

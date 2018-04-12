@@ -1,0 +1,38 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+    <tbody>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="code"/ --></th>
+            <td>{CODE}</td>
+        </tr>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="language"/ --></th>
+            <td>
+                <table class="table-form">
+                    <tr>
+                        <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number"/ --></th>
+                        <th><!-- patTemplate:gtfwgetlang key="language"/ --></th>
+                        <th><!-- patTemplate:gtfwgetlang key="translation"/ --></th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <td colspan="3" align="center">-- <!-- patTemplate:gtfwgetlang key="data_not_found"/ --> --</td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <!-- patTemplate:tmpl name="lang" -->
+                    <tr class="{ROW_CLASS}">
+                        <td style="text-align: center;">{NO}</td>        
+                        <td>{NAMA} ({KODE})</td>        
+                        <td>{TRANSLATE}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+                </table>
+            </td>
+        <tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

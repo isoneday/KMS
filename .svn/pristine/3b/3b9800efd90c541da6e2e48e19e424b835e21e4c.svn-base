@@ -1,0 +1,353 @@
+img.loader-widget{
+    display: block;
+    margin: 20px auto;
+}
+.additional_element {
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
+.btn-widget{
+	position:fixed;
+	top:250px;
+	z-index:99;
+	right:0;
+}
+.btn-widget:hover{
+	position:fixed;
+	top:250px;
+	z-index:99;
+	right:0;
+}
+.grid_elements {
+    width: 300px;
+    float: left;
+}
+.grid_elements table {
+    border-collapse: separate;
+    width: 200px;
+    height: 200px;
+}
+.actions_block {
+    padding: 9px;
+    float: right
+}
+
+.grid_elements table td {
+    background-color: #CFCFCF;
+    border-radius: 1px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+}
+#widget_list{
+	list-style:none;
+	left: -40px;
+    list-style: none outside none;
+    position: relative;
+    width: 270px;
+}
+#widget_list li{
+	list-style:none;
+	border-bottom:1px solid #EEEEEE;
+	padding: 5px 0 5px 0;
+}
+#widget_list li a{
+	color:#555555!important;
+	background-image:url(../images/graphics/btn-radio-widget.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px; 
+	padding-left:45px;
+}
+#widget_list li a:hover{
+	color:#ed8a09!important;
+	cursor:pointer;
+	top:0!important;
+	left:0!important;
+	text-decoration: none;
+	
+	background-image:url(../images/graphics/btn-radio-widget-hover.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px; 
+	padding-left:45px;
+}
+
+.grid_elements table td.hover {
+    background-color: #999;
+}
+
+.grid_elements table td:hover {
+    cursor: pointer;
+}
+
+.layout_block .block_name {
+    cursor: pointer;
+}
+
+.ui-resizable-resizing {
+    z-index: 9999999 !important;
+}
+
+.layout_name_edit {
+    background-color: red;
+    background: url( '../media/images/icons/edit_input.gif' );
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 14px;
+    border: none;
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    outline: none;
+    width: 90%;
+    font-style: italic;
+    cursor: pointer !important;
+}
+.layouts_grid .remove_element {
+    cursor: pointer;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.4;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.layouts_grid .layout_block .info {
+    color: white;
+    font-size: 16px;
+    font-family: Helvetica;
+    padding: 10px;
+}
+/*! gridster.js - v0.1.0 - 2012-10-07
+* http://gridster.net/
+* Copyright (c) 2012 ducksboard; Licensed MIT */
+
+.layouts_grid {
+    position:relative !important;
+    width: 90%;
+    min-height: 300px;
+    float: left;
+}
+
+.layouts_grid > * {
+    margin: 0 auto;
+    -webkit-transition: height .4s;
+    -moz-transition: height .4s;
+    -o-transition: height .4s;
+    -ms-transition: height .4s;
+    transition: height .4s;
+}
+
+.layouts_grid ul {
+    list-style-type: none;
+    min-height: 660px;
+}
+.layouts_grid li {
+    list-style: none;
+    background-color: #fff;
+	border-radius:5px;
+	border:1px solid #ccc;
+
+
+	-webkit-box-shadow: 0 20px 11px -23px rgba(0, 0, 0, 0.8);
+	   -moz-box-shadow: 0 20px 11px -23px rgba(0, 0, 0, 0.8);
+	        box-shadow: 0 20px 11px -23px rgba(0, 0, 0, 0.8);
+}
+ /*.layouts_grid li:before, .layouts_grid li:after
+{
+   content:"";
+   position:absolute;
+   z-index:-5;
+   bottom:15px;
+   left:10px;
+   width:50%;
+   height:20%;
+   max-width:300px;
+   -webkit-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   -moz-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   -webkit-transform:rotate(-3deg);
+   -moz-transform:rotate(-3deg);
+   -o-transform:rotate(-3deg);
+   transform:rotate(-3deg);
+}
+
+.layouts_grid li:after
+{
+	right:10px;
+   left:auto;
+   -webkit-transform:rotate(3deg);
+   -moz-transform:rotate(3deg);
+   -o-transform:rotate(3deg);
+   transform:rotate(3deg);
+} 
+*/
+.layouts_grid .gs_w{
+    z-index: 0;
+    position: absolute;
+}
+
+.ready .gs_w:not(.preview-holder) {
+    -webkit-transition: opacity .3s, left .3s, top .3s;
+    -moz-transition: opacity .3s, left .3s, top .3s;
+    -o-transition: opacity .3s, left .3s, top .3s;
+    transition: opacity .3s, left .3s, top .3s;
+}
+
+.ready .gs_w:not(.preview-holder) {
+    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+}
+
+.layouts_grid .preview-holder {
+    z-index: 1;
+    position: absolute;
+    background-color: inherit;
+    border: none;
+    opacity: 0.3;
+}
+
+.layouts_grid .player-revert {
+    z-index: 10!important;
+    -webkit-transition: left .3s, top .3s!important;
+    -moz-transition: left .3s, top .3s!important;
+    -o-transition: left .3s, top .3s!important;
+    transition:  left .3s, top .3s!important;
+}
+
+.layouts_grid .dragging {
+    z-index: 10!important;
+    -webkit-transition: all 0s !important;
+    -moz-transition: all 0s !important;
+    -o-transition: all 0s !important;
+    transition: all 0s !important;
+}
+
+/* Uncomment this if you set helper : "clone" in draggable options */
+/*.layouts_grid .player {
+  opacity:0;
+}*/
+
+
+
+/* GMC CLINIC */
+.nest-bg{
+/* 	float:left; */
+	margin-right:20px;
+	margin-bottom:25px;
+	border-radius: 3px;
+	background-color: #ffffff !important; 
+    border: 1px solid #CDCDCD;
+    clear: both;
+	position:relative;
+	
+}
+/* .nest-bg:after, .nest-bg:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #FFFFFF;
+    border-color: -moz-use-text-color #CCCCCC #CCCCCC;
+    border-image: none;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    bottom: -3px;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 3px;
+    position: absolute;
+    right: 3px;
+	border-radius: 0 0 3px 3px;
+	
+	
+}
+.nest-bg:before {
+    bottom: -5px;
+    left: 6px;
+    right: 6px;
+	
+} */
+.nest-bg, .middleNav, .sItem, .statsDetailed {
+    box-shadow: 0 1px 0 #FFFFFF;
+}
+.nest-bg .title {
+  /*   background: url("../img/nest-head-bg.png") repeat-x scroll 0 0 #EFEFEF;  */
+    border-bottom: 3px double #CDCDCD;
+    height: 36px;
+    box-shadow: 0 1px 0 #FFFFFF;
+	border-radius: 5px 5px 0 0;
+	background-color: #f5f5f5;
+    *background-color: #e6e6e6;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+	cursor: move;
+}
+.title h6 {
+    float: left;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 0 12px 0;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    color:#555555;
+	line-height:none;
+	position:relative;
+	top:8px;
+}
+.slidder-bar-nest{	
+	padding: 15px;
+	margin-bottom:30px;
+}
+.nest-bg .title .titleIcon {
+        background: url("../img/nest-bg.png") repeat scroll 0 0 transparent;
+        border-bottom: 1px solid #CCCCCC;
+        border-left: 1px solid #CCCCCC;
+        border-radius: 0 0 3px 3px;
+        border-right: 1px solid #CCCCCC;
+        box-shadow: 0 1px 0 #FFFFFF;
+        float: left;
+        height: 16px;
+        margin: 0 0 0 15px;
+        padding: 9px 9px 5px;
+        width: 16px;
+    }
+ .body-nest{
+    	padding:15px;
+				
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+	box-shadow: 0 2px 5px #CCCCCC;
+}
+.breadcrumb-widget{
+	list-style:none;
+	padding: 5px 0 5px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	height:20px;
+	margin:0;
+}  
+.gridster-row{
+	margin:0 0 0 -30px;
+} 
+
+.layout_content2{
+	width:350px; 
+	padding:5px 10px;
+}
+#visualization{
+	width:100%;
+}
+.table-province{
+	max-height:357px;
+	overflow-y:auto;
+}

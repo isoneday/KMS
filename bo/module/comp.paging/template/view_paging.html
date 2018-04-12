@@ -1,0 +1,74 @@
+<!-- patTemplate:tmpl name="content" -->
+    <!-- patTemplate:tmpl name="page_nav" -->
+    <div class="pagination">    
+    <ul>
+        <li>
+            <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="display"  / -->
+        </li>
+    </ul>
+    <ul>
+        <!-- patTemplate:tmpl name="page_nav_first" type="condition" conditionvar="IS_AVAIL" -->
+            <!-- patTemplate:sub condition="YES" -->
+                <li><a href="{FIRST_NAV_URL}" class="{NAV_CLASS} xhr dest_{DESTINATION}">&laquo;</a></li>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+                <li class="disabled"><a>&laquo;</a></li>
+            <!-- /patTemplate:sub -->
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="page_nav_prev" type="condition" conditionvar="IS_AVAIL" -->
+            <!-- patTemplate:sub condition="YES" -->
+                <li><a href="{PREV_NAV_URL}" class="{NAV_CLASS} xhr dest_{DESTINATION}">&lt;</a></li>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+                <li class="disabled"><a>&lt;</a></li>
+            <!-- /patTemplate:sub -->
+        <!-- /patTemplate:tmpl -->
+  
+        <!-- patTemplate:tmpl name="page_nav_info" type="simplecondition" requiredvars="ALL_REC_INFO" -->
+                <li class="disabled"><a><b>{START_REC_INFO}</b>-<b>{END_REC_INFO}</b> <!-- patTemplate:gtfwgetlang key="of" / --> <b>{ALL_REC_INFO}</b></a></li>
+        <!-- /patTemplate:tmpl -->
+      
+        <!-- patTemplate:tmpl name="page_nav_next" type="condition" conditionvar="IS_AVAIL" -->
+            <!-- patTemplate:sub condition="YES" -->
+                <li><a href="{NEXT_NAV_URL}" class="{NAV_CLASS} xhr dest_{DESTINATION}">&gt;</a></li>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+                <li class="disabled"><a>&gt;</a></li>
+            <!-- /patTemplate:sub -->
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="page_nav_last" type="condition" conditionvar="IS_AVAIL" -->
+            <!-- patTemplate:sub condition="YES" -->
+                <li><a href="{LAST_NAV_URL}" class="{NAV_CLASS} xhr dest_{DESTINATION}">&raquo;</a></li>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+                <li class="disabled"><a>&raquo;</a></li>
+            <!-- /patTemplate:sub -->
+        <!-- /patTemplate:tmpl -->
+    </ul>
+    </div>
+    <!-- /patTemplate:tmpl -->
+<script type="text/javascript">
+var loaded = false;
+$(function(){
+    $('.pagination #paging-display').on('change', function(){
+        if (loaded == false) {
+            var elm = $(this);
+            url = elm.data('url');
+            dest = elm.data('dest');
+            $('.busy-indicator').fadeIn("slow");
+            $('#'+dest).load(url+'&ascomponent=1&display='+elm.val());
+            $('.busy-indicator').fadeOut("slow");
+            loaded = true;
+        }   
+    });
+});
+</script>
+<style>
+.pagination #paging-display{
+    height: 34px; margin: -30px 0 0; padding: 8px 4px;
+    text-align: center;
+}
+</style>
+<!-- /patTemplate:tmpl -->

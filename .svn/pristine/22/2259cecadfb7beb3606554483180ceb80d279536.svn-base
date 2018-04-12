@@ -1,0 +1,11 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+
+    <tr>
+        <th style="width:200px">SumberInfoNama</th>
+        <td>{SUMBERINFONAMA}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

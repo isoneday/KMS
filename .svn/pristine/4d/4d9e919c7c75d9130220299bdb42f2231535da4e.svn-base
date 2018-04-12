@@ -1,0 +1,272 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class PersonalData extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/applicant.personal.data/business/mysqlt/personaldata.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countPersonalData($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($nim)) {
+            $str .= " AND LOWER(aplikan_nim) LIKE('%$nim%')";
+        }
+        $query = $this->mSqlQueries['count_personaldata'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getPersonalData($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($nim)) {
+            $str .= " AND LOWER(aplikan_nim) LIKE('%$nim%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_personaldata'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getAplikanId($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_aplikan_id'], array($id));
+        if ($result) {
+            return $result[0]['aplikan_id'];
+        }
+    }
+
+    public function getDetailPersonalData($id)
+    {
+        // var_dump($this->mSqlQueries['get_detail_personaldata'], array($id));die;
+        $result = $this->Open($this->mSqlQueries['get_detail_personaldata'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function getDetailWali($id, $num=null)
+    {
+        $str = '';
+        if (!empty($num)) {
+            $str .= "AND aplikanwali_id = $num";
+        }
+        $query = $this->mSqlQueries['get_detail_wali'];
+        $query = str_replace('--where--', $str, $query);
+        $result = $this->Open(stripslashes($query), array($id));
+        return $result;
+        // $result = $this->Open($this->mSqlQueries['get_detail_wali'], array($id));
+        // return $result;
+    }    
+
+    public function getDetailSaudara($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_saudara'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function getAktivitasOrganisasi($id, $num = null)
+    {
+        $str = '';
+        if (!empty($num)) {
+            $str .= "AND aplikanorganisasi_id = $num";
+        }
+        $query = $this->mSqlQueries['get_aktivitas_organisasi'];
+        $query = str_replace('--where--', $str, $query);
+        $result = $this->Open(stripslashes($query), array($id));
+        return $result;
+        // $result = $this->Open($this->mSqlQueries['get_aktivitas_organisasi'], array($id));
+        // return $result;
+    }    
+
+    public function getPrestasiNonAkademik($id, $num = null)
+    {
+        $str = '';
+        if (!empty($num)) {
+            $str .= "AND aplikanprestasi_id = $num";
+        }
+        $query = $this->mSqlQueries['get_prestasi_non_akademik'];
+        $query = str_replace('--where--', $str, $query);
+        $result = $this->Open(stripslashes($query), array($id));
+        return $result;
+        // $result = $this->Open($this->mSqlQueries['get_prestasi_non_akademik'], array($id));
+        // return $result;
+    }    
+
+    public function getAkademik($id, $num = null)
+    {
+        $str = '';
+        if (!empty($num)) {
+            $str .= "AND aplikanakademik_id = $num";
+        }
+        $query = $this->mSqlQueries['get_akademik'];
+        $query = str_replace('--where--', $str, $query);
+        $result = $this->Open(stripslashes($query), array($id));
+        return $result;
+        // $result = $this->Open($this->mSqlQueries['get_akademik'], array($id));
+        // return $result;
+    }    
+
+    public function getBeasiswa($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_beasiswa'], array($id));
+        return $result;
+    }    
+
+    public function getLampiran($aplikanid, $dokumenid)
+    {
+        $result = $this->Open($this->mSqlQueries['get_lampiran'], array($aplikanid, $dokumenid));
+        return $result[0];
+    }   
+    
+    public function insertPersonalData($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_personaldata'], $params);
+    }
+    
+    public function updatePersonalData($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_personaldata'], $params);
+    }
+    
+    public function deletePersonalData($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_personaldata'], array($id));
+    }
+
+    public function insertOrtu($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_orang_tua'], $params);
+    }
+
+    public function updateOrtu($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_orang_tua'], $params);
+    }
+
+    public function deleteOrtu($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_orang_tua'], array($id));
+    }
+
+    public function insertSaudara($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_saudara'], $params);
+    }
+
+    public function updateSaudara($params)
+    {
+        // echo "<pre>";var_dump($this->mSqlQueries['update_saudara'], $params);echo "</pre>";
+        // die;
+        return $this->Execute($this->mSqlQueries['update_saudara'], $params);
+    }
+    
+    public function deleteSaudara($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_saudara'], array($id));
+    }
+
+    public function insertAktifitas($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_aktifitas'], $params);
+    }
+
+    public function updateAktifitas($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_aktifitas'], $params);
+    }
+    
+    public function deleteAktifitas($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_aktifitas'], array($id));
+    }
+
+    public function insertPrestasi($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_prestasi'], $params);
+    }
+
+    public function updatePrestasi($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_prestasi'], $params);
+    }
+    
+    public function deletePrestasi($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_prestasi'], array($id));
+    }
+
+    public function insertAkademik($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_akademik'], $params);
+    }
+
+    public function updateAkademik($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_akademik'], $params);
+    }
+    
+    public function deleteAkademik($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_akademik'], array($id));
+    }
+
+    public function insertBeasiswa($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_beasiswa'], $params);
+    }
+
+    public function updateBeasiswa($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_beasiswa'], $params);
+    }
+    
+    public function deleteBeasiswa($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_beasiswa'], array($id));
+    }
+
+    public function insertLampiran($params)
+    {
+        // echo "<pre>";var_dump($this->mSqlQueries['insert_lampiran'], $params);echo "</pre>";
+        // die;
+        return $this->Execute($this->mSqlQueries['insert_lampiran'], $params);
+    }
+
+    public function updateLampiran($params)
+    {
+        // echo "<pre>";var_dump($this->mSqlQueries['update_lampiran'], $params);echo "</pre>";
+        // exit;
+        return $this->Execute($this->mSqlQueries['update_lampiran'], $params);
+    }
+
+    public function listPersonalData()
+    {
+        return $this->Open($this->mSqlQueries['list_personaldata'], array());
+    }
+}
+
+// End of file PersonalData.class.php

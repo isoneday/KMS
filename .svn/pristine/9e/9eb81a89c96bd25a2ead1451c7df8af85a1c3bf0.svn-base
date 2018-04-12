@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateSaudara extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessPersonalData', 'applicant.personal.data');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->inputSaudara();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'detailPersonalData', 'view', 'html').'&display' . '&ascomponent=1&tabActive=saudara");');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='. $id . '&ascomponent=1&tabActive=saudara")');
+        }   
+    }
+
+
+}
+
+?>

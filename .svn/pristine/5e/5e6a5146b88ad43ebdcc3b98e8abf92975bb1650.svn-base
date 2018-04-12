@@ -1,0 +1,68 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form">
+        <input type="hidden" name="id" value="{ID}" id="data_id" />
+        <table class="table-edit">
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+                <td>
+                    <input type="text" name="name" value="{NAME}" class="input_large"  />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                <td>
+                    <textarea name="desc" cols="50" rows="1" >{DESC}</textarea>            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="application" / --></th>
+                <td>
+                    <div id="row_app">
+                        <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="application_id"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="access_right" / --></th>
+                <td>
+                    <div id="hak-akses"></div>     
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-footer" style="padding:14px 230px 15px!important">  
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="1"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="2"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="3"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>         
+    </div>
+</form>
+<script type="text/javascript">
+    $(function(){
+        loadHakAkses();
+        $('#application_id').off('change').on('change', function(){
+            loadHakAkses();
+        });
+    });
+    function loadHakAkses(){
+        $('#hak-akses').fadeOut().load('{URL_HAK_AKSES}'+'&appId='+$('#application_id').val()+'&grId='+$('#data_id').val()+'&ascomponent=1', function(){$(this).fadeIn();});
+    }
+</script>
+<style>
+    .my-modal {
+        width : 200px;
+        margin : -100px 0 0 -100px;
+    }
+    .modal-backdrop {background: none;}
+    .label-disabled {
+        color : gray;
+    }
+    .hidden_field{
+        display: none;
+    }
+</style>
+<!-- /patTemplate:tmpl -->

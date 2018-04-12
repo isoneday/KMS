@@ -1,0 +1,84 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<!-- patTemplate:gtfwrendermodule module="applicant.ranking" submodule="detailApplicant" action="view" name="" / -->
+
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+
+<div class="content-box">
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL_SAVE}">
+<input type="hidden" name="appid" value="{APPID}" />
+<table class="table-common">
+	
+	<thead>
+		<tr>
+			<th><!-- patTemplate:gtfwgetlang key="Document" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="File" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="Parameter" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="Action" / --></th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+		<!-- patTemplate:sub condition="YES" -->
+		<tr>
+			<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+		</tr>
+		<!-- /patTemplate:sub -->
+		<!-- patTemplate:sub condition="NO" -->
+		<!-- patTemplate:tmpl name="item" -->
+		<tr class="{ROW_CLASS}">
+			<td>{DOKUMEN_NAME}</td>
+			<td><center><a STYLE="{STYLE_DOWNLOAD}" href="{URL_DOWNLOAD}" target="_blank"><img src="assets/images/Tombol - Tutup.ico" alt="Download"/></a></center></td>
+			<td>{PARAMETER_DOKUMEN}</td>
+			<td>
+				<input type="radio" name="data[{APLIKANDOKUMEN_BEASISWADOKUMEN_ID}]" class="yes" value="Y" {CHECKEDSESUAI}>Sesuai<br/> 
+				<input type="radio" name="data[{APLIKANDOKUMEN_BEASISWADOKUMEN_ID}]" class="no" value="N" {CHECKEDTIDAKSESUAI}>Tidak Sesuai
+			</td>
+		</tr>
+		<!-- /patTemplate:tmpl -->
+		<!-- /patTemplate:sub -->
+		<!-- /patTemplate:tmpl -->
+	</tbody>
+</table>
+
+<div class="table-edit">
+	<tr>
+		<td> 
+			<!-- patTemplate:tmpl name="jumlah" -->
+			<input type="hidden" value={COUNT} name="count_pertanyaan">
+			<input type="hidden" value={APLIKANID} name="aplikan_id">
+			<!-- /patTemplate:tmpl -->
+			<input type="hidden" id="yes_result" value=0 name="yes_result">
+			<input type="hidden" id="no_result" value=0 name="no_result">   
+			<button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+			<button type="button" class="btn btn-primary" OnClick="window.history.back()"><!-- patTemplate:gtfwgetlang key="cancel" / --></button>       
+		</td>            
+	</tr>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+
+    var popupApplicantRanking;
+    $('.popup_applicantranking').click(function() {
+        var url = $(this).attr('href') + '&ascomponent=1';
+        var title = $(this).attr('title');
+
+        popupApplicantRanking = showGtPopup(url, title);
+        return false;
+    });
+
+    $(document).ready(function(){
+    	$('input').change(function(){
+    		var yes = $('.yes:checked').length
+    		var no = $('.no:checked').length
+    		$('#yes_result').val(yes)
+    		$('#no_result').val(no)
+    	})
+    });
+
+</script>
+<!-- /patTemplate:tmpl -->

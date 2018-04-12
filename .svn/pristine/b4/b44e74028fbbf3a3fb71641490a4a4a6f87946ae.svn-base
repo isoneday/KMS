@@ -1,0 +1,57 @@
+<!-- patTemplate:tmpl name="content" -->
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="NO" -->
+	
+     
+	
+		<div id="thumb-tray">
+		<ul id="thumb-list" class="header-btn2">
+            <!-- patTemplate:tmpl name="item" -->
+            <li><a href="{URL}" class="menu-module btn-top-up btn-width-max" data-id="{ID}">{TITLE}</a></li>
+            <!-- /patTemplate:tmpl -->
+        </ul>
+	 	<div id="thumb-prev"><img class="btn-prev-slide" src="assets/images/thumb-back.png"></div>
+		<div id="thumb-next"><img class="btn-prev-slide" src="assets/images/thumb-forward.png"></div> 
+		</div>
+		
+		
+		
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="YES" -->
+    
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+<script type="text/javascript">
+$(function(){
+    $('.menu-module').on('click', function(){
+        var url = $(this).attr('href');
+        if (readCookie('mmId') != $(this).data('id')) {
+            document.cookie = 'mmId='+$(this).data('id');
+            $('#side_menu').fadeOut().load('{URL_MENU}&ascomponent=1&mmId='+$(this).data('id'), function(resp, status, xhr){           
+                if (status && $('#slick-toggle').hasClass('slick-icon')) {
+                    hideMenu();
+                }
+                $(this).fadeIn('fast');
+            });
+        }
+        $('#subcontent-element').fadeOut().load(url+'&ascomponent=1&mmId='+$(this).data('id'), function(resp, status, xhr){
+            $(this).fadeIn('fast');  
+        });
+        return false;
+    });
+  
+})
+function readCookie(name) {
+	var cookiename = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++)
+	{
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(cookiename) == 0) return c.substring(cookiename.length,c.length);
+	}
+	return null;
+}
+</script>
+
+<!-- /patTemplate:tmpl -->

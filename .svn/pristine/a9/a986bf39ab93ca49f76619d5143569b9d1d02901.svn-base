@@ -1,0 +1,34 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" style="margin: 0;">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+        <td>
+            <input type="text" name="name" value="{NAME}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="status" / --></th>
+        <td>
+            <input type="radio" name="status" id="status1" value="1" checked="" /> <label for="status1"><!-- patTemplate:gtfwgetlang key="yes" / --></label>
+            <input type="radio" name="status" id="status0"  value="0" /> <label for="status0"><!-- patTemplate:gtfwgetlang key="no" / --></label>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+        <td>
+            <textarea name="desc" cols="50" rows="3" >{DESC}</textarea>            
+        </td>
+    </tr>
+</table>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+    <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+</div>
+</form>
+<!-- /patTemplate:tmpl -->

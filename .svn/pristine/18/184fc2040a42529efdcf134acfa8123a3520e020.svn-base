@@ -1,0 +1,117 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+        <td><input type="text" name="beasiswa_name" value="{BEASISWA_NAME}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="description" / --></th>
+        <td><input type="text" name="beasiswa_dec" value="{BEASISWA_DEC}" /></td>        
+    </tr>
+	
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+            <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+<table class="table-common">
+<thead>
+    <tr>
+        <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+        <th style="width: 50px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+        
+        <th><!-- patTemplate:gtfwgetlang key="beasiswa" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="jenis_beasiswa" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="tanggal_berlaku" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="tanggal_penutupan" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="jumlah_pelamar" / --></th>
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td style="text-align: center;">{NO}</td>        
+        <td class="links">
+            <a class="xhr dest_subcontent-element btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="applicantranking" / -->"></a>
+        </td>
+        
+        <td>{BEASISWA_NAME}</td>
+        <td>{JENISBEASISWA_NAME}</td>
+        <td>{BEASISWA_PERIODE_MULAI} s/d {BEASISWA_PERIODE_SELESAI}</td>
+        <!--td>{PER_AWAL} s/d {PER_AKHIR}</td-->
+        <td>{BEASISWA_PERIODE_SELESAI}</td>
+        <td>{JUMLAH}</td>
+        <!--td>{JUMLAH_PELAMAR}</td-->
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantranking" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantranking" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupApplicantRanking;
+    $('.popup_applicantranking').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupApplicantRanking = showGtPopup(url, title);
+        return false;
+    });
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

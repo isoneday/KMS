@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateApplicantInterviewLolos extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessApplicantInterview', 'applicant.interview');
+        $id = $_GET['id']->Integer()->Raw();
+        $name = $_GET['name'];
+        $mail = $_GET['mail'];
+        
+        $result = $proses->updateLolos($id,$name,$mail);
+       
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.interview', 'ApplicantInterview', 'view', 'html').'&display' . '&ascomponent=1")');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('applicant.interview', 'updateApplicantInterview', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

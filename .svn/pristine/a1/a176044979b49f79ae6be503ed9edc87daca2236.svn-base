@@ -1,0 +1,92 @@
+<?php
+
+$sql["count_type"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_type"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.phototype_id AS `id`,
+    a.phototype_name AS `name`,
+    a.`phototype_msttype_id` AS mst_id,
+    c.`msttype_name` AS mst_name,
+    a.phototype_status AS `status`,
+    a.phototype_desc AS `desc`,
+    a.phototype_is_locked AS is_locked,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.`user_real_name`, CONCAT( u1.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_photo_type a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+LEFT JOIN ref_master_type c ON c.`msttype_id` = a.`phototype_msttype_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_type"] = "
+SELECT 
+    a.phototype_id AS `id`,
+    a.phototype_name AS `name`,
+    a.`phototype_msttype_id` AS mst_id,
+    c.`msttype_name` AS mst_name,
+    a.phototype_status AS `status`,
+    a.phototype_desc AS `desc`,
+    a.phototype_is_locked AS is_locked,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+IF((a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.user_real_name, CONCAT(u1.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert ,
+IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), u2.user_real_name, CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update   
+FROM ref_photo_type a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`    
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+LEFT JOIN ref_master_type c ON c.`msttype_id` = a.`phototype_msttype_id`
+WHERE a.phototype_id = %d
+";
+$sql["insert_type"] = "
+INSERT INTO ref_photo_type
+(
+    phototype_msttype_id,
+    phototype_name,
+    phototype_status,
+    phototype_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_type"] = "
+UPDATE ref_photo_type
+SET 
+    phototype_msttype_id= %s,
+    phototype_name = %s,
+    phototype_status = %s,
+    phototype_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE phototype_id = %d
+";
+$sql["delete_type"] = "
+DELETE FROM ref_photo_type
+WHERE phototype_id = %d
+";
+$sql["list_type"] = "
+SELECT
+    phototype_id AS `id`,
+    phototype_name AS `name`
+FROM
+    ref_photo_type
+ORDER BY phototype_name
+";

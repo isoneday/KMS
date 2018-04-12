@@ -1,0 +1,7 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    {DETAIL_ROW}
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

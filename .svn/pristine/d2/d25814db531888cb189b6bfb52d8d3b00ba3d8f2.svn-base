@@ -1,0 +1,29 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateOrtu extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessPersonalData', 'applicant.personal.data');
+        $id = $_POST['id']->Integer()->Raw();
+        // $idWali = $_POST['idWali']->Integer()->Raw();
+        $result = $proses->inputOrtu();
+        //return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'DetailPersonalData', 'view', 'html').'&display' . '&ascomponent=1");');
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'detailPersonalData', 'view', 'html').'&display' . '&ascomponent=1&tabActive=ortu");');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&idWali='. $id . '&ascomponent=1&tabActive=ortu")');
+        }        
+
+        // if ($result) {
+        //     return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'PersonalData', 'view', 'html').'&display' . '&ascomponent=1");');  
+        // } else {  
+        //     return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='. $id .'&idWali='.$idWali.'&ascomponent=1")');
+        // }        
+    }
+}
+
+?>

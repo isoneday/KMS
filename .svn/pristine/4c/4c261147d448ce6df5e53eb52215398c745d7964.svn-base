@@ -1,0 +1,87 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">JurKode</th>
+        <td>{JURKODE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurKodeuniv</th>
+        <td>{JURKODEUNIV}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurFakKode</th>
+        <td>{JURFAKKODE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurNamaResmi</th>
+        <td>{JURNAMARESMI}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurNamaSingkat</th>
+        <td>{JURNAMASINGKAT}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurNamaAsing</th>
+        <td>{JURNAMAASING}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurAlamat</th>
+        <td>{JURALAMAT}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurTelp</th>
+        <td>{JURTELP}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurFax</th>
+        <td>{JURFAX}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurEmail</th>
+        <td>{JUREMAIL}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurKontakPerson</th>
+        <td>{JURKONTAKPERSON}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurLuasKebunPercobaan</th>
+        <td>{JURLUASKEBUNPERCOBAAN}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurLuasRuangKuliah</th>
+        <td>{JURLUASRUANGKULIAH}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurJumlahRuangKuliah</th>
+        <td>{JURJUMLAHRUANGKULIAH}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurLuasLaboratorium</th>
+        <td>{JURLUASLABORATORIUM}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurJumlahRuangLaboratorium</th>
+        <td>{JURJUMLAHRUANGLABORATORIUM}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurLuasRuangDosenTetap</th>
+        <td>{JURLUASRUANGDOSENTETAP}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurLuasRuangAdministrasi</th>
+        <td>{JURLUASRUANGADMINISTRASI}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurJumlahJudulBuku</th>
+        <td>{JURJUMLAHJUDULBUKU}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">JurJumlahEksemplarBuku</th>
+        <td>{JURJUMLAHEKSEMPLARBUKU}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

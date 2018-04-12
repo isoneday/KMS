@@ -1,0 +1,152 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewRegistApplicant extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_regist_applicant.html');
+    }
+
+    function ProcessRequest() {	
+        $ObjApplicantPencairan = GtfwDispt()->load->business('ApplicantPencairan', 'applicant.pencairan');
+		$ObjRegistrasiUlang = GtfwDispt()->load->business('RegistrasiUlang', 'applicant.regist.ulang');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+
+        $id = $_GET['id']->Integer()->Raw();
+		$nim = $_GET['nim']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+        
+        $status = $ObjApplicantPencairan->cekStatus($id);
+		$detail = $ObjRegistrasiUlang->getDetailRegistrasiUlang($id);
+		$detailTranskrip = $ObjRegistrasiUlang->getDetailTranskrip($id);
+		$detailKrs = $ObjRegistrasiUlang->getDetailKrs($id);
+				 
+        return compact('message','id','nim','id_beasiswa','detail','detailTranskrip','detailKrs','status');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+		
+		if ($status['aplikanbeasiswa_statuspendaftaran_id'] == '9') {
+			$this->mrTemplate->addVar('Button', 'IS_EMPTY', 'NO');
+			$this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('applicant.pencairan', 'updateStatus', 'do', 'json') . '&id=' . $id. '&nim=' . $nim. '&id_beasiswa=' . $id_beasiswa);
+			$this->mrTemplate->addVar('Button', 'URL_REJECT', GtfwDispt()->GetUrl('applicant.pencairan', 'updateStatusReject', 'do', 'json') . '&id=' . $id. '&nim=' . $nim. '&id_beasiswa=' . $id_beasiswa);
+		}else if ($status['aplikanbeasiswa_statuspendaftaran_id'] == '10') {
+			$this->mrTemplate->addVar('Button', 'IS_EMPTY', 'YES');
+		}
+		
+		if (!empty($detail)) {
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+
+            $this->mrTemplate->addVars('bank', $detail);
+			$this->mrTemplate->addVars('bank2', $detail);
+            if(!empty($detail['pks_origin'])){
+				$this->mrTemplate->addVar('dataPks', 'IS_EMPTY', 'NO');
+                $this->mrTemplate->addVar('dataPks', 'FILE_PKS', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detail['pks_file'].'&download='.$detail['pks_origin']);
+				
+				$this->mrTemplate->addVar('dataPks2', 'IS_EMPTY', 'NO');
+                $this->mrTemplate->addVar('dataPks2', 'FILE_PKS', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detail['pks_file'].'&download='.$detail['pks_origin']);
+			}else {
+				$this->mrTemplate->addVar('dataPks', 'IS_EMPTY', 'YES');
+				$this->mrTemplate->addVar('dataPks2', 'IS_EMPTY', 'YES');
+			}
+			
+			if(!empty($detail['pks_origin'])){
+				$this->mrTemplate->addVar('dataBuku', 'IS_EMPTY', 'NO');
+				$this->mrTemplate->addVar('dataBuku', 'FILE_BUKU', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detail['buku_file'].'&download='.$detail['buku_origin']);
+				
+				$this->mrTemplate->addVar('dataBuku2', 'IS_EMPTY', 'NO');
+				$this->mrTemplate->addVar('dataBuku2', 'FILE_BUKU', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detail['buku_file'].'&download='.$detail['buku_origin']);
+			}else {
+				$this->mrTemplate->addVar('dataBuku', 'IS_EMPTY', 'YES');
+				
+				$this->mrTemplate->addVar('dataBuku2', 'IS_EMPTY', 'YES');
+			}
+		}
+		
+		if (!empty($detailTranskrip)) {
+			$this->mrTemplate->addVar('dataTranskrip', 'IS_EMPTY', 'NO');
+			$this->mrTemplate->addVar('dataTranskrip2', 'IS_EMPTY', 'NO');
+			
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+            $this->mrTemplate->clearTemplate('transkrip');
+			$this->mrTemplate->clearTemplate('transkrip2');
+			
+			$jumTranskrip = count($detailTranskrip);
+            for ($i=0; $i < $jumTranskrip ; $i++) {
+				$detailTranskrip[$i]['tanggal_daftar'] = $this->date2stirng($detailTranskrip[$i]['time']);
+                $this->mrTemplate->addVars('transkrip', $detailTranskrip[$i]);
+				$this->mrTemplate->addVars('transkrip2', $detailTranskrip[$i]);
+			
+				$this->mrTemplate->addVar('transkrip', 'FILE_TRANSKRIP', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detailTranskrip[$i]['file'].'&download='.$detailTranskrip[$i]['file_origin']);
+				
+				$this->mrTemplate->addVar('transkrip2', 'FILE_TRANSKRIP', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detailTranskrip[$i]['file'].'&download='.$detailTranskrip[$i]['file_origin']);
+			
+				$this->mrTemplate->addVar('transkrip', 'NAME', $detailTranskrip[$i]['file_origin']);
+				$this->mrTemplate->parseTemplate('transkrip', 'a');
+				
+				$this->mrTemplate->addVar('transkrip2', 'NAME', $detailTranskrip[$i]['file_origin']);
+				$this->mrTemplate->parseTemplate('transkrip2', 'a');
+			}
+		}else {
+            $this->mrTemplate->addVar('dataTranskrip', 'IS_EMPTY', 'YES');
+			
+			$this->mrTemplate->addVar('dataTranskrip2', 'IS_EMPTY', 'YES');
+        }
+		
+		
+		if (!empty($detailKrs)) {
+			$this->mrTemplate->addVar('dataKrs', 'IS_EMPTY', 'NO');
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+			$this->mrTemplate->clearTemplate('krs');
+			
+			$jumkrs = count($detailKrs);
+            for ($i=0; $i < $jumkrs ; $i++) {
+				$detailKrs[$i]['tanggal_daftar'] = $this->date2stirng($detailKrs[$i]['time']);
+                $this->mrTemplate->addVar('krs','TANGGAL_DAFTAR', $detailKrs[$i]['tanggal_daftar']);
+                $this->mrTemplate->addVar('krs','SEMESTER', $detailKrs[$i]['semester']);
+
+				$this->mrTemplate->addVar('krs', 'FILE_KRS', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$detailKrs[$i]['aplikan_id'].'&file='.$file_path.$detailKrs[$i]['file'].'&download='.$detailKrs[$i]['file_origin']);
+
+				$this->mrTemplate->addVar('krs', 'NAME', $detailKrs[$i]['file_origin']);
+				$this->mrTemplate->parseTemplate('krs', 'a');
+			}
+        }else {
+            $this->mrTemplate->addVar('dataKrs', 'IS_EMPTY', 'YES');
+        }
+				
+		$this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('applicant.pencairan', 'updateStatus', 'do', 'json') . '&id=' . $id. '&nim=' . $nim. '&id_beasiswa=' . $id_beasiswa);
+		$this->mrTemplate->addVar('Button', 'URL_REJECT', GtfwDispt()->GetUrl('applicant.pencairan', 'updateStatusReject', 'do', 'json') . '&id=' . $id. '&nim=' . $nim. '&id_beasiswa=' . $id_beasiswa);
+		
+    }
+	
+	function date2stirng($date){
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrd = explode('-', $date);
+        $dateString = $arrd[2].' '.$bln[(int)$arrd[1]].' '.$arrd[0];
+
+        return $dateString;
+    }
+
+}
+
+?>

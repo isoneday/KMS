@@ -1,0 +1,359 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailApplicantData extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_applicantdata.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantData = GtfwDispt()->load->business('ApplicantData', 'applicant.data');
+
+        $id = $_GET['id']->Integer()->Raw();
+
+        $detail['dataPendaftar'] = $ObjApplicantData->GetListPendaftar($id);
+        $detail['dataWali'] = $ObjApplicantData->GetListWali($id);
+        $detail['dataSaudara'] = $ObjApplicantData->GetListSaudara($id);
+        $detail['dataHistory'] = $ObjApplicantData->GetListHistory($id);
+        $detail['dataAktifitas'] = $ObjApplicantData->GetListAktifitas($id);
+        $detail['dataPrestasi'] = $ObjApplicantData->GetListPrestasi($id);
+        $detail['dataBeasiswa'] = $ObjApplicantData->GetListBeasiswa($id);
+        $detail['cekStatusDaftar'] = $ObjApplicantData->cekStatusDaftar($id);
+        $detail['cekStatusDtrm'] = $ObjApplicantData->cekStatusDiterima($id);
+        $detail = $ObjApplicantData->getDetailApplicantData($id);
+        return compact('detail');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+
+        $dataPendaftar = $data['dataPendaftar'];
+        $dataWali = $data['dataWali'];
+        $dataSaudara = $data['dataSaudara'];
+        $dataHistory = $data['dataHistory'];
+        $dataAktifitas = $data['dataAktifitas'];
+        $dataPrestasi = $data['dataPrestasi'];
+        $dataBeasiswa = $data['dataBeasiswa'];
+        $cekStatusDaftar = $data['cekStatusDaftar'];
+        $cekStatusDtrm = $data['cekStatusDtrm'];
+
+        if (!empty($detail)) {
+            /*
+              if ((!empty($emp_photo['photo_file'])) && is_readable(Configuration::Instance()->GetValue('application', 'employee_save_path') . $emp_photo['photo_file'])) {
+              $path = Configuration::Instance()->GetValue('application', 'employee_save_path') . $emp_photo['photo_file'];
+              $detail['attachment'] = "<img src=" . $path . " class='rounded' width=110px height=140px alt='" . $emp_photo['photo_name'] . "' title='" . $emp_photo['photo_name'] . "'><img border='0' class='shadow-driver' src='assets/images/shadow.jpg'>";
+              } else {
+             * 
+             */
+            $path_female = Configuration::Instance()->GetValue('application', 'employee_save_path') . 'user-photo-female.jpg';
+            $path_male = Configuration::Instance()->GetValue('application', 'employee_save_path') . 'user-photo-male.jpg';
+            $detail['gender'] = 'm';
+            if ($detail['gender'] == 'm') {
+                $detail['attachment'] = "<img src=" . $path_male . " class='rounded' width=110px height=140px alt='Male Employee' title='Male Employee'><img border='0' class='shadow-driver' src='assets/images/shadow.jpg'>";
+            } else {
+                $detail['attachment'] = "<img src=" . $path_female . " class='rounded' width=110px height=140px alt='Female Employee' title='Female Employee'><img border='0' class='shadow-driver' src='assets/images/shadow.jpg'>";
+            }
+            /*
+              }
+             * 
+             */
+            $this->mrTemplate->addVars('content', $detail);
+        }
+
+
+        if (!empty($dataPendaftar)) {
+            // LIST IDENTITAS MAHASISWA BEGIN /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            $this->mrTemplate->AddVar('content', 'SATKERNAMA', $dataPendaftar[0]['satkerNama']);
+            $this->mrTemplate->AddVar('content', 'NAMA_FAKULTAS', $dataPendaftar[0]['fakName']);
+            $this->mrTemplate->AddVar('content', 'JURUSAN', $dataPendaftar[0]['jurName']);
+            $this->mrTemplate->AddVar('content', 'PRODI', $dataPendaftar[0]['prodiName']);
+            $this->mrTemplate->AddVar('content', 'JENJANG', $dataPendaftar[0]['jenjangDetail']);
+            $this->mrTemplate->AddVar('content', 'ANGKATAN', $dataPendaftar[0]['angkatan']);
+            $this->mrTemplate->AddVar('content', 'NIU', $dataPendaftar[0]['niu']);
+            $this->mrTemplate->AddVar('content', 'JALUR', $dataPendaftar[0]['jalur']);
+            $this->mrTemplate->AddVar('content', 'NAMA_MHS', $dataPendaftar[0]['nama']);
+            $this->mrTemplate->AddVar('content', 'TPT_LAHIR', $dataPendaftar[0]['tptLahir']);
+            $this->mrTemplate->AddVar('content', 'UKTNAMA', $dataPendaftar[0]['uktNama']);
+
+            $this->mrTemplate->AddVar('content', 'KMHSPDRTIDAKMAMPUFILE', $dataPendaftar[0]['kmhsPdrTidakMampuFile']);
+            $this->mrTemplate->AddVar('content', 'KMHSPDRTIDAKBEASISWALAINFILE', $dataPendaftar[0]['kmhsPdrTidakBeasiswaLainFile']);
+            $this->mrTemplate->AddVar('content', 'KMHSPDRFOTOFILE', $dataPendaftar[0]['kmhsPdrFotoFile']);
+            $this->mrTemplate->AddVar('content', 'KMHSPDRKARTUKELUARGAFILE', $dataPendaftar[0]['kmhsPdrKartuKeluargaFile']);
+
+            $tglLahir = $this->date2string($dataPendaftar[0]['tglLahir']);
+            $this->mrTemplate->AddVar('content', 'TGL_LAHIR', $tglLahir);
+
+            $agama = $dataPendaftar[0]['agama'];
+            if ($agama == 1)
+                $agama_nm = "Islam";
+            else if ($agama == 2)
+                $agama_nm = "Katholik";
+            else if ($agama == 3)
+                $agama_nm = "Protestan";
+            else if ($agama == 4)
+                $agama_nm = "Hindu";
+            else if ($agama == 5)
+                $agama_nm = "Budha";
+            else if ($agama == 6)
+                $agama_nm = "Lainnya";
+            else if ($agama == 7)
+                $agama_nm = "Tidak Ada Data";
+            $this->mrTemplate->AddVar('content', 'AGAMA', $agama_nm);
+
+            if ($dataPendaftar[0]['jenis_kelamin'])
+                $this->mrTemplate->AddVar('content', 'JKEL_MHS', $dataPendaftar[0]['jenis_kelamin'] == 'L' ? 'Laki-Laki' : 'Perempuan' );
+            else
+                $this->mrTemplate->AddVar('content', 'JKEL_MHS', '');
+
+            $this->mrTemplate->AddVar('content', 'JML_SDR', $dataPendaftar[0]['jmlSdr']);
+            $this->mrTemplate->AddVar('content', 'KTP', $dataPendaftar[0]['ktp']);
+            $this->mrTemplate->AddVar('content', 'BANK', $dataPendaftar[0]['bank']);
+            $this->mrTemplate->AddVar('content', 'NO_REK', $dataPendaftar[0]['noRek']);
+            $this->mrTemplate->AddVar('content', 'TELP', $dataPendaftar[0]['telp']);
+            $this->mrTemplate->AddVar('content', 'ALMT_ASAL', $dataPendaftar[0]['almtAsal']);
+            $this->mrTemplate->AddVar('content', 'ALMT_JOGJA', $dataPendaftar[0]['almtJogja']);
+
+            $status_tptTgl = $dataPendaftar[0]['status_tptTgl'];
+            $this->mrTemplate->AddVar('content', 'STATUS_TPTTGL', $status_tptTgl);
+            if ($status_tptTgl == 'Rumah Saudara') {
+                $this->mrTemplate->AddVar('content', 'RMHSAUDARA', ', ' . $dataPendaftar[0]['rmhSaudara']);
+            } else {
+                $this->mrTemplate->AddVar('content', 'RMHSAUDARA', '');
+            }
+
+            $biKuliah = $dataPendaftar[0]['biKuliah'];
+            $this->mrTemplate->AddVar('content', 'BIKULIAH', $biKuliah);
+            if ($biKuliah == 'Dibiayai Saudara') {
+                $this->mrTemplate->AddVar('content', 'BISAUDARA', ', ' . $dataPendaftar[0]['biSaudara']);
+            } else {
+                $this->mrTemplate->AddVar('content', 'BISAUDARA', '');
+            }
+
+            $aktift = $dataPendaftar[0]['aktift'];
+            $this->mrTemplate->AddVar('content', 'AKTIFT', $aktift);
+            if ($aktift == 'Kuliah Sambil Bekerja') {
+                $this->mrTemplate->AddVar('content', 'TPTKERJA', '<br/> 	&nbsp;&nbsp;  - Tempat Bekerja : ' . $dataPendaftar[0]['tptKerja']
+                        . '<br/> &nbsp;&nbsp; - Penghasilan : Rp ' . number_format($dataPendaftar[0]['gajiKerja'], 0, ",", ".")
+                        . '<br/> &nbsp;&nbsp; - Jam Kerja : ' . $dataPendaftar[0]['jamKerja']
+                );
+            } else {
+                $this->mrTemplate->AddVar('content', 'TPTKERJA', '');
+            }
+            $this->mrTemplate->AddVar('content', 'JUMLAH_SAUDARA_MAHASISWA', $dataPendaftar[0]['kmhsPdrJumlahSaudara']);
+            $this->mrTemplate->AddVar('content', 'JUMLAH_SAUDARA_MAHASISWA_DITANGGUNG', $dataPendaftar[0]['kmhsPdrJumlahSaudaraDitanggung']);
+            $this->mrTemplate->AddVar('content', 'JUMLAH_SAUDARA_MAHASISWA_BEKERJA', $dataPendaftar[0]['kmhsPdrJumlahSaudaraBekerja']);
+
+            if (isset($_GET['ub'])) {
+                $this->mrTemplate->AddVar('content', 'IDENTITAS_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&ub=dp');
+                $this->mrTemplate->AddVar('content', 'WALI_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=wali&ub=dp');
+                $this->mrTemplate->AddVar('content', 'SAUDARA_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=saudara&ub=dp');
+                $this->mrTemplate->AddVar('content', 'AKTIFT_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=aktifitas&ub=dp');
+                $this->mrTemplate->AddVar('content', 'PREST_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=prestasi&ub=dp');
+                $this->mrTemplate->AddVar('content', 'HISTORY_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=history&ub=dp');
+                $this->mrTemplate->AddVar('content', 'BEASISWA_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=beasiswa&ub=dp');
+            } else {
+                $this->mrTemplate->AddVar('content', 'IDENTITAS_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu']);
+                $this->mrTemplate->AddVar('content', 'WALI_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=wali');
+                $this->mrTemplate->AddVar('content', 'SAUDARA_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=saudara');
+                $this->mrTemplate->AddVar('content', 'AKTIFT_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=aktifitas');
+                $this->mrTemplate->AddVar('content', 'PREST_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=prestasi&ub=dp');
+                $this->mrTemplate->AddVar('content', 'HISTORY_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=history');
+                $this->mrTemplate->AddVar('content', 'BEASISWA_URL_UPDATE', Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'aplikanPendaftaranProses', 'view', 'html') . '&up=' . $dataPendaftar[0]['niu'] . '&tabActive=beasiswa');
+            }
+            // LIST IDENTITAS MAHASISWA END //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        // LIST WALI START -------------------------------------------------------------------------------------------------------------
+        if (empty($dataWali)) {
+            $this->mrTemplate->AddVar('dataWali', 'DATA_EMPTY', 'YES');
+            // return NULL;
+        } else {
+            $this->mrTemplate->AddVar('dataWali', 'DATA_EMPTY', 'NO');
+            for ($a = 0; $a < count($dataWali); $a++) {
+                $dataWali[$a]['class_name'] = ($a % 2 == 0) ? '' : 'table-common-even';
+
+                $dataWali[$a]['hasilgaji'] = number_format($dataWali[$a]['hasil'], 0, ",", ".");
+                $dataWali[$a]['tgl_lahir'] = $this->date2string($dataWali[$a]['tgl_lahir']);
+
+                // $ket_kerja					= $dataWali[$a]['ket_kerja'];
+                // $expKerja					= explode("|",$ket_kerja);
+                // $ket_a						= $expKerja[0];
+                // $ket_b						= $expKerja[1];
+                // if($ket_kerja != ''){
+                // if($ket_b == '')		$dataWali[$a]['ket_kerja']	= '<br/> - Jenis Usaha/Pekerjaan : '.$ket_a.'';
+                // else					$dataWali[$a]['ket_kerja']	= '<br/> - Nama Kantor/Perusahaan : '.$ket_a.'<br/> - Pangkat/Jabatan : '.$ket_b;
+                // } else {
+                // $dataWali[$a]['ket_kerja']	= '';
+                // }
+
+                $tglMng = $dataWali[$a]['tglMng'];
+                if ($tglMng == '0000-00-00')
+                    $dataWali[$a]['tgl_mng'] = '';
+                else if ($tglMng == NULL)
+                    $dataWali[$a]['tgl_mng'] = '';
+                else
+                    $dataWali[$a]['tgl_mng'] = '<br/>' . $this->date2int($dataWali[$a]['tglMng']);
+
+                $idWali = Dispatcher::Instance()->Encrypt($dataWali[$a]['id']);
+
+                $this->mrTemplate->AddVars('data_item_wali', $dataWali[$a], 'WALI_');
+                $this->mrTemplate->parseTemplate('data_item_wali', 'a');
+            }
+        }
+        // LIST WALI END ---------------------------------------------------------------------------------------------------------------
+        // LIST SAUDARA START -------------------------------------------------------------------------------------------------------------
+        if (empty($dataSaudara)) {
+            $this->mrTemplate->AddVar('dataSaudara', 'DATA_EMPTY', 'YES');
+            // return NULL;
+        } else {
+            $this->mrTemplate->AddVar('dataSaudara', 'DATA_EMPTY', 'NO');
+            for ($b = 0; $b < count($dataSaudara); $b++) {
+                $dataSaudara[$b]['class_name'] = ($b % 2 == 0) ? '' : 'table-common-even';
+
+                $dataSaudara[$b]['tgl_lahir'] = $this->date2string($dataSaudara[$b]['tgl_lahir']);
+
+                // $ket_kerjaWali				= $dataSaudara[$b]['ket_kerja'];
+                // $expKerjaWali				= explode("|",$ket_kerjaWali);
+                // $ket_c						= $expKerjaWali[0];
+                // $ket_d						= $expKerjaWali[1];
+                // if($ket_kerjaWali != ''){
+                // if($ket_d == '')		$dataSaudara[$b]['ket_kerja']	= '<br/> - '.$ket_c.'';
+                // else					$dataSaudara[$b]['ket_kerja']	= '<br/> - '.$ket_c.'<br/> - '.$ket_d;
+                // } else {
+                // $dataSaudara[$b]['ket_kerja']	= '';
+                // }
+
+                $idSdr = Dispatcher::Instance()->Encrypt($dataSaudara[$b]['id']);
+                $dataSaudara[$b]['LABEL'] = 'Saudara';
+
+                $this->mrTemplate->AddVars('data_item_saudara', $dataSaudara[$b], 'SDR_');
+                $this->mrTemplate->parseTemplate('data_item_saudara', 'a');
+            }
+        }
+        // LIST SAUDARA END 	-------------------------------------------------------------------------------------------------------------
+        // echo "<pre>";
+        // print_r($dataPrestasi);
+        // exit;
+        // LIST AKTIFITAS START -------------------------------------------------------------------------------------------------------------
+        if (empty($dataAktifitas)) {
+            $this->mrTemplate->AddVar('dataAktift', 'DATA_EMPTY', 'YES');
+            // return NULL;
+        } else {
+            $this->mrTemplate->AddVar('dataAktift', 'DATA_EMPTY', 'NO');
+            for ($ak = 0; $ak < count($dataAktifitas); $ak++) {
+                $dataAktifitas[$ak]['class_name'] = ($ak % 2 == 0) ? '' : 'table-common-even';
+
+                $idAktift = Dispatcher::Instance()->Encrypt($dataAktifitas[$ak]['id']);
+                $dataAktifitas[$ak]['LABEL'] = 'Akfitas';
+
+                $this->mrTemplate->AddVars('data_item_aktift', $dataAktifitas[$ak], 'AKTIFT_');
+                $this->mrTemplate->parseTemplate('data_item_aktift', 'a');
+            }
+        }
+        // LIST AKTIFITAS END 	-------------------------------------------------------------------------------------------------------------
+        // LIST PRESTASI START 	-------------------------------------------------------------------------------------------------------------
+        if (empty($dataPrestasi)) {
+            $this->mrTemplate->AddVar('dataPrest', 'DATA_EMPTY', 'YES');
+            // return NULL;
+        } else {
+            $this->mrTemplate->AddVar('dataPrest', 'DATA_EMPTY', 'NO');
+            for ($pr = 0; $pr < count($dataPrestasi); $pr++) {
+                $dataPrestasi[$pr]['class_name'] = ($pr % 2 == 0) ? '' : 'table-common-even';
+
+                $idAktift = Dispatcher::Instance()->Encrypt($dataPrestasi[$pr]['id']);
+                $dataPrestasi[$pr]['LABEL'] = 'Prestasi';
+
+                $this->mrTemplate->AddVars('data_item_prest', $dataPrestasi[$pr], 'PREST_');
+                $this->mrTemplate->parseTemplate('data_item_prest', 'a');
+            }
+        }
+        // LIST PRESTASI END 	-------------------------------------------------------------------------------------------------------------
+        // LIST HISTORY START 	-------------------------------------------------------------------------------------------------------------
+        if (empty($dataHistory)) {
+            $this->mrTemplate->AddVar('dataHistory', 'DATA_EMPTY', 'YES');
+            // return NULL;
+        } else {
+            $this->mrTemplate->AddVar('dataHistory', 'DATA_EMPTY', 'NO');
+            for ($c = 0; $c < count($dataHistory); $c++) {
+                $dataHistory[$c]['class_name'] = ($c % 2 == 0) ? '' : 'table-common-even';
+
+                $idHist = Dispatcher::Instance()->Encrypt($dataHistory[$c]['idFix']);
+                $dataHistory[$c]['LABEL'] = 'History Akademik';
+
+                $this->mrTemplate->AddVars('data_item_history', $dataHistory[$c], 'HIST_');
+                $this->mrTemplate->parseTemplate('data_item_history', 'a');
+            }
+        }
+        // LIST HISTORY END 	-------------------------------------------------------------------------------------------------------------
+        // LIST BEASISWA START 	-------------------------------------------------------------------------------------------------------------
+        if (empty($dataBeasiswa)) {
+            $this->mrTemplate->AddVar('dataBeasiswa', 'DATA_EMPTY', 'YES');
+            // return NULL;
+        } else {
+            $this->mrTemplate->AddVar('dataBeasiswa', 'DATA_EMPTY', 'NO');
+            for ($d = 0; $d < count($dataBeasiswa); $d++) {
+                $dataBeasiswa[$d]['class_name'] = ($d % 2 == 0) ? '' : 'table-common-even';
+                $dataBeasiswa[$d]['number'] = $d + 1;
+
+                $idBea = Dispatcher::Instance()->Encrypt($dataBeasiswa[$d]['id']);
+                $dataBeasiswa[$d]['per_awal'] = $this->date2int($dataBeasiswa[$d]['perAwal']);
+                $dataBeasiswa[$d]['per_akhir'] = $this->date2int($dataBeasiswa[$d]['perAkhir']);
+                $dataBeasiswa[$d]['tgldft'] = $this->date2int($dataBeasiswa[$d]['tglDaftar']);
+
+                $dataBeasiswa[$d]['param'] = $dataBeasiswa[$d]['idBea'] . '-' . $this->niuPost;
+
+                $dataBeasiswa[$d]['url_detail_beasiswa_daftar'] = Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'popupDetailBeasiswaDaftar', 'view', 'html') . '&bea=' . $dataBeasiswa[$d]['idBea'] . '-' . $this->niuPost;
+
+                $dataBeasiswa[$d]['url_delete'] = Dispatcher::Instance()->GetUrl('aplikan_pendaftaran', 'DeleteItemDataAplikanPendaftaran', 'do', 'html') . '&idBeadel=' . $dataBeasiswa[$d]['idBea'] . '-' . $this->niuPost;
+
+                $this->mrTemplate->AddVars('data_item_beasiswa', $dataBeasiswa[$d], 'BEA_');
+                $this->mrTemplate->parseTemplate('data_item_beasiswa', 'a');
+            }
+        }
+    }
+
+    function date2int($date) {
+        $bln = array(
+            1 => '01',
+            2 => '02',
+            3 => '03',
+            4 => '04',
+            5 => '05',
+            6 => '06',
+            7 => '07',
+            8 => '08',
+            9 => '09',
+            10 => '10',
+            11 => '11',
+            12 => '12'
+        );
+        $arrtgl = explode('-', $date);
+        return $arrtgl[2] . '/' . $bln[(int) $arrtgl[1]] . '/' . $arrtgl[0];
+    }
+
+    function date2string($date) {
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrtgl = explode('-', $date);
+        return $arrtgl[2] . '&nbsp;' . $bln[(int) $arrtgl[1]] . '&nbsp;' . $arrtgl[0];
+    }
+
+}
+
+?>

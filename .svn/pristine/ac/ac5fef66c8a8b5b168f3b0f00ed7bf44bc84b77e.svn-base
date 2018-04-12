@@ -1,0 +1,197 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessApplicantData
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjApplicantData = GtfwDispt()->load->business('ApplicantData');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        $Val->set_rules('kmhspdrnim', GtfwLangText('kmhsPdrNim'), 'required');
+        $Val->set_rules('kmhspdrniu', GtfwLangText('kmhsPdrNiu'), 'required');
+        $Val->set_rules('kmhspdrangk', GtfwLangText('kmhsPdrAngk'), 'required');
+        $Val->set_rules('kmhspdrnif', GtfwLangText('kmhsPdrNif'), 'required');
+        $Val->set_rules('kmhspdrfakid', GtfwLangText('kmhsPdrFakId'), 'required');
+        $Val->set_rules('kmhspdrprodiid', GtfwLangText('kmhsPdrProdiId'), 'required');
+        $Val->set_rules('kmhspdrjurid', GtfwLangText('kmhsPdrJurId'), 'required');
+        $Val->set_rules('kmhspdrjenpdkid', GtfwLangText('kmhsPdrJenPdkId'), 'required');
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjApplicantData->StartTrans();
+                $params = array(
+                    $post['kmhspdrnim'],
+                    $post['kmhspdrniu'],
+                    $post['kmhspdrangk'],
+                    $post['kmhspdrnif'],
+                    $post['kmhspdrfakid'],
+                    $post['kmhspdrprodiid'],
+                    $post['kmhspdrjurid'],
+                    $post['kmhspdrjenpdkid'],
+                    $post['kmhspdrislulus'],
+                    $post['kmhspdrblnlulus'],
+                    $post['kmhspdrthnlulus'],
+                    $post['kmhspdrnama'],
+                    $post['kmhspdrtmplahir'],
+                    $post['kmhspdrtgllahir'],
+                    $post['kmhspdrjeniskelamin'],
+                    $post['kmhspdralamatasal'],
+                    $post['kmhspdralamatjogja'],
+                    $post['kmhspdrnotelp'],
+                    $post['kmhspdrjmltanggkel'],
+                    $post['kmhspdrkettanggkel'],
+                    $post['kmhspdrjmlsaudara'],
+                    $post['kmhspdrbank'],
+                    $post['kmhspdrrekening'],
+                    $post['kmhspdrjalurmasuk'],
+                    $post['kmhspdragama'],
+                    $post['kmhspdrnoktp'],
+                    $post['kmhspdrstattpttgl'],
+                    $post['kmhspdrrmhsaudara'],
+                    $post['kmhspdrbiayakuliah'],
+                    $post['kmhspdrbiayasaudara'],
+                    $post['kmhspdraktifitas'],
+                    $post['kmhspdrtptkerja'],
+                    $post['kmhspdrgajikerja'],
+                    $post['kmhspdrjamkerja'],
+                    $post['kmhspdrukt'],
+                    $post['kmhspdrshowdaftar'],
+                    $post['kmhspdrlastupdate'],
+                    $post['kmhsunitid'],
+                    $post['kmhspdrtidakmampufile'],
+                    $post['kmhspdrtidakbeasiswalainfile'],
+                    $post['kmhspdrfotofile'],
+                    $post['kmhspdrkartukeluargafile'],
+                    $post['kmhspdrrekomendasifakultasfile'],
+                    $post['kmhspdrjumlahsaudara'],
+                    $post['kmhspdrjumlahsaudaraditanggung'],
+                    $post['kmhspdrjumlahsaudarabekerja'],
+                    $post['kmhspdremail'],
+                    $post['kmhspdrsumberinformasibeasiswa'],
+                    $post['kmhspdrsatkerid'],
+                    $post['kmhspdrtanggal'],
+                    $this->user
+                );
+                $result = $result && $this->ObjApplicantData->insertApplicantData($params);
+                $this->ObjApplicantData->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjApplicantData->StartTrans();
+                $params = array(
+                    $post['kmhspdrnim'],
+                    $post['kmhspdrniu'],
+                    $post['kmhspdrangk'],
+                    $post['kmhspdrnif'],
+                    $post['kmhspdrfakid'],
+                    $post['kmhspdrprodiid'],
+                    $post['kmhspdrjurid'],
+                    $post['kmhspdrjenpdkid'],
+                    $post['kmhspdrislulus'],
+                    $post['kmhspdrblnlulus'],
+                    $post['kmhspdrthnlulus'],
+                    $post['kmhspdrnama'],
+                    $post['kmhspdrtmplahir'],
+                    $post['kmhspdrtgllahir'],
+                    $post['kmhspdrjeniskelamin'],
+                    $post['kmhspdralamatasal'],
+                    $post['kmhspdralamatjogja'],
+                    $post['kmhspdrnotelp'],
+                    $post['kmhspdrjmltanggkel'],
+                    $post['kmhspdrkettanggkel'],
+                    $post['kmhspdrjmlsaudara'],
+                    $post['kmhspdrbank'],
+                    $post['kmhspdrrekening'],
+                    $post['kmhspdrjalurmasuk'],
+                    $post['kmhspdragama'],
+                    $post['kmhspdrnoktp'],
+                    $post['kmhspdrstattpttgl'],
+                    $post['kmhspdrrmhsaudara'],
+                    $post['kmhspdrbiayakuliah'],
+                    $post['kmhspdrbiayasaudara'],
+                    $post['kmhspdraktifitas'],
+                    $post['kmhspdrtptkerja'],
+                    $post['kmhspdrgajikerja'],
+                    $post['kmhspdrjamkerja'],
+                    $post['kmhspdrukt'],
+                    $post['kmhspdrshowdaftar'],
+                    $post['kmhspdrlastupdate'],
+                    $post['kmhsunitid'],
+                    $post['kmhspdrtidakmampufile'],
+                    $post['kmhspdrtidakbeasiswalainfile'],
+                    $post['kmhspdrfotofile'],
+                    $post['kmhspdrkartukeluargafile'],
+                    $post['kmhspdrrekomendasifakultasfile'],
+                    $post['kmhspdrjumlahsaudara'],
+                    $post['kmhspdrjumlahsaudaraditanggung'],
+                    $post['kmhspdrjumlahsaudarabekerja'],
+                    $post['kmhspdremail'],
+                    $post['kmhspdrsumberinformasibeasiswa'],
+                    $post['kmhspdrsatkerid'],
+                    $post['kmhspdrtanggal'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjApplicantData->updateApplicantData($params);
+                $this->ObjApplicantData->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('applicant.data', 'ApplicantData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.data', 'applicantdata', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('applicant.data', 'inputApplicantData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.data', (empty($post['id'])?'add':'update').'ApplicantData', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjApplicantData->deleteApplicantData($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.data', 'ApplicantData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

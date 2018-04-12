@@ -1,0 +1,137 @@
+/*
+ * Untuk mengatur lebar datepicker
+*/
+
+.hasDatepicker {
+    width:100px !important;
+    float: left;
+}
+
+/*
+ * Untuk mengatur lebar combobox yang terlalu lebar
+*/
+select {
+    width:auto;
+    margin-bottom: 0px;
+}
+
+
+.td_date {
+    width: 110px !important;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+
+.input_jumlah {
+    width:70px !important;
+}
+.input_mlarge {
+    width:100px !important;
+}
+.input_large {
+    width:250px !important;
+}
+.input_xlarge {
+    width:345px !important;
+}
+.price_goods {
+    /*width:120px !important;*/
+}
+.discount_goods {
+    width:85px !important;
+}
+.discount {
+    width:120px !important;
+}
+.batchcode_input {
+    width:120px !important;
+}
+.full_name {
+    width:300px !important;
+}
+.hide_price{
+    display:none;
+}
+
+.with_date_range {
+    width: 200px !important;
+}
+
+.urgent{
+    background-color : #FF9696 !important;
+}
+.deal{
+    background-color : #DFF0D8 !important;
+}
+.fail{
+    background-color : #FFD1D2 !important;
+}
+.on_hold{
+    background-color : #FFFFBD !important;
+}
+.no_style{
+    background-color : #FFFFFF !important;
+}
+.wrong_input{
+    background-color : yellow !important;
+}
+
+.input_short {
+    width: 50px !important;
+}
+
+.td_title {
+    background-color: #DCDCDC;
+    color: #434343;
+    font-weight: bold;
+    padding: 5px 5px 5px 5px;
+}
+
+.td_input_multi input{
+    display:block;
+}
+
+#popup_message {
+    padding: 15px 0 0 15px;
+}
+
+.long_input, .span5 {
+    width: 350px !important;
+}
+
+.middle_input {
+    width: 200px !important;
+}
+
+.very_small_input {
+    width: 50px !important;
+}
+
+.medium_small_input {
+    width: 85px !important;
+}
+
+.small_input {
+    width: 100px !important;
+}
+
+.super_small_input {
+    width: 30px !important;
+}
+
+.baik, .rusak, .hilang {
+    text-align: center;
+}
+
+.text-top {
+    vertical-align: top;
+}
+
+.no_margin {
+    margin: 0px !important;
+}
+
+.no_padding {
+    padding: 0px !important;
+}
+

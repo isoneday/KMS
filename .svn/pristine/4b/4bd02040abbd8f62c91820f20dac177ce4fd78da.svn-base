@@ -1,0 +1,504 @@
+<?php
+
+$sql["get_aplikan_id"] = "
+SELECT 
+    aplikan_id as aplikan_id
+FROM aplikan_user a
+WHERE user_id = %d
+";
+
+$sql["count_applicantinterview"] = "
+SELECT 
+    COUNT(kmhsAsramaId) AS total
+FROM kemahasiswaan_asrama
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_applicantinterview"] = "
+SELECT 
+    a.kmhsAsramaId AS `kmhsAsramaId`,
+    a.kmhsAsramaNama AS `kmhsAsramaNama`,
+    a.kmhsAsramaAlamat AS `kmhsAsramaAlamat`,
+    a.kmhsAsramaTelp AS `kmhsAsramaTelp`,
+    a.kmhsAsramaKonPerson AS `kmhsAsramaKonPerson`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM kemahasiswaan_asrama a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_applicantinterview"] = "
+SELECT 
+    a.*,
+    b.*
+	
+FROM 
+	aplikan_beasiswa a
+LEFT JOIN 
+	aplikan_register b ON b.`aplikan_id` = a.`aplikanbeasiswa_aplikan_id`
+WHERE 
+	a.`aplikanbeasiswa_id` = %d
+";
+$sql["insertPembayaran"] = "
+INSERT INTO beasiswa_pembayaran
+(
+    pembayaran_aplikanid,
+	pembayaran_userid,
+	pembayaran_bankpengirim,
+	pembayaran_nobankpengirim,
+	pembayaran_bankpenerima,
+	pembayaran_nobankpenerima,
+	pembayaran_semester,
+	pembayaran_tanggal,
+	pembayaran_keterangan,
+	pembayaran_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+	%s,
+	%s,
+	%s,
+	%s,
+    NOW()
+)
+";
+$sql["update_applicantinterview"] = "
+UPDATE kemahasiswaan_asrama
+SET 
+    kmhsAsramaId = %s,
+    kmhsAsramaNama = %s,
+    kmhsAsramaAlamat = %s,
+    kmhsAsramaTelp = %s,
+    kmhsAsramaKonPerson = %s
+WHERE kmhsAsramaId_id = %d
+";
+
+$sql["update_applicantinterviewLolos"] = "
+UPDATE aplikan_beasiswa
+SET 
+    aplikanbeasiswa_statuspendaftaran_id = '4'
+WHERE aplikanbeasiswa_aplikan_id = %d
+";
+
+$sql["update_applicantinterviewTidakLolos"] = "
+UPDATE aplikan_beasiswa
+SET 
+    aplikanbeasiswa_statuspendaftaran_id = '5'
+WHERE aplikanbeasiswa_aplikan_id = %d
+";
+
+$sql["delete_applicantinterview"] = "
+DELETE FROM kemahasiswaan_asrama
+WHERE kmhsAsramaId_id = %d
+";
+$sql["list_applicantinterview"] = "
+SELECT
+    kmhsAsramaId_id AS `id`,
+    kmhsAsramaId_name AS `name`
+FROM
+    kemahasiswaan_asrama
+ORDER BY kmhsAsramaId_name
+";
+$sql["listUniversitas"] = "
+SELECT 
+	universitas_name as nama_universitas,
+	universitas_id as id_universitas
+FROM
+	ref_universitas
+ORDER BY
+	universitas_name asc 
+";
+$sql["listBeasiswa"] = "
+SELECT 
+	beasiswa.*,
+	ref_jenis_beasiswa.jenisbeasiswa_name
+FROM
+	beasiswa
+LEFT JOIN
+	ref_jenis_beasiswa ON ref_jenis_beasiswa.jenisbeasiswa_id=beasiswa.beasiswa_jenisbeasiswa_id
+ORDER BY
+	beasiswa.beasiswa_name asc 
+";
+$sql["list_kategoriwawancara"] = "
+SELECT 
+	*
+FROM
+	ref_kategori_wawancara
+";
+$sql["list_aplikanbeasiswa"] = "
+SELECT 
+	*
+FROM
+	aplikan_beasiswa
+WHERE
+    aplikanbeasiswa_statuspendaftaran_id = '9'
+    --search--
+	--limit--  
+";
+$sql["count_aplikanbeasiswa"] = "
+SELECT 
+    COUNT(aplikanbeasiswa) AS total
+FROM aplikan_beasiswa
+WHERE
+    aplikanbeasiswa_statuspendaftaran_id = '9'
+    --search--
+";
+$sql["getbeasiswa"] = "
+SELECT 
+    beasiswa.*,
+	ref_jenis_beasiswa.jenisbeasiswa_name
+FROM 
+	beasiswa 
+LEFT JOIN
+	ref_jenis_beasiswa on ref_jenis_beasiswa.jenisbeasiswa_id = beasiswa.beasiswa_id
+WHERE 
+	beasiswa_id = %d
+";
+$sql["get_jumlahpelamar"] = "
+SELECT 
+    count(aplikanbeasiswa_id) as jml
+FROM 
+	aplikan_beasiswa
+WHERE 
+	aplikanbeasiswa_statuspendaftaran_id = '3'
+AND	
+	aplikanbeasiswa_beasiswa_id = %d
+";
+
+
+$sql["listKategori"] = "
+SELECT 
+	*
+FROM 
+	ref_kategori_wawancara 
+";
+
+$sql["listaspek"] = "
+SELECT 
+	*
+FROM 
+	ref_aspek_wawancara 
+WHERE
+	kategoriwawancara_id = %d	
+";
+
+$sql["list_universitas"] = "
+SELECT 
+	universitas_id, 
+	universitas_name 
+FROM 
+	aplikan_beasiswa a
+LEFT JOIN 
+	aplikan_register b ON a.`aplikanbeasiswa_aplikan_id`=b.`aplikan_id`
+LEFT JOIN 
+	ref_universitas c ON c.`universitas_id`=b.`aplikan_univ_id`
+WHERE 
+	a.`aplikanbeasiswa_beasiswa_id`=%d
+GROUP BY 
+	c.`universitas_id`
+";
+
+$sql["listPencairan"] = "
+SELECT 
+	aplikan_register.*,
+	aplikan_beasiswa.aplikanbeasiswa_beasiswa_id,
+	ref_status_pendaftaran.`statuspendaftaran_name`	
+FROM 
+	aplikan_register 
+LEFT JOIN
+	aplikan_beasiswa
+ON 
+	aplikan_beasiswa.aplikanbeasiswa_aplikan_id	= aplikan_register.aplikan_id
+LEFT JOIN
+	ref_status_pendaftaran
+ON
+	aplikan_beasiswa.`aplikanbeasiswa_statuspendaftaran_id` = ref_status_pendaftaran.`statuspendaftaran_id`
+WHERE 
+	 aplikan_register.`aplikan_univ_id`=%d
+AND
+	aplikan_beasiswa.aplikanbeasiswa_statuspendaftaran_id='9' OR
+	aplikan_beasiswa.aplikanbeasiswa_statuspendaftaran_id='10'
+	 ";
+	 
+$sql["listPencairanapplicant"] = "
+SELECT
+	a.pembayaran_aplikanid AS aplikanid,
+	a.pembayaran_userid AS userid,
+	b.user_real_name AS realname,
+	a.pembayaran_bankpengirim AS bankpengirim,
+	a.pembayaran_nobankpengirim AS nobankpengirim,
+	a.pembayaran_bankpenerima AS bankpenerima,
+	a.pembayaran_nobankpenerima AS nobankpenerima,
+	a.pembayaran_semester AS semester,
+	a.pembayaran_tanggal AS tanggal
+FROM
+	beasiswa_pembayaran a
+LEFT JOIN
+	gtfw_user b
+ON
+	b.user_id = a.pembayaran_userid
+WHERE 
+	 a.pembayaran_aplikanid = %d
+";
+
+$sql["cekStatus"] = "
+SELECT
+	aplikanbeasiswa_statuspendaftaran_id
+FROM
+	aplikan_beasiswa
+WHERE 
+	 aplikanbeasiswa_aplikan_id = %d
+";
+
+$sql["listGroup"] = "
+SELECT 
+	usergroup_group_id	
+FROM 
+	gtfw_user_group
+WHERE 
+	 usergroup_user_id=%d
+";
+	 
+$sql["getDetailAplikan"] = "
+SELECT 
+	*
+FROM 
+	aplikan_register 
+WHERE 
+	 `aplikan_id`=%d";
+	 
+$sql["update_statuswawancara"] = "
+UPDATE
+	aplikan_beasiswa 
+SET
+	aplikanbeasiswa_statuspendaftaran_id='8'	
+WHERE 
+	 aplikanbeasiswa_aplikan_id = '%s'
+";
+
+$sql["update_status"] = "
+UPDATE
+	aplikan_beasiswa 
+SET
+	aplikanbeasiswa_statuspendaftaran_id='10'	
+WHERE 
+	 aplikanbeasiswa_aplikan_id = '%s'
+";
+
+$sql["update_statusReject"] = "
+UPDATE
+	aplikan_beasiswa 
+SET
+	aplikanbeasiswa_statuspendaftaran_id='11'	
+WHERE 
+	 aplikanbeasiswa_aplikan_id = '%s'
+";
+
+$sql["getDetailAllAplikan"] = "
+SELECT
+	a.`aplikanwawancara_beasiswa_id`,
+	b.`beasiswa_name`,
+	a.`aplikanwawancara_aplikan_id`,
+	a.`aspekwawancara_id`,
+	c.`aspekwawancara_desc`,
+	a.`aspekwawancara_nilai`,
+	a.`insert_user_id`,
+	d.`user_real_name`,
+	a.`insert_timestamp`
+FROM aplikan_wawancara a
+LEFT JOIN
+	beasiswa b
+ON
+	b.`beasiswa_id` = a.`aplikanwawancara_beasiswa_id`
+LEFT JOIN
+	ref_aspek_wawancara c
+ON
+	c.`aspekwawancara_id` = a.`aspekwawancara_id`
+LEFT JOIN
+	gtfw_user d
+ON
+	d.`user_id` = a.`insert_user_id`
+WHERE
+	a.`aplikanwawancara_aplikan_id` = '%s'
+AND
+	a.`aplikanwawancara_beasiswa_id` = '%s'
+
+";
+
+$sql["getDetailWawancara"] = "
+SELECT
+	aspekwawancara_id,
+	aspekwawancara_desc
+FROM
+	ref_aspek_wawancara
+ORDER BY aspekwawancara_id ASC
+";
+
+$sql["getDataPemeriksa"] = "
+SELECT DISTINCT
+	a.`insert_user_id`,
+	b.`user_real_name`,
+	a.`insert_timestamp`
+FROM aplikan_wawancara a
+LEFT JOIN
+	gtfw_user b
+ON
+	b.`user_id` = a.`insert_user_id`
+WHERE
+	a.`aplikanwawancara_aplikan_id` = '%d'
+AND
+	a.`aplikanwawancara_beasiswa_id` = '%d'
+";
+
+$sql["getDataNilai"] = "
+SELECT
+	a.`aspekwawancara_id`,
+	c.`aspekwawancara_desc`,
+	a.`aspekwawancara_nilai`,
+	a.`insert_user_id`
+FROM aplikan_wawancara a
+LEFT JOIN
+	ref_aspek_wawancara c
+ON
+	c.`aspekwawancara_id` = a.`aspekwawancara_id`
+WHERE
+	a.`aplikanwawancara_aplikan_id` = '%s'
+AND
+	a.`aplikanwawancara_beasiswa_id` = '%s'
+AND
+	a.`insert_user_id` = '%s'
+";
+
+$sql["getDataALL"] = "
+SELECT
+	a.aspekwawancara_id as id_wawancara, 
+	a.aspekwawancara_desc as deskripsi_wawancara,
+
+(SELECT b.aspekwawancara_nilai FROM aplikan_wawancara b
+WHERE  a.`aspekwawancara_id` = b.aspekwawancara_id AND b.insert_user_id = '%s' 
+	AND b.`aplikanwawancara_aplikan_id` = '%s') AS nilai1, 
+
+(SELECT c.user_real_name FROM aplikan_wawancara b
+LEFT JOIN gtfw_user c ON c.user_id = b.insert_user_id
+WHERE  a.`aspekwawancara_id` = b.aspekwawancara_id AND b.insert_user_id = '%s' 
+	AND b.`aplikanwawancara_aplikan_id` = '%s') AS interview1, 
+
+(SELECT b.aspekwawancara_nilai FROM aplikan_wawancara b
+WHERE  a.`aspekwawancara_id` = b.aspekwawancara_id AND b.insert_user_id = '%s' 
+	AND b.`aplikanwawancara_aplikan_id` = '%s') AS nilai2, 
+
+(SELECT c.user_real_name FROM aplikan_wawancara b
+LEFT JOIN gtfw_user c ON c.user_id = b.insert_user_id
+WHERE  a.`aspekwawancara_id` = b.aspekwawancara_id AND b.insert_user_id = '%s' 
+	AND b.`aplikanwawancara_aplikan_id` = '%s') AS interview2, 
+
+(SELECT b.aspekwawancara_nilai FROM aplikan_wawancara b
+WHERE  a.`aspekwawancara_id` = b.aspekwawancara_id AND b.insert_user_id = '%s' 
+	AND b.`aplikanwawancara_aplikan_id` = '%s') AS nilai3, 
+
+(SELECT c.user_real_name FROM aplikan_wawancara b
+LEFT JOIN gtfw_user c ON c.user_id = b.insert_user_id
+WHERE  a.`aspekwawancara_id` = b.aspekwawancara_id AND b.insert_user_id = '%s' 
+	AND b.`aplikanwawancara_aplikan_id` = '%s') AS interview3 
+FROM
+	ref_aspek_wawancara a
+ORDER BY aspekwawancara_id ASC
+";
+$sql['get_foto']="
+SELECT
+    a.aplikandokumen_file as file,
+    a.aplikandokumen_file_path as path
+FROM aplikan_dokumen a
+LEFT JOIN 
+    aplikan_register b ON a.aplikandokumen_aplikan_id = b.aplikan_id
+WHERE
+    b.`aplikan_nim` = '%s' AND
+    a.aplikandokumen_beasiswadokumen_id = '289'
+";
+$sql['get_pendaftar_by_nim']="
+SELECT 
+    a.aplikan_id AS `id`,
+    a.aplikan_nim AS `nim`,
+    a.aplikan_angkatan AS `angkatan`,
+    a.aplikan_univ_id AS `univ_id`,
+    d.universitas_name,
+    a.aplikan_fakultas_id AS `fakultas_id`,
+    e.fakultas_name,
+    a.aplikan_prodi_id AS `prodi_id`,
+    g.prodi_name,
+    a.aplikan_jurusan_id AS `jurusan_id`,
+    f.jurusan_name,
+    a.aplikan_jenjangpendidikan_id AS `jenjangpendidikan_id`,
+    l.jenjangpendidikan_name,
+    l.jenjangpendidikan_kode,
+    a.aplikan_nama AS `nama`,
+    a.aplikan_email AS `email`,
+    a.aplikan_jenis_kelamin AS `jenis_kelamin`,
+    a.aplikan_tempat_lahir AS `tempat_lahir`,
+    a.aplikan_tanggal_lahir AS `tanggal_lahir`,
+    a.aplikan_agama_id AS `agama_id`,
+    h.agama_name,
+    a.aplikan_no_ktp AS `no_ktp`,
+    a.aplikan_telepon AS `telepon`,
+    a.aplikan_alamat AS `alamat`,
+    a.aplikan_tempattinggal_id AS `tempattinggal_id`,
+    i.tempattinggal_name,
+    a.aplikan_pembiayaankuliah_id AS `pembiayaankuliah_id`,
+    j.pembiayaankuliah_name,
+    a.aplikan_sumber_info_id AS `sumber_info_id`,
+    k.sumberinfo_name,
+    o.`biaya_hidup` AS hidup,
+    o.`biaya_perkuliahan` AS perkuliahan,
+    DATE(a.aplikan_tanggal_registrasi) AS `tanggal_registrasi`,
+    a.insert_timestamp
+FROM aplikan_register a
+LEFT JOIN aplikan_user c ON c.`aplikan_id` = a.`aplikan_id`
+LEFT JOIN ref_universitas d ON d.`universitas_id` = a.`aplikan_univ_id`
+LEFT JOIN ref_fakultas e ON e.`fakultas_id` = a.`aplikan_fakultas_id`
+LEFT JOIN ref_jurusan f ON f.`jurusan_id` = a.`aplikan_jurusan_id`
+LEFT JOIN ref_program_studi g ON g.`prodi_id` = a.`aplikan_prodi_id`
+LEFT JOIN ref_agama h ON h.`agama_id` = a.`aplikan_agama_id`
+LEFT JOIN ref_jenjang_pendidikan l ON l.`jenjangpendidikan_id` = a.`aplikan_jenjangpendidikan_id`
+LEFT JOIN ref_tempat_tinggal i ON i.`tempattinggal_id` = a.`aplikan_tempattinggal_id`
+LEFT JOIN ref_pembiayaan_kuliah j ON j.`pembiayaankuliah_id` = a.`aplikan_pembiayaankuliah_id`
+LEFT JOIN ref_sumber_info_beasiswa k ON k.`sumberinfo_id` = a.`aplikan_sumber_info_id`
+LEFT JOIN aplikan_beasiswa m ON m.`aplikanbeasiswa_aplikan_id` = a.`aplikan_id`
+LEFT JOIN beasiswa n ON n.`beasiswa_id` = m.`aplikanbeasiswa_beasiswa_id`
+LEFT JOIN ref_biaya o ON o.`biaya_beasiswaid` = n.`beasiswa_id`
+WHERE 
+    aplikan_nim = '%s'
+";
+
+/*---KRS---*/
+$sql["get_detail_krs"] = "
+SELECT 
+	a.aplikannilai_id AS id,
+	a.aplikannilai_aplikanid AS aplikanid,
+	c.`user_real_name`,
+	a.aplikannilai_file AS `file`,
+	a.aplikannilai_file_origin AS file_origin,
+	a.aplikannilai_file_path AS file_path,
+	a.aplikannilai_file_type AS file_type,
+	a.aplikannilai_file_size AS file_size,
+	a.aplikannilai_jenisdokumen AS jenisdokumen,
+	a.aplikannilai_semester AS semester,
+	date(a.insert_timestamp) AS `time`
+FROM
+	aplikan_nilai a
+LEFT JOIN
+	aplikan_user b
+ON
+	b.`aplikan_id` = a.`aplikannilai_aplikanid`
+LEFT JOIN
+	gtfw_user c
+ON
+	b.`user_id` = c.`user_id`
+WHERE a.aplikannilai_aplikanid = %d
+AND a.aplikannilai_jenisdokumen = 'krs'
+";

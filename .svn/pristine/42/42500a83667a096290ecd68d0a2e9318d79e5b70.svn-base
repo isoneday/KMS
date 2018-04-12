@@ -1,0 +1,29 @@
+<!-- patTemplate:tmpl name="content" -->
+<div class="dataquest">
+    <!-- patTemplate:tmpl name="detail" -->
+    <table>
+        
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+            <td>{APLIKAN_NAMA}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+            <td>{APLIKAN_NIM}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="university" / --></th>
+            <td>{UNIVERSITAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="fakultas" / --></th>
+            <td>{FAKULTAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="prodi" / --></th>
+            <td>{PRODI_NAME}</td>
+        </tr>
+    </table>
+    <!-- /patTemplate:tmpl -->
+</div>
+<!-- /patTemplate:tmpl -->

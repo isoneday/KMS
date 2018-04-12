@@ -1,0 +1,29 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+require_once Configuration::Instance()->GetValue( 'application', 'docroot') . 'main/lib/smartRead/smartReadFile.class.php';
+
+class ViewLampiran extends HtmlResponse
+{
+   	function TemplateModule()
+   	{
+   	}
+   
+   	function ProcessRequest()
+   	{	
+        // echo "<pre>";var_dump($_GET['file']->SqlString()->Raw());echo "</pre>";
+        $docroot = Configuration::Instance()->GetValue( 'application', 'docroot');
+        $file = $_GET['file']->SqlString()->Raw();
+        $filename = $_GET['download']->SqlString()->Raw();
+        $downloadfile = SmartReadFile::Instance()->readFile($docroot.$file, $filename);
+        echo $docroot.$file;
+        exit;
+   	}
+   
+   	function ParseTemplate($rdata = NULL)
+   	{
+   	}
+}
+?>

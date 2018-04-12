@@ -1,0 +1,63 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+        <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+            <a class="modkmsmanagement btn-add" href="/gtkms/bo/index.php?mod=core.user&sub=user&act=view&typ=html&mmId=7" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="modkmsmanagement" / -->">manage user</a>
+        <!-- /patTemplate:tmpl -->
+    <!-- patTemplate:tmpl name="button_add2" visibility="hidden" -->
+            <a class="modkmsmanagement btn-add" href="/gtkms/bo/index.php?mod=mod.kmsdata&sub=modKmsdata&act=view&typ=html&mmId=70" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="modkmsmanagement" / -->">manage documentation</a>
+        <!-- /patTemplate:tmpl -->
+    <!-- patTemplate:tmpl name="button_add3" visibility="hidden" -->
+            <a class="modkmsmanagement btn-add" href="/gtkms/bo/index.php?mod=mod.kmsproblem&sub=modKmsproblem&act=view&typ=html&mmId=75" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="modkmsmanagement" / -->">manage log problem</a>
+        <!-- /patTemplate:tmpl -->
+    <!-- patTemplate:tmpl name="button_add4" visibility="hidden" -->
+            <a class="modkmsmanagement btn-add" href="/gtkms/bo/index.php?mod=cms.news&sub=cmsNews&act=view&typ=html&mmId=79"<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="modkmsmanagement" / -->">manage news</a>
+        <!-- /patTemplate:tmpl -->
+   
+    </div>
+  
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modkmsmanagement" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modkmsmanagement" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupModKmsmanagement;
+    $('.popup_modkmsmanagement').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupModKmsmanagement = showGtPopup(url, title);
+        return false;
+    });
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,96 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="sumberid" / --></th>
+        <td>
+            <input type="text" name="sumberid" value="{SUMBERID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jenisid" / --></th>
+        <td>
+            <input type="number" name="jenisid" value="{JENISID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+        <td>
+            <input type="text" name="name" value="{NAME}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+        <td>
+            <textarea name="desc" cols="50" rows="2" >{DESC}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="enddate" / --></th>
+        <td>
+            <input type="text" name="enddate" value="{ENDDATE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jumlah_penerima" / --></th>
+        <td>
+            <input type="text" name="jumlah_penerima" value="{JUMLAH_PENERIMA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="minimum_ipk" / --></th>
+        <td>
+            <input type="text" name="minimum_ipk" value="{MINIMUM_IPK}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="maksimal_sks" / --></th>
+        <td>
+            <input type="text" name="maksimal_sks" value="{MAKSIMAL_SKS}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="minimum_penghasilan_ortu" / --></th>
+        <td>
+            <input type="text" name="minimum_penghasilan_ortu" value="{MINIMUM_PENGHASILAN_ORTU}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="minimum_tanggungan_ortu" / --></th>
+        <td>
+            <input type="text" name="minimum_tanggungan_ortu" value="{MINIMUM_TANGGUNGAN_ORTU}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="is_aktif" / --></th>
+        <td>
+            <input type="text" name="is_aktif" value="{IS_AKTIF}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="periode_mulai" / --></th>
+        <td>
+            <input type="text" name="periode_mulai" value="{PERIODE_MULAI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="periode_selesai" / --></th>
+        <td>
+            <input type="text" name="periode_selesai" value="{PERIODE_SELESAI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,64 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+    <tbody>
+        <tr class="subhead">
+            <th colspan="2">
+                <strong><!-- patTemplate:gtfwgetlang key="email_template_data" / --></strong>
+            </th>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="purpose" / --></th>
+            <td>{PURPOSE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+            <td>{SUBJECT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="from" / --></th>
+            <td>{FROM}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="from_name" / --></th>
+            <td>{FROM_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="body" / --></th>
+            <td>
+                <!-- patTemplate:tmpl name="item_body" -->
+                <img src="assets/images/btn/{CODE}.png"><p></p>
+                <pre>{TEXT}</pre><br />
+                <!-- /patTemplate:tmpl -->
+
+            </td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="altbody" / --></th>
+            <td>
+                <!-- patTemplate:tmpl name="item_body_alt" -->
+                <img src="assets/images/btn/{CODE}.png"><p></p>
+                <pre>{ALT_TEXT}</pre><br />
+                <!-- /patTemplate:tmpl -->
+
+            </td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="attachment" / --></th>
+            <td>{ATTACHMENT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="param" / --></th>
+            <td>{PARAM}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="submitted"/ --></th>
+            <td>{LAST_INSERT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="modified"/ --></th>
+            <td>{LAST_UPDATE}</td>
+        </tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

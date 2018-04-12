@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewInputCity extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_input_city.html');
+    }
+
+    function ProcessRequest() {
+        $ObjCity = GtfwDispt()->load->business('City', 'ref.city');
+
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());
+        unset($_SESSION['ref.city']['data_id']);
+        if (!empty($id)) $_SESSION['ref.city']['data_id'] = $id;
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+
+        $msg = Messenger::Instance()->Receive(__file__);
+        $post = isset($msg[0][0]) ? $msg[0][0] : null;
+        $message['content'] = isset($msg[0][1]) ? $msg[0][1] : null;
+        $message['style'] = isset($msg[0][2]) ? $msg[0][2] : null;
+
+        if (!empty($post)) {
+            $input = $post;
+        } elseif (!empty($id)) {
+            $input = $ObjCity->getDetailCity($id);
+        }
+
+        Messenger::Instance()->SendToComponent('ref.country', 'comboCountry', 'view', 'html', 'country_id', array(
+            'dataId' => (!empty($input['country_id']) ? $input['country_id'] : null),
+            'elmId' => 'country',
+            'name' => 'country_id',
+            'first' => 'select',
+            'showAdd' => false), Messenger::CurrentRequest);
+        Messenger::Instance()->SendToComponent('ref.state', 'comboState', 'view', 'html', 'state', array(
+            'dataId' => (!empty($input['state']) ? $input['state'] : null),
+            'elmId' => 'state',
+            'name' => 'state',
+            'first' => 'select',
+            'showAdd' => false,
+            'country_id' => (!empty($input['country_id']) ? $input['country_id'] : null)), Messenger::CurrentRequest);
+
+        $list_category = array(array('id' => 'city', 'name' => GtfwLangText('city')), array('id' => 'district', 'name' => GtfwLangText('district')));
+        Messenger::Instance()->SendToComponent('comp.combobox', 'Combobox', 'view', 'html', 'category', array(
+            'category',
+            $list_category,
+            (!empty($input['category']) ? $input['category'] : ''),
+            'false',
+            ' style=""'), Messenger::CurrentRequest);
+
+        $nav[0]['url'] = GtfwDispt()->GetUrl('ref.city', 'city', 'view', 'html') . '&display';
+        $nav[0]['menu'] = 'City';
+        $title = empty($id) ? GtfwLangText('add') : GtfwLangText('edit');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array(
+            $title,
+            $nav,
+            'breadcrump',
+            '',
+            ''), Messenger::CurrentRequest);
+
+        return compact('input', 'id', 'message', 'elmId');
+    }
+
+    function ParseTemplate($rdata = null) {
+        extract($rdata);
+
+        if ($message) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        $status = 'checked="checked"';
+        $nstatus = '';
+
+        if (isset($input['status']) && $input['status'] != '1') {
+            $status = '';
+            $nstatus = 'checked="checked"';
+        }
+
+        if (!empty($input)) {
+            $this->mrTemplate->addVars('content', $input);
+        }
+
+        $this->mrTemplate->AddVar('content', 'STATUS', $status);
+        $this->mrTemplate->AddVar('content', 'NSTATUS', $nstatus);
+
+        $this->mrTemplate->addVar('content', 'URL_COUNTRY', GtfwDispt()->GetUrl('ref.country', 'comboCountry', 'view', 'html') . '&ascomponent=1');
+        $this->mrTemplate->addVar('content', 'URL_STATE', GtfwDispt()->GetUrl('ref.state', 'comboState', 'view', 'html') . '&ascomponent=1');
+        $this->mrTemplate->addVar('content', 'URL_BACK', GtfwDispt()->GetUrl('ref.city', 'city', 'view', 'html') . '&display');
+        $this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('ref.city', (empty($id) ? 'add' : 'update') . 'City', 'do', 'json') . '&elmId=' . $elmId);
+    }
+
+}
+
+?>

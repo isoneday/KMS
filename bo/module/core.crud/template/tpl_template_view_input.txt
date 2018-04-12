@@ -1,0 +1,19 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+	<div class="content-box-form">
+		<input type="hidden" name="id" value="{ID}" />
+		<table class="table-edit">
+			{INPUT_ROW}
+		</table>
+	</div>
+	<div class="form-footer" style="padding:14px 230px 15px!important">  
+            <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="1"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="2"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+            <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="3"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>         
+    </div>
+</form>
+<!-- /patTemplate:tmpl -->

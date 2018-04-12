@@ -1,0 +1,640 @@
+
+                                    HANDOUT
+                              PELATIHAN OPERATOR
+                           SISTEM INFORMASIAKADEMIK
+                                DISUSUN OLEH :
+                             Tim Academic Software
+                           PT. Gamatechno Indonesia
+                                       
+                                       
+                                       
+                                       
+                             SAINT MARY'S COLLEGE
+                                     2016
+
+Daftar Isi
+Daftar Isi	1
+Pendahuluan	3
+1.	Tinjauan Sistem	3
+2.	Tujuan	3
+Flowchart	4
+1.	Alur Kegiatan Akademik Semester 1	4
+2.	Alur Kegiatan Akademik Semester Reguler	5
+3.	Alur Kegiatan Akademik Semester Akhir	6
+Panduan Teknis	7
+1.	Pengelolaan Data Master	7
+1.1.	Data Program Studi Baru	7
+1.2.	Data Mahasiswa	8
+1.3.	Data Dosen	8
+1.4.	Data Kurikulum	9
+1.5.	Data Matakuliah	10
+1.6.	Data Jenis Nilai	14
+1.7.	Jatah SKS	15
+1.8.	Ruang	15
+1.9.	Akun Portal Akademik	19
+2.	Menjelang Semester Baru	21
+2.1.	Setting Semester Baru	21
+2.2.	Setting Kurikulum Mahasiswa Baru	25
+2.3.	Setting Dosen Pembimbing Mahasiswa Baru	25
+2.4.	Setting Kelas Matakuliah Ditawarkan	26
+2.5.	Pengelolaan KRS	31
+2.6.	Setting Transkrip	35
+2.7.	Penyetaraan Matakuliah Mahasiswa Pindahan	36
+3.	Masa Semester Aktif	37
+3.1.	Pengelolaan Peserta Kelas	37
+3.2.	Pengelolaan Data Kemahasiswaan	41
+3.3.	Cetak Presensi Ujian	43
+3.4.	Cetak Kartu Ujian	43
+4.	Masa Akhir Semester	44
+4.1.	Input Nilai	44
+4.2.	Cetak KHS	46
+4.3.	Penyusunan Transkrip	46
+5.	Kelulusan	46
+5.1.	Pendaftaran Tugas Akhir	46
+5.2.	Pendaftaran Ujian Tugas Akhir	48
+5.3.	Pengelolaan Ujian Tugas Akhir	48
+5.4.	Pendaftaran Yudisium	50
+5.5.	Pengelolaan Yudisium	50
+5.6.	Cetak Transkrip Kelulusan	52
+
+Pendahuluan
+Tinjauan Sistem
+Sistem Informasi Akademik sebagai sistem yang digunakan dalam sebuah institusi pendidikan tinggiuntuk mengelola data-data akademiknya. Sistem informasi ini membantu operator untuk mengelola proses akademik secara terpadu dan terintegrasi dengan aplikasi akademik yang lain, sehingga dapat mempermudah semua pihak dalam mendapatkan data akademik secara akurat dan cepat.
+Sistem Informasi Akademik merupakan sistem untuk mengelola data-data akademik Mahasiswa dimulai dari awal semester perkuliahannya hingga Mahasiswa dinyatakan lulus. Setiap proses memiliki keterkaitan dengan proses sebelumnya, sehingga diperlukan pengisian data secara runtut agar dapat menghasilkan laporan data yang akurat.
+Tujuan
+Tujuan dari dilakukannya pelatihan Sistem Informasi Akademik bagi operator adalah sebagai berikut :
+  1. Memandu para operator untuk dapat melakukan pengelolaan data-data akademik.
+  2. Membiasakan operator menggunakan alat bantu berupa aplikasi dalam menyelesaikan masalah yang dihadapi dalam pengelolaan data akademik.
+Flowchart
+01. Alur Kegiatan Akademik Semester 1
+
+Alur Kegiatan Akademik Semester Reguler
+
+Alur Kegiatan Akademik Semester Akhir
+
+Panduan Teknis
+02. Pengelolaan Data Master
+Data Program Studi Baru
+Apabila ada penambahan program studi baru di lingkungan institusi, maka untuk langkah-langkah penambahannya dilakukan di aplikasi SI Registrasi, bukan di aplikasi SI Akademik. Setelah proses penambahan data program studi sudah dilakukan, ada beberapa hal yang perlu diperhatikan, sebagai berikut :
+  1. Lakukan perubahan setting hak akses pada akun root. Terutama untuk akun administrator, pada prodi baru yang dibuat, di menu manajemen grup, biasanya prodi baru tersebut masih belum ter-checklist.
+  2. Jika penambahan data program studi dilakukan setelah data semester baru ditambahkan, maka perlu dilakukan ubah setting semester aktif menjadi semester sebelumnya, kemudian sesuaikan setting semester per-prodi (pada semester yang seharusnya sedang aktif). Ada di menu :Semester  Semester Prodi. Setelah itu, kembalikan lagi set semester aktif.
+                         Isikan data yang masih kosong
+Data Mahasiswa
+Pengelolaan data Mahasiswa dilakukan dengan melakukan update biodata yang terkait dengan data akademik. Dengan konfigurasi database yang terkoneksi antara SI Akademik dan SI Registrasi, maka apabila hendak melakukan penambahan data atau perubahan biodata Mahasiswa secara lengkap dapat dilakukan melalui SI Registrasi.
+Update biodata Mahasiswa terkait data akademiknya, dapat dilakukan dengan cara sebagai berikut.
+  1. Buka aplikasi SI Registrasi, kemudian lakukan login.
+  2. Pilih menu KemahasiswaanMahasiswa.
+  3. Lakukan filtering terlebih dahulu. Pilih Program Studi, pilih angkatan Mahasiswa yang dimaksud, kemudian tekan tombol Tampilkan.
+  4. Pada halaman Daftar Mahasiswa, cari nama Mahasiswa, kemudian tekan tombol Ubah pada kolom Aksi.
+  5. Ubah data pada form Ubah Data Mahasiswa mengenai data-data akademik Mahasiswa yang bersangkutan dan tekan tombol Simpan.
+                                       
+Data Dosen
+Proses KBM berlangsung antara dosen dan mahasiswa. Setiap kelas yang dibuka akan selalu ada minimal 1 orang dosen pengampu kelas tersebut.
+Untuk menambahkan data dosen, lakukan langkah-langkah sebagai berikut :
+  1. Pilih menu Dosen  Data Dosen
+  2. Tekan tombol Tambah
+  3. Lengkapi isian form Tambah Data Dosen
+  4. Tekan tombol Simpan
+Hanya dosen yang memiliki homebase prodi saja yang dapat dipilih sebagai dosen pengampu kelas
+
+Data Kurikulum
+Kurikulum merupakan haluan pelaksanaan kegiatan akademik yang akan selalu diperbaharui seiring dengan tuntutan di dunia kerja dan kemajuan ilmu pengetahuan. Kurikulum berisi aturan dasar perkuliahan dan matakuliah apa saja yang wajib ditempuh oleh Mahasiswa.
+Setting kurikulum dimulai dengan mendefinisikan nama dari kurikulum yang ada. Kemudian diikuti dengan mendata matakuliah apa saja yang ada dalam kurikulum tersebut. Dan diakhiri dengan melakukan setting kesetaraan terhadap kurikulum sebelumnya serta prasyarat pengambilan matakuliahnya.
+Untuk menambah kurikulum, lakukan langkah-langkah sebagai berikut.
+  1. Pilih menu KurikulumData Kurikulum.
+  2. Pilih Program Studi, kemudian tekan tombolOK.  
+  3. Tekan Tombol  Tambah Kurikulum Baru pada halaman Daftar Kurikulum.
+  4. Isikan data pada form Tambah Kurikulum dan tekan tombol Tambah.
+  5. Untuk mengubah data kurikulum yang sudah ada, pada halaman Daftar Kurikulum, tekan tombol Ubah di kolom Aksi.
+                            Mengubah data kurikulum
+                            Menambah data kurikulum
+Data Matakuliah
+Pendataan matakuliah yang terdapat pada setiap kurikulum yang dimiliki oleh setiap program studi berfungsi untuk membentuk sebaran matakuliah yang akan ditawarkan sebagai paket semester kepada Mahasiswa.
+
+Untuk menambahkan data sebuah matakuliah dalam kurikulum dapat dilakukan dengan cara sebagai berikut.
+  1. Pilih menu KurikulumMatakuliah.
+  2. Pilih Program Studi, kemudian tekan tombol OK.
+  3. Pilih kurikulum, kemudian tekan tombol Lihat pada kolom Aksi.
+  4. Pada halaman Daftar Matakuliah, tekan tombol Tambah Mata Kuliah Baru.
+  5. Isikan data pada form Tambah Matakuliah Baru dan tekan tombol Tambah.
+  6. Untuk mengubah data matakuliah yang sudah ada, pada halaman Daftar Matakuliah, cari matakuliah yang akan diubah datanya, kemudian tekan tombol Ubah pada kolom Aksi.
+                                       
+Catatan:
+  *  Sangat disarankan agar data matakuliah dilengkapi selengkap-lengkapnya di awal semester. Hal itu dikarenakan perubahan data matakuliah setelah ada proses transaksi (rekap nilai maupun transkrip) bisa berdampak membutuhkan waktu yang sangat lama saat proses perubahan di sistem. 
+  *  Selain penjelasan sebelumnya, data matakuliah ini akan berpengaruh pula di proses lain seperti : pembuatan kelas ditawarkan, proses pengambilan KRS online, cetakan output sertifikat kelulusan matakuliah, dan beberapa proses lain.
+  *  Beberapa item isian pada detil matakuliah merupakan mandatoryitem, atau wajib diisi. Ditandai dengan tanda bintang (*). Sehingga apabila ada item bertanda (*) dan masih kosong maka sistem akan melakukan pengecekan dan data gagal disimpan.
+Kesetaraan Matakuliah
+Pada program studi yang mengalami pergantian kurikulum, adanya perubahan mengenai nama-sifat-penawaran sebuah matakuliah kepada mahasiswa adalah sangat mungkin terjadi. Penyetaraan antar matakuliah dari dua kurikulum yang berbeda sangat diperlukan, agar apabila mahasiswa mengambil matakuliah dari kurikulum baru yang memiliki kesetaraan dari kurikulum lama, akan dicatat sistem bukan lagi sebagai pengambilan pertama. 
+Kesetaraan matakuliah juga diperlukan dalam setting pengambilan nilai yang akan dimunculkan pada transkrip nilai mahasiswa. Terkait dengan penamaan matakuliah yang akan dianut, besar SKS, dan nilai yang akan digunakan.
+Untuk melakukan setting kesetaraan matakuliah, dapat dilakukan dengan langkah sebagai berikut :
+  1. Pilih menu Kurikulum  Matakuliah Setara
+  2. Pilih program studi, tekan tombol OK.
+  3. Pada tabel daftar kurikulum, pilih salah satu kurikulum yang akan diatur kesetaraannya. Tekan tombol Lihat.
+  4. Pada tabel daftar matakuliah, pilih salah satu matakuliah yang akan disetarakan. Tekan tombol Ubah.
+  5. Pada halaman Tambah Matakuliah Setara, pilih program studi yang akan digunakan sebagai program studi sumber penyetaraan. Tekan tombol Pilih.
+  6. Pilih kurikulum yang akan digunakan sebagaisumber penyetaraan. Tekan tombol Pilih.
+  7. Pada daftar matakuliah, beri tanda centang Pilih dan Bolak-Balik atau beri tanda centang Pilih saja.
+  8. Tekan tombol Tambah untuk menambahkan data penyetaraan.
+                 Disarankan untuk memberi pilihan Bolak-Balik
+Catatan:
+  *  Disarankan untuk memberikan pilihan Bolak-Balik agar matakuliah lama yang disetarakan dengan matakuliah yang ada di kurikulum baru perlakuannya di transkrip maupun KHS mahasiswa bisa setara antara yang di kurikulum lama dengan yang di kurikulum baru.
+  *  Jika tidak Bolak-Balik, maka matakuliah yang ada di kurikulum lama tidak akan terpengaruh dengan kurikulum yang sedang aktif digunakan.
+Prasyarat Matakuliah
+Matakuliah berprasyarat adalah matakuliah yang dapat ditempuh apabila matakuliah prasyaratnya telah dipenuhi. Sudah sangat lazim di perguruan tinggi menerapkan matakuliah bersyarat, dimana untuk dapat menempuh suatu matakuliah berprasyarat, mahasiswa harus telah memenuhi ketentuan matakuliah prasyarat.
+Untuk memberikan prasyarat matakuliah, langkah-langkah yang harus dilakukan adalah :
+  1. Pilih menu Kurikulum  Matakuliah Prasyarat
+  2. Pilih program studi, tekan tombol OK.
+  3. Pada tabel daftar kurikulum, pilih salah satu kurikulum yang akan diatur matakuliah prasyaratnya. Tekan tombol Lihat.
+  4. Pada tabel daftar matakuliah, pilih salah satu matakuliah yang akan diberikan prasyarat. Tekan tombol Prasyarat.
+  5. Pilih matakuliah yang jadi prasyarat dan tentukan apakah sifatnya :Lulus, Sejajar, atau Ambil.
+  6. Tekan tombol Simpan, untuk menyimpan data.
+                                       
+Catatan:
+  * Lulus = Matakuliah prasyarat harus sudah lulus. Bobot Minimal tidak perlu di isi. Untuk menentukan nilai minimal lulus, dapat dilakukan pada saat setting referensi data matakuliah di menu Kurikulum  Matakuliah  Ubah.
+  * Sejajar = Matakuliah prasyarat boleh diambil bersamaan. Bobot Minimal tidak perlu di isi.
+  * Ambil = Matakuliah prasyarat harus sudah diambil. Bobot Minimal harus di isi.
+Data Jenis Nilai
+Jenis Nilai pada SI Akademik ini merangkum kebijakan perguruan tinggi mengenai penilaian untuk setiap matakuliah yang diambil oleh Mahasiswa setiap semesternya. Jenis nilai ini akan berpengaruh pada sistem penilaian, karena nilai angka total yang diperoleh Mahasiswa akan dihitung nilai hurufnya berdasarkan range nilai yang sesuai dengan setting jenis nilai ini.
+Dengan demikian, setting Jenis Nilai ini sangat diperlukan agar perhitungan nilai huruf Mahasiswa dapat sesuai dengan kebijakan perguruan tinggi.
+Berikut adalah langkah-langkah untuk melakukan setting jenis nilai.
+     1.   Pilih menu Jenis Nilai  Jenis Nilai.
+     2.   Pilih Program Studi, kemudian tekan tombol Tampilkan.
+     3.   Untuk menambah jenis nilai, tekan tombol Tambah Jenis Nilai Baru.
+     4.   Pada halaman Tambah Jenis Nilai, isikan Kode Nilai, Bobot, Rentang Nilai, dan Kelompok Nilai, kemudian tekan tombol Tambah.
+     5.   Untuk mengubah data jenis nilai yang sudah ada, di halaman Daftar Jenis Nilai, tekan tombol Ubah di kolom Aksi.
+                                       
+Jatah SKS
+Kebijakan institusi dalam pengaturan besarnya beban studi yang dapat diambil oleh seorang mahasiswa, pada kebanyakan kasus, akan disesuaikan dengan hasil studi mahasiswa tersebut. Sistem dapat membatasi secara otomatis besarnya beban studi yang dapat diambil oleh seorang mahasiswa berdasarkan hasil studi pada semester acuan.
+Untuk dapat menerapkan penghitungan secara otomatis beban studi tersebut, maka diperlukan sebuah setting yang merangkum pengaturan pemberian beban studi/jatah SKS tersebut.
+Berikut adalah langkah-langkah untuk melakukan setting pengaturan pemberian beban studi/jatah SKS :
+  1. Pilih menu Jatah SKS  Jatah SKS
+  2. Pada halaman Daftar Jatah SKS yang tertampil, klik pada tombol Tambah Jatah SKS
+  3. Pada form Tambah Jatah SKS yang tertampil, isikan range IP, yaitu IP semester minimal dan IP semester maksimal, kemudian isikan jatah SKS maksimal (beban studi maksimal) untuk range IP tersebut.
+  4. Tekan tombol  Simpan untuk menyimpan data setting.
+                                       
+Ruang
+Ruang kuliah merupakan salah satu data master yang penting karena mempengaruhi proses penjadwalan kelas matakuliah dan penjadwalan ujian. Sebuah ruang kuliah dapat disetting juga kapasitas maksimalnya sehingga dapat membantu proses penjadwalan ujian, di mana sistem akan memberikan informasi apakah ruang kuliah yang disediakan untuk ujian sudah mencukupi kuota Mahasiswa.
+Setting Ruang dimulai dari setting Gedung. Berikut di bawah ini adalah langkah-langkah untuk melakukan setting Gedung dan Ruang.
+Gedung 
+                     Melihat, mengubah, dan menghapus data
+                                 Menambah data
+Berikut adalah langkah-langkah untuk menambah dan mengubah data gedung.
+  1. Pilih menu Manajemen Ruang  Gedung.
+  2. Pada halaman Daftar Gedung, tekan tombol Tambah.
+  3. Pada halaman Tambah Gedung yang tertampil, isikan unit pengelola Gedung, apakah fakultas atau jurusan. Isikan pula Kode Gedung dan Nama Gedung.
+  4. Tekan tombol Simpan untuk menyimpan  data Gedung.
+  5. Untuk mengubah data gedung yang sudah ada, pada halaman Daftar Gedung, tekan tombol Ubah di kolom Aksi.
+                                       
+Ruang Kuliah
+                     Melihat, mengubah, dan menghapus data
+Berikut ini adalah langkah-langkah untuk menambah data ruang.
+   1.    Pilih menu Manajemen Ruang Manajemen Ruang.
+   2.    Pada halaman daftar gedung yang tertampil, pilih data gedung yang akan diisikan data ruangnya, kemudian tekan tombol Lihat.
+   3.    Pada halaman detil gedung yang tertampil, tekan tombol Tambah Data Ruang.
+   4.    Pada form Tambah Ruang yang muncul, isikan data-data ruang, terutama kode Ruang, Nama Ruang, Kapasitas, Kapasitas Ujian, dan Guna Ruang.
+   5.    Beri pilihan "Kuliah" pada field Guna (*).
+   6.    Tekan tombol Simpan untuk menyimpan data Ruang.
+   7.    Untuk mengubah data ruang yang sudah ada, pada bagian Daftar Ruang, tekan tombol Ubah di kolom Aksi.
+                                       
+Catatan:
+  * Pilih pilihan "Kuliah" pada field "Guna (*)" agar data ruang dapat muncul pada proses pembuatan jadwal kelas.
+Laboratorium 
+Berikut ini adalah langkah-langkah untuk menambah data ruang.
+  1. Pilih menu Manajemen Ruang  Manajemen Laboratorium
+  2. Pada halaman daftar gedung yang tertampil, pilih data gedung yang akan diisikan data laboratoriumnya, kemudian tekan tombol Lihat.
+  3. Pada halaman detil gedung yang tertampil, tekan tombol Tambah Data Laboratorium.
+  4. Pada form Tambah Laboratorium yang muncul, isikan data-data laboratorium, terutama kode Ruang, Nama Ruang, Kapasitas, Kapasitas Ujian, dan Guna Ruang.
+  5. Tekan tombol Simpan untuk menyimpan data.
+  6. Untuk mengubah data yang sudah ada, pada bagian Daftar Laboratorium, tekan tombol Ubah di kolom Aksi.
+                                       
+Ruang Seminar
+Selain ruang untuk kelas kuliah, sistem ini juga mendukung pengelolaan ujian tugas akhir. Pada umumnya, pelaksanaan ujian tugas akhir membutuhkan data ruang seminar.
+Langkah-langkah untuk menambahkan data ruangan yang akan digunakan sebagai ruang ujian tugas akhir adalah sebagai berikut :
+  1. Pilih menu Manajemen Ruang Manajemen Ruang.
+  2. Pada halaman daftar gedung yang tertampil, pilih data gedung yang akan diisikan data ruangnya, kemudian tekan tombol Lihat.
+  3. Pada halaman detil gedung yang tertampil, tekan tombol Tambah Data Ruang.
+  4. Pada form Tambah Ruang yang muncul, isikan data-data ruang, terutama kode Ruang, Nama Ruang, Kapasitas, Kapasitas Ujian, dan Guna Ruang.
+  5. Beri pilihan "Seminar" pada field Guna (*).
+  6. Tekan tombol Simpan untuk menyimpan data Ruang.
+  7. Untuk mengubah data ruang yang sudah ada, pada bagian Daftar Ruang, tekan tombol Ubah di kolom Aksi.
+                                       
+Akun Portal Akademik
+Account portal akademik diberikan kepada mahasiswa dan dosen untuk dapat mengelola data akademik secara mandiri. Data transaksi akademik yang dilakukan oleh dosen dan mahasiswa melalui portal akademik akan dapat dilihat pula melalui aplikasi akademik back office.
+Pembuatan account portal akademik berfungsi untuk memberikan user-password yang akan digunakan oleh dosen dan Mahasiswa untuk dapat melakukanlogin ke dalam aplikasi portal akademik dan mempergunakan semua menu dan fungsi yang terdapat di dalamnya.
+Akun Mahasiswa 
+Pembuatan account portal akademik untuk mahasiswa dapat dilakukan secara masal maupun satu-persatu per-mahasiswa sebagai berikut :
+* Masal :
+  1. Pilih menu Portal Akademik Buat Account Mahasiswa Massal
+  2. Lakukan filtering data mahasiswa terlebih dahul, kemudian tekan tombol Tampilkan.
+  3. Pada daftar mahasiswa yang muncul akan secara otomatis terseleksi semua mahasiswa di angkatan tersebut. Lakukan unselect jika ada mahasiswa yang tidak perlu dibuatkan akun.
+  4. Klik tombol Buat Account untuk membuat akun portal.
+  5. Setelah buat akun portal secara masal berhasil dilakukan, akan tampil daftar akun portal mahasiswa dan operator dapat langsung mencetak daftar akun tersebut.
+                                       
+* Satuan :
+  1. Pilih menu Portal Akademik Account Mahasiswa.
+  2. Pada halaman Daftar Mahasiswa, jika belum ada data yang tampil, lakukan pencarian Mahasiswa dengan menggunakan form filter yang tersedia. Masukkan data-data yang diinginkan dan tekan tombol Tampilkan.
+  3. Pada tabel Daftar Mahasiswa, pilih data Mahasiswa yang ingin dibuat accountnya dengan menekan tombol Buat pada kolom Aksi.
+  4. Selanjutnya account Portal Akademik dari Mahasiswa yang bersangkutan akan dibuat secara otomatis oleh sistem. Informasi account akan tampil di halaman Buat Account Portal  Akademik.
+                                       
+Akun Dosen 
+Sedangkan untuk account portal akademik dosen dapat dilakukan sebagai berikut.
+  1. Pilih menu Portal Akademik Account Dosen.
+  2. Pada halaman Daftar Dosen, jika belum ada data yang tampil, lakukan pencarian dosen dengan menggunakan form Cari Dosen yang tersedia. Masukkan data-data yang diminta dan klik tombol Tampilkan.
+  3. Pada tabel Daftar Dosen, pilih data dosen yang ingin dibuat accountnya dengan menekan tombol Buat pada kolom Aksi.
+  4. Selanjutnya account Portal Akademik dari dosen yang bersangkutan akan di buat secara otomatis oleh sistem. Informasi account akan tampil di halaman Buat Account Portal Akademik.
+                                       
+Catatan :
+  * Reset password merupakan proses untuk melakukan generatepassword account portal yang baru bagi mahasiswa. Proses ini dapat dilakukan apabila mahasiswa lupa akan password portal akademiknya yang terdahulu.
+                                       
+  * Reset password mahasiswa dapat dilakukan secara massal maupun per-individu.
+Menjelang Semester Baru
+Setting Semester Baru
+Setiap akan  memulai sebuah semester yang baru, seorang operator aplikasi harus melakukan setting untuk semester yang akan diaktifkan.Setting ini terkait dengan aturan-aturan dan periode semester tersebut dijalankan.
+Setting Semester (Berlaku Semua Prodi)
+Apabila seluruh program studi yang ada di institusi memiliki aturan semester yang sama, maka bisa menggunakan fitur Setting Semester. Untuk melakukan set aturan sebuah semester yang harus dilakukan adalah sebagai berikut :
+  1. Pilih menu SemesterSetting Semester
+  2. Untukmenambah semester baru, tekan tombol Tambah. Sedangkan untuk mengubah data periode yang sudah ada, tekan tombol Ubah pada kolom Aksi.
+  3. Isikan data semester baru dan tekan tombol Simpan.
+  4. Untuk mengaktifkan periode yang sudah dibuat, pada halaman Daftar Semester, tekan tombol Aktifkan di kolom Aksi.
+                             Mengaktifkan periode
+                             Mengubah data periode
+Pada setting semester, jika diperlukan, operator dapat melakukan setting periode pengambilan KRS online, metode KRS, serta set periode input nilai. Penjelasan lebih lanjut, sebagai berikut :
+Jika diaktifkan, maka metode KRS online adalah dengan model pengambilan paket. Contoh :Mahasiswa semester 3 hanya dapat mengambil matakuliah yang ditawarkan untuk semester 3
+Selain itu, operator juga harus menentukan bagaimana aturan pengambilan KRS Online yang akan diberlakukan pada semester aktif tersebut. Aturan-aturan yang perlu diset diantaranya adalah sebagai berikut :
+                                       
+  * Semester acuan jatah SKS : 
+   Jumlah SKS yang akan digunakan sebagai acuan jatah SKS adalah jumlah SKS mahasiswa yang ada pada semester berapa.
+  * Cek Status Registrasi : 
+   Apakah diinginkan, sistem mengecek status registrasi mahasiswa pada semester aktif? Hal ini berkaitan dengan pembayaran heregistrasi.
+  * Cek Jatah Sks : 
+   Apakah diinginkan, sistem mengecek jatah SKS mahasiswa? Ini berkaitan dengan setting "Semester acuan jatah SKS".
+  * Cek Matakuliah Prasyarat: 
+   Apakah diinginkan, sistem mengecek matakuliah yang memiliki prasyarat.
+  * Cek Prasyarat IPK : 
+   Apakah diinginkan, sistem mengecek prasyarat IPK mahasiswa? Ini berlaku hanya jika prasyarat  matakuliah diberikan (ada pada menu referensi matakuliah). Misal, mahasiswa dengan jumlah IPK tertentu baru bisa mengambil matakuliah X, sedangkan jika IPK mahasiswa tidak memenuhi prasyarat matakuliah tersebut, maka mahasiswa tidak akan bisa mengambil matakuliah saat KRS online.
+  * Cek Prasyarat Jumlah sks:
+   Apakah diinginkan sistem mengecek jumlah SKS yang telah diperoleh mahasiswa. Ini berlaku hanya jika prasyarat  matakuliah diberikan (ada pada menu referensi matakuliah).
+  * Cek Prasyarat Jumlah sks Lulus :
+   Apakah diinginkan sistem mengecek jumlah SKS yang nilainya sudah memenuhi syarat lulus matakuliah.
+  * Cek Bentrok Kuliah :
+   Apakah diinginkan sistem mengecek jadwal perkuliahan. Berlaku hanya jika jadwal kuliah sudah ditentukan.
+  * Cek Bentrok Ujian :
+   Apakah diinginkan sistem mengecek jadwal ujian UTS & UAS. Berlaku hanya jika jadwal kuliah sudah ditentukan.
+  * SKS Default (*):
+   Jatah SKS awal yang diberikan untuk mahasiswa yang belum mempunyai jatah SKS.
+
+Setting Semester Prodi (Berlaku Prodi Tertentu)
+Apabila program studi yang ada di institusi memiliki aturan semester yang berbeda satu dengan lainnya, misal memiliki jadwal KRS online yang tidak serentak, atau memiliki rentang waktu akademik yang berbeda tanggalnya, maka bisa menggunakan fitur Semester Prodi.
+Langkah-langkah untuk set semester prodi adalah sebagai berikut :
+  1. Pilih menu SemesterSemester Prodi
+  2. Pilih program studi, kemudian klik tombolTampilkan.
+                                       
+  3. Untuk melakukan pengaturan, klik tombol Set pada semester yang berlaku.
+  4. Lengkapi isian form sesuai dengan kondisi aturan semester yang berlaku di prodi.Penjelasan dari setiap field sama seperti yang ada di menu Setting Semester (Bab 2.1.1). Kemudian klik tombol Simpan.
+                                       
+Catatan :
+  * Untuk menambah dan menghapus periode semester, tetap dilakukan di menu Semester  Setting Semester. Begitu juga dengan perubahan periode semester yang aktif, dilakukan di menu Setting Semester.
+Setting Kurikulum Mahasiswa Baru
+Setiap tahun ajaran baru, setelah proses penerimaan Mahasiswa baru dan setelah daftar Mahasiswa baru sudah dikeluarkan, terdapat sebuah proses di institusi, yaitu menentukan kurikulum pengajaran yang berlaku untuk Mahasiswa baru tersebut, sesuai dengan program studi masing-masing. Pada kondisi kebanyakan, kurikulum pengajaran yang terbaru lah yang diberlakukan ke Mahasiswa baru ini.
+Sistem akademik juga memerlukan informasi (setting) kurikulum yang diberlakukan ke Mahasiswa baru ini. Hal ini diperlukan untuk pembuatan transkrip Nilai Mahasiswa, dimana penyusunannya akan berpedoman kepada kurikulum.
+Berikut ini adalah langkah-langkah untuk melakukan proses setting kurikulum mahasiswa baru.
+  1. Pilih menu Kemahasiswaan Kurikulum Mahasiswa.
+  2. Pada halaman Daftar Kurikulum Mahasiswa yang tertampil, tekan tombol Tambah.
+  3. Isikan angkatan Mahasiswa baru, kemudian pilih kurikulum yang akan diberlakukan untuk setiap Prodi.
+  4. Tekan tombol Simpan untuk menyimpan data setting kurikulum Mahasiswa.
+                Pilih angkatan yang akan disetting kurikulumnya
+
+                              Tentukan kurikulum
+Setting Dosen Pembimbing Mahasiswa Baru
+Pada setiap tahun ajaran  baru, program studi atau fakultas akan menerima Mahasiswa baru yang telah diterima melalui proses seleksi dari pihak institusi. Untuk proses akademik, data-data Mahasiswa baru ini akan diberikan dosen pembimbing akademik yang akan membimbing dan membantu Mahasiswa dalam proses akademiknya selama berada di institusi.
+Pada sistem, proses yang melibatkan dosen pembimbing akan sangat tampak pada proses KRS, selain itu dosen pembimbing akademik dapat memantau perkembangan Mahasiswa bimbingan melalui portal. Pemantauan ini dapat berupa pemantauan KRS, hasil studi per semester, dan juga transkrip akademik. 
+Berikut ini adalah langkah-langkah untuk melakukan setting data dosen pembimbing.
+  1. Pilih menu Kemahasiswaan Bimbingan Akademik.
+  2. Pilih Program Studi, kemudian tekan tombol OK.
+  3. Cari angkatan Mahasiswa yang dimaksud, kemudian tekan tombol Ubah Kolektif pada kolom Aksi.
+  4. Pada halaman Ubah Kolektif Pembimbing Akademik, tentukan Dosen Pembimbing pada bagian Dosen PA, kemudian pilih mahasiswa mana saja yang dibimbing oleh dosen tersebut dan beri tanda centang pada bagian Mahasiswa.
+  5. Setelah selesai memilih mahasiswa, tekan tombol Ubah.
+                               Tentukan dosen PA
+
+                              Beri tanda centang
+
+Setting Kelas Matakuliah Ditawarkan
+Sebelum memasuki masa KRS, harus ada pembuatan kelas ditawarkan. Daftar kelas matakuliah yang akan muncul di halaman portal mahasiswa pada saat KRS online, adalah data kelas yang dibuat pada semester tersebut.
+Proses pembuatan kelas baru yang akan ditawarkan pada semester aktif dapat dilakukan dengan tiga cara yaitu : satu persatu, secara massal, dan dengan cara menggandakan kelas dari semester lain.
+Copy Kelas Dari Semester Lain
+Sering terjadi, apabila pada periode akademik masih menggunakan kurikulum yang sama, maka matakuliah yang ditawarkan pada semester sekarang akan sama dengan matakuliah yang akan ditawarkan di semester sejenis. 
+Sebagai contoh, jika semester yang sedang aktif adalah semester ganjil (misal : Ganjil 2015), maka matakuliah yang ditawarkan di semester sekarang adalah matakuliah yang sama yang ditawarkan pada semester ganjil di sebelumnya (berarti : Ganjil 2014).
+
+Jika demikian, maka untuk pembuatan kelas, operator hanya tinggal melakukan proses copy kelas saja, dengan langkah-langkah sebagai berikut :
+   1.    Pilih menu Jadwal Copy Kelas
+   2.    Pilih program studi, lalu pilih semester acuan yang akan dicopy.
+   3.    Klik tombol Proses
+
+Catatan:
+  * Proses copy kelas tidak dapat dikembalikan, sehingga wajib diperhatikan, apakah semester acuan yang akan digunakan adalah semester yang tepat. Resiko jika terjadi kesalahan adalah operator harus mengahapus satu per satu kelas yang terlanjur terbuat.
+Pembuatan Kelas Massal
+Langkah-langkah untuk membuat kelas secara massal, adalah sebagai berikut :
+   1.    Pilih menu Jadwal Buat Kelas Massal
+   2.    Jika data semester dan kurikulum masih belum terpilih, maka, klik tombol Pilih Semester atau tombol Pilih Kurikulum, kemudian pilih semester atau kurikulum yang akan digunakan
+   3.    Jika data matakuliah sudah tampil, maka isikan jumlah kelas yang akan dibuat pada matakuliah yang akan dibuatkan kelasnya. Kemudian beri tanda centang.
+   4.    Klik tombol Tambah Kelas, untuk menambah data kelas baru.
+         Beri tanda centang pada matakuliah yang akan dibuat kelasnya
+
+                     Isikan jumlah kelas yang akan dibuat
+
+Catatan:
+  * Perlu diperhatikan bahwa, setelah melakukan pembuatan kelas massal, operator perlu mengatur Dosen Pembimbing Kelas dan Bobot Nilai.
+Pembuatan Kelas Satuan
+Langkah-langkah pembuatan kelas secara satu persatu, adalah sebagai berikut :
+   1.    Pilih menu Jadwal  Kelas
+   2.    Pilih program studi yang akan dibuatkan kelasnya, kemudian klik tombol Tampilkan.
+   3.    Klik tombol Tambah Kelas. Apabila kurikulum untuk program studi tersebut sudah diset, maka akan tampil seluruh daftar matakuliah yang ada di kurikulum program studi tersebut. Jika masih belum, silahkan melakukan setting kurikulum seperti pada Bab 2.2.
+   4.    Pilih matakuliah yang akan dibuatkan kelasnya dengan klik tombol Pilih.
+   5.    Lengkapi form Tambah Kelas.
+   6.    Klik tombol Simpan untuk menyimpan data kelas.
+Beri tanda centang jika diinginkan dosen dapat melakukan input nilai dari portal dosen
+
+Klik untuk memilih dosen pengampu kelas. Hanya dosen yang memiliki homebase prodi saja yang dapat dipilih sebagai dosen pengampu kelas
+
+Jadwal Kelas
+Berikut ini adalah langkah-langkah untuk melakukan setting jadwal kelas.
+  1. Pilih menu Jadwal  Jadwal Kelas.
+  2. Pilih Program Studi, kemudian tekan tombol Tampil.
+  3. Pada tabel Daftar Jadwal Kelas, pada kelas matakuliah, tekan tombol Jadwal pada kolom Aksi.
+  4. Klik tombol Tambah, untuk menentukan jadwal kelas matakuliah tersebut.
+  5. Lengkapi isian form, kemudian tekan tombol Tambah.
+
+Jadwal Ujian
+Berikut ini adalah langkah-langkah untuk melakukan setting jadwal ujian.
+  1. Pilih menu Jadwal  Jadwal Ujian.
+  2. Pilih Program Studi, kemudian tekan tombol OK.
+  3. Pilih kelas matakuliah yang akan dibuat jadwal ujiannya, kemudian tekan tombol Tambah pada kolom Aksi. Untuk mengubah sesi ujian (UTS atau UAS), tekan tombol Ganti Sesi Ujian.
+  4. Pada halaman Detail Jadwal Ujian, tekan link Buat Jadwal Ujian.
+  5. Pada halaman Buat Jadwal Ujian, isi tanggal, waktu, dan beri tanda centang pada kolom Pilih untuk menentukan ruang ujian
+  6. Tekan tombol Simpan.
+                              Beri tanda centang
+
+                              Beri tanda centang
+
+          Tentukan pembagian jumlah peserta pada ruangan yang dipilih
+
+                            Tentukan peran pengawas
+Catatan:
+  * Apabila pada setting semester, diaktifkan aturan Cek Jadwal Ujian, maka setting jadwal ujian harus dilakukan di awal semester. Namun jika tidak, maka setting jadwal ujian bisa dilakukan di tengah semester.
+  * Pengawas ruang ujian tidak wajib ditentukan di sistem.
+Cek Aturan Kelas
+Setelah kelas selesai dibuat, perlu dilakukan pengecekan aturan kelas yang diberlakukan untuk kelas matakuliah. Apakah ada aturan bahwa yang bisa mengambil kelas matakuliah tersebut adalah mahasiswa angkatan tertentu saja, atau bebas. Lainnya, apakah ada aturan bahwa hanya mahasiswa dengan rentang NIM tertentu saja yang bisa mengambil kelas matakuliah tersebut, atau bebas.
+       Untuk mengubah kurikulum angkatan yang boleh mengambil kelas ini
+Pengelolaan KRS
+Proses KRS melalui Back Office dibagi menjadi dua, yaitu KRS per Mahasiswa dan KRS secara massal. Proses KRS yang dilakukan operator untuk mahasiswa melalui menu Rencana Studi pada aplikasi Back Office.
+KRS Massal
+Fitur KRS Massal sangat memudahkan pada saat operator ingin set KRS untuk mahasiswa angkatan baru, karena biasanya untuk mahasiswa angkatan baru KRS-nya sudah ditentukan (belum ambil KRS secara mandiri). Untuk melakukan rencana studi secara massal, langkah-langkahnya adalahsebagai berikut.
+  1. Pilih menu Rencana Studi  Rencana Studi Massal.
+  2. Tentukan filter Program Studi, Semester, dan Angkatan kemudian tekan tombol OK.
+  3. Beri tanda centang (√) pada semua data mahasiswa yang ingin di-KRS-kan, kemudian tekan tombol Lanjut.
+  4. Pilih matakuliah yang akan di KRS-kan untuk mahasiswa tersebut, kemudian pilih kelasnya.
+  5. Klik tombol Proses untuk memproses pengambilan KRS.
+                     Pilih mahasiswa yang akan di KRS-kan
+                     Pilih matakuliah yang akan di KRS-kan
+                            Pilih kelas matakuliah
+KRS per Mahasiswa
+Sedangkan untuk melakukan rencana studi per mahasiswa, langkah-langkahnya adalah sebagai berikut.
+  1. Pilih menu Rencana Studi  Rencana Studi.
+  2. Pada bagian Filter, cari nama mahasiswa yang akan ditambahkan data rencana studinya, kemudian tekan tombol Tampilkan.
+  3. Pada tabel Daftar Mahasiswa yang Belum KRS, tekan tombol Lihat pada kolom Aksi.
+  4. Pada halaman Daftar Rencana Studi Mahasiswa, tekan tombol KRS.
+  5. Pada halaman Daftar Rencana Studi Mahasiswa KRS, tekan tombol Tambah/Ubah KRS.
+  6. Pada daftar matakuliah yang muncul, beri tanda centang (√) di matakuliah yang ingin ditambahkan, sekaligus pilih kelas yang diinginkan. Kemudian tekan tombol Simpan.
+                     Pilih matakuliah yang akan di KRS-kan
+                            Pilih kelas matakuliah
+Jika ingin melakukan ubah KRS mahasiswa, langkah-langkahnya adalah sebagai berikut :
+  1. Pilih menu Rencana Studi  Rencana Studi.
+  2. Pada bagian Filter, cari nama mahasiswa yang akan ditambahkan data rencana studinya, kemudian tekan tombol Tampilkan.
+  3. Pada tabel Daftar Mahasiswa yang Belum KRS, tekan tombol Lihat pada kolom Aksi.
+  4. Pada halaman Daftar Rencana Studi Mahasiswa, tekan tombol KRS.
+  5. Klik tombol Tambah/Ubah KRS
+  6. Hilangkan tanda  pada matakuliah yang tidak jadi diambil.
+  7. Pilih pilihan kelas yang kosong.
+  8. Klik tombol Simpan.
+                    Hilangkan tanda  dan pilih kelas kosong
+Persetujuan KRS
+Persetujuan KRS adalah proses memberikan persetujuan terhadap kelas matakuliah yang diambil oleh mahasiswa untuk diikuti pada semester yang akan datang. Proses persetujuan ini perlu dilakukan agar mahasiswa dapat tercatat sebagai peserta kelas pada setiap kelas matakuliah yang diambilnya.
+Proses persetujuan KRS melalui Back Office dapat dilakukan dengan langkah-langkah sebagai berikut.
+  1. Pilih menu Persetujuan KRS  Persetujuan KRS.
+  2. Tentukan filter Program Studi dari mahasiswa yang ingin disetujui KRS-nya. Tekan tombol OK.
+  3. Pada halaman Persetujuan Kartu Rencana Studi Mahasiswa, pilih mahasiswa yang akan disetujui KRS-nya dengan memberi tanda centang (√) di depan namanya.
+  4. Tekan tombol Setujui KRS untuk menyetujui KRS, atau tombol Batalkan Persetujuan KRS untuk membatalkan persetujuan KRS.
+                                Pilih mahasiswa
+Setting Transkrip
+Di awal semester baru, perlu dilakukan setting transkrip terlebih dahulu agar pada saat proses rekap nilai dan pembuatan transkrip nanti, tidak terjadi kegagalan dikarenakan pengembalian kurikulum yang akan digunakan di transkrip masih belum ditentukan.
+
+Langkah-langkah untuk melakukan setting transkrip adalah sebagai berikut :
+  1. Pilih menu TranskripSetting Transkrip
+  2. Pilih program studi yang akan disetting, klik tombol OK.
+  3. Untuk memberikan setting pengembalian kurikulum, klik tombol Ubah yang berada di posisi atas.
+  4. Pada halaman Ubah Setting Pengembalian Kurikulum, pilih salah satu metode pengembalian kurikulum, kemudian klik tombol Ubah.
+                                       
+Penyetaraan Matakuliah Mahasiswa Pindahan
+Jika ada mahasiswa pindahan, transaksi nilai yang sudah diperoleh di institusi sebelumnya jika ingin diakui, maka harus dilakukan transfer nilai terlebih dahulu. Penyetaraan matakuliah mahasiswa pindahan, baik pindahan dari dalam maupun luar institusi, perlakuannya tetap sama.
+Langkah-langkah untuk melakukan penyetaraan matakuliah, adalah sebagai berikut :
+  1. Pilih menu Transkrip  Transfer Nilai
+  2. Pilih program studi, kemudian klik Tampilkan.
+  3. Klik tombol TambahMatakuliahTransfer.
+                                       
+  4. Klik tombol Detail pada mahasiswa pindahan yang akan diakui transaksinya. Daftar mahasiswa pindahan yang muncul disini adalah mahasiswa yang sudah diset sebagai Mahasiswa Pindahan pada aplikasi Registrasi (menu Registrasi  Mahasiswa  Ubah).
+  5. Klik tombol Tambah untuk menambahkan matakuliah yang akan diakui.
+                                       
+  6. Isikan data transaksi matakuliah yang diakui, kemudian klik tombol Simpan.
+                                       
+Masa Semester Aktif
+Ketika masa semester berlangsung, terdapat beberapa proses pendataan yang dilakukan, antara lain mengelola peserta kelas, pengelolaan data kemahasiswaan dan pengelolaan ujian.
+Pengelolaan Peserta Kelas
+Pengelolaan peserta kelas berhubungan dengan hal-hal yang dilakukan operator terkait pengelolaan jumlah peserta kelas yang diperoleh setelah proses KRS. 
+Syarat pra-kondisi yang harus terpenuhi sebelum menjalankan pengelolaan peserta kelas adalah sebagai berikut :
+  1. Data KRS mahasiswa telah melalui persetujuan KRS oleh  dosen pembimbing akademiknya. 
+  2. Masa KRS dan masa revisi KRS telah berakhir, sehingga data yang ada merupakan jumlah peserta yang sudah final.
+Beberapa yang dilakukan sebagai bentuk pengelolaan atas peserta kelas adalah sebagai berikut :
+  1. Memindahkan peserta kelas ke kelas yang lain.
+  2. Membagi sebuah kelas yang pesertanya terlalu besar ke dalam beberapa kelas paralel.
+  3. Menggabungkan peserta kelas dari beberapa kelas paralel yang sedikit peserta kelasnya ke dalam sebuah kelas.
+  4. Membuat rencana pertemuan kuliah.
+  5. Input presensi mahasiswa.
+  6. Membuat dan mencetak presensi tatap muka - presensi ujian UTS/UAS.
+  7. Definisi akan peran dan pengawas ujian.
+Membuat Rencana Pertemuan
+Sebelum dapat melakukan input data presensi mahasiswa per pertemuan, terlebih dahulu perlu dibuat rencana pertemuannya. Langkah-langkahnya adalah sebagai berikut.
+  1. Pilih menu Peserta Kelas  Presensi.
+  2. Pilih Program Studi yang presensi mahasiswanya ingin diinputkan, tekan tombol OK.
+  3. Pada daftar kelas yang tampil, cara kelas yang presensi mahasiswanya ingin diinputkan, kemudian tekan tombol Rencana Tatap Muka pada kolom Aksi.
+  4. Di halaman Daftar Peserta, pada bagian "Jumlah Pertemuan", tentukan estimasi jumlah pertemuan yang akan terlaksana, kemudian tekan tombol Tampilkan.
+  5. Selanjutnya tentukan rencana tanggal pertemuan pertama, untuk tanggal pertemuan kedua, ketiga, dan seterusnya, sistem akan melakukan generate otomatis.
+  6. Tekan tombol Simpan.
+                                       
+Cetak Presensi Kelas
+Untuk mencetak form presensi kehadiran mahasiswa peserta kelas, dapat dilakukan dengan cara sebagai berikut.
+  1. Pilih menu Peserta Kelas  Cetak Presensi.
+  2. Tentukan filter Program Studidari kelas yang akan dicetak presensi kelasnya. Tekan tombol OK.
+  3. Pada halaman Cetak Presensi Kuliah, pilih kelas yang akan dicetak presensinya dengan menekan tombol Cetak Presensi.
+  4. Untuk mencetak presensi dari beberapa kelas sekaligus, dapat dilakukan dengan mencetang beberapa kelas lalu tekan tombol Cetak Presensi. 
+Input Presensi Mahasiswa
+Untuk melakukan input presensi mahasiswa ke dalam sistem, langkah-langkahnya adalah sebagai berikut.
+  1. Pilih menu Peserta Kelas  Presensi.
+  2. Pilih Program Studi yang mahasiswanya akan diinputkan presensi, kemudian tekan tombol OK.
+  3. Pada halaman Daftar Kelas, pilih kelas yang presensi mahasiswanya akan diinputkan. Tekan tombol Presensi pada kolom Aksi.
+  4. Di halaman selanjutnya, pilih pertemuan yang akan diinputkan presensi mahasiswanya, tekan tombol Input Presensi pada kolom Aksi.
+  5. Selanjutnya, input presensi mahasiswa, kemudian tekan tombol Simpan.
+                                       
+Melakukan Rekap Presensi per Kelas
+Setelah melakukan input presensi mahasiswa, untuk melihat rekapitulasi presensi mahasiswa per kelas, langkah-langkahnya adalah sebagai berikut.
+  1. Pilih menu Peserta Kelas  Presensi.
+  2. Pilih Program Studi yang mahasiswanya akan diinputkan presensi, kemudian tekan tombol OK.
+  3. Pada halaman Daftar Kelas, pilih kelas yang presensi mahasiswanya akan diinputkan. Tekan tombol Rekap Presensi pada kolom Aksi.
+Pengelolaan Data Kemahasiswaan
+Mahasiswa Cuti
+Terdapat 2 metode untuk mengelola status cuti mahasiswa, pertama adalah memproses pengajuan cuti mahasiswa, kedua adalah mencatatkan cuti mahasiswa.
+Penjelasannya sebagai berikut :
+  1. Memproses pengajuan cuti mahasiswa yang dilakukan oleh mahasiswa :
+     1. Pilih menu KemahasiswaanPengajuan CutiMahasiswa
+     2. Lakukan pencarian berdasarkan program studi, nama, dan lain-lain, klik tombol Cari.
+     3. Klik tombol ProsesPengajuanCuti.
+     4. Lengkapi data cuti mahasiswa, kemudian klik tombol Proses untuk memproses cuti mahasiswa.
+                                       
+  2. Mencatatkan cuti mahasiswa, langkah-langkahnya adalah sebagai berikut :
+     1. Pilih menu KemahasiswaanCutiMahasiswa
+     2. Lakukan pencarian berdasarkan program studi, nama, dan lain-lain, klik tombol Cari.
+     3. Klik TambahCutiMahasiswa untuk mencatatkan mahasiswa yang cuti.
+     4. Klik tombol Cuti pada mahasiswa yang mengambil cuti.
+     5. Isikan data cutinya, kemudian klik tombol Proses untuk memproses cuti mahasiswa.
+                                       
+Mahasiswa Keluar
+Mencatatkan mahasiswa yang keluar, langkah-langkah-nya adalah sebagai berikut :
+  1. Pilih menu KemahasiswaanMahasiswa
+  2. Lakukan pencarian berdasarkan program studi, nama, dan lain-lain, klik tombol Cari.
+  3. Klik tombol Pilih untuk mahasiswa yang sudah keluar.
+  4. Isikan data pengunduran diri mahasiswa tersebut, kemudian klik tombol Proses.
+                                       
+Mahasiswa DO
+Mencatatkan mahasiswa yang drop out, langkah-langkahnya adalah sebagai berikut :
+  1. Pilih menu KemahasiswaanMahasiswa Drop Out
+  2. Klik tombol Tambah.
+  3. Lakukan pencarian berdasarkan program studi, nama, dan lain-lain, klik tombol Cari.
+  4. Klik tombol Pilih pada daftar mahasiswa.
+  5. Isikan data DO mahasiswa tersebut, kemudian klik tombol Proses.
+                                       
+Cetak Presensi Ujian
+Pembuatan presensi UTS atau UAS memiliki proses yang sama, dengan langkah-langkah sebagai berikut :
+  1. Pilih menu Peserta Kelas  Cetak Presensi UTSatauCetak Presensi UAS.
+  2. Tentukan filter Program Studi dari kelas yang akan dicetak presensi ujiannya. Tekan tombol OK.
+  3. Beri tanda centang (√) di depan nama kelas yang akan dicetak presensi ujiannya. Tekan tombol Cetak atau Cetak Khusus untuk mencetak presensi ujiannya.
+                            Kik untuk cetak massal
+                            Kik untuk cetak satuan
+                             Pilh kelas matakuliah
+Cetak Kartu Ujian
+Cetak kartu ujian dilakukan menjelang masa ujian berlangsung, setelah melalui beberapa kondisi yang harus terpenuhi antara lain sebagai berikut :
+  1. Jadwal ujian (UTS/UAS) telah disusun beserta dengan ruangan dan pembagian peserta ujian di tiap-tiap ruang ujian.
+  2. Masa pembayaran biaya perkuliahan telah berakhir, sehingga mahasiswa telah menyelesaikan administrasi pembayarannya.
+Untuk mencetak kartu ujian bagi mahasiswa dapat dilakukan dengan langkah sebagai berikut :
+  1. Pilih menu Rencana Studi  Rencana Studi.
+  2. Tentukan filter Program Studi dan Angkatan mahasiswa yang akan dicetak kartu ujiannya. Tekan tombol Tampilkan.
+  3. Setelah muncul Daftar Mahasiswa Sudah KRS, tekan tombol Cetak Kartu UTS atau Cetak Kartu UAS yang terdapat di kolom aksi di samping setiap nama mahasiswa.
+
+Masa Akhir Semester
+Input Nilai
+Proses entri nilai akhir yang diperoleh mahasiswa merupakan salah satu proses yang dilakukan di akhir sebuah semester. Nilai yang dientrikan diperoleh dari masing-masing dosen pengampu matakuliah. 
+Entri nilai yang dilakukan dapat dengan mengisikan nilai per komponen penilaian ataupun langsung dengan Nilai Relatifnya.
+Langkah-langkah untuk melakukan proses entri nilai adalah sebagai berikut.
+  1. Pilih menu Input Nilai  Input Nilai Per Kelas.
+  2. Pada halaman Daftar Kelas, pilih kelas yang akan diinputkan, tekan tombol Input Nilai pada kolom Aksi.
+  3. Beri tanda centang ( √ ) di depan nama mahasiswa yang akan dientrikan nilainya.
+  4. Isikan nilai pada form Input Nilai Mahasiswa, dan tekan tombol Simpan.
+
+Catatan:
+  * Apabila nilai yang dientrikan dengan menyertakan nilai per komponen penilaian, maka harus dipastikan prosentase penilaian per komponen telah diseting saat membuat kelas ditawarkan.
+  * Bagian kolom absolut merupakan total nilai yang diperoleh mahasiswa dari hasil penghitungan prosentase nilai per komponen nilai dikali dengan nilai yang diperoleh untuk tiap komponen nilai.
+  * Jangan lupakan memberi centang di depan nama mahasiswa yang akan dientrikan nilainya, sebab tanpa dicentang maka nilai untuk mahasiswa tersebut tidak akan tersimpan.
+Input Nilai Semester Lama
+Pada saat pertama kali penggunaan sistem, ada kalanya data nilai mahasiswa di semester lama ada yang belum lengkap, sehingga perlu dilakukan input nilai matakuliah untuk semester lama. Langkah-langkah untuk melakukan input nilai semester lama adalah sebagai berikut :
+  1. Buat kelas matakuliah di semester lama :
+   Jika kelas matakuliah di semester lama masih belum ada, maka lakukan penambahan kelas matakuliah terlebih dahulu. Jangan lupa untuk pilih semester lain, karena secara default semester yang tampil adalah semester yang sedang aktif (klik tombol Pilih Semester di menu Jadwal). Kemudian lakukan penambahan data kelas seperti pada bab 2.4.3.
+                                       
+  2. KRS matakuliah semester lama :
+   Lakukan pengambilan KRS untuk mahasiswa yang ingin ditambahkan nilai matakuliahnya. Jangan lupa untuk pilih filter semester lain (ada pada kolom filter data). Kemudian lakukan pengambilan KRS seperti pada bab 2.5.2. Setelah selesai melakukan pengambilan KRS, lakukan persetujuan KRS.
+                                       
+Jika 2 langkah diatas sudah dilakukan, maka proses input nilai untuk semester lama sudah bisa dilakukan.
+Cetak KHS
+Untuk mencetak hasil studi mahasiswa, dapat dilakukan dengan cara sebagai berikut.
+  1. Pilih menu Hasil StudiHasil Studi per Semester.
+  2. Tentukan filter Program Studidan semester KHS yang akan dicetak dari mahasiswa yang akan dicetak hasil studinya. Tekan tombol Tampilkan.
+  3. Pada halaman Hasil Studi Mahasiswa, tekan tombol Cetak Khusus Semua KHSatau Cetak Semua KHS.
+Penyusunan Transkrip
+Transkrip merupakan daftar nilai terbaik dari seorang mahasiswa dengan mengacu pada sebuah setingan kurikulum tertentu. 
+Syarat pra-kondisi yang harus terpenuhi sebelum dilakukan penyusunan transkrip seorang mahasiswa adalah sebagai berikut :
+  1. Seluruh nilai dari setiap matakuliah yang diambil oleh mahasiswa pada semester tersebut telah dientri.
+  2. Kurikulum yang diberlakukan pada mahasiswa yang akan dibuat transkripnya telah diseting.
+  3. Kesetaraan matakuliah telah disetting.
+  4. Untuk mahasiswa pindahan, nilai yang diperoleh dari perguruan tinggi sebelumnya telah dientri ke dalam sistem.
+Proses untuk melakukan generate transkrip bagi mahasiswa dapat dilakukan dengan cara sebagai berikut.
+  1. Pilih menu Transkrip  Nilai  Transkrip.
+  2. Tentukan filter data yang akan ditampilkan dan tekan tombol Tampilkan.
+  3. Pada halaman Daftar Transkrip Mahasiswa, pilih data mahasiswa dan tekan link pada nama mahasiswa pada kolom Nama.
+  4. Pada halaman selanjutnya, isikan setting pengambilan nilai dan pengembalian kurikulumnya, lalu tekan tombol Buat Transkrip.
+Kelulusan
+Pendaftaran Tugas Akhir
+Menu ini digunakan untuk mengelola pendaftaran tugas akhir mahasiswa. Data mahasiswa yang muncul pada menu ini adalah mahasiswa yang sudah mengambil matakuliah Skrispi pada saat mengisi Rencana Studi.
+Berikut ini adalah langkah-langkah untuk menambah pendaftaran tugas akhir :
+  1. Pilih Tugas Akhir  Pendaftaran Tugas Akhir.
+  2. Pada halaman Pendaftaran Tugas Akhir, tekan tombol Tambah.
+  3. Pada halaman Tambah Tugas Akhir Mahasiswa, pilih mahasiswa dan tekan tombol Pilih pada kolom Aksi.
+  4. Isikan data pada form Tambah Tugas Akhir Mahasiswa dan tekan tombol Tambah.
+  5. Isikan data-data Tugas Akhir mahasiswa, kemudian tekan tombol Tambah.
+
+Pendaftaran Ujian Tugas Akhir
+Menu ini digunakan untuk mengelola data pendaftaran Ujian TA. Data mahasiswa yang muncul pada menu ini adalah mahasiswa yang sudah melakukan pendaftaran Tugas Akhir.
+Berikut ini adalah langkah-langkah untuk menambah pendaftaran pendadaran.
+  1. Pilih Tugas Akhir  Pendaftaran Ujian TA.
+  2. Pada halaman Pendaftaran Ujian TA, tekan tombol Tambah.
+  3. Pada halaman Pendaftaran Ujian TA Mahasiswa, pada bagian Pencarian, cari mahasiswa yang akan mendaftar ujian Tugas Akhir, kemudian tekan tombol Cari.
+  4. Pada tabel daftar mahasiswa, cari nama mahasiswa yang dimaksud, kemudian tekan tombol Pilih pada kolom Aksi.
+  5. Isikan data-data ujian Tugas Akhir mahasiswa dan tekan tombol Tambah.
+                                       
+Pengelolaan Ujian Tugas Akhir
+Menu ini digunakan untuk mengelola data ujian Tugas Akhir atau pendadaran mahasiswa. Data mahasiswa yang muncul pada menu ini adalah mahasiswa yang sudah melakukan pendaftaran ujian Tugas Akhir.
+Berikut ini adalah langkah-langkah untuk menentukan dosen penguji pada pendadaran mahasiswa.
+  1. Pilih Tugas Akhir  Pengelolaan Pendadaran.
+  2. Pada halaman Pengelolaan Pendadaran, pilih data mahasiswa yang mempunyai Status Pendadaran "Belum".
+  3. Pada data tersebut, tekan tombol Detil pada kolom Aksi.
+  4. Pada halaman Detil Ujian TA Mahasiswa, tekan tombol Tambah/Ubah Dosen Pendadaran untuk menentukan dosen penguji pendadaran.
+  5. Pada halaman Tambah Dosen Ujian TA, pilih dosen pendadaran dengan cara memberikan tanda centang pada data dosen dan tentukan peran dosen tersebut.
+  6. Tekan tombol Tambah.
+  7. Untuk memasukkan data-data hasil ujian Tugas Akhir Mahasiswa, pada halaman Detil Ujian TA Mahasiswa, tekan tombol Ubah.
+  8. Isikan data-data hasil ujian Tugas Akhir, kemudian tekan tombol Simpan.
+
+Pendaftaran Yudisium
+Setelah seorang mahasiswa menyelesaikan kewajibannya mengikuti perkuliahan maka sebelum diwisuda dan dinyatakan lulus dari perguruan tinggi mahasiswa tersebut mengikuti proses yudisium. Proses yudisium sendiri adalah proses untuk membereskan segala urusan administrasi yang terkait dengan perkuliahan, diantaranya adalah proses menyusun daftar nilai akhir mahasiswa, penghitungan IP Kumulatif akhir yang akan tercatum di dalam ijazah seorang mahasiswa.
+Syarat pra-kondisi yang harus terpenuhi sebelum proses yudisium dapat berjalan dengan menggunakan aplikasi akademik adalah sebagai berikut.
+  1. Mahasiswa yang akan mengikuti yudisium, telah dinyatakan lulus dan selesai dari proses Tugas Akhir.
+  2. Setting gelar, syarat yudisium dan sesi yudisium telah dientrikan dalam aplikasi.
+Adapun langkah yang dapat digunakan untuk mendaftarkan mahasiswa mengikuti yudisium ke dalam sistem dengan cara sebagai berikut :
+  1. Pilih Kelulusan  Pendaftaran Yudicium.
+  2. Pada halaman Pendaftaran Yudicium, tekan tombol Tambah.
+  3. Cari mahasiswa yang ingin didaftarkan yudisiumnya di bagian Filter. Kemudian tekan tombol Tampilkan.
+  4. Pilih mahasiswa yang ada di daftar mahasiswa lulus tugas akhir yang akan didaftarkan yudisium dengan cara menekan nama mahasiswa tersebut. 
+  5. Isikan data-data di halaman Pendaftaran Yudisium Mahasiswa, kemudian tekan tombol Tambah.
+                                       
+Pengelolaan Yudisium
+Selanjutnya, setelah mahasiswa didaftarkan sebagai yang akan mengikuti yudisium, operator akademik akan mengelola data-data pendaftar sehingga dinyatakan lulus yudisium.
+Langkah-langkah yang dilakukan untuk menyatakan seorang mahasiswa lulus yudisum adalah sebagai berikut :
+  1. Pilih Kelulusan  Pengelolaan Yudicium.
+  2. Pada bagian Filter, cari mahasiswa yang ingin dinyatakan lulus yudisium, kemudian tekan tombol Tampilkan.
+  3. Pada daftar mahasiswa yang muncul, tekan tombol Yudicium pada tombol Aksi.
+  4. Pada halaman Yudisium Mahasiswa, isikan data-data kelulusan yudisium.
+  5. Tekan tombol Simpan.
+                                       
+Cetak Transkrip Kelulusan
+Langkah-langkah untuk mencetak transkrip kelulusan, adalah sebagai berikut :
+  1. Pilih menu TranskripNilaiTranskrip
+  2. Tampilkan daftar mahasiswa yang ingin dicetak transkrip kelulusannya
+  3. Klik tombol CetakSemuaTranskrip
+  4. Pilih mahasiswa yang ingin dicetak transkrip kelulusannya
+  5. Klik tombol CetakTranskrip, atau klik tombol CetakTranskripDuplicate
+

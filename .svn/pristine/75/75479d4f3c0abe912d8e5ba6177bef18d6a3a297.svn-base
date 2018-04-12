@@ -1,0 +1,42 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="refJenPdkKode" / --></th>
+        <td>
+            <input type="text" name="refjenpdkkode" value="{REFJENPDKKODE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="refJenPdkKodeDikti" / --></th>
+        <td>
+            <input type="text" name="refjenpdkkodedikti" value="{REFJENPDKKODEDIKTI}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="refJenPdkNama" / --></th>
+        <td>
+            <input type="text" name="refjenpdknama" value="{REFJENPDKNAMA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="refJenPdkDesc" / --></th>
+        <td>
+            <textarea name="refjenpdkdesc" cols="50" rows="2" >{REFJENPDKDESC}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

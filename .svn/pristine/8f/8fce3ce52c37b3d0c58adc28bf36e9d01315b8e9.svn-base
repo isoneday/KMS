@@ -1,0 +1,76 @@
+<?php
+
+$sql["count_interviewaspect"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_interviewaspect"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.aspekwawancara_id AS `id`,
+    a.kategoriwawancara_id AS `kategoriwawancara_id`,
+    c.kategoriwawancara_name AS category,
+    a.aspekwawancara_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_aspek_wawancara a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_kategori_wawancara c ON c.kategoriwawancara_id=a.kategoriwawancara_id
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_interviewaspect"] = "
+SELECT 
+    a.aspekwawancara_id AS `id`,
+    a.kategoriwawancara_id AS `kategoriwawancara_id`,
+    c.kategoriwawancara_name AS category,
+    a.aspekwawancara_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_aspek_wawancara a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_kategori_wawancara c ON c.kategoriwawancara_id=a.kategoriwawancara_id
+WHERE aspekwawancara_id = %d
+";
+$sql["insert_interviewaspect"] = "
+INSERT INTO ref_aspek_wawancara
+(
+    kategoriwawancara_id,
+    aspekwawancara_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_interviewaspect"] = "
+UPDATE ref_aspek_wawancara
+SET 
+    kategoriwawancara_id = %s,
+    aspekwawancara_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aspekwawancara_id = %d
+";
+$sql["delete_interviewaspect"] = "
+DELETE FROM ref_aspek_wawancara
+WHERE aspekwawancara_id = %d
+";
+$sql["list_interviewaspect"] = "
+SELECT
+    aspekwawancara_id AS `id`,
+    aspekwawancara_name AS `name`
+FROM
+    ref_aspek_wawancara
+ORDER BY aspekwawancara_name
+";

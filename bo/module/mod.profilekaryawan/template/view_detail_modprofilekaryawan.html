@@ -1,0 +1,86 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">Personal Id</th>
+        <td>{PERSONAL_ID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Real Name</th>
+        <td>{REAL_NAME}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:200px">gender</th>
+        <td>{JENIS_KELAMIN}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Religion</th>
+        <td>{AGAMA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">place of birth</th>
+        <td>{TEMPAT_LAHIR}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:200px">address</th>
+        <td>{ALAMAT}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">zip code</th>
+        <td>{KODE_POS}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:200px">job position</th>
+        <td>{POSISI_KERJA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">joined in company</th>
+        <td>{TAHUN_MASUK}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Mobile</th>
+        <td>+{NO_HP}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Email</th>
+        <td>{EMAIL}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Desc</th>
+        <td>{DESC}</td>
+    </tr>
+    <!-- <tr>
+        <th style="width:200px">Active Lang Code</th>
+        <td>{ACTIVE_LANG_CODE}</td>
+    </tr>
+     --><tr class="subhead">
+                <th colspan="1"><!-- patTemplate:gtfwgetlang key="employee_photo" / --></th>
+       <td>         <a href="{PHOTO_PATH}"  target="_blank"  class="" title="">open photo</a> </td>
+  
+            </tr>
+    
+            <!-- patTemplate:tmpl name="current_photo" visibility="hidden" -->
+    
+    <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+                <td>
+                    {PHOTO_FILE}
+                </td>
+            </tr>
+            <!-- patTemplate:tmpl name="photo_preview" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+            </tr>
+<th style="text-style: bold  !important;"> PHOTO PROFILE</th><br><br>
+
+
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:tmpl -->
+            
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

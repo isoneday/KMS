@@ -1,0 +1,138 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurKode" / --></th>
+        <td>
+            <input type="number" name="jurkode" value="{JURKODE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurKodeuniv" / --></th>
+        <td>
+            <input type="text" name="jurkodeuniv" value="{JURKODEUNIV}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurFakKode" / --></th>
+        <td>
+            <input type="number" name="jurfakkode" value="{JURFAKKODE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurNamaResmi" / --></th>
+        <td>
+            <input type="text" name="jurnamaresmi" value="{JURNAMARESMI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurNamaSingkat" / --></th>
+        <td>
+            <input type="text" name="jurnamasingkat" value="{JURNAMASINGKAT}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurNamaAsing" / --></th>
+        <td>
+            <input type="text" name="jurnamaasing" value="{JURNAMAASING}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurAlamat" / --></th>
+        <td>
+            <input type="text" name="juralamat" value="{JURALAMAT}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurTelp" / --></th>
+        <td>
+            <input type="text" name="jurtelp" value="{JURTELP}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurFax" / --></th>
+        <td>
+            <input type="text" name="jurfax" value="{JURFAX}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurEmail" / --></th>
+        <td>
+            <input type="text" name="juremail" value="{JUREMAIL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurKontakPerson" / --></th>
+        <td>
+            <input type="text" name="jurkontakperson" value="{JURKONTAKPERSON}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurLuasKebunPercobaan" / --></th>
+        <td>
+            <input type="text" name="jurluaskebunpercobaan" value="{JURLUASKEBUNPERCOBAAN}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurLuasRuangKuliah" / --></th>
+        <td>
+            <input type="text" name="jurluasruangkuliah" value="{JURLUASRUANGKULIAH}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurJumlahRuangKuliah" / --></th>
+        <td>
+            <input type="number" name="jurjumlahruangkuliah" value="{JURJUMLAHRUANGKULIAH}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurLuasLaboratorium" / --></th>
+        <td>
+            <input type="text" name="jurluaslaboratorium" value="{JURLUASLABORATORIUM}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurJumlahRuangLaboratorium" / --></th>
+        <td>
+            <input type="number" name="jurjumlahruanglaboratorium" value="{JURJUMLAHRUANGLABORATORIUM}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurLuasRuangDosenTetap" / --></th>
+        <td>
+            <input type="text" name="jurluasruangdosentetap" value="{JURLUASRUANGDOSENTETAP}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurLuasRuangAdministrasi" / --></th>
+        <td>
+            <input type="text" name="jurluasruangadministrasi" value="{JURLUASRUANGADMINISTRASI}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurJumlahJudulBuku" / --></th>
+        <td>
+            <input type="text" name="jurjumlahjudulbuku" value="{JURJUMLAHJUDULBUKU}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jurJumlahEksemplarBuku" / --></th>
+        <td>
+            <input type="text" name="jurjumlaheksemplarbuku" value="{JURJUMLAHEKSEMPLARBUKU}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

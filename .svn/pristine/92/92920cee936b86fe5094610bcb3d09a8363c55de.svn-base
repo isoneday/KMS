@@ -1,0 +1,87 @@
+<?php
+
+$sql['count_data'] = "
+SELECT
+	COUNT(currId) AS total
+FROM
+	finansi_bg_ref_currency
+WHERE
+    1 = 1
+    --filter--
+";
+
+$sql['get_data'] = "
+SELECT
+  `currId` as data_id,
+  `currCode` as code,
+  `currNama` as name,
+  `currSymbol` as symbol,
+  `currAktif` as status,
+  `currUcapan` as desc
+FROM `finansi_bg_ref_currency`
+WHERE
+    1 = 1
+    --filter--
+--limit--
+";
+
+$sql['get_detail'] = "
+SELECT
+  `currId` as data_id,
+  `currCode` as code,
+  `currNama` as name,
+  `currSymbol` as symbol,
+  `currAktif` as status,
+  `currUcapan` as ucapan
+FROM `finansi_bg_ref_currency`
+WHERE
+	currId = %d
+";
+
+$sql['add_currency'] = "
+INSERT INTO `finansi_bg_ref_currency`
+            ( `currId`,
+			  `currCode`,
+			  `currNama`,
+			  `currSymbol`,
+			  `currAktif`,
+			  `currUcapan`)
+VALUES ('%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s')
+";
+
+$sql['max_currency_id'] = "
+SELECT
+	MAX(currId) AS id
+FROM
+	finansi_bg_ref_currency
+";
+
+$sql['update_currency'] = "
+UPDATE `finansi_bg_ref_currency`
+SET `currCode` = '%s',
+  `currNama` = '%s',
+  `currSymbol` = '%s',
+  `currAktif` = '%s',
+  `currUcapan` = '%s'
+WHERE `currId` = '%s'
+";
+
+$sql['delete_currency'] = "
+DELETE
+FROM `finansi_bg_ref_currency`
+WHERE `currId` = '%s'
+";
+
+$sql['get_data_by_code'] = "
+ SELECT 
+  u.`currId` AS data_id 
+FROM
+  finansi_bg_ref_currency u 
+WHERE LOWER(u.`currCode`) = LOWER(%s)
+ ";
+ 

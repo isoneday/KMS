@@ -1,0 +1,692 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<script>
+    $("#tabs-personaldata").tabs();
+    
+    var tabs = ["biodata","ortu","saudara","aktifitas","prestasi","akademik","lampiran","beasiswa"];
+    var factive = '{TAB_ACTIVE}';
+    if (factive != "") {
+        var tab_active = tabs.indexOf(factive) + 1;
+        $("#tabs-personaldata > ul > li:nth-child("+tab_active+") a").trigger('click');
+        console.log(tab_active);
+    }
+
+    function updateInputFakultas() {
+         replaceContentWithUrl('combo_input_fakultas', '<!-- patTemplate:gtfwgeturl module="ref.faculty" sub="ComboRefFaculty" action="view" type="html" htmlentities="no" / -->&ascomponent=1&univ=' + document.forms.form_input_biodata.univ_id.value);        
+    } 
+    function updateInputJurusan() {
+         replaceContentWithUrl('combo_input_jurusan', '<!-- patTemplate:gtfwgeturl module="ref.department" sub="ComboRefDepartment" action="view" type="html" htmlentities="no" / -->&ascomponent=1&fakultas=' + document.forms.form_input_biodata.fakultas_id.value);
+    }
+    function updateInputProdi() {
+         replaceContentWithUrl('combo_input_prodi', '<!-- patTemplate:gtfwgeturl module="ref.study.program" sub="ComboStudyProgram" action="view" type="html" htmlentities="no" / -->&ascomponent=1&jurusan=' + document.forms.form_input_biodata.jurusan_id.value);
+    } 
+
+    $(function () {
+        $("#agreement_1, #agreement_2").change(function () {
+            if ($("#agreement_1").is(':checked') && $("#agreement_2").is(':checked')) {
+                $('#sendBTN').attr('disabled', false);
+            } else {
+                $('#sendBTN').attr('disabled', true);
+            }
+        });
+
+    });
+
+</script>
+<div class="content-box-form">
+    <div id="tabs-personaldata">
+        <ul>
+            <li><a href="#tabs-personaldata-1">Biodata</a></li>
+            <li><a href="#tabs-personaldata-2">Orang Tua/Wali</a></li>
+            <li><a href="#tabs-personaldata-3">Saudara</a></li>
+            <li><a href="#tabs-personaldata-4">Aktifitas</a></li>
+            <li><a href="#tabs-personaldata-5">Data Prestasi Non Akademik</a></li>
+            <li><a href="#tabs-personaldata-6">IPK</a></li>
+            <li><a href="#tabs-personaldata-7">Lampiran</a></li>
+            <li><a href="#tabs-personaldata-8">Beasiswa</a></li>
+        </ul>
+        <div id="tabs-personaldata-1">
+            <!-- patTemplate:tmpl name="detail" -->
+            <form id="form_input_biodata" class="xhr dest_subcontent-element" method="post" action="{URL}">
+                <input type="hidden" name="id" value="{ID}" />
+                <table class="table-edit">
+                    
+                    <tr>
+                        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+                        <td>
+                            <input type="text" name="nim" value="{NIM}" required="required" />*            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Angkatan</th>
+                        <td>
+                            <select name="angkatan">
+                                <option value="">-- Select --</option>
+                            <!-- patTemplate:tmpl name="angkatan" -->
+                                <option value="{ID}" {SELECTED}>{YEAR}</option>
+                            <!-- /patTemplate:tmpl -->
+                            </select>          
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Universitas</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.university" submodule="ComboRefUniversity" action="view" name="univ_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Fakultas</th>
+                        <td id="combo_input_fakultas">
+                            <!-- patTemplate:gtfwrendermodule module="ref.faculty" submodule="ComboRefFaculty" action="view" name="fakultas_id"  / -->           
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Jurusan</th>
+                        <td id="combo_input_jurusan">
+                           <!-- patTemplate:gtfwrendermodule module="ref.department" submodule="ComboRefDepartment" action="view" name="jurusan_id"  / -->            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Program Studi</th>
+                        <td id="combo_input_prodi">
+                             <!-- patTemplate:gtfwrendermodule module="ref.study.program" submodule="ComboStudyProgram" action="view" name="prodi_id"  / -->           
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="width: 200px;">Jenjang Pendidikan</th>
+                        <td id="combo_input_pendidikan">
+                            <!-- patTemplate:gtfwrendermodule module="ref.education" submodule="ComboRefEducation" action="view" name="jenjangpendidikan_id"  / -->     
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Nama</th>
+                        <td>
+                            <input type="text" name="nama" value="{NAMA}"  />            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Email</th>
+                        <td>
+                            <input type="text" name="email" value="{EMAIL}"  />            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Jenis Kelamin</th>
+                        <td>
+                            <input type="radio" {APL_GENDER_LAKI} name="jenis_kelamin" value="L"/> Laki - Laki 
+                            <input type="radio" {APL_GENDER_PEREMPUAN} name="jenis_kelamin" value="P"/> Permpuan            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tempat Lahir</th>
+                        <td>
+                            <input type="text" name="tempat_lahir" value="{TEMPAT_LAHIR}"  />            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tanggal Lahir</th>
+                        <td>
+                            {TANGGAL_LAHIR}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Agama</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="referensi.agama" submodule="ComboReferensiAgama" action="view" name="agama_id"  / -->             
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">No. KTP</th>
+                        <td>
+                            <input type="text" name="no_ktp" value="{NO_KTP}"  />            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Telepon</th>
+                        <td>
+                            <input type="text" name="telepon" value="{TELEPON}"  />            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Alamat</th>
+                        <td>
+                            <textarea name="alamat" cols="50" rows="2" >{ALAMAT}</textarea>     
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tempat Tinggal</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.tempat.tinggal" submodule="ComboTempatTinggal" action="view" name="tempattinggal_id"  / -->           
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Pembiayaan Kuliah</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.fanancing.study" submodule="ComboFanancingStudy" action="view" name="pembiayaankuliah_id"  / -->           
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Sumber Info</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.resources.scholarships" submodule="ComboResourcesScholarships" action="view" name="sumber_info_id"  / -->             
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tanggal Registrasi</th>
+                        <td>
+                           {TANGGAL_REGISTRASI} 
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>   
+                            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+                        </td>            
+                    </tr>    
+                </table>
+            </form>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-2">
+            <!-- patTemplate:tmpl name="orangtua" -->
+            <form id="form_input_orangtua" class="xhr dest_subcontent-element" method="post" action="{URL}">
+                <input type="hidden" name="ortu_id" value="{ORTU_ID}">
+                <table class="table-edit">
+                    <tr>
+                        <th colspan="2"><h3>{TITLE}</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Keterangan</th>
+                        <td>
+                        <!-- patTemplate:gtfwrendermodule module="ref.wali" submodule="ComboRefWali" action="view" name="aplikanwali_wali_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Nama Orang Tua/Wali</th>
+                        <td><input type="text" name="ortu_nama" value="{ORTU_NAMA}" ></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tempat Lahir Orang Tua</th>
+                        <td><input type="text" name="ortu_tempat_lahir" value="{ORTU_TEMPAT_LAHIR}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tanggal Lahir</th>
+                        <td><input type="date" name="ortu_tgl_lhr" value="{ORTU_TGL_LHR}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Pendidikan</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.education" submodule="ComboRefEducation" action="view" name="ortu_pendidikan_id"  / --> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Pekerjaan</th>
+                        <td>
+                        <!-- patTemplate:gtfwrendermodule module="ref.employee" submodule="ComboRefEmployee" action="view" name="ortu_pekerjaan_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Penghasilan</th>
+                        <td><input type="text" name="ortu_penghasilan" value="{ORTU_PENGHASILAN}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Status Meninggal : </th>
+                        <td>
+                            <input type="radio" value="Y" {STATUS_MENINGGAL} name="ortu_status"></input> Ya
+                            <input type="radio" value="N" {STATUS_HIDUP} name="ortu_status"></input> Tidak
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>   
+                            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+                        </td>      
+                    </tr>
+                </table>
+                <!-- patTemplate:tmpl name="orangtua_display" -->
+                <table class="table-details">
+                    <tbody>
+                        <tr>
+                            <th colspan="6">
+                                <h3 style="display: inline-block;">Data Orang Tua/Wali &nbsp;</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Aksi</th>
+                            <th>Nama dan Keterangan</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Pendidikan Terakhir</th>
+                            <th>Pekerjaan</th>
+                            <th>Penghasilan</th>
+                            <th>Status Wali</th>
+                        </tr>
+                        <!-- patTemplate:tmpl name="dataorangtuawali" -->
+                        <tr>
+                            <td>
+                                <a class="xhr dest_subcontent-element btn-edit" href="{URL_UPDATE}" title="Edit Data"></a>
+                            </td>
+                            <td><b>{ORTU_NAMA}</b> - {ORTU_JABATAN}</td>
+                            <td>{ORTU_TGL_LHR}</td>
+                            <td>{ORTU_PENDIDIKAN_NAMA}</td>
+                            <td>{ORTU_PEKERJAAN_NAMA}</td>
+                            <td>{ORTU_PENGHASILAN}</td>
+                            <td>{ORTU_STATUS}</td>
+                        </tr>
+                        <!-- /patTemplate:tmpl -->
+                    </tbody>
+                </table>
+                <!-- /patTemplate:tmpl -->
+            </form>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-3">
+            <!-- patTemplate:tmpl name="saudara" -->
+                <form id="form_input_saudara" class="xhr dest_subcontent-element" method="post" action="{URL}">
+                    <input type="hidden" name="saudara_id" value="{SAUDARA_ID}">
+                    <table class="table-edit">
+                        <tr>
+                            <th colspan="2"><h3>Input Saudara</h3></th>
+                        </tr>
+                       <tr>
+                           <th style="width: 200px;">Jumlah Saudara</th>
+                           <td><input type="number" name="saudara_jumlah" value="{SAUDARA_JUMLAH}" placeholder=""></td>
+                       </tr>
+                       <tr>
+                           <th style="width: 200px;">Jumlah Saudara Yang Ditanggung Orang tua</th>
+                           <td><input type="number" name="saudara_jumlah_tanggungan" value="{SAUDARA_JUMLAH_TANGGUNGAN}" placeholder=""></td>
+                       </tr>
+                       <tr>
+                           <th style="width: 200px;">Jumlah Saudara Yang Sudah Bekerja</th>
+                           <td><input type="number" name="saudara_jumlah_bekerja" value="{SAUDARA_JUMLAH_BEKERJA}" placeholder=""></td>
+                       </tr>
+                       <tr>
+                           <th></th>
+                           <td>   
+                               <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                               <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+                           </td>      
+                       </tr>
+                    </table>
+                </form>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-4">
+            <!-- patTemplate:tmpl name="aktifitas" -->
+            <form id="form_input_aktifitas" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="multipart/form-data">
+                <table class="table-edit">
+                    <tr>
+                        <input type="hidden" name="org_id" value="{ORG_ID}">
+                        <th colspan="2"><h3>{TITLE}</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Aktifitas</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.jenis.aktifitas" submodule="comboJenisAktifitas" action="view" name="org_jenisaktifitas_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Lingkup</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.lingkup.prestasi" submodule="ComboLingkupPrestasi" action="view" name="org_lingkup_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Jabatan</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.jabatan.organisasi" submodule="comboJabatanOrganisasi" action="view" name="org_jabatan_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Nama Organisasi</th>
+                        <td><input type="text" name="org_nama" value="{ORG_NAMA}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Periode Tahun</th>
+                        <td>
+                            <select name="org_periode">
+                                <option value="">-- Select --</option>
+                            <!-- patTemplate:tmpl name="org_periode" -->
+                                <option value="{ID}" {SELECTED}>{YEAR}</option>
+                            <!-- /patTemplate:tmpl -->
+                            </select>          
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Keterangan</th>
+                        <td><textarea cols="30" name="org_keterangan">{ORG_KETERANGAN}</textarea></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">File Aktifitas Organisasi *</th>
+                        <td>
+                            <input type="file" name="org_file" title="" tabindex="17"  />
+                            <br><i>* format file (doc,DOC,docx,DOCX,pdf,PDF)</i>
+                            <br>Status : {LAMPIRAN_4_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center" style="padding-top:20px;padding-bottom:20px">   
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </td>      
+                    </tr>
+                </table>
+            </form>
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="7">
+                            <h3 style="display: inline-block;">Data Aktifitas Organisasi &nbsp;</h3>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Aksi</th>
+                        <th>Nama Organisasi</th>
+                        <th>Periode/Tahun</th>
+                        <th>Jenis Aktifitas</th>
+                        <th>Lingkup</th>
+                        <th>Jabatan</th>
+                        <th>Keterangan</th>
+                        <th>File</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataaktifitas" -->
+                    <tr>
+                        <td>
+                            <a class="xhr dest_subcontent-element btn-edit" href="{URL_UPDATE}" title="Edit Data"></a>
+                        </td>
+                        <td>{ORG_NAMA}</td>
+                        <td>{ORG_PERIODE}</td>
+                        <td>{ORG_JENISAKTIFITAS_NAMA}</td>
+                        <td>{ORG_LINGKUP_NAMA}</td>
+                        <td>{ORG_JABATAN_NAMA}</td>
+                        <td>{ORG_KETERANGAN}</td>
+                        <td><a href="{FILE_ORGANISASI}" class="" title="">download file</a></td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-5">
+            <!-- patTemplate:tmpl name="nonakademik" -->
+            <form id="form_input_nonakademik" class="xhr dest_subcontent-element" method="post" action="{URL}">
+                <table class="table-edit">
+                    <tr>
+                        <input type="hidden" name="prestasi_id" value="{PRESTASI_ID}">
+                        <th colspan="2"><h3>{TITLE}</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Lingkup</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.lingkup.prestasi" submodule="ComboLingkupPrestasi" action="view" name="prestasi_lingkup_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Periode Tahun</th>
+                        <td>
+                            <select name="prestasi_periode">
+                                <option value="">-- Select --</option>
+                            <!-- patTemplate:tmpl name="prestasi_periode" -->
+                                <option value="{ID}" {SELECTED}>{YEAR}</option>
+                            <!-- /patTemplate:tmpl -->
+                            </select>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Prestasi</th>
+                        <td><input type="text" name="prestasi_nama" value="{PRESTASI_NAMA}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Keterangan</th>
+                        <td><textarea cols="30" name="prestasi_keterangan">{PRESTASI_KETERANGAN}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center" style="padding-top:20px;padding-bottom:20px">   
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </td>      
+                    </tr>
+                </table>
+            </form>
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="5">
+                            <h3 style="display: inline-block;">Data Prestasi Non Akademik &nbsp;</h3>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Aksi</th>
+                        <th>Nama Kegiatan</th>
+                        <th>Periode/Tahun</th>
+                        <th>Lingkup</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataprestasinonakademik" -->
+                    <tr>
+                        <td>
+                            <a class="xhr dest_subcontent-element btn-edit" href="{URL_UPDATE}" title="Edit Data"></a>
+                        </td>
+                        <td>{PRESTASI_NAMA}</td>
+                        <td>{PRESTASI_PERIODE}</td>
+                        <td>{PRESTASI_LINGKUP_NAMA}</td>
+                        <td>{PRESTASI_KETERANGAN}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-6">
+            <!-- patTemplate:tmpl name="ipk" -->
+            <form id="form_input_ipk" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="multipart/form-data">
+                <table class="table-edit">
+                    <tr>
+                        <input type="hidden" name="akademik_id" value="{AKADEMIK_ID}">
+                        <th colspan="2"><h3>{TITLE}</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Semester</th>
+                        <td>
+                            <select name="akademik_semester_nama">
+                                <option value="">-- Select --</option>
+                                <!-- patTemplate:tmpl name="akademik_semester" -->
+                                    <option value="{ID}" {SELECTED}>{SEMESTER}</option>
+                                <!-- /patTemplate:tmpl -->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tahun</th>
+                        <td>
+                            <select name="akademik_periode">
+                                <option value="">-- Select --</option>
+                                <!-- patTemplate:tmpl name="akademik_periode" -->
+                                <option value="{ID}" {SELECTED}>{YEAR}</option>
+                                <!-- /patTemplate:tmpl -->
+                            </select>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">IPS</th>
+                        <td><input type="text" name="akademik_ips" value="{AKADEMIK_IPS}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">IPK</th>
+                        <td><input type="text" name="akademik_ipk" value="{AKADEMIK_IPK}" placeholder=""></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Cuti</th>
+                        <td>
+                            <input name="akademik_is_cuti" {CUTI_YA} type="radio" value="Y"></input> Ya
+                            <input name="akademik_is_cuti" {CUTI_NO} type="radio" value="N"></input> Tidak
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">File Bukti Akademik *</th>
+                        <td>
+                            <input type="file" name="akademik_file" data-ext="pdf,doc,docx" title="" tabindex="17"  />
+                            <br><i>* format file (doc,DOC,docx,DOCX,pdf,PDF)</i>
+                            <br>Status : {LAMPIRAN_4_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center" style="padding-top:20px;padding-bottom:20px">   
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </td>      
+                    </tr>
+                </table>
+            </form>
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="7">
+                            <h3 style="display: inline-block;">Data History Akademik &nbsp;</h3>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Aksi</th>
+                        <th>Semester</th>
+                        <th>Periode/Tahun</th>
+                        <th>IPS</th>
+                        <th>IPK</th>
+                        <th>Status</th>
+                        <th>file</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataakademik" -->
+                    <tr>
+                        <td>
+                            <a class="xhr dest_subcontent-element btn-edit" href="{URL_UPDATE}" title="Edit Data"></a>
+                        </td>
+                        <td>{AKADEMIK_SEMESTER_NAMA}</td>
+                        <td>{AKADEMIK_PERIODE}</td>
+                        <td>{AKADEMIK_IPS}</td>
+                        <td>{AKADEMIK_IPK}</td>
+                        <td>{AKADEMIK_IS_CUTI}</td>
+                        <td><a href="{FILE_AKADEMIK}" class="" title="">download file</a></td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-7">
+            <!-- patTemplate:tmpl name="lampiran" -->
+            <form id="form_lampiran" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{ID}">
+                <table class="table-edit">
+                    <tr>
+                        <th colspan="2"><h3>Lampiran</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Upload file pernyatan tidak mampu *</th>
+                        <td>
+                             <input type="file" name="lam_tdk_mampu" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                              <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                             <br>Status : {LAMPIRAN_1_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Upload file rekomendasi fakultas/jurusan tidak mengikuti beasiswa lain dan mahasiswa aktif *</th>
+                        <td>
+                            <input type="file" name="lam_rekomen" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                             <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                         <br>Status : {LAMPIRAN_2_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Upload file essay *</th>
+                        <td>
+                            <input type="file" name="lam_essay" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                             <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                         <br>Status : {LAMPIRAN_3_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Upload file kartu keluarga *</th>
+                        <td>
+                            <input type="file" name="lam_kk" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                             <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                            <br>Status : {LAMPIRAN_4_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <th style="width: 200px;">Upload file Foto Close Up *</th>
+                        <td>
+                            <input type="file" name="lam_ft" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                             <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                            <br>Status : {LAMPIRAN_4_STATUS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>   
+                            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+                        </td>      
+                    </tr>
+                </table>
+            </form>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-8">
+            <!-- patTemplate:tmpl name="beasiswa" -->
+            <form id="form_lampiran" class="xhr dest_subcontent-element" method="post" action="{URL}">
+                <input type="hidden" name="aplikan_id" value="{APLIKAN_ID}">
+                <table class="table-edit">
+                    <tr>
+                        <th colspan="2"><h3>Data Beasiswa</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Tipe Daftar *</th>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;">Nama Beasiswa</th>
+                        <td>
+                            <!-- patTemplate:gtfwrendermodule module="ref.employee" submodule="ComboBeasiswa" action="view" name="beasiswa_sumberbeasiswa_id"  / -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><h3>Daftar History Beasiswa</h3></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><h3>Accept Agreement</h3></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;"<td>
+                            <input id="agreement_1" name="agreement_1" type="checkbox" > Saya setuju
+                        </th>
+                        <td>
+                             Dengan ini, saya menyatakan bahwa data yang saya isikan di dalam formulir pendaftaran adalah benar. Saya bersedia menerima sanksi pembatalan penerimaan beasiswa apabila saya melanggar pernyataan ini.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 200px;"<td>
+                            <input id="agreement_2" name="agreement_2" type="checkbox" > Saya setuju
+                        </th>
+                        <td>
+                            Saya bersedia untuk ikut aktif dalam kegiatan yang menjadi rangkaian program Beasiswa Pertamina Sobat Bumi, yang telah ditentukan oleh Pertamina Foundation.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td>   
+                            <button type="submit" class="btn btn-primary" id="sendBTN" name="sendBTN" disabled=""><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+                        </td>      
+                    </tr>
+                </table>
+            </form>
+            <!-- /patTemplate:tmpl -->
+        </div>
+    </div>
+</div>
+<!-- /patTemplate:tmpl -->

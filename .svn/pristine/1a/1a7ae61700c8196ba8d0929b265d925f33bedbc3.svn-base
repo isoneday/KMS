@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+
+class CurrencyFin extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.currency/business/mysqlt/currencyfin.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function getInputFields()
+    {
+        $fields = array(
+            'code',
+			'name',
+			'symbol',
+			'status',
+			'desc'
+            );
+        $return = array();
+        foreach ($fields as $val)
+        {
+            $return[$val] = null;
+        }
+        return $return;
+    }
+
+    public function countData($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        if (!empty($name))
+        {
+            $str .= "AND LOWER(currNama) LIKE LOWER('%$name%')";
+        }
+        $query = $this->mSqlQueries['count_data'];
+        $query = str_replace('--filter--', $str, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result[0]['total'];
+    }
+
+    public function getData($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        if (!empty($name))
+        {
+            $str .= "AND LOWER(currNama) LIKE LOWER('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display))
+        {
+            $limit = "LIMIT $start, $display";
+        }
+        $query = $this->mSqlQueries['get_data'];
+        $query = str_replace('--filter--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetail($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail'], array($id));
+        if ($result)
+        {
+            return  $result[0] + $this->getInputFields();
+        }
+    }
+
+    public function addCurrency($params)
+    {
+        return $this->Execute($this->mSqlQueries['add_currency'], $params);
+    }
+	
+	public function getNextCurrencyId()
+    {
+        $id = 1;
+        $result = $this->Open($this->mSqlQueries['max_currency_id'], array());
+        if (!empty($result[0]['id'])) $id = $result[0]['id']+1;
+        return $id;
+    }
+	
+	public function updateCurrency($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_currency'], $params);
+    }
+	
+	public function deleteCurrency($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_currency'], array($id));
+    }
+	
+	public function isCodeExist($name)
+    {
+        $return = false;
+        $result = $this->Open($this->mSqlQueries['get_data_by_code'], array($name));
+        
+        if (!empty($result)) {
+            $return = true;
+        }
+        
+        return $return;
+    }
+
+}
+
+?>

@@ -1,0 +1,101 @@
+<?php
+
+$sql["count_studyprogram"] = "
+SELECT 
+    COUNT(prodi_id) AS total
+FROM ref_program_studi
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_studyprogram"] = "
+SELECT 
+    a.prodi_id AS `id`,
+    a.prodi_kode_univ AS `kode_univ`,
+    a.prodi_name AS `name`,
+    a.prodi_jenjangpendidikan_id AS `jenjangpendidikan_id`,
+    a.prodi_is_eksakta AS `is_eksakta`,
+    a.prodi_jurusan_id AS `jurusan_id`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_program_studi a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_studyprogram"] = "
+SELECT 
+    a.prodi_id AS `id`,
+    a.prodi_kode_univ AS `kode_univ`,
+    a.prodi_name AS `name`,
+    a.prodi_jenjangpendidikan_id AS `jenjangpendidikan_id`,
+    a.prodi_is_eksakta AS `is_eksakta`,
+    a.prodi_jurusan_id AS `jurusan_id`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_program_studi a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE prodi_id = %d
+";
+$sql["insert_studyprogram"] = "
+INSERT INTO ref_program_studi
+(
+    prodi_kode_univ,
+    prodi_name,
+    prodi_jenjangpendidikan_id,
+    prodi_is_eksakta,
+    prodi_jurusan_id,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_studyprogram"] = "
+UPDATE ref_program_studi
+SET 
+    prodi_kode_univ = %s,
+    prodi_name = %s,
+    prodi_jenjangpendidikan_id = %s,
+    prodi_is_eksakta = %s,
+    prodi_jurusan_id = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE prodi_id = %d
+";
+$sql["delete_studyprogram"] = "
+DELETE FROM ref_program_studi
+WHERE prodi_id = %d
+";
+$sql["list_studyprogram"] = "
+SELECT
+    prodi_id AS `id`,
+    prodi_name AS `name`
+FROM
+    ref_program_studi
+ORDER BY prodi_name
+";
+$sql["list_studyprogram_by_jurusan"] = "
+SELECT
+    prodi_id AS `id`,
+    prodi_name AS `name`
+FROM
+    ref_program_studi
+WHERE prodi_jurusan_id = %d
+ORDER BY prodi_name
+";

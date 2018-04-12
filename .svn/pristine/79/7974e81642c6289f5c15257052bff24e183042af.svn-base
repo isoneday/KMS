@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailApplicantInterview extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_applicantinterview.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+
+        $id = $_GET['id']->Integer()->Raw();
+
+        $data = $ObjApplicantInterview->getDetailApplicantInterview($id);
+        $listKategoriwawancara = $ObjApplicantInterview->listKategoriwawancara();
+        
+        return compact('data','id','listKategoriwawancara');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        $this->mrTemplate->addVar('search', 'URL', GtfwDispt()->GetCurrentUrl() . '&display');
+        if (!empty($filter)) {
+            $this->mrTemplate->addVars('search', $filter);
+        }
+
+        if (!empty($data) AND count($data) > 0) {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+			$this->mrTemplate->addVars('data', $data);
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+		
+		 if (!empty($listKategoriwawancara) AND count($listKategoriwawancara) > 0) {
+            $this->mrTemplate->addVar('kategori_wawancara', 'IS_EMPTY', 'NO');
+            foreach ($listKategoriwawancara as $val) {
+                $this->mrTemplate->addVars('kategori_wawancara', $val);
+                $this->mrTemplate->parseTemplate('kategori_wawancara', 'a');
+            }
+        } else {
+            $this->mrTemplate->addVar('kategori_wawancara', 'IS_EMPTY', 'YES');
+        }
+    }
+
+}
+
+?>

@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class Currency extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.currency/business/mysqlt/currency.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function cekCurrency($country_id) {
+        $result = $this->Open($this->mSqlQueries['cek_currency'], array($country_id));
+        return $result;
+    }
+
+    public function countCurrency() {
+        $query = $this->mSqlQueries['count_currency'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getCurrency($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($code)) {
+            $str .= " AND LOWER(curr_code) LIKE('%$code%')";
+        }
+        if (!empty($name)) {
+            $str .= " AND LOWER(curr_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+        $query = $this->mSqlQueries['get_currency'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+
+    public function getDetailCurrency($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_currency'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function insertCurrency($params) {
+        $result = $this->Execute($this->mSqlQueries['insert_currency'], $params);
+        return $result;
+    }
+
+    public function updateCurrency($params) {
+        return $this->Execute($this->mSqlQueries['update_currency'], $params);
+    }
+
+    public function deleteCurrency($id) {
+        return $this->Execute($this->mSqlQueries['delete_currency'], array($id));
+    }
+
+    public function listCurrency() {
+        $result = $this->Open($this->mSqlQueries['list_currency'], array());
+        return $result;
+    }
+
+    public function listCurrencyGa() {
+        $result = $this->Open($this->mSqlQueries['list_currency_ga'], array());
+        return $result;
+    }
+
+    public function listCurrencyGaCode() {
+        $result = $this->Open($this->mSqlQueries['list_currency_ga_code'], array());
+        return $result;
+    }
+
+    public function listCurrencyWithRate() {
+        return $this->Open($this->mSqlQueries['list_currency_with_rate'], array());
+    }
+
+    public function checkCurrencyName($param) {
+        if (is_array($param))
+            extract($param);
+        $str = '';
+        if (!empty($id))
+            $str = "AND curr_id != $id";
+        $query = str_replace('--FILTER--', $str, $this->mSqlQueries['check_currency_name']);
+        $result = $this->Open($query, array($name));
+        if (!empty($result)) {
+            return true;
+        }
+    }
+
+    public function checkField($param) {
+        if (is_array($param))
+            extract($param);
+        $str = '';
+
+        if (!empty($code)) {
+            $str .= " AND LOWER(curr_code) = LOWER('$code')";
+        }
+        if (!empty($id)) {
+            $str .= " AND curr_id != $id";
+        }
+        $limit = '';
+        $query = $this->mSqlQueries['get_currency'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        if (!empty($result))
+            return true;
+        else
+            return false;
+    }
+
+}
+
+// End of file Currency.class.php

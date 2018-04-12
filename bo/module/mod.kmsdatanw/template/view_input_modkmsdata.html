@@ -1,0 +1,149 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" style="margin: 0;"enctype="multipart/form-data">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    
+    <tr>
+        <th style="width: 200px;">type dokumentasi</th>
+        <td>
+      <div id="div_country_id">
+           <!-- patTemplate:gtfwrendermodule module="mod.kmsdata" submodule="comboModKmsdata" 
+           action="view" name="idmasdok"  / -->          
+              &nbsp;*</div>       
+                </td>
+    </tr>
+
+
+    <tr class="id_pembicara" style="display:none;">
+         <th style="width: 200px;">judul</th>
+        <td>
+            <input type="text" name="kmsdata_keyword" />
+        </td>
+      </tr>
+
+<tr class="id_pembicara" style="display:none;">
+             <th style="width: 200px;">jenis</th>
+        <td>
+            <input type="text" name="jenis" />
+        </td>
+    </tr>
+<tr class="id_pembicara" style="display:none;">
+
+         <th style="width: 200px;">Pembicara</th>
+        <td>
+            <input type="text" name="pembicara" />
+        </td>
+</tr>
+<tr class="id_pembicara" style="display:none;">
+             <th style="width: 200px;">lokasi</th>
+        <td>
+            <input type="text" name="lokasi" />
+        </td>
+      </tr>
+<tr class="id_pembicara" style="display:none;">
+
+             <th style="width: 200px;">tanggal</th>
+        <td>
+            <input type="date" name="tanggal" />
+        </td>
+    </tr>
+
+    
+<!-- untuk dokumentasi meeting -->
+<tr class="id_meeting" style="display:none;">
+         <th style="width: 200px;">topik</th>
+        <td>
+            <input type="text" name="topik" />
+        </td>
+      </tr>
+
+<tr class="id_meeting" style="display:none;">
+             <th style="width: 200px;">pembicara</th>
+        <td>
+            <input type="text" name="pembicara" />
+        </td>
+    </tr>
+<tr class="id_meeting" style="display:none;">
+
+         <th style="width: 200px;">agenda</th>
+        <td>
+            <input type="text" name="agenda" />
+        </td>
+</tr>
+<tr class="id_meeting" style="display:none;">
+             <th style="width: 200px;">tangal</th>
+        <td>
+            <input type="datetime" name="tanggal" />
+        </td>
+      </tr>
+<tr class="id_meeting" style="display:none;">
+
+             <th style="width: 200px;">status</th>
+        <td>
+            <input type="text" name="status" />
+        </td>
+    </tr>
+<!-- dokumentasi produk -->
+    <tr class="id_produk" style="display:none;">
+         <th style="width: 200px;">judul dokumentasi</th>
+        <td >
+            <input type="text" name="kmsdata_keyword" />
+        </td>
+      </tr>
+
+<tr class="id_produk" style="display:none;">
+         <th style="width: 200px;">nama produk</th>
+        <td>
+            <input type="text" name="nama_produk" />
+        </td>
+      </tr>
+
+<tr class="id_produk" style="display:none;">
+             <th style="width: 200px;">jenis</th>
+        <td>
+            <input type="text" name="jenis_produk" />
+        </td>
+    </tr>
+<tr class="id_produk" style="display:none;">
+
+         <th style="width: 200px;">bidang produk</th>
+        <td>
+            <input type="text" name="bidang_produk" />
+        </td>
+</tr>
+<tr class="id_produk" style="display:none;">
+             <th style="width: 200px;">keterangan</th>
+        <td>
+            <input type="text" name="keterangan" />
+        </td>
+      </tr>
+<tr class="id_produk" style="display:none;">
+
+             <th style="width: 200px;">status</th>
+        <td>
+            <input type="text" name="status" />
+        </td>
+    </tr>
+
+<tr>
+    
+                <th style="width: 200px;">upload file</th>
+                <td>
+                    <input type="file" name="lam_filedata" data-ext="pptx,docx,pdf,xlsx,xls,doc,png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                     <br><i>* format file (pptx,docx,pdf,xlsx,xls,doc,png,jpg,gif,PNG,pdf)</i>
+                 <br>Status : {LAM_FILEDATA}
+
+                </td>
+            </tr>
+        
+</table>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+    <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+</div>
+</form>
+<!-- /patTemplate:tmpl -->

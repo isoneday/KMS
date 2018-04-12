@@ -1,0 +1,39 @@
+<!-- patTemplate:tmpl name="content" -->	
+<ul class="dropdown-menu">
+    <li>
+        <div class="media">
+            <a class="pull-left">{PROFILE}</a>
+            <div class="media-body">
+                <ul>
+                    <li style="font-weight:bold;"><div>Real Name</div>: {NAME}</li>
+                    <li><div>Email</div>: {EMAIL}</li>
+                    <li><div>Group</div>: {GROUP_NAME}</li>
+                    <li>
+                        <a class="prof_popup" data-title="<!-- patTemplate:gtfwgetlang key="change_password" / -->" href="<!-- patTemplate:gtfwgeturl module="core.user" sub="changePassword" action="view" type="html" params=""  / -->">
+                            <button class="btn btn-mini" type="button"><!-- patTemplate:gtfwgetlang key="change_password" / --></button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+    <li class="divider"></li>
+    <li>	
+        <a style="padding:0px 10px 0 0 !important;" class="prof_popup" data-title="<!-- patTemplate:gtfwgetlang key="profile" / -->" href="<!-- patTemplate:gtfwgeturl module="core.user" sub="profile" action="view" type="html" params=""  / -->"><button class="btn btn-small" ><!-- patTemplate:gtfwgetlang key="view_profile" / --></button></a>
+        <a style="padding:1px 15px 5px 100px !important;" href="<!-- patTemplate:gtfwgeturl module="core.login" sub="logout" action="do" type="html" params=""  / -->"><button class="btn btn-small"><!-- patTemplate:gtfwgetlang key="logout" / --></button></a>
+    </li>
+</ul>
+
+<script type="text/javascript">
+    var popupProfile;
+    $(function(){
+        $('.prof_popup').click(function(){
+            var url = $(this).attr('href')+'&ascomponent=1';
+            var title = $(this).data('title');
+    
+            popupProfile = showGtPopup(url, title, null, null, null, true);
+            return false;
+        });
+    });
+</script>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoAddAktifitas extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessPersonalData', 'applicant.personal.data');
+        
+        $post = $_POST->AsArray();
+        
+        $result = $proses->inputAktifitas();
+        if ($result) {
+            $url = GtfwDispt()->GetUrl('applicant.personal.data', 'detailPersonalData', 'view', 'html').'&ascomponent=1&tabActive=aktifitas';
+            return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');");
+        } else {
+            $url = GtfwDispt()->GetUrl('applicant.personal.data', 'addPersonalData', 'view', 'html').'&ascomponent=1&tabActive=aktifitas';
+            return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');");
+        }
+    }
+}
+
+?>

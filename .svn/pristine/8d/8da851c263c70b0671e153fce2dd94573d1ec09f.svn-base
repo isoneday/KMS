@@ -1,0 +1,698 @@
+<?php
+
+$sql["count_personaldata"] = "
+SELECT 
+    COUNT(aplikan_id) AS total
+FROM aplikan_register
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_personaldata"] = "
+SELECT 
+    a.aplikan_id AS `id`,
+    a.aplikan_nim AS `nim`,
+    a.aplikan_angkatan AS `angkatan`,
+    a.aplikan_univ_id AS `univ_id`,
+    a.aplikan_fakultas_id AS `fakultas_id`,
+    a.aplikan_prodi_id AS `prodi_id`,
+    a.aplikan_jurusan_id AS `jurusan_id`,
+    a.aplikan_jenjangpendidikan_id AS `jenjangpendidikan_id`,
+    a.aplikan_nama AS `nama`,
+    a.aplikan_email AS `email`,
+    a.aplikan_jenis_kelamin AS `jenis_kelamin`,
+    a.aplikan_tempat_lahir AS `tempat_lahir`,
+    a.aplikan_tanggal_lahir AS `tanggal_lahir`,
+    a.aplikan_agama_id AS `agama_id`,
+    a.aplikan_no_ktp AS `no_ktp`,
+    a.aplikan_telepon AS `telepon`,
+    a.aplikan_alamat AS `alamat`,
+    a.aplikan_tempattinggal_id AS `tempattinggal_id`,
+    a.aplikan_pembiayaankuliah_id AS `pembiayaankuliah_id`,
+    a.aplikan_sumber_info_id AS `sumber_info_id`,
+    a.aplikan_tanggal_registrasi AS `tanggal_registrasi`,
+    a.insert_timestamp,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM aplikan_register a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_aplikan_id"] = "
+SELECT 
+    aplikan_id as aplikan_id
+FROM aplikan_user a
+WHERE user_id = %d
+";
+
+$sql["get_detail_wali"] = "
+SELECT
+    a.aplikanwali_id AS `ortu_id`,
+    a.aplikanwali_aplikan_id AS `aplikan_ortu_id`,
+    a.aplikanwali_name AS `ortu_nama`,
+    a.aplikanwali_tempat_lahir AS `ortu_tempat_lahir`,
+    a.aplikanwali_tanggal_lahir AS `ortu_tgl_lhr`,
+    a.aplikanwali_pendidikan_id AS `ortu_pendidikan_id`,
+    c.jenjangpendidikan_name AS `ortu_pendidikan_nama`,
+    a.aplikanwali_pekerjaan_id AS `ortu_pekerjaan_id`,
+    b.pekerjaan_name AS `ortu_pekerjaan_nama`,
+    a.aplikanwali_penghasilan AS `ortu_penghasilan`,
+    a.aplikanwali_wali_id,
+    e.wali_name AS `ortu_jabatan`,
+    a.aplikanwali_is_meninggal AS `ortu_status`
+FROM
+    aplikan_wali a
+LEFT JOIN
+    ref_pekerjaan b ON a.aplikanwali_pekerjaan_id = b.pekerjaan_id
+LEFT JOIN
+    ref_jenjang_pendidikan c ON a.aplikanwali_pendidikan_id = c.jenjangpendidikan_id
+LEFT JOIN 
+    aplikan_user d ON a.aplikanwali_aplikan_id = d.aplikan_id
+LEFT JOIN
+    ref_wali e ON a.aplikanwali_wali_id = e.wali_id
+WHERE 
+    d.user_id = %d
+    --where--
+";
+$sql["get_detail_saudara"] = "
+SELECT
+    a.aplikansaudara_id AS `saudara_id`,
+    a.aplikansaudara_aplikan_id AS `saudara_aplikan_id`,
+    a.aplikansaudara_jumlah AS `saudara_jumlah`,
+    a.aplikansaudara_jumlah_bekerja AS `saudara_jumlah_bekerja`,
+    a.aplikansaudara_jumlah_tanggungan AS `saudara_jumlah_tanggungan`
+FROM
+    aplikan_saudara a
+LEFT JOIN 
+    aplikan_user b ON a.aplikansaudara_aplikan_id = b.aplikan_id
+WHERE b.user_id = %d
+";
+$sql["get_aktivitas_organisasi"] = "
+SELECT
+    a.aplikanorganisasi_id AS `org_id`,
+    a.aplikanorganisasi_jenisaktifitas_id AS `org_jenisaktifitas_id`,
+    c.jenisaktifitas_name AS `org_jenisaktifitas_nama`,
+    a.aplikanorganisasi_lingkup_id AS `org_lingkup_id`,
+    d.lingkup_name AS `org_lingkup_nama`,
+    a.aplikanorganisasi_jabatanorganisasi_id AS `org_jabatan_id`,
+    e.jabatanorganisasi_name AS `org_jabatan_nama`,
+    a.aplikanorganisasi_name AS `org_nama`,
+    a.aplikanorganisasi_periode AS `org_periode`,
+    a.aplikanorganisasi_keterangan AS `org_keterangan`,
+    a.aplikanorganisasi_file AS `file`,
+    a.aplikanorganisasi_file_origin AS `file_origin`,
+    a.aplikanorganisasi_file_path AS `file_path`,
+    a.aplikanorganisasi_file_type AS `file_type`,
+    a.aplikanorganisasi_file_size AS `file_size`
+FROM
+    aplikan_organisasi a
+LEFT JOIN 
+    aplikan_user b ON a.aplikanorganisasi_aplikan_id = b.aplikan_id
+LEFT JOIN
+    ref_jenis_aktifitas c ON a.aplikanorganisasi_jenisaktifitas_id = c.jenisaktifitas_id
+LEFT JOIN
+    ref_lingkup d ON a.aplikanorganisasi_lingkup_id = d.lingkup_id
+LEFT JOIN
+    ref_jabatan_organisasi e ON a.aplikanorganisasi_jabatanorganisasi_id = e.jabatanorganisasi_id
+WHERE 
+    b.user_id = %d
+    --where--
+";
+$sql["get_prestasi_non_akademik"] = "
+SELECT
+    a.aplikanprestasi_id AS `prestasi_id`,
+    a.aplikanprestasi_aplikan_id AS `prestasi_aplikan_id`,
+    a.aplikanprestasi_lingkup_id AS `prestasi_lingkup_id`,
+    c.lingkup_name AS `prestasi_lingkup_nama`,
+    a.aplikanprestasi_name AS `prestasi_nama`,
+    a.aplikanprestasi_periode AS `prestasi_periode`,
+    a.aplikanprestasi_keterangan AS `prestasi_keterangan`
+FROM
+    aplikan_prestasi a
+LEFT JOIN 
+    aplikan_user b ON a.aplikanprestasi_aplikan_id = b.aplikan_id
+LEFT JOIN
+    ref_lingkup c ON a.aplikanprestasi_lingkup_id = c.lingkup_id
+WHERE 
+    b.user_id = %d
+    --where--
+";
+$sql["get_akademik"] = "
+SELECT
+    a.aplikanakademik_id AS `akademik_id`,
+    a.aplikanakademik_aplikan_id AS `akademik_aplikan_id`,
+    a.aplikanakademik_semester AS `akademik_semester_nama`,
+    a.aplikanakademik_periode AS `akademik_periode`,
+    a.aplikanakademik_ips AS `akademik_ips`,
+    a.aplikanakademik_ipk AS `akademik_ipk`,
+    a.aplikanakademik_is_cuti AS `akademik_is_cuti`,
+    a.aplikanakademik_file AS `file`,
+    a.aplikanakademik_file_origin AS `file_origin`,
+    a.aplikanakademik_file_path AS `file_path`,
+    a.aplikanakademik_file_type AS `file_type`,
+    a.aplikanakademik_file_size AS `file_size`
+FROM
+    aplikan_akademik a
+LEFT JOIN 
+    aplikan_user b ON a.aplikanakademik_aplikan_id = b.aplikan_id
+WHERE 
+    b.user_id = %d
+    --where--
+";
+$sql["get_beasiswa"] = "
+SELECT
+    a.aplikanbeasiswa_id AS `aplikanbeasiswa_id`,
+    a.aplikanbeasiswa_beasiswa_id AS `beasiswa_id`,
+    c.beasiswa_name AS `beasiswa_nama`,
+    a.aplikanbeasiswa_statuspendaftaran_id AS `beasiswa_status`,
+    d.statuspendaftaran_name AS `beasiswa_status_nama`,
+    d.statuspendaftaran_desc AS `beasiswa_status_desc`,
+    date(a.aplikanbeasiswa_tanggal) AS `beasiswa_tanggal_daftar`
+FROM
+    aplikan_beasiswa a
+LEFT JOIN 
+    aplikan_user b ON a.aplikanbeasiswa_aplikan_id = b.aplikan_id
+LEFT JOIN
+    beasiswa c ON a.aplikanbeasiswa_beasiswa_id = c.beasiswa_id
+LEFT JOIN
+    ref_status_pendaftaran d ON a.aplikanbeasiswa_statuspendaftaran_id = d.statuspendaftaran_id
+WHERE b.user_id = %d
+";
+
+$sql["get_lampiran"] = "
+SELECT
+    COUNT(aplikandokumen_id) as total,
+    a.aplikandokumen_id as dokumen_id,
+    a.aplikandokumen_file AS dokumen_file,
+    a.aplikandokumen_file_origin AS dokumen_origin,
+    a.aplikandokumen_file_path AS dokumen_path
+FROM
+    aplikan_dokumen a
+LEFT JOIN 
+    aplikan_user b ON a.aplikandokumen_aplikan_id = b.aplikan_id
+WHERE
+    b.user_id = %s
+    AND aplikandokumen_beasiswadokumen_id = %s
+";
+
+/*---DATA REGISTER ULANG---*/
+$sql["get_detail_registrasiulang"] = "
+SELECT 
+	registerulang_id AS id,
+	registerulang_aplikanid AS aplikan_id,
+	registerulang_namabank AS namabank,
+	registerulang_norekening AS norekening,
+	registerulang_pks_file AS pks_file,
+	registerulang_pks_file_origin AS pks_origin,
+	registerulang_pks_file_path as pks_path,
+	registerulang_pks_file_type as pks_type,
+	registerulang_pks_file_size as pks_size,
+	registerulang_buku_file AS buku_file,
+	registerulang_buku_file_origin AS buku_origin,
+	registerulang_buku_file_path as buku_path,
+	registerulang_buku_file_type as buku_type,
+	registerulang_buku_file_size as buku_size,
+	timestamp_registrasi AS waktu_daftar
+FROM
+	aplikan_register_ulang
+WHERE registerulang_aplikanid = %d
+ORDER BY registerulang_id DESC
+LIMIT 1
+";
+
+$sql["insert_registrasiulang"] = "
+INSERT INTO aplikan_register_ulang
+(
+	registerulang_aplikanid,
+    registerulang_namabank,
+    registerulang_norekening,
+    registerulang_pks_file,
+    registerulang_pks_file_origin,
+    registerulang_pks_file_path,
+	registerulang_pks_file_type,
+    registerulang_pks_file_size,
+    registerulang_buku_file,
+    registerulang_buku_file_origin,
+    registerulang_buku_file_path,
+	registerulang_buku_file_type,
+    registerulang_buku_file_size,
+	timestamp_registrasi
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+	%s,
+	NOW()
+)
+";
+$sql["update_registrasiulang"] = "
+UPDATE aplikan_register_ulang
+SET 
+    registerulang_namabank = %s,
+    registerulang_norekening = %s,
+    registerulang_pks_file = %s,
+    registerulang_pks_file_origin = %s,
+    registerulang_pks_file_path = %s,
+    registerulang_pks_file_type = %s,
+    registerulang_pks_file_size = %s,
+    registerulang_buku_file = %s,
+    registerulang_buku_file_origin = %s,
+    registerulang_buku_file_path = %s,
+    registerulang_buku_file_type = %s,
+    registerulang_buku_file_size = %s,
+    updatetime_register = NOW()
+WHERE registerulang_aplikanid = %d
+";
+
+/*---Transkrip---*/
+$sql["count_corecompany"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_detail_transkrip"] = "
+SELECT
+	a.aplikannilai_id AS id,
+	a.aplikannilai_aplikanid AS aplikanid,
+	c.`user_real_name`,
+	a.aplikannilai_file AS `file`,
+	a.aplikannilai_file_origin AS file_origin,
+	a.aplikannilai_file_path AS file_path,
+	a.aplikannilai_file_type AS file_type,
+	a.aplikannilai_file_size AS file_size,
+	a.aplikannilai_jenisdokumen AS jenisdokumen,
+	a.aplikannilai_semester AS semester,
+	date(a.insert_timestamp) AS `time`
+FROM
+	aplikan_nilai a
+LEFT JOIN
+	aplikan_user b
+ON
+	b.`aplikan_id` = a.`aplikannilai_aplikanid`
+LEFT JOIN
+	gtfw_user c
+ON
+	b.`user_id` = c.`user_id`
+WHERE a.aplikannilai_aplikanid = %d
+AND a.aplikannilai_jenisdokumen = 'transkrip'
+";
+$sql["insert_transkrip"] = "
+INSERT INTO aplikan_nilai
+(
+    aplikannilai_aplikanid,
+    aplikannilai_file,
+    aplikannilai_file_origin,
+    aplikannilai_file_path,
+    aplikannilai_file_type,
+    aplikannilai_file_size,
+	aplikannilai_jenisdokumen,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    'transkrip',
+	NOW()
+)
+";
+
+/*---KRS---*/
+$sql["get_detail_krs"] = "
+SELECT 
+	a.aplikannilai_id AS id,
+	a.aplikannilai_aplikanid AS aplikanid,
+	c.`user_real_name`,
+	a.aplikannilai_file AS `file`,
+	a.aplikannilai_file_origin AS file_origin,
+	a.aplikannilai_file_path AS file_path,
+	a.aplikannilai_file_type AS file_type,
+	a.aplikannilai_file_size AS file_size,
+	a.aplikannilai_jenisdokumen AS jenisdokumen,
+	a.aplikannilai_semester AS semester,
+	date(a.insert_timestamp) AS `time`
+FROM
+	aplikan_nilai a
+LEFT JOIN
+	aplikan_user b
+ON
+	b.`aplikan_id` = a.`aplikannilai_aplikanid`
+LEFT JOIN
+	gtfw_user c
+ON
+	b.`user_id` = c.`user_id`
+WHERE a.aplikannilai_aplikanid = %d
+AND a.aplikannilai_jenisdokumen = 'krs'
+	--where--
+";
+$sql["insert_krs"] = "
+INSERT INTO aplikan_nilai
+(
+    aplikannilai_aplikanid,
+    aplikannilai_file,
+    aplikannilai_file_origin,
+    aplikannilai_file_path,
+    aplikannilai_file_type,
+    aplikannilai_file_size,
+	aplikannilai_jenisdokumen,
+	aplikannilai_semester,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    'krs',
+	%s,
+	NOW()
+)
+";
+
+
+$sql["delete_aplikannilai"]= "
+DELETE FROM aplikan_nilai
+WHERE aplikannilai_id = %d
+";
+
+/*---DATA ORANG TUA/WALI---*/
+$sql["insert_orang_tua"]= "
+INSERT INTO aplikan_wali
+(
+    aplikanwali_aplikan_id,
+    aplikanwali_name,
+    aplikanwali_tempat_lahir,
+    aplikanwali_tanggal_lahir,
+    aplikanwali_pendidikan_id,
+    aplikanwali_pekerjaan_id,
+    aplikanwali_penghasilan,
+    aplikanwali_is_meninggal,
+    aplikanwali_wali_id,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_orang_tua"]= "
+UPDATE aplikan_wali
+SET 
+    aplikanwali_name = %s,
+    aplikanwali_tempat_lahir = %s,
+    aplikanwali_tanggal_lahir = %s,
+    aplikanwali_pendidikan_id = %s,
+    aplikanwali_pekerjaan_id = %s,
+    aplikanwali_penghasilan = %s,
+    aplikanwali_is_meninggal = %s,
+    aplikanwali_wali_id = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aplikanwali_id = %d
+";
+$sql["delete_orang_tua"]= "
+DELETE FROM aplikan_wali
+WHERE aplikanwali_id = %d
+";
+
+/*---DATA SAUDARA---*/
+$sql["insert_saudara"]= "
+INSERT INTO aplikan_saudara
+(
+    aplikansaudara_aplikan_id,
+    aplikansaudara_jumlah,
+    aplikansaudara_jumlah_tanggungan,
+    aplikansaudara_jumlah_bekerja,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_saudara"]= "
+UPDATE aplikan_saudara
+SET 
+    aplikansaudara_jumlah = %s,
+    aplikansaudara_jumlah_tanggungan = %s,
+    aplikansaudara_jumlah_bekerja = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aplikansaudara_id = %d
+";
+$sql["delete_saudara"]= "
+DELETE FROM aplikan_saudara
+WHERE aplikansaudara_id = %d
+";
+
+/*---DATA AKTIFITAS---*/
+$sql["insert_aktifitas"]= "
+INSERT INTO aplikan_organisasi
+(
+    aplikanorganisasi_aplikan_id,
+    aplikanorganisasi_jenisaktifitas_id,
+    aplikanorganisasi_lingkup_id,
+    aplikanorganisasi_jabatanorganisasi_id,
+    aplikanorganisasi_name,
+    aplikanorganisasi_periode,
+    aplikanorganisasi_keterangan,
+    aplikanorganisasi_file,
+    aplikanorganisasi_file_origin,
+    aplikanorganisasi_file_path,
+    aplikanorganisasi_file_type,
+    aplikanorganisasi_file_size,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_aktifitas"]= "
+UPDATE aplikan_organisasi
+SET 
+    aplikanorganisasi_jenisaktifitas_id = %s,
+    aplikanorganisasi_lingkup_id = %s,
+    aplikanorganisasi_jabatanorganisasi_id = %s,
+    aplikanorganisasi_name = %s,
+    aplikanorganisasi_periode = %s,
+    aplikanorganisasi_keterangan = %s,
+    aplikanorganisasi_file = %s,
+    aplikanorganisasi_file_origin = %s,
+    aplikanorganisasi_file_path = %s,
+    aplikanorganisasi_file_type = %s,
+    aplikanorganisasi_file_size = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aplikanorganisasi_id = %d
+";
+$sql["delete_aktifitas"]= "
+DELETE FROM aplikan_organisasi
+WHERE aplikanorganisasi_id = %d
+";
+
+/*---PRESTASI NON AKADEMIK---*/
+$sql["insert_prestasi"]= "
+INSERT INTO aplikan_prestasi
+(
+    aplikanprestasi_aplikan_id,
+    aplikanprestasi_lingkup_id,
+    aplikanprestasi_periode,
+    aplikanprestasi_name,
+    aplikanprestasi_keterangan,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_prestasi"]= "
+UPDATE aplikan_prestasi
+SET 
+    aplikanprestasi_lingkup_id = %s,
+    aplikanprestasi_periode = %s,
+    aplikanprestasi_name = %s,
+    aplikanprestasi_keterangan = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aplikanprestasi_id = %d
+";
+$sql["delete_prestasi"]= "
+DELETE FROM aplikan_prestasi
+WHERE aplikanprestasi_id = %d
+";
+
+/*---DATA AKADEMIK---*/
+$sql["insert_akademik"]= "
+INSERT INTO aplikan_akademik
+(
+    aplikanakademik_aplikan_id,
+    aplikanakademik_semester,
+    aplikanakademik_periode,
+    aplikanakademik_ips,
+    aplikanakademik_ipk,
+    aplikanakademik_is_cuti,
+    aplikanakademik_file,
+    aplikanakademik_file_origin,
+    aplikanakademik_file_path,
+    aplikanakademik_file_type,
+    aplikanakademik_file_size,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_akademik"]= "
+UPDATE aplikan_akademik
+SET 
+    aplikanakademik_semester = %s,
+    aplikanakademik_periode = %s,
+    aplikanakademik_ips = %s,
+    aplikanakademik_ipk = %s,
+    aplikanakademik_is_cuti = %s,
+    aplikanakademik_file = %s,
+    aplikanakademik_file_origin = %s,
+    aplikanakademik_file_path = %s,
+    aplikanakademik_file_type = %s,
+    aplikanakademik_file_size = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aplikanakademik_id = %d
+";
+$sql["delete_akademik"]= "
+DELETE FROM aplikan_akademik
+WHERE aplikanakademik_id = %d
+";
+
+/*---DATA BEASISWA---*/
+$sql["insert_beasiswa"]= "
+INSERT INTO aplikan_beasiswa
+(
+    aplikanbeasiswa_aplikan_id,
+    aplikanbeasiswa_beasiswa_id,
+    aplikanbeasiswa_statuspendaftaran_id,
+    aplikanbeasiswa_tanggal
+) VALUES (
+    %d,
+    %s,
+    '1',
+    NOW()
+)
+";
+$sql["update_beasiswa"]= "
+UPDATE aplikan_beasiswa
+SET 
+    aplikanbeasiswa_beasiswa_id = %s,
+    aplikanbeasiswa_tanggal = NOW()
+WHERE aplikanbeasiswa_id = %d
+";
+$sql["delete_beasiswa"]= "
+DELETE FROM aplikan_beasiswa
+WHERE aplikanbeasiswa_id = %d
+";
+
+/*---DATA LAMPIRAN---*/
+$sql["insert_lampiran"]= "
+INSERT INTO aplikan_dokumen
+(
+    aplikandokumen_aplikan_id,
+    aplikandokumen_beasiswadokumen_id,
+    aplikandokumen_file,
+    aplikandokumen_file_origin,
+    aplikandokumen_file_path,
+    aplikandokumen_file_type,
+    aplikandokumen_file_size,
+    aplikandokumen_verifikator_status,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_lampiran"]= "
+UPDATE aplikan_dokumen
+SET 
+    aplikandokumen_file = %s,
+    aplikandokumen_file_origin = %s,
+    aplikandokumen_file_path = %s,
+    aplikandokumen_file_type = %s,
+    aplikandokumen_file_size = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE aplikandokumen_id = %d
+";
+
+/*---LIST FOR DROPDOWN---*/
+$sql["list_personaldata"] = "
+SELECT
+    aplikan_id AS `id`,
+    aplikan_name AS `name`
+FROM
+    aplikan_register
+ORDER BY aplikan_name
+";

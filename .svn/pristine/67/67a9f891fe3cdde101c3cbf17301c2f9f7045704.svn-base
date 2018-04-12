@@ -1,0 +1,75 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+
+    <table>
+        <!-- patTemplate:tmpl name="foto" -->
+        <tr>
+            <th style="width: 150px;" rowspan="6"><img width="150px" height="120px" src={FILEPATH}{FILE}></th>
+        </tr>
+		<!-- /patTemplate:tmpl -->
+		<!-- patTemplate:tmpl name="biodataHead" -->
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="nama" / --></th>
+            <td>{NAMA}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+            <td>{NIM}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="universitas" / --></th>
+            <td>{UNIVERSITAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="fakultas" / --></th>
+            <td>{FAKULTAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="prodiname" / --></th>
+            <td>{PRODI_NAME}</td>
+        </tr>
+        <!-- /patTemplate:tmpl -->
+    </table>
+</div>	
+
+   <hr>
+<div class="content-box">   
+	<a class="xhr dest_subcontent-element btn-respon" href="{URL_LOLOS}" title="<!-- patTemplate:gtfwgetlang key="lolos" / --> <!-- patTemplate:gtfwgetlang key="detail_universitas" / -->">  Approve</a>
+	
+	<a class="xhr dest_subcontent-element btn-nonrespon" href="{URL_TIDAK}" title="<!-- patTemplate:gtfwgetlang key="tidaklolos" / --> <!-- patTemplate:gtfwgetlang key="detail_universitas" / -->">  Reject</a>
+	
+   <form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+   <input type="hidden" name="aplikanwawancara_aplikan_id" value="{ID}">
+   <input type="hidden" name="aplikanwawancara_beasiswa_id" value="{ID_BEASISWA}">
+   <table class="table-common">
+	<thead>
+		<tr>
+			<th><!-- patTemplate:gtfwgetlang key="Document" / --></th>
+			<th>{USER1}</th>
+			<th>{USER2}</th>
+			<th>{USER3}</th>
+		</tr>
+	</thead>
+    <tbody>
+		<!-- patTemplate:tmpl name="data" -->
+		<tr class="{ROW_CLASS}">
+			<td>{DESKRIPSI_WAWANCARA}</td>
+			<td>{NILAI-1}</td>
+			<td>{NILAI-2}</td>
+			<td>{NILAI-3}</td>
+		</tr>
+		<!-- /patTemplate:tmpl -->
+	</tbody>
+    </table>
+	
+   </form>
+
+</div>
+<!-- /patTemplate:tmpl -->

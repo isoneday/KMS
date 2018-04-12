@@ -1,0 +1,41 @@
+<!-- patTemplate:tmpl name="content" -->
+
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <input type="hidden" name="id" value="{ID}" />
+    <div class="content-box-form" style="height:270px">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <table class="table-edit-popup">
+
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="code"/ --></th>
+                <td>
+                    <input type="text" name="code" value="{CODE}" size="40" title="<!-- patTemplate:gtfwgetlang key="code"/ -->" tabindex="1" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="language"/ --></th>
+                <td>
+                    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <!-- patTemplate:tmpl name="lang" -->
+                    <p>
+                        <label style="display: inline-block !important; width: 100px;">{NAMA} ({KODE})</label>
+                        <input type="text" style="display: inline-block;" value="{TRANSLATE}" name="lang[{KODE}]" size="40" title="<!-- patTemplate:gtfwgetlang key="language"/ -->" tabindex="2"/>
+                    </p>
+                    <!-- /patTemplate:tmpl -->
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">    
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="3"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="4"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+    </div>
+</form>
+<!-- /patTemplate:tmpl -->

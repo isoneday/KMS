@@ -1,0 +1,124 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:150px;"><!-- patTemplate:gtfwgetlang key="kmsdata_keyword" / --></th>
+        <td><input type="text" name="kmsdata_keyword" value="{KMSDATA_KEYWORD}" /></td>        
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+            <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+        <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+            <a class="popup_searchengine" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="searchengine" / -->"><button class="btn"><span class="icon-plus"></span> <!-- patTemplate:gtfwgetlang key="add" / --></button></a>
+        <!-- /patTemplate:tmpl -->
+    </div>
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+<table class="table-common"condition="">
+<thead>
+    <tr>
+        <th style="width: 40px;">No</th>
+        
+        <th>data</th>
+        <th>kmsdata_keyword</th>
+        <th>filedata_enc</th>
+        <th>filedata_origin</th>
+        <th>filedata_path</th>
+        <th>filedata_type</th>
+        <th>filedata_size</th>
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="11" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td style="text-align: center;">{NO}</td>        
+
+            <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+            <a class="popup_searchengine btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="searchengine" / -->"></a>
+            <!-- /patTemplate:tmpl -->
+            <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+            <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{NAME}" ></a>
+            <!-- /patTemplate:tmpl -->            
+            </ul>
+        </td>
+        
+        <td>{DATA}</td>
+        <td>{KMSDATA_KEYWORD}</td>
+        <td>{FILEDATA_ENC}</td>
+        <td>{FILEDATA_ORIGIN}</td>
+        <td>{FILEDATA_PATH}</td>
+        <td>{FILEDATA_TYPE}</td>
+        <td>{FILEDATA_SIZE}</td>
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="searchengine" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="searchengine" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupSearchengine;
+    $('.popup_searchengine').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupSearchengine = showGtPopup(url, title);
+        return false;
+    });
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

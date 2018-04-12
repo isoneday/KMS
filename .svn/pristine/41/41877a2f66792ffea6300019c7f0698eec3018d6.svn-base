@@ -1,0 +1,75 @@
+<?php
+
+$sql["count_typescholarships"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_typescholarships"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.kmhsRefJnsBeaId AS `kmhsRefJnsBeaId`,
+    a.kmhsRefJnsBeaId AS `id`,
+    a.kmhsRefJnsBeaNama AS `kmhsRefJnsBeaNama`,
+    a.kmhsRefJnsBeaNama AS `name`,
+    a.kmhsRefJnsBeaDesc AS `kmhsRefJnsBeaDesc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM kemahasiswaan_ref_jenis_beasiswa a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_typescholarships"] = "
+SELECT 
+    a.kmhsRefJnsBeaId AS `kmhsRefJnsBeaId`,
+    a.kmhsRefJnsBeaId AS `id`,
+    a.kmhsRefJnsBeaNama AS `kmhsRefJnsBeaNama`,
+    a.kmhsRefJnsBeaDesc AS `kmhsRefJnsBeaDesc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM kemahasiswaan_ref_jenis_beasiswa a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE kmhsRefJnsBeaId = %d
+";
+$sql["insert_typescholarships"] = "
+INSERT INTO kemahasiswaan_ref_jenis_beasiswa
+(
+    kmhsRefJnsBeaNama,
+    kmhsRefJnsBeaDesc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_typescholarships"] = "
+UPDATE kemahasiswaan_ref_jenis_beasiswa
+SET 
+    kmhsRefJnsBeaNama = %s,
+    kmhsRefJnsBeaDesc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE kmhsRefJnsBeaId = %d
+";
+$sql["delete_typescholarships"] = "
+DELETE FROM kemahasiswaan_ref_jenis_beasiswa
+WHERE kmhsRefJnsBeaId = %d
+";
+$sql["list_typescholarships"] = "
+SELECT
+    kmhsRefJnsBeaId AS `id`,
+    kmhsRefJnsBeaNama AS `name`
+FROM
+    kemahasiswaan_ref_jenis_beasiswa
+ORDER BY kmhsRefJnsBeaNama
+";

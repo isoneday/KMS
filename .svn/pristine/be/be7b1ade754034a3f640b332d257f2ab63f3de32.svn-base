@@ -1,0 +1,98 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<!-- patTemplate:tmpl name="warning_box" visibility="hidden" -->
+   <div class="{CLASS_PESAN}">
+      <div style="float: right" onclick="javascript: $(this.parentNode).hide('slow')"><img src="images/icon-warning-16x16.gif"></div>
+      {ISI_PESAN}
+   </div>
+   <br />
+<!-- /patTemplate:tmpl -->
+
+   <div class="pageBar">
+      <div class="toolbar">  
+         <a class="popup_message" href="{URL_NEW}" title="<!-- patTemplate:gtfwgetlang key="new_message" / -->"><button class="btn"><i class="icon-pencil"></i> <!-- patTemplate:gtfwgetlang key="new" / --></button></a> 
+         <a id="button-refresh-content" title="Refresh"><button class="btn"> <i class="icon-refresh"></i> <!-- patTemplate:gtfwgetlang key="refresh" / --></button></a>
+         <a class="popup_message" href="{URL_SETTING}" title="<!-- patTemplate:gtfwgetlang key="setting" / -->"><button class="btn"><i class="icon-wrench"></i>  <!-- patTemplate:gtfwgetlang key="setting" / --></button></a>   
+      </div>
+   </div>
+   <div id="msgContainer"><ul></ul></div>
+<link href="assets/css/tokeninput/token-input.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/tokeninput/token-input-facebook.css" rel="stylesheet" type="text/css" />
+<script type='text/javascript' src='assets/js/libs/jquery.tokeninput.js'></script>
+<script type="text/javascript">
+var folder = 1;
+var popup_message;
+
+$(function(){ 
+    $('#msgContainer').on('tabsselect', function(event, ui) {
+        tmp = ($(ui.tab).attr('href')).split('-'); // anchor element of the selected (clicked) tab
+        folder = tmp[1];
+    });
+    $('#button-refresh-content').off('click').on('click', function(){
+        $('#msgContainer').tabs()[0].folderLoad(folder);    
+    });
+    
+    $('.popup_message').off('click').on('click', function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popup_message = showGtPopup(url, title, 700, null, null, false);
+        return false;
+    });
+                
+});
+$(function(){
+    var timer = {};
+    timer.value = 0;
+    timer.reset = function(){clearInterval(timer.value);timer.start()};
+    
+       timer.start = function(){if ({AUTO_CHECK_MESSAGE}) {timer.value=setInterval(function(){var a=$('#msgContainer');if (a.length==0||a[0].instanceId!=tmp.instanceId){clearInterval(timer.value);return}$.getJSON('{URL_CHECK}',function(data){if(data.count>0&&data.count>tmp.newMessageCount)tmp.folderLoad(1,true)})},15000)}};
+    
+   
+   $("#msgContainer").tabs({select:function(e,u){var id=u.panel.id.substr(7);if(!tmp.folderLoaded[id])tmp.folderLoad(id);var a=$('.ui-tabs-nav a[href="#folder-'+id+'"] b',tmp);if(a.length)a.parent().text(a.eq(0).text())}});
+
+    var tmp = document.getElementById('msgContainer');
+    tmp.instanceId = Math.random().toString();
+    tmp.folderUrl = new Array;
+    tmp.folderLoaded = new Array;
+    tmp.folderLoad = function(id, resetTimer) {
+    	this.folderLoaded[id] = true;
+    	$('#folder-' + id).fadeOut().load(this.folderUrl[id], $('#folder-' + id).fadeIn());
+    	if (id === 1 && !resetTimer) timer.reset()
+    }
+    tmp.folderAdd = function(id, name, url) {
+    	$(tmp).tabs('add', '#folder-' + id, name);
+    	tmp.folderUrl[id] = url;
+    	tmp.folderLoaded[id] = false;
+    	$('select[name=ctrlFolderId]', tmp).append('<option value="' + id + '">' + name + '</option>')
+    }
+    tmp.folderEdit = function(id, name) {
+    	$('.ui-tabs-nav a[href="#folder-' + id + '"]', tmp).text(name);
+    	$('select[name=ctrlFolderId] option[value=' + id + ']', tmp).text(name)
+    }
+    tmp.folderDelete = function(id) {
+    	var a = $('.ui-tabs-nav a', tmp);
+    	for (var i = 0; i < a.length; i++) if (a.eq(i).attr('href') == '#folder-' + id) {
+    		$(tmp).tabs('remove', i);
+    		break
+    	}
+    	$('select[name=ctrlFolderId] option[value=' + id + ']', tmp).remove()
+    }
+    tmp.messageSetRead = function(Obj, id) {
+    	if (tmp.messageReadList.indexOf(id) >= 0) return;
+    	while (Obj.tagName.toLowerCase() != 'tr') Obj = Obj.parentNode;
+    	Obj.style.fontWeight = 'normal';
+    	tmp.newMessageCount--;
+    	tmp.messageReadList.push(id)
+    }
+    tmp.messageReadList = new Array;
+   <!-- patTemplate:tmpl name="folder_content" -->
+   tmp.folderAdd({FOLDER_ID},'{FOLDER_NAME}','{URL_FOLDER}&ascomponent=1');
+   <!-- /patTemplate:tmpl -->
+   tmp.folderLoad(1);
+   $(tmp).tabs('select','folder-{FOLDER_ID}');
+});
+</script>
+
+<!-- /patTemplate:tmpl -->

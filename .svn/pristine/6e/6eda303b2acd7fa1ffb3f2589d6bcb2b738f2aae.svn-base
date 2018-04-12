@@ -1,0 +1,72 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerId" / --></th>
+        <td>
+            <input type="number" name="satkerid" value="{SATKERID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerLevel" / --></th>
+        <td>
+            <input type="text" name="satkerlevel" value="{SATKERLEVEL}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerParentId" / --></th>
+        <td>
+            <input type="number" name="satkerparentid" value="{SATKERPARENTID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerUnitId" / --></th>
+        <td>
+            <input type="number" name="satkerunitid" value="{SATKERUNITID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerNama" / --></th>
+        <td>
+            <input type="text" name="satkernama" value="{SATKERNAMA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerStruktural" / --></th>
+        <td>
+            <input type="text" name="satkerstruktural" value="{SATKERSTRUKTURAL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerCreationDate" / --></th>
+        <td>
+            <input type="text" name="satkercreationdate" value="{SATKERCREATIONDATE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerLastUpdate" / --></th>
+        <td>
+            <input type="text" name="satkerlastupdate" value="{SATKERLASTUPDATE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="satkerUserId" / --></th>
+        <td>
+            <input type="number" name="satkeruserid" value="{SATKERUSERID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

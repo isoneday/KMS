@@ -1,0 +1,61 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <input type="hidden" name="id" value="{ID}" />
+    <table class="table-edit">
+
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="title" / --></th>
+            <td>
+                <input type="text" name="title" value="{TITLE}" size="50"  />            
+            </td>
+        </tr>
+        <!-- patTemplate:tmpl name="current_photo" visibility="hidden" -->
+        <tr id="div_photo">
+            <th><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+            <td>{PHOTO_FILE}
+                <input type="hidden" name="photo" value="{PHOTO}"/>
+                <input type="hidden" name="photo_enc" value="{PHOTO}"/>
+                <input type="hidden" name="photo_origin" value="{PHOTO_ORIGIN}"/>
+                <input type="hidden" name="photo_path" value="{PHOTO_PATH}"/>
+                <input type="hidden" name="photo_type" value="{PHOTO_TYPE}"/>
+                <input type="hidden" name="photo_size" value="{PHOTO_SIZE}"/>
+            </td>
+        </tr>
+        <!-- patTemplate:tmpl name="photo_preview" visibility="hidden" -->
+        <tr id="div_preview">
+            <th><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+            <td>{PHOTOP}
+            </td>
+        </tr>
+        <!-- /patTemplate:tmpl -->
+        <!-- /patTemplate:tmpl -->
+        <tr id="div_thumb">
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="photo" / --></th>
+            <td>
+                <input type="file" name="photo" data-ext="png,jpg,gif,PNG" />
+            </td>
+        </tr>  
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="status" / --></th>
+            <td>
+                <input type="radio" name="status" value="1" {STATUS}/> 
+                <!-- patTemplate:gtfwgetlang key="active"/ --> 
+                <input type="radio" name="status" value="0" {NSTATUS}/> 
+                <!-- patTemplate:gtfwgetlang key="not_active"/ -->
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>   
+                <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+            </td>            
+        </tr>    
+    </table>
+</form>
+<!-- patTemplate:gtfwrendermodule module="comp.upload" submodule="upload" action="do" name="" / --> 
+<!-- /patTemplate:tmpl -->

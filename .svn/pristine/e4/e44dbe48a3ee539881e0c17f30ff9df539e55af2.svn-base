@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class TempatTinggal extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.tempat.tinggal/business/mysqlt/tempattinggal.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countTempatTinggal($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(tempattinggal_name) LIKE('%$name%')";
+        }
+        $query = $this->mSqlQueries['count_tempattinggal'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getTempatTinggal($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(tempattinggal_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_tempattinggal'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailTempatTinggal($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_tempattinggal'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertTempatTinggal($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_tempattinggal'], $params);
+    }
+    
+    public function updateTempatTinggal($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_tempattinggal'], $params);
+    }
+    
+    public function deleteTempatTinggal($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_tempattinggal'], array($id));
+    }
+    
+    public function listTempatTinggal()
+    {
+        return $this->Open($this->mSqlQueries['list_tempattinggal'], array());
+    }
+}
+
+// End of file TempatTinggal.class.php

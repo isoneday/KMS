@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateLampiran extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessPersonalData', 'applicant.personal.data');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->inputLampiran();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'DetailPersonalData', 'view', 'html').'&display' . '&ascomponent=1&tabActive=lampiran");');  
+        } else {  
+           return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='. $id . '&ascomponent=1&tabActive=lampiran")');
+        }        
+    }
+}
+
+?>

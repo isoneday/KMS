@@ -1,0 +1,198 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form">
+        <input type="hidden" name="id" value="{ID}" />
+        <table class="table-edit">
+            <tr class="subhead">
+                <th colspan="2">
+                    <strong><!-- patTemplate:gtfwgetlang key="user_data" / --></strong>
+                </th>
+            </tr>
+             <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="personal_id" / --></th>
+                <td>
+                    <input type="text" name="personal_id" value="{PERSONAL_ID}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="personal_id" / -->" tabindex="3" /> *            
+                </td>
+            </tr>
+                        <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="real_name" / --></th>
+                <td>
+                    <input type="text" name="real_name" value="{REAL_NAME}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="real_name" / -->" tabindex="1" /> *            
+                </td>
+            </tr>
+                <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jenis_kelamin" / --></th>
+                <td>
+                    <label style="display: inline;"><input type="radio" name="jenis_kelamin" value="laki-laki" tabindex="7" {CHECK_ACTIVE_1} /> <!-- patTemplate:gtfwgetlang key="laki_laki" / --></label> &nbsp;&nbsp;
+                    <label style="display: inline;"><input type="radio" name="jenis_kelamin" value="perempuan" tabindex="8" {CHECK_ACTIVE_0} /> <!-- patTemplate:gtfwgetlang key="perempuan" / --></label> *          
+                </td>
+            </tr>
+               <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="emptype_id" / --></th>
+                <td colspan="4">
+                    <div id="div_type_id">
+                        <!-- patTemplate:gtfwrendermodule module="emp.ref.employee.type" submodule="comboRefEmpType" action="view" name="emptype_id" / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+             <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="agama" / --></th>
+                <td>
+                    <label style="display: inline;"><input type="radio" name="agama" value="islam" tabindex="7" {CHECK_ACTIVE_3} /> <!-- patTemplate:gtfwgetlang key="islam" / --></label> &nbsp;&nbsp;
+
+                    <label style="display: inline;"><input type="radio" name="agama" value="kristen" tabindex="8" {CHECK_ACTIVE_2} /> <!-- patTemplate:gtfwgetlang key="kristen" / --></label>&nbsp;&nbsp;
+                    
+                    <label style="display: inline;"><input type="radio" name="agama" value="hindu" tabindex="8" {CHECK_ACTIVE_1} /> <!-- patTemplate:gtfwgetlang key="hindu" / --></label>&nbsp;&nbsp;
+                    
+                    <label style="display: inline;"><input type="radio" name="agama" value="budha" tabindex="8" {CHECK_ACTIVE_0} /> <!-- patTemplate:gtfwgetlang key="budha" / --></label> *          
+                </td>
+            </tr>
+       
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="username" / --></th>
+                <td>
+                    <input type="text" name="name" value="{NAME}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="username" / -->" tabindex="2" /> * 
+                </td>
+            </tr>
+            <!-- patTemplate:tmpl name="password" -->
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="password" / --></th>
+                <td>
+                    <input type="password" name="password" required="" size="30" title="<!-- patTemplate:gtfwgetlang key="password" / -->" tabindex="4" /> *
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="confirm_password" / --></th>
+                <td>
+                    <input type="password" name="confirm_password" required="" size="30" title="<!-- patTemplate:gtfwgetlang key="confirm_password" / -->" tabindex="5" /> *
+                </td>
+            </tr>    
+            <!-- /patTemplate:tmpl -->
+            
+         
+           <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="tahun_masuk" / --></th>
+                <td>
+                    <input type="year" name="tahun_masuk" value="{TAHUN_MASUK}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="tahun_masuk" / -->" tabindex="3" /> *            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kode_pos" / --></th>
+                <td>
+                    <input type="text" name="kode_pos" value="{KODE_POS}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="kode_pos" / -->" tabindex="3" /> *            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="tempat_lahir" / --></th>
+                <td>
+                    <input type="text" name="tempat_lahir" value="{TEMPAT_LAHIR}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="tempat_lahir" / -->" tabindex="3" /> *            
+                </td>
+            </tr>
+             <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="alamat" / --></th>
+                <td>
+                    <textarea name="alamat" cols="50" rows="2" title="<!-- patTemplate:gtfwgetlang key="alamat" / -->" tabindex="2">{ALAMAT}</textarea>            
+                </td>
+                </tr>
+           <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="no_hp" / --></th>
+                <td>
+                    <input type="text" name="no_hp" value="{NO_HP}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="no_hp" / -->" tabindex="3" /> *            
+                </td>
+            </tr>
+        
+            
+            
+               
+
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="email" / --></th>
+                <td>
+                    <input type="email" name="email" value="{EMAIL}" required="" size="50" title="<!-- patTemplate:gtfwgetlang key="email" / -->" tabindex="3" /> *            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                <td>
+                    <textarea name="desc" cols="50" rows="2" title="<!-- patTemplate:gtfwgetlang key="desc" / -->" tabindex="6">{DESC}</textarea>            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="active" / --></th>
+                <td>
+                    <label style="display: inline;"><input type="radio" name="active" value="1" tabindex="7" {CHECK_ACTIVE_1} /> <!-- patTemplate:gtfwgetlang key="yes" / --></label> &nbsp;&nbsp;
+                    <label style="display: inline;"><input type="radio" name="active" value="0" tabindex="8" {CHECK_ACTIVE_0} /> <!-- patTemplate:gtfwgetlang key="no" / --></label> *          
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="language" / --></th>
+                <td>
+                    <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="lang"  / -->
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="group" / --></th>
+                <td>
+                    <!-- patTemplate:tmpl name="group" -->
+                    <p><input type="checkbox" name="group[]" id="{ID}" value="{ID}" {CHECKED} /> <label style="display:inline"><a class="popup_group" href="{URL}" title="{TITLE}">{NAME}</a></label></p>
+                    <!-- /patTemplate:tmpl -->
+                </td>
+            </tr>
+              <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="id_photo" / --></th>
+            </tr>
+            <!-- patTemplate:tmpl name="current_photo" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+                <td>{PHOTO_FILE}
+                    <input type="hidden" name="id_photo" value="{ID_PHOTO}"/>
+                    <input type="hidden" name="photo" value="{PHOTO}"/>
+                    <input type="hidden" name="photo_enc" value="{PHOTO}"/>
+                    <input type="hidden" name="photo_origin" value="{PHOTO_ORIGIN}"/>
+                    <input type="hidden" name="photo_path" value="{PHOTO_PATH}"/>
+                    <input type="hidden" name="photo_type" value="{PHOTO_TYPE}"/>
+                    <input type="hidden" name="photo_size" value="{PHOTO_SIZE}"/>
+                </td>
+            </tr>
+            <!-- patTemplate:tmpl name="photo_preview" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+                <td>{PHOTOP}
+                </td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:tmpl -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo" / --></th>
+                <td>
+                    <input type="file" name="photo" data-ext="png,jpg,gif,PNG" title="<!-- patTemplate:gtfwgetlang key="photo" / -->" tabindex="17"  />
+                </td>
+            </tr>
+        
+        </table>
+    </div>
+    <div class="form-footer" style="padding:14px 230px 15px!important">
+        <button type="submit" class="btn" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="11"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="save" / --></span></button>
+        <button type="reset" class="btn btn-primary" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="12"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="reset" / --></span></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="btn btn-success" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="13"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>
+    </div>    
+</form>
+<script type="text/javascript">
+    var popupGroup;
+    $(function(){    
+        $('.popup_group').click(function(){
+            var url = $(this).attr('href')+'&ascomponent=1';
+            var title = $(this).attr('title');
+    
+            popupGroup = showGtPopup(url, title);
+            return false;
+        });
+    })
+</script>
+<!-- patTemplate:gtfwrendermodule module="comp.upload" submodule="upload" action="do" name="" / -->
+
+<!-- /patTemplate:tmpl -->

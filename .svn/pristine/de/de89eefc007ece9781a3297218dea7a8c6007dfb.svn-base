@@ -1,0 +1,90 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakKode" / --></th>
+        <td>
+            <input type="number" name="fakkode" value="{FAKKODE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakKodeUniv" / --></th>
+        <td>
+            <input type="text" name="fakkodeuniv" value="{FAKKODEUNIV}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakNamaResmi" / --></th>
+        <td>
+            <input type="text" name="faknamaresmi" value="{FAKNAMARESMI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakNamaSingkat" / --></th>
+        <td>
+            <input type="text" name="faknamasingkat" value="{FAKNAMASINGKAT}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakNamaAsing" / --></th>
+        <td>
+            <input type="text" name="faknamaasing" value="{FAKNAMAASING}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakIsEksakta" / --></th>
+        <td>
+            <input type="number" name="fakiseksakta" value="{FAKISEKSAKTA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakAlamat" / --></th>
+        <td>
+            <input type="text" name="fakalamat" value="{FAKALAMAT}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakTelp" / --></th>
+        <td>
+            <input type="text" name="faktelp" value="{FAKTELP}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakFax" / --></th>
+        <td>
+            <input type="text" name="fakfax" value="{FAKFAX}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakEmail" / --></th>
+        <td>
+            <input type="text" name="fakemail" value="{FAKEMAIL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="fakKontakPerson" / --></th>
+        <td>
+            <input type="text" name="fakkontakperson" value="{FAKKONTAKPERSON}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="faksatkerId" / --></th>
+        <td>
+            <input type="number" name="faksatkerid" value="{FAKSATKERID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

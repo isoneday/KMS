@@ -1,0 +1,234 @@
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Register extends CI_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->helper('notification_helper');
+        $m_register = $this->load->model("m_register");
+    }
+
+    public function index() {
+        $data['sumber_info_beasiswa']   = $this->db->get('ref_sumber_info_beasiswa');
+        $data['universitas']            = $this->m_register->getUniv();
+        $data['jenjang_pendidikan']     = $this->db->get('ref_jenjang_pendidikan');
+        $data['page']                   = "v_register";
+
+        $this->load->helper('captcha');
+        $random_number = substr(number_format(time() * rand(),0,'',''),0,6);
+        $vals = array(
+         'word' => $random_number,
+         'img_path' => './captcha/',
+         'img_url' => base_url().'captcha/',
+         'img_width' => 140,
+         'img_height' => 50,
+         'expiration' => 7200
+        );
+
+        $cap                = create_captcha($vals);
+        $data['captcha']    = $cap['image'];
+        $this->session->set_userdata('captchaUser', $cap['word']);
+
+        $fail       = $success = "";
+        $fail       = $this->session->flashdata('fail');
+        $success    = $this->session->flashdata('success');
+
+        $data['fail']       = $fail;
+        $data['success']    = $success;
+
+        $this->load->view('v_register', $data);
+    }
+
+    public function loadData() {
+        $loadType = $_REQUEST['loadType'];
+        $loadId = $_REQUEST['loadId'];
+
+        $result = $this->m_register->getData($loadType, $loadId);
+        $HTML = "";
+
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $list) {
+                $HTML.="<option value='" . $list->id . "'>" . $list->name . "</option>";
+            }
+        }
+        echo $HTML;
+    }
+
+    function member_check() {
+        $email = $this->input->post('email');
+
+        $result = $this->db->query("select * from gtfw_user where user_user_name='" . $email . "'");
+        if ($result->num_rows() > 0) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+    }
+
+    function nim_check() {
+        $nim = $this->input->post('nim');
+
+        $result = $this->db->query("select * from aplikan_register where aplikan_nim='" . $nim . "'");
+        if ($result->num_rows() > 0) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+    }
+
+    public function action() {
+        $this->load->library("form_validation");
+
+        $password   = $this->createPassword();
+
+        $tanggal    = $this->input->post("tanggal");
+        $bulan      = $this->input->post("bulan");
+        $tahun      = $this->input->post("tahun");
+        $tgl_lahir  = $tahun."-".$bulan."-".$tanggal;
+
+        $data["aplikan_angkatan"]           = $this->input->post("tahun_masuk");
+        $data["aplikan_nama"]               = $this->input->post("nama");
+        $data["aplikan_nim"]                = $this->input->post("nim");
+        $data["aplikan_email"]              = $this->input->post("email");
+        $data["aplikan_univ_id"]            = $this->input->post("universitas");
+        $data["aplikan_sumber_info_id"]     = $this->input->post("sumber_info_beasiswa");
+        $data["aplikan_fakultas_id"]        = $this->input->post("fakultas");
+        $data["aplikan_jenjangpendidikan_id"] = $this->input->post("jenjang_pendidikan");
+        $data["aplikan_jurusan_id"]         = $this->input->post("jurusan");
+        $data["aplikan_prodi_id"]           = $this->input->post("prodi");
+        $data["aplikan_tanggal_lahir"]      = $tgl_lahir;
+        $data["aplikan_tanggal_registrasi"] = date("Y-m-d H:i:s");
+
+        $datauser["user_real_name"]         = $data["aplikan_nama"];
+        $datauser["user_user_name"]         = $data["aplikan_email"];
+        $datauser["user_email"]             = $data["aplikan_email"];
+        $datauser["user_password"]          = md5($password);
+        $datauser["user_active_lang_code"]  = 'en';
+        $datauser["insert_user_id"]         = '1';
+        $datauser["insert_timestamp"]       = date("Y-m-d H:i:s");
+
+        $lastGtfwId = $this->m_register->insetGtfwUser($datauser);
+
+        $datagroup["usergroup_user_id"]     = $lastGtfwId;
+        $datagroup["usergroup_group_id"]    = 5;
+
+        $lastUserGroupId = $this->m_register->insertGtfwGroup($datagroup);
+
+        $lastId = $this->m_register->insertMerc($data);
+
+        $datamerchuser["aplikan_id"]        = $lastId;
+        $datamerchuser["user_id"]           = $lastGtfwId;
+        $datamerchuser["insert_user_id"]    = '1';
+        $datamerchuser["insert_timestamp"]  = date("Y-m-d H:i:s");
+
+        $this->m_register->insertMercUser($datamerchuser);
+
+        if ($lastGtfwId != null) {
+            $address    = $this->input->post("email");
+            $name       = $this->input->post("nama");
+            $subject    = 'Konfirmasi pendaftaran';
+            $content    = "Yth, ".$datauser['user_real_name']."
+                          <br/>
+                          <br/>Anda telah terdaftar sebagai calon penerima beasiswa dengan akun, sbb:
+                          <br/>Username : ".$datauser['user_user_name']."
+                          <br/>Password : ".$password."
+                          <br/>
+                          <br/>Silahkan melakukan login dengan mengakses alamat
+                          <br/>
+                          <br/>".base_url()."bo/index.php?mod=core.login&sub=login&act=view&typ=html
+                          <br/>
+                          <br/>dengan langkah-langkah sebagai berikut :
+                          <br/>
+                          <br/>1. login dengan username dan password anda.
+                          <br/>2. Lengkapi data anda dengan mengisi formulir serta lampiran dokumen yang diminta.
+                          <br/>3. Buat dan kirimkan essay yang bertema lingkungan hidup, line spacing 1.5, dan jumlah karakter 500-1000 karaketer.
+                          <br/>4. Menunggu konfirmasi tahap seleksi beasiswa berikutnya dari Pertamina Foundation melalui alamat email ini.
+                          <br/>
+                          <br/>Demikian,
+                          <br/>Terima Kasih.
+                          <br/>
+                          <br/>Beasiswa Pertamina Sobat Bumi
+                        ";
+    
+
+            $message_mail = template_email($content, $subject);
+            $attachment = "";
+            send_email_notification($address, $subject, $message_mail, $attachment);
+
+            $this->session->set_flashdata('success', 'Proses pendaftaran berhasil, silahkan cek notifikasi email Anda!');
+            redirect('register');
+        } else {
+            $this->session->set_flashdata('fail', 'Proses pendaftaran merchant gagal, silahkan cek data Anda kembali!');
+            redirect('register');
+        }
+    }
+
+    public function create_captcha() {
+        $this->load->helper('captcha');
+        $random_number = substr(number_format(time() * rand(),0,'',''),0,6);
+        $vals = array(
+         'word' => $random_number,
+         'img_path' => './captcha/',
+         'img_url' => base_url().'captcha/',
+         'img_width' => 140,
+         'img_height' => 50,
+         'expiration' => 7200
+        );
+
+        $cap    = create_captcha($vals);
+        $image  = $cap['image'];
+        $this->session->set_userdata('captchaUser', $cap['word']);
+
+        print $image;
+    }
+
+    public function check_captcha($string = '') {
+        $string = $this->input->post("captcha");
+        if($string==$this->session->userdata('captchaUser')) {
+            echo "true";
+        }
+        else {
+            //$this->form_validation->set_message('check_captcha', 'Wrong captcha code');
+            echo "false";
+        }
+    }
+
+    function send_mail($data) {
+        $id         = $data['merc_id'];
+        $name       = $data['merc_name'];
+        $address    = $data['merc_email'];
+        $attachment = base_url() . 'files/from_registration.pdf';
+        $subject    = 'Merchant Registration';
+        $content    = "Hi, " . $name . " ! <br /><br />";
+        $content    .= "Terima kasih telah melakukan pendaftaran, selanjutnya untuk melengkapi proses pendaftaran silahkan membaca proposal attachment yang kami lampirkan... 
+                        <br />...
+                        <br />...
+                        <br />...
+                        <br /> Redaksi registrasi disini...
+                        <br />...
+                        <br />...
+                        <br />";
+        $content .= "Apabila ada setuju, silahkan klik link persetujuan dibawah ini.<br />";
+        $content .= "<a href='" . base_url() . "registration/register_confirmation/" . $id . "'>Saya Setuju</a>";
+
+        $message_mail = template_email($content, $subject);
+        send_email_notification($address, $subject, $message_mail, $attachment);
+    }
+
+    function createPassword() {
+        $chars = "023456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        srand((double) microtime() * 1000000);
+        $b = 0;
+        $pass = '';
+        while ($b <= 9) {
+            $num = rand() % 33;
+            $tmp = substr($chars, $num, 1);
+            $pass = $pass . $tmp;
+            $b++;
+        }
+        return $pass;
+    }
+
+}

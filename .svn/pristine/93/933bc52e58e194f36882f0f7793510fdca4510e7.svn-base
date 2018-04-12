@@ -1,0 +1,92 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefFaculty extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.faculty/business/mysqlt/reffaculty.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefFaculty($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($faknamaresmi)) {
+            $str .= " AND LOWER(fakNamaResmi) LIKE('%$faknamaresmi%')";
+        }
+        if (!empty($faksatkerid)) {
+            $str .= " AND LOWER(faksatkerId) LIKE('%$faksatkerid%')";
+        }
+        $query = $this->mSqlQueries['count_reffaculty'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefFaculty($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($faknamaresmi)) {
+            $str .= " AND LOWER(fakNamaResmi) LIKE('%$faknamaresmi%')";
+        }
+        if (!empty($faksatkerid)) {
+            $str .= " AND LOWER(faksatkerId) LIKE('%$faksatkerid%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_reffaculty'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefFaculty($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_reffaculty'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefFaculty($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_reffaculty'], $params);
+    }
+    
+    public function updateRefFaculty($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_reffaculty'], $params);
+    }
+    
+    public function deleteRefFaculty($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_reffaculty'], array($id));
+    }
+    
+    public function listRefFaculty()
+    {
+        return $this->Open($this->mSqlQueries['list_reffaculty'], array());
+    }
+
+    public function listRefFacultyByUniv($id)
+    {
+        return $this->Open($this->mSqlQueries['list_reffaculty_by_univ'], array($id));
+    }
+}
+
+// End of file RefFaculty.class.php

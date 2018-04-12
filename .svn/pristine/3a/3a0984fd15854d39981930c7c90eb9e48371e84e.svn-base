@@ -1,0 +1,50 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+
+    <table class="table-common">
+        <thead>
+            <tr>
+                <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+                <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="nama" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="angkatan" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="tanggal_lahir" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="telepon" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="tanggal_register" / --></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr>
+                <td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="item" -->
+            <tr class="{ROW_CLASS}">
+                <td style="text-align: center;">{NO}</td>        
+                <td class="links">
+                    <a class="xhr dest_subcontent-element btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="detail_universitas" / -->"></a>
+                </td>
+                <td>{APLIKAN_NAMA}</td>
+                <td>{APLIKAN_ANGKATAN}</td>
+                <td>{APLIKAN_TANGGAL_LAHIR}</td>
+                <td>{APLIKAN_TELEPON}</td>
+                <td>{APLIKAN_TANGGAL_REGISTRASI}</td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </tbody>
+    </table>
+   
+</div>
+<!-- /patTemplate:tmpl -->

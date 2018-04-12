@@ -1,0 +1,56 @@
+<!-- patTemplate:tmpl name="content" -->
+<div class="span3">
+    <ul id="widget_list">
+<!-- patTemplate:tmpl name="widget" type="condition" conditionvar="IS_EMPTY" -->
+    
+    <!-- patTemplate:sub condition="NO" -->
+        <!-- patTemplate:tmpl name="item" -->
+        <li>
+            <a class="add_widget" data-row="{ROW}" data-col="{COL}" data-sizex="{SIZEX}" data-sizey="{SIZEY}" data-id="{ID}" data-url="{URL}" data-resize="{RESIZE}" data-name="{NAME}">{NAME}</a>
+        </li>
+        <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+<!-- /patTemplate:tmpl -->
+    </ul>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('#widget_list').on('click', '.add_widget', function(){
+        var elm = $(this);
+        var tpl = '<li class="layout_block nest-bg" data-url="'+elm.data('url')+'" data-id="'+elm.data('id')+'" data-resize="'+elm.data('resize')+'" data-name="'+elm.data('name')+'">\
+            <div class="title"><h6>'+elm.text()+'</h6></div>\
+			<div class="widget-title"></div>\
+            <div class="remove_element"><i class="icon-remove"></i></div>\
+            <div class="layout_content"></div>\
+        </li>'
+        var added = layout.add_widget(tpl, elm.data('sizex'), elm.data('sizey'), elm.data('col'), elm.data('row'));
+        
+        if (added.data('resize')== 1) {
+            added.resizable({
+                grid: [grid_size + (grid_margin * 2), grid_size + (grid_margin * 2)],
+                animate: false,
+                minWidth: grid_size,
+                minHeight: grid_size,
+                containment: '#layouts_grid',
+                autoHide: false,
+                stop: function(event, ui) {
+                    var resized = $(this);
+                    setTimeout(function() {
+                        resizeBlock(resized);
+                        // saveWidget();
+                    }, 300);
+                }
+            });
+            added.children('.ui-resizable-handle, .remove_element').hover(function() {
+                layout.disable();
+            }, function() {
+                layout.enable();
+            });            
+        }
+        loadContent(added);
+        saveWidget();
+        elm.parent().remove();
+    });
+});
+</script>
+<!-- /patTemplate:tmpl -->

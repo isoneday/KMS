@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailCity extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_city.html');
+    }
+
+    function ProcessRequest() {
+        $ObjCity = GtfwDispt()->load->business('City', 'ref.city');
+
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());
+
+        $detail = $ObjCity->getDetailCity($id);
+
+        $nav[0]['url'] = GtfwDispt()->GetUrl('ref.city', 'city', 'view', 'html') . '&display';
+        $nav[0]['menu'] = 'City';
+        $title = GtfwLangText('detail');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+
+        return compact('detail');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+
+        if (!empty($detail)) {
+            $detail['status'] == 1 ? $detail['status'] = GtfwLangText('active') : $detail['status'] = GtfwLangText('not_active');
+            $detail['category'] == 'city' ? $detail['category'] = GtfwLangText('city') : $detail['category'] = GtfwLangText('district');
+            $this->mrTemplate->addVars('content', $detail);
+        }
+    }
+
+}
+
+?>

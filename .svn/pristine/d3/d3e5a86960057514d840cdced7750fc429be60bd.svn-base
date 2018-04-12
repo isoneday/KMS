@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class ApplicantData extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/applicant.data/business/mysqlt/applicantdata.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countApplicantData() {
+        $query = $this->mSqlQueries['count_applicantdata'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getApplicantData($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($AplikanNim)) {
+            $str .= " AND LOWER(aplikan_nim) LIKE('%$AplikanNim%')";
+        }
+        if (!empty($AplikanAngkatan)) {
+            $str .= " AND LOWER(aplikan_angkatan) LIKE('%$AplikanAngkatan%')";
+        }
+        
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+		
+        $query = $this->mSqlQueries['get_applicantdata'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+
+        return $result;
+    }
+
+    public function getDetailApplicantData($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_applicantdata'], array($id));
+
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function insertApplicantData($params) {
+        return $this->Execute($this->mSqlQueries['insert_applicantdata'], $params);
+    }
+
+    public function updateApplicantData($params) {
+        return $this->Execute($this->mSqlQueries['update_applicantdata'], $params);
+    }
+
+    public function deleteApplicantData($id) {
+        return $this->Execute($this->mSqlQueries['delete_data'], array($id));
+    }
+
+    public function listApplicantData() {
+        return $this->Open($this->mSqlQueries['list_applicantdata'], array());
+    }
+
+    function GetListFoto($id) {
+        $result = $this->Open($this->mSqlQueries['get_foto'], array($id));
+        return $result;
+    }
+
+    function GetListPendaftar($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_by_nim'], array($id));
+        return $result;
+    }
+
+    function GetListWali($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_wali'], array($id));
+        return $result;
+    }
+
+    function GetListSaudara($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_saudara'], array($id));
+        return $result;
+    }
+
+    function GetListHistory($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_history'], array($id));
+        return $result;
+    }
+
+    function GetListAktifitas($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_aktifitas'], array($id));
+        return $result;
+    }
+
+    function GetListPrestasi($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_prestasi'], array($id));
+        return $result;
+    }
+
+    function GetListAkademik($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_akademik'], array($id));
+        return $result;
+    }
+
+    function GetListBeasiswa($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_beasiswa'], array($id));
+        return $result;
+    }
+
+    function cekStatusId($id) {
+        $result = $this->Open($this->mSqlQueries['cek_status_id'], array($id));
+        return $result;
+    }
+
+    function cekStatusDaftar($id) {
+        $result = $this->Open($this->mSqlQueries['cek_statu_sdaftar'], array($id));
+        return $result;
+    }
+
+    function cekStatusDiterima($id) {
+        $result = $this->Open($this->mSqlQueries['cek_status_diterima'], array($id));
+        return $result;
+    }
+
+    function cekStatusDaftarDiterima($id) {
+        $result = $this->Open($this->mSqlQueries['cek_statu_sdaftar_diterima'], array($id));
+        return $result;
+    }
+
+}
+
+// End of file ApplicantData.class.php

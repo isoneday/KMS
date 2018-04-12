@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateRefWali extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefWali', 'ref.wali');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.wali', 'RefWali', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupRefWali);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('ref.wali', 'updateRefWali', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

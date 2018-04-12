@@ -1,0 +1,83 @@
+<!-- patTemplate:tmpl name="content" -->
+<div id="sample-again">
+
+<!-- patTemplate:tmpl name="filter" -->
+<div class="content-box">
+<form id="form_sample_again" class="xhr dest_sample-again" method="post" action="{ACTION}">
+<input type="text" name="start" value="{START}" class="month_year" required="" />
+&nbsp;<!-- patTemplate:gtfwgetlang key="until" / -->&nbsp;
+<input type="text" name="end" value="{END}" class="month_year" required="" /> 
+&nbsp; <button class="btn"><!-- patTemplate:gtfwgetlang key="show" / --></button>
+</form>
+</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box" style="overflow: auto;">
+
+<table class="table-common">
+<thead>
+    <tr>
+        <th><!-- patTemplate:gtfwgetlang key="number" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="goods_code" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="goods_name" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="units_name" / --></th>
+        <!-- patTemplate:tmpl name="period_label" -->
+        <th>{LABEL}</th>
+        <!-- /patTemplate:tmpl -->
+        <th><!-- patTemplate:gtfwgetlang key="goods_forecast_stock" / --></th>
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+       <td nowrap="nowrap" class="text-center">{NO}</td>
+        <td nowrap="nowrap">{GOODS_CODE}</td>
+        <td nowrap="nowrap">{GOODS_NAME}</td>
+        <td class="text-center">{UNITS}</td>
+       <!-- patTemplate:tmpl name="period" -->
+        <td class="text-right">{GOODS_QTY}</td>
+        <!-- /patTemplate:tmpl -->
+        <td class="text-right">{FORECASTING}</td>
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+</div>
+<script type="text/javascript">
+$(function(){    
+        
+        $(".month_year").datepicker({
+            dateFormat: 'yy-mm',
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            
+            onClose: function(dateText, inst) {
+                var date = 1;
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).val($.datepicker.formatDate('yy-mm', new Date(year, month, date)));
+            }
+        }).css('float', 'none');
+
+        $(".month_year").focus(function () {
+            $(".ui-datepicker-calendar").hide();
+            $("#ui-datepicker-div").position({
+                my: "center top",
+                at: "right bottom",
+                of: $(this)
+            });
+        });
+    
+})
+</script>
+</div>
+<!-- /patTemplate:tmpl -->

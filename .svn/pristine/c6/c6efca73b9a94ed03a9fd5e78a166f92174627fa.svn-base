@@ -1,0 +1,145 @@
+<?php
+
+$sql["count_country"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_country"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.country_id AS `id`,
+    a.country_code AS `code`,
+    a.country_name AS `name`,
+    a.country_capital AS `capital`,
+    a.country_map AS `map`,
+    a.country_nat_singular AS `nat_singular`,
+    a.country_nat_plural AS `nat_plural`,
+    a.country_curr_id AS `currency`,
+    c.`curr_name` AS currency_name,
+    c.`curr_code` AS `currency_code`,
+    a.country_status AS `status`,
+    a.country_desc AS `desc`,
+    a.unit_id AS `unit_id`,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_country a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_currency c ON c.`curr_id` = a.`country_curr_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE
+    1 = 1
+    --search-- 
+--order-- 
+--limit--  
+";
+$sql["get_detail_country"] = "
+SELECT 
+    a.country_id AS `id`,
+    a.country_code AS `code`,
+    a.country_name AS `name`,
+    a.country_capital AS `capital`,
+    a.country_map AS `map`,
+    a.country_nat_singular AS `nat_singular`,
+    a.country_nat_plural AS `nat_plural`,
+    a.country_curr_id AS `currency`,
+    c.`curr_name` AS currency_name,
+    c.`curr_code` AS `currency_code`,
+    a.country_status AS `status`,
+    a.country_desc AS `desc`,
+    a.unit_id AS `unit_id`,
+	IF((d.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert                
+FROM ref_country a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_currency c ON c.`curr_id` = a.`country_curr_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE a.country_id = %d
+";
+
+
+$sql['get_detail_country_by_code']="
+SELECT 
+    a.country_id AS `id`,
+    a.country_code AS `code`,
+    a.country_name AS `name`,
+    a.country_capital AS `capital`,
+    a.country_map AS `map`,
+    a.country_nat_singular AS `nat_singular`,
+    a.country_nat_plural AS `nat_plural`,
+    a.country_curr_id AS `currency`,
+    c.`curr_name` AS currency_name,
+    c.`curr_code` AS `currency_code`,
+    a.country_status AS `status`,
+    a.country_desc AS `desc`,
+    a.unit_id AS `unit_id`,
+	IF((d.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert                
+FROM ref_country a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_currency c ON c.`curr_id` = a.`country_curr_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE a.country_code = '%s'
+";
+
+$sql["insert_country"] = "
+INSERT INTO ref_country
+(
+    country_code,
+    country_name,
+    country_capital,
+    country_map,
+    country_nat_singular,
+    country_nat_plural,
+    country_curr_id,
+    country_status,
+    country_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_country"] = "
+UPDATE ref_country
+SET 
+    country_code = %s,
+    country_name = %s,
+    country_capital = %s,
+    country_map = %s,
+    country_nat_singular = %s,
+    country_nat_plural = %s,
+    country_curr_id = %s,
+    country_status = %s,
+    country_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE country_id = %d
+";
+$sql["delete_country"] = "
+DELETE FROM ref_country
+WHERE country_id = %d
+";
+$sql["list_country"] = "
+SELECT
+    country_id AS `id`,
+    CONCAT(country_name,' (',country_code,')') AS `name`
+FROM
+    ref_country
+ORDER BY country_name
+";
+$sql["list_citizenship"] = "
+SELECT
+    country_id AS `id`,
+    country_nat_singular AS `name`
+FROM
+    ref_country
+WHERE country_status = 1
+ORDER BY country_name
+";

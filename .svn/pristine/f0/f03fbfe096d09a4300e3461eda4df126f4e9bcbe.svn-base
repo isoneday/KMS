@@ -1,0 +1,318 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrNim" / --></th>
+        <td>
+            <input type="text" name="kmhspdrnim" value="{KMHSPDRNIM}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrNiu" / --></th>
+        <td>
+            <input type="text" name="kmhspdrniu" value="{KMHSPDRNIU}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrAngk" / --></th>
+        <td>
+            <input type="text" name="kmhspdrangk" value="{KMHSPDRANGK}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrNif" / --></th>
+        <td>
+            <input type="text" name="kmhspdrnif" value="{KMHSPDRNIF}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrFakId" / --></th>
+        <td>
+            <input type="number" name="kmhspdrfakid" value="{KMHSPDRFAKID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrProdiId" / --></th>
+        <td>
+            <input type="text" name="kmhspdrprodiid" value="{KMHSPDRPRODIID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJurId" / --></th>
+        <td>
+            <input type="number" name="kmhspdrjurid" value="{KMHSPDRJURID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJenPdkId" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjenpdkid" value="{KMHSPDRJENPDKID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrIsLulus" / --></th>
+        <td>
+            <input type="text" name="kmhspdrislulus" value="{KMHSPDRISLULUS}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrBlnLulus" / --></th>
+        <td>
+            <input type="text" name="kmhspdrblnlulus" value="{KMHSPDRBLNLULUS}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrThnLulus" / --></th>
+        <td>
+            <input type="text" name="kmhspdrthnlulus" value="{KMHSPDRTHNLULUS}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrNama" / --></th>
+        <td>
+            <input type="text" name="kmhspdrnama" value="{KMHSPDRNAMA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrTmpLahir" / --></th>
+        <td>
+            <input type="text" name="kmhspdrtmplahir" value="{KMHSPDRTMPLAHIR}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrTglLahir" / --></th>
+        <td>
+            <input type="text" name="kmhspdrtgllahir" value="{KMHSPDRTGLLAHIR}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJenisKelamin" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjeniskelamin" value="{KMHSPDRJENISKELAMIN}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrAlamatAsal" / --></th>
+        <td>
+            <input type="text" name="kmhspdralamatasal" value="{KMHSPDRALAMATASAL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrAlamatJogja" / --></th>
+        <td>
+            <input type="text" name="kmhspdralamatjogja" value="{KMHSPDRALAMATJOGJA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrNoTelp" / --></th>
+        <td>
+            <input type="text" name="kmhspdrnotelp" value="{KMHSPDRNOTELP}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJmlTanggKel" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjmltanggkel" value="{KMHSPDRJMLTANGGKEL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrKetTanggKel" / --></th>
+        <td>
+            <textarea name="kmhspdrkettanggkel" cols="50" rows="2" >{KMHSPDRKETTANGGKEL}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJmlSaudara" / --></th>
+        <td>
+            <input type="number" name="kmhspdrjmlsaudara" value="{KMHSPDRJMLSAUDARA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrBank" / --></th>
+        <td>
+            <input type="text" name="kmhspdrbank" value="{KMHSPDRBANK}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrRekening" / --></th>
+        <td>
+            <input type="text" name="kmhspdrrekening" value="{KMHSPDRREKENING}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJalurMasuk" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjalurmasuk" value="{KMHSPDRJALURMASUK}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrAgama" / --></th>
+        <td>
+            <input type="text" name="kmhspdragama" value="{KMHSPDRAGAMA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrNoKtp" / --></th>
+        <td>
+            <input type="text" name="kmhspdrnoktp" value="{KMHSPDRNOKTP}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrStatTptTgl" / --></th>
+        <td>
+            <input type="text" name="kmhspdrstattpttgl" value="{KMHSPDRSTATTPTTGL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrRmhSaudara" / --></th>
+        <td>
+            <input type="text" name="kmhspdrrmhsaudara" value="{KMHSPDRRMHSAUDARA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrBiayaKuliah" / --></th>
+        <td>
+            <input type="text" name="kmhspdrbiayakuliah" value="{KMHSPDRBIAYAKULIAH}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrBiayaSaudara" / --></th>
+        <td>
+            <input type="text" name="kmhspdrbiayasaudara" value="{KMHSPDRBIAYASAUDARA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrAktifitas" / --></th>
+        <td>
+            <input type="text" name="kmhspdraktifitas" value="{KMHSPDRAKTIFITAS}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrTptKerja" / --></th>
+        <td>
+            <input type="text" name="kmhspdrtptkerja" value="{KMHSPDRTPTKERJA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrGajiKerja" / --></th>
+        <td>
+            <input type="number" name="kmhspdrgajikerja" value="{KMHSPDRGAJIKERJA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJamKerja" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjamkerja" value="{KMHSPDRJAMKERJA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrUkt" / --></th>
+        <td>
+            <input type="text" name="kmhspdrukt" value="{KMHSPDRUKT}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrShowDaftar" / --></th>
+        <td>
+            <input type="text" name="kmhspdrshowdaftar" value="{KMHSPDRSHOWDAFTAR}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrLastUpdate" / --></th>
+        <td>
+            <input type="text" name="kmhspdrlastupdate" value="{KMHSPDRLASTUPDATE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsUnitId" / --></th>
+        <td>
+            <input type="text" name="kmhsunitid" value="{KMHSUNITID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrTidakMampuFile" / --></th>
+        <td>
+            <input type="text" name="kmhspdrtidakmampufile" value="{KMHSPDRTIDAKMAMPUFILE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrTidakBeasiswaLainFile" / --></th>
+        <td>
+            <input type="text" name="kmhspdrtidakbeasiswalainfile" value="{KMHSPDRTIDAKBEASISWALAINFILE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrFotoFile" / --></th>
+        <td>
+            <input type="text" name="kmhspdrfotofile" value="{KMHSPDRFOTOFILE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrKartuKeluargaFile" / --></th>
+        <td>
+            <input type="text" name="kmhspdrkartukeluargafile" value="{KMHSPDRKARTUKELUARGAFILE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrRekomendasiFakultasFile" / --></th>
+        <td>
+            <input type="text" name="kmhspdrrekomendasifakultasfile" value="{KMHSPDRREKOMENDASIFAKULTASFILE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJumlahSaudara" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjumlahsaudara" value="{KMHSPDRJUMLAHSAUDARA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJumlahSaudaraDitanggung" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjumlahsaudaraditanggung" value="{KMHSPDRJUMLAHSAUDARADITANGGUNG}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrJumlahSaudaraBekerja" / --></th>
+        <td>
+            <input type="text" name="kmhspdrjumlahsaudarabekerja" value="{KMHSPDRJUMLAHSAUDARABEKERJA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrEmail" / --></th>
+        <td>
+            <input type="text" name="kmhspdremail" value="{KMHSPDREMAIL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrSumberInformasiBeasiswa" / --></th>
+        <td>
+            <input type="text" name="kmhspdrsumberinformasibeasiswa" value="{KMHSPDRSUMBERINFORMASIBEASISWA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrSatkerId" / --></th>
+        <td>
+            <input type="number" name="kmhspdrsatkerid" value="{KMHSPDRSATKERID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsPdrTanggal" / --></th>
+        <td>
+            <input type="text" name="kmhspdrtanggal" value="{KMHSPDRTANGGAL}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

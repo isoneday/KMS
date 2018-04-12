@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailBeasiswa extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_beasiswa.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+
+        $id = $_GET['id']->Integer()->Raw();
+
+        $listUniversitas = $ObjApplicantInterview->listUniversitas($id);
+		$i = 0;
+		foreach($listUniversitas as $var)
+			{
+			$data[$i]['universitas_name'] = $var['universitas_name'];
+			$data[$i]['universitas_id'] = $var['universitas_id'];
+			$i++;
+			}
+        
+        return compact('data','id');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+       $no = 1;
+        if (!empty($data) AND count($data) > 0) {
+			$this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            foreach ($data as $val) {
+                $val['no'] = $no;
+                $val['url_detail'] = GtfwDispt()->GetUrl('applicant.interview', 'listInterview', 'view', 'html') . 
+				'&id=' . $val['universitas_id'] .
+				'&id_beasiswa=' . $id
+				;
+
+                $this->mrTemplate->addVars('item', $val);
+                $this->mrTemplate->parseTemplate('item', 'a');
+                $no++;
+            }
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+		
+    }
+
+}
+
+?>

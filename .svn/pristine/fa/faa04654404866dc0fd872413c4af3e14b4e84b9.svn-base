@@ -1,0 +1,462 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessRegistrasiUlang
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjRegistrasiUlang = GtfwDispt()->load->business('RegistrasiUlang');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+        $this->aplikanId = $this->ObjRegistrasiUlang->getAplikanId($this->user);
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        //$Val->set_rules('lam_pks', GtfwLangText('Upload Perjanjian Kerja Sama'), 'required');
+        $Val->set_rules('namabank', GtfwLangText('Nama Bank'), 'required');
+        $Val->set_rules('norekening', GtfwLangText('Nomor Rekening'), 'required');
+        //$Val->set_rules('lam_buku', GtfwLangText('Upload Buku Tabungan'), 'required');
+        //$Val->set_rules('lam_transkrip', GtfwLangText('Upload Transkrip'), 'required');
+        //$Val->set_rules('lam_krs', GtfwLangText('Upload KRS'), 'required');
+        $Val->set_rules('semesterkrs', GtfwLangText('Semester KRS'), 'required');
+		
+        $result = $Val->run();
+	
+        $file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+		$config = array(
+            "dest" => $file_path,
+            "ext" => "doc,DOC,docx,DOCX,pdf,PDF,jpg,jpeg,JPG,JPEG,png,PNG",
+            "maxsize" => 12097152
+        );
+		
+		$upload_pks = $this->uploadFile('lam_pks', $config);
+		$upload_buku = $this->uploadFile('lam_buku', $config);
+		$upload_transkrip = $this->uploadFile('lam_transkrip', $config);
+		$upload_krs = $this->uploadFile('lam_krs', $config);
+        
+		
+		if ($upload_pks != null) {
+            if ($upload_pks['lam_pks']['error'] === false) {
+                $post['lam_pks_file']          = $upload_pks['lam_pks']['name_enc'];
+                $post['lam_pks_file_origin']   = $upload_pks['lam_pks']['name_ori'];
+                $post['lam_pks_file_path']     = $upload_pks['lam_pks']['file_path'];
+                $post['lam_pks_file_type']     = $upload_pks['lam_pks']['file_ext'];
+                $post['lam_pks_file_size']     = $upload_pks['lam_pks']['file_size'];
+            }
+        }
+		
+        if ($upload_buku != null) {
+            if ($upload_buku['lam_buku']['error'] === false) {
+                $post['lam_buku_file']          = $upload_buku['lam_buku']['name_enc'];
+                $post['lam_buku_file_origin']   = $upload_buku['lam_buku']['name_ori'];
+                $post['lam_buku_file_path']     = $upload_buku['lam_buku']['file_path'];
+                $post['lam_buku_file_type']     = $upload_buku['lam_buku']['file_ext'];
+                $post['lam_buku_file_size']     = $upload_buku['lam_buku']['file_size'];
+            }
+        }
+		
+		if ($upload_transkrip != null) {
+            if ($upload_transkrip['lam_transkrip']['error'] === false) {
+                $post['lam_transkrip_file']          = $upload_transkrip['lam_transkrip']['name_enc'];
+                $post['lam_transkrip_file_origin']   = $upload_transkrip['lam_transkrip']['name_ori'];
+                $post['lam_transkrip_file_path']     = $upload_transkrip['lam_transkrip']['file_path'];
+                $post['lam_transkrip_file_type']     = $upload_transkrip['lam_transkrip']['file_ext'];
+                $post['lam_transkrip_file_size']     = $upload_transkrip['lam_transkrip']['file_size'];
+            }
+        }
+		
+		if ($upload_krs != null) {
+            if ($upload_krs['lam_krs']['error'] === false) {
+                $post['lam_krs_file']          = $upload_krs['lam_krs']['name_enc'];
+                $post['lam_krs_file_origin']   = $upload_krs['lam_krs']['name_ori'];
+                $post['lam_krs_file_path']     = $upload_krs['lam_krs']['file_path'];
+                $post['lam_krs_file_type']     = $upload_krs['lam_krs']['file_ext'];
+                $post['lam_krs_file_size']     = $upload_krs['lam_krs']['file_size'];
+            }
+        }
+		
+		
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjRegistrasiUlang->StartTrans();
+                $params = array(
+					$this->aplikanId,
+                    $post['namabank'],
+                    $post['norekening'],
+					//file pks
+					(isset($post['lam_pks_file']) ? $post['lam_pks_file'] : null),
+                    (isset($post['lam_pks_file_origin']) ? $post['lam_pks_file_origin'] : null),
+                    (isset($post['lam_pks_file_path']) ? $post['lam_pks_file_path'] : null),
+                    (isset($post['lam_pks_file_type']) ? $post['lam_pks_file_type'] : null),
+                    (isset($post['lam_pks_file_size']) ? $post['lam_pks_file_size'] : null),
+					//bukutabungan
+					(isset($post['lam_buku_file']) ? $post['lam_buku_file'] : null),
+                    (isset($post['lam_buku_file_origin']) ? $post['lam_buku_file_origin'] : null),
+                    (isset($post['lam_buku_file_path']) ? $post['lam_buku_file_path'] : null),
+                    (isset($post['lam_buku_file_type']) ? $post['lam_buku_file_type'] : null),
+                    (isset($post['lam_buku_file_size']) ? $post['lam_buku_file_size'] : null),
+                    date("Y-m-d h:i:s")
+                );
+                $result = $result && $this->ObjRegistrasiUlang->insertRegistrasiUlang($params);
+                $this->ObjRegistrasiUlang->EndTrans($result);
+				
+				$paramsTranskrip = array(
+					$this->aplikanId,
+					//file Transkrip
+					(isset($post['lam_transkrip_file']) ? $post['lam_transkrip_file'] : null),
+                    (isset($post['lam_transkrip_file_origin']) ? $post['lam_transkrip_file_origin'] : null),
+                    (isset($post['lam_transkrip_file_path']) ? $post['lam_transkrip_file_path'] : null),
+                    (isset($post['lam_transkrip_file_type']) ? $post['lam_transkrip_file_type'] : null),
+                    (isset($post['lam_transkrip_file_size']) ? $post['lam_transkrip_file_size'] : null),
+                    date("Y-m-d h:i:s")
+                );
+				$RsTranskrip = $result && $this->ObjRegistrasiUlang->insertTranskrip($paramsTranskrip);
+				
+				$paramsKrs = array(
+					$this->aplikanId,
+					//file krs
+					(isset($post['lam_krs_file']) ? $post['lam_krs_file'] : null),
+                    (isset($post['lam_krs_file_origin']) ? $post['lam_krs_file_origin'] : null),
+                    (isset($post['lam_krs_file_path']) ? $post['lam_krs_file_path'] : null),
+                    (isset($post['lam_krs_file_type']) ? $post['lam_krs_file_type'] : null),
+                    (isset($post['lam_krs_file_size']) ? $post['lam_krs_file_size'] : null),
+					$post['semesterkrs'],
+                    date("Y-m-d h:i:s")
+                );
+				$RsKrs = $result && $this->ObjRegistrasiUlang->insertKrs($paramsKrs);
+				
+							
+				//$result = 1;
+                if ($result) {
+                    $msg = 'Penambahan Registrasi Ulang Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Penambahan Registrasi Ulang Gagal';
+                    $css = $this->cssFail;
+                }
+            } else {
+				$detail = $this->ObjRegistrasiUlang->getDetailRegistrasiUlang($this->aplikanId);
+                $this->ObjRegistrasiUlang->StartTrans();
+                $params = array(
+                    $post['namabank'],
+                    $post['norekening'],
+					//file pks
+					(isset($post['lam_pks_file']) ? $post['lam_pks_file'] : $detail['pks_file']),
+                    (isset($post['lam_pks_file_origin']) ? $post['lam_pks_file_origin'] : $detail['pks_origin']),
+                    (isset($post['lam_pks_file_path']) ? $post['lam_pks_file_path'] : $detail['pks_path']),
+                    (isset($post['lam_pks_file_type']) ? $post['lam_pks_file_type'] : $detail['pks_type']),
+                    (isset($post['lam_pks_file_size']) ? $post['lam_pks_file_size'] : $detail['pks_size']),
+					//bukutabungan
+					(isset($post['lam_buku_file']) ? $post['lam_buku_file'] : $detail['buku_file']),
+                    (isset($post['lam_buku_file_origin']) ? $post['lam_buku_file_origin'] : $detail['buku_origin']),
+                    (isset($post['lam_buku_file_path']) ? $post['lam_buku_file_path'] : $detail['buku_path']),
+                    (isset($post['lam_buku_file_type']) ? $post['lam_buku_file_type'] : $detail['buku_type']),
+                    (isset($post['lam_buku_file_size']) ? $post['lam_buku_file_size'] : $detail['buku_size']),
+                    $this->aplikanId
+                );
+                $result = $result && $this->ObjRegistrasiUlang->updateRegistrasiUlang($params);
+                $this->ObjRegistrasiUlang->EndTrans($result);
+				
+				$paramsTranskrip = array(
+					$this->aplikanId,
+					//file Transkrip
+					(isset($post['lam_transkrip_file']) ? $post['lam_transkrip_file'] : null),
+                    (isset($post['lam_transkrip_file_origin']) ? $post['lam_transkrip_file_origin'] : null),
+                    (isset($post['lam_transkrip_file_path']) ? $post['lam_transkrip_file_path'] : null),
+                    (isset($post['lam_transkrip_file_type']) ? $post['lam_transkrip_file_type'] : null),
+                    (isset($post['lam_transkrip_file_size']) ? $post['lam_transkrip_file_size'] : null),
+                    date("Y-m-d h:i:s")
+                );
+				//$RsTranskrip = $result && $this->ObjRegistrasiUlang->insertTranskrip($paramsTranskrip);
+				
+				$paramsKrs = array(
+					$this->aplikanId,
+					//file krs
+					(isset($post['lam_krs_file']) ? $post['lam_krs_file'] : null),
+                    (isset($post['lam_krs_file_origin']) ? $post['lam_krs_file_origin'] : null),
+                    (isset($post['lam_krs_file_path']) ? $post['lam_krs_file_path'] : null),
+                    (isset($post['lam_krs_file_type']) ? $post['lam_krs_file_type'] : null),
+                    (isset($post['lam_krs_file_size']) ? $post['lam_krs_file_size'] : null),
+					$post['semesterkrs'],
+                    date("Y-m-d h:i:s")
+                );
+				//$RsKrs = $result && $this->ObjRegistrasiUlang->insertKrs($paramsKrs);
+				
+                if ($result) {
+                    $msg = 'Perubahan Data Registrasi Ulang Sukses';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Perubahan Data Registrasi Ulang Gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+
+        if ($result) {
+             Messenger::Instance()->Send('applicant.regist.ulang', 'DetailRegistrasiUlang', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+			 return true;
+        } else {
+            $post['submitted'] = 'biodata';
+            Messenger::Instance()->Send('applicant.regist.ulang', 'inputRegistrasiUlang', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+			return false;
+		}
+
+        return $result;     
+    }
+	
+	function inputTranskrip(){
+		$Val = GtfwDispt()->load->library('Validation');
+        
+        //$Val->set_rules('lam_transkrip', GtfwLangText('Upload Transkrip'), 'required');
+		
+		$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+		$config = array(
+            "dest" => $file_path,
+            "ext" => "doc,DOC,docx,DOCX,pdf,PDF,jpg,jpeg,JPG,JPEG,png,PNG",
+            "maxsize" => 12097152
+        );
+		
+		$upload_transkrip = $this->uploadFile('lam_transkrip', $config);
+		if ($upload_transkrip != null) {
+            if ($upload_transkrip['lam_transkrip']['error'] === false) {
+                $post['lam_transkrip_file']          = $upload_transkrip['lam_transkrip']['name_enc'];
+                $post['lam_transkrip_file_origin']   = $upload_transkrip['lam_transkrip']['name_ori'];
+                $post['lam_transkrip_file_path']     = $upload_transkrip['lam_transkrip']['file_path'];
+                $post['lam_transkrip_file_type']     = $upload_transkrip['lam_transkrip']['file_ext'];
+                $post['lam_transkrip_file_size']     = $upload_transkrip['lam_transkrip']['file_size'];
+            }
+        }
+		
+		$result = $Val->run();
+		
+		if ($result) {
+			$this->ObjRegistrasiUlang->StartTrans();
+			
+			$paramsTranskrip = array(
+				$this->aplikanId,
+				//file Transkrip
+				(isset($post['lam_transkrip_file']) ? $post['lam_transkrip_file'] : null),
+				(isset($post['lam_transkrip_file_origin']) ? $post['lam_transkrip_file_origin'] : null),
+				(isset($post['lam_transkrip_file_path']) ? $post['lam_transkrip_file_path'] : null),
+				(isset($post['lam_transkrip_file_type']) ? $post['lam_transkrip_file_type'] : null),
+				(isset($post['lam_transkrip_file_size']) ? $post['lam_transkrip_file_size'] : null),
+				date("Y-m-d h:i:s")
+			);
+			$result = $result && $this->ObjRegistrasiUlang->insertTranskrip($paramsTranskrip);
+			
+			$this->ObjRegistrasiUlang->EndTrans($result);
+						
+			//$result = 1;
+			if ($result) {
+				$msg = 'Penambahan Transkrip Berhasil';
+				$css = $this->cssDone;
+			} else {
+				$msg = 'Penambahan Transkrip Gagal';
+				$css = $this->cssFail;
+			}
+            
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+
+        if ($result) {
+             Messenger::Instance()->Send('applicant.regist.ulang', 'DetailRegistrasiUlang', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+			 return true;
+        } else {
+            $post['submitted'] = 'biodata';
+            Messenger::Instance()->Send('applicant.regist.ulang', 'addTranskrip', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+			return false;
+		}
+
+        return $result;
+	}
+	
+	function inputKrs(){
+		$post = $_POST->AsArray();
+		$Val = GtfwDispt()->load->library('Validation');
+		
+		$Val->set_rules('semesterkrs', GtfwLangText('Semester KRS'), 'required');
+		
+		$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+		$config = array(
+            "dest" => $file_path,
+            "ext" => "doc,DOC,docx,DOCX,pdf,PDF,jpg,jpeg,JPG,JPEG,png,PNG",
+            "maxsize" => 12097152
+        );
+		
+		$upload_krs = $this->uploadFile('lam_krs', $config);
+		if ($upload_krs != null) {
+            if ($upload_krs['lam_krs']['error'] === false) {
+                $post['lam_krs_file']          = $upload_krs['lam_krs']['name_enc'];
+                $post['lam_krs_file_origin']   = $upload_krs['lam_krs']['name_ori'];
+                $post['lam_krs_file_path']     = $upload_krs['lam_krs']['file_path'];
+                $post['lam_krs_file_type']     = $upload_krs['lam_krs']['file_ext'];
+                $post['lam_krs_file_size']     = $upload_krs['lam_krs']['file_size'];
+            }
+        }
+		
+		$result = $Val->run();
+		
+		if ($result) {
+			$this->ObjRegistrasiUlang->StartTrans();
+			
+			$paramsKrs = array(
+				$this->aplikanId,
+				//file krs
+				(isset($post['lam_krs_file']) ? $post['lam_krs_file'] : null),
+				(isset($post['lam_krs_file_origin']) ? $post['lam_krs_file_origin'] : null),
+				(isset($post['lam_krs_file_path']) ? $post['lam_krs_file_path'] : null),
+				(isset($post['lam_krs_file_type']) ? $post['lam_krs_file_type'] : null),
+				(isset($post['lam_krs_file_size']) ? $post['lam_krs_file_size'] : null),
+				$post['semesterkrs'],
+				date("Y-m-d h:i:s")
+			);
+			$result = $result && $this->ObjRegistrasiUlang->insertKrs($paramsKrs);
+			
+			$this->ObjRegistrasiUlang->EndTrans($result);
+						
+			//$result = 1;
+			if ($result) {
+				$msg = 'Penambahan Transkrip Berhasil';
+				$css = $this->cssDone;
+			} else {
+				$msg = 'Penambahan Transkrip Gagal';
+				$css = $this->cssFail;
+			}
+            
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+
+        if ($result) {
+             Messenger::Instance()->Send('applicant.regist.ulang', 'DetailRegistrasiUlang', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+			 return true;
+        } else {
+            $post['submitted'] = 'biodata';
+            Messenger::Instance()->Send('applicant.regist.ulang', 'addKrs', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+			return false;
+		}
+
+        return $result;
+	}
+
+    
+    function deleteKrs($id)
+    {
+        $result = $this->ObjRegistrasiUlang->deleteKrs($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.regist.ulang', 'detailRegistrasiUlang', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	function deleteTranskrip($id)
+    {
+        $result = $this->ObjRegistrasiUlang->deleteTranskrip($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.regist.ulang', 'detailRegistrasiUlang', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+
+    function uploadFile($name, $config) {
+        if($_FILES[$name]['name'] != ''){
+            $errors         = array();
+            $file_name      = $_FILES[$name]['name'];
+            $file_size      = $_FILES[$name]['size'];
+            $file_tmp       = $_FILES[$name]['tmp_name'];
+            $file_type      = $_FILES[$name]['type'];
+            $file_ext       = strtolower(end(explode('.',$_FILES[$name]['name'])));
+            $destination    = Configuration::Instance()->GetValue('application', 'docroot').$config['dest'];
+            $listconfig     = explode(',', $config['ext']);
+
+            $randfilename = md5(uniqid(mt_rand())) . '.' . $file_ext;
+            $bad = array(
+                "<!--",
+                "-->",
+                "'",
+                "<",
+                ">",
+                '"',
+                '&',
+                '$',
+                '=',
+                ';',
+                '?',
+                '/',
+                "%20",
+                "%22",
+                "%3c", // <
+                "%253c", // <
+                "%3e", // >
+                "%0e", // >
+                "%28", // (
+                "%29", // )
+                "%2528", // (
+                "%26", // &
+                "%24", // $
+                "%3f", // ?
+                "%3b", // ;
+                "%3d"  // =
+            );
+
+            $randfilename = str_replace($bad, '', $randfilename);
+
+            if(in_array($file_ext, $listconfig, true) === false){
+                $errors[]="Upload File Error : Extension not allowed.";
+            }
+            
+            if($file_size > $config['maxsize']){
+                $errors[]='Upload File Error : Not Allowed Filesize';
+            }
+            
+            if(empty($errors)==true){
+                move_uploaded_file($file_tmp, $destination.$randfilename);
+                // echo $destination;echo "<br>";
+                // echo "Success";
+            }else{
+                $data[$name]['error'] = true;
+                $data[$name]['msg']   = $errors;
+                return $data;
+            }
+            $data[$name]['error'] = false;
+            $data[$name]['name_enc'] = $randfilename;
+            $data[$name]['name_ori'] = $file_name;
+            $data[$name]['file_ext'] = $file_ext;
+            $data[$name]['file_size'] = $file_size;
+            $data[$name]['full_path'] = $destenc;
+            $data[$name]['file_path'] = $destination;
+            return $data;
+        }
+    }
+}
+
+?>

@@ -1,0 +1,145 @@
+<?php
+
+$sql["count_refdepartment"] = "
+SELECT 
+    COUNT(jurusan_id) AS total
+FROM ref_jurusan
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_refdepartment"] = "
+SELECT 
+    a.jurusan_id AS `id`,
+    a.jurusan_kode_univ AS `kode_univ`,
+    a.jurusan_fakultas_id AS `fakultas_name`,
+    a.jurusan_name AS `name`,
+    a.jurusan_singkatan AS `jurusan_singkatan`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_jurusan a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refdepartment"] = "
+SELECT 
+    a.jurusan_id AS `jurusan_id`,
+    a.jurusan_kode_univ AS `jurusan_kode_univ`,
+    a.jurusan_fakultas_id AS `jurusan_fakultas_id`,
+    a.jurusan_name AS `jurusan_name`,
+    a.jurusan_singkatan AS `jurusan_singkatan`,
+    a.jurNamaAsing AS `jurNamaAsing`,
+    a.jurAlamat AS `jurAlamat`,
+    a.jurTelp AS `jurTelp`,
+    a.jurFax AS `jurFax`,
+    a.jurEmail AS `jurEmail`,
+    a.jurKontakPerson AS `jurKontakPerson`,
+    a.jurLuasKebunPercobaan AS `jurLuasKebunPercobaan`,
+    a.jurLuasRuangKuliah AS `jurLuasRuangKuliah`,
+    a.jurJumlahRuangKuliah AS `jurJumlahRuangKuliah`,
+    a.jurLuasLaboratorium AS `jurLuasLaboratorium`,
+    a.jurJumlahRuangLaboratorium AS `jurJumlahRuangLaboratorium`,
+    a.jurLuasRuangDosenTetap AS `jurLuasRuangDosenTetap`,
+    a.jurLuasRuangAdministrasi AS `jurLuasRuangAdministrasi`,
+    a.jurJumlahJudulBuku AS `jurJumlahJudulBuku`,
+    a.jurJumlahEksemplarBuku AS `jurJumlahEksemplarBuku`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_jurusan a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE jurusan_id = %d
+";
+$sql["insert_refdepartment"] = "
+INSERT INTO ref_jurusan
+(
+    jurusan_id,
+    jurusan_kode_univ,
+    jurusan_fakultas_id,
+    jurusan_name,
+    jurusan_singkatan,
+    jurNamaAsing,
+    jurAlamat,
+    jurTelp,
+    jurFax,
+    jurEmail,
+    jurKontakPerson,
+    jurLuasKebunPercobaan,
+    jurLuasRuangKuliah,
+    jurJumlahRuangKuliah,
+    jurLuasLaboratorium,
+    jurJumlahRuangLaboratorium,
+    jurLuasRuangDosenTetap,
+    jurLuasRuangAdministrasi,
+    jurJumlahJudulBuku,
+    jurJumlahEksemplarBuku
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_refdepartment"] = "
+UPDATE ref_jurusan
+SET 
+    jurusan_id = %s,
+    jurusan_kode_univ = %s,
+    jurusan_fakultas_id = %s,
+    jurusan_name = %s,
+    jurusan_singkatan = %s,
+    jurNamaAsing = %s,
+    jurAlamat = %s,
+    jurTelp = %s,
+    jurFax = %s,
+    jurEmail = %s,
+    jurKontakPerson = %s,
+    jurLuasKebunPercobaan = %s,
+    jurLuasRuangKuliah = %s,
+    jurJumlahRuangKuliah = %s,
+    jurLuasLaboratorium = %s,
+    jurJumlahRuangLaboratorium = %s,
+    jurLuasRuangDosenTetap = %s,
+    jurLuasRuangAdministrasi = %s,
+    jurJumlahJudulBuku = %s,
+    jurJumlahEksemplarBuku = %s
+WHERE jurusan_id = %d
+";
+$sql["delete_refdepartment"] = "
+DELETE FROM ref_jurusan
+WHERE jurusan_id = %d
+";
+$sql["list_refdepartment"] = "
+SELECT
+    jurusan_id AS `id`,
+    jurusan_name AS `name`
+FROM
+    ref_jurusan
+ORDER BY jurusan_name
+";
+$sql["list_refdepartment_by_fakultas"] = "
+SELECT
+    jurusan_id AS `id`,
+    jurusan_name AS `name`
+FROM
+    ref_jurusan
+WHERE jurusan_fakultas_id = %d
+ORDER BY jurusan_name
+";

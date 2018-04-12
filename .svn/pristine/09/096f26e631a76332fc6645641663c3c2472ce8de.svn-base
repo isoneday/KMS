@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailApplicant extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/applicant.ranking/template');
+        $this->SetTemplateFile('view_detail_applicant.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicant = GtfwDispt()->load->business('ApplicantRanking', 'applicant.ranking');    
+	
+		$id = $_GET['AppId']->Integer()->Raw();
+
+        $data = $ObjApplicant->getDetailApplicant($id);
+        
+        return compact('data', 'id');
+        
+    }
+
+    function ParseTemplate($rdata = NULL) {
+		extract($rdata);
+		if (!empty($detail)) {
+         $this->mrTemplate->addVars('detail', $detail);
+        }
+		
+		 if (!empty($data) AND count($data) > 0) {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            $no = $filter['start'] + 1;
+            foreach ($data as $val) {
+			
+                $val['no'] = $no;
+               
+                if($val['STATUS_DOKUMEN']==2){
+                    $val['row_class'] = "fail";
+                }
+                $this->mrTemplate->addVars('detail', $val);
+                $this->mrTemplate->parseTemplate('detail', 'a');
+                $no++;
+            }
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+    }
+
+}
+
+?>

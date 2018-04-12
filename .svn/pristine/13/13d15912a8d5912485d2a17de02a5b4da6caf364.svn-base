@@ -1,0 +1,58 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <input type="hidden" name="id" value="{ID}" />
+    <table class="table-edit">
+
+        <tr>
+            <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="purpose" / --></th>
+            <td>
+                <input type="text" name="purpose" value="{PURPOSE}" size="50"  />&nbsp;*            
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+            <td>
+                <input type="text" name="subject" value="{SUBJECT}" size="50" />&nbsp;*            
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="param" / --></th>
+            <td>
+                <textarea name="param" cols="38" rows="2" >{PARAM}</textarea>            
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="url" / --></th>
+            <td>
+                <input type="text" name="url_notif" value="{URL_NOTIF}" size="50" />&nbsp;*            
+            </td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="body" / --></th>
+            <td>
+                <!-- patTemplate:tmpl name="item_body" -->
+                <img src="assets/images/btn/{CODE}.png"><p></p>
+                <textarea id="body_{CODE}" name="body[{CODE}]" cols="10" rows="2" title="<!-- patTemplate:gtfwgetlang key="body" / -->" tabindex="5">{TEXT}</textarea> <br />
+                <!-- /patTemplate:tmpl -->
+
+            </td>
+        </tr>
+    </table>
+    <div class="form-footer" style="padding:14px 230px 15px!important">
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="9"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="10"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="11"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>         
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        <!-- patTemplate:tmpl name="item_body_tiny" -->
+        setTinyMce('body_{CODE}');                
+        <!-- /patTemplate:tmpl -->                          
+    });
+</script>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefUniversity extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.university/business/mysqlt/refuniversity.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefUniversity($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($satkernama)) {
+            $str .= " AND LOWER(satkerNama) LIKE('%$satkernama%')";
+        }
+        $query = $this->mSqlQueries['count_refuniversity'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefUniversity($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($satkernama)) {
+            $str .= " AND LOWER(satkerNama) LIKE('%$satkernama%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refuniversity'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefUniversity($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refuniversity'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefUniversity($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refuniversity'], $params);
+    }
+    
+    public function updateRefUniversity($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refuniversity'], $params);
+    }
+    
+    public function deleteRefUniversity($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refuniversity'], array($id));
+    }
+    
+    public function listRefUniversity()
+    {
+        return $this->Open($this->mSqlQueries['list_refuniversity'], array());
+    }
+}
+
+// End of file RefUniversity.class.php

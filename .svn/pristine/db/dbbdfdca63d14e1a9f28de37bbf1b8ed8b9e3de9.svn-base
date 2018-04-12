@@ -1,0 +1,95 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessRefAgama
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjRefAgama = GtfwDispt()->load->business('RefAgama');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjRefAgama->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user
+                );
+                $result = $result && $this->ObjRefAgama->insertRefAgama($params);
+                $this->ObjRefAgama->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjRefAgama->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjRefAgama->updateRefAgama($params);
+                $this->ObjRefAgama->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('ref.agama', 'RefAgama', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.agama', 'refagama', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.agama', 'inputRefAgama', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.agama', (empty($post['id'])?'add':'update').'RefAgama', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjRefAgama->deleteRefAgama($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('ref.agama', 'RefAgama', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

@@ -1,0 +1,55 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">FakKode</th>
+        <td>{FAKKODE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakKodeUniv</th>
+        <td>{FAKKODEUNIV}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakNamaResmi</th>
+        <td>{FAKNAMARESMI}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakNamaSingkat</th>
+        <td>{FAKNAMASINGKAT}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakNamaAsing</th>
+        <td>{FAKNAMAASING}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakIsEksakta</th>
+        <td>{FAKISEKSAKTA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakAlamat</th>
+        <td>{FAKALAMAT}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakTelp</th>
+        <td>{FAKTELP}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakFax</th>
+        <td>{FAKFAX}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakEmail</th>
+        <td>{FAKEMAIL}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FakKontakPerson</th>
+        <td>{FAKKONTAKPERSON}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">FaksatkerId</th>
+        <td>{FAKSATKERID}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,112 @@
+<!-- patTemplate:tmpl name="body" -->
+<div class="busy-indicator" style="direction: none;"></div>
+<div class="btn-up-right">
+
+    <div class="btn-group pull-right">
+        <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#" title="<!-- patTemplate:gtfwgetlang key="user_profile" / -->">
+            <i class="icon-user icon-white"></i> 
+            <span class="caret"></span>
+        </a>
+
+        <!-- patTemplate:gtfwrendermodule name="top_user" module="core.user" submodule="username" action="view" type="html" params="" / -->
+    </div> 
+
+    <div class="btn-group pull-right" style="margin-right: 5px;">
+        <!-- patTemplate:gtfwrendermodule name="top_menu" module="comp.menu" submodule="topMenu" action="view" type="html" params="" / -->
+        <a class="xhr dest_subcontent-element btn btn-inverse" href="<!-- patTemplate:gtfwgeturl module="comp.message" sub="msgContainer" action="view" type="html" params=""  / -->" title="<!-- patTemplate:gtfwgetlang key="message" / -->"><i class="icon-envelope icon-white"></i></a>
+
+        <li class="dropdown btn btn-inverse">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<!-- patTemplate:gtfwgetlang key="search" / -->"> <i class="icon-search icon-white"></i><b class="caret"></b></a>
+            <ul class="dropdown-menu search-menus" style="left: -206px;position: absolute;padding:0!important;width: 250px !important;">
+				<li style="border-bottom:0px solid #ccc;cursor:default;margin-bottom:0px;padding:0 10px 0px 10px" id="searchmenu-input">
+					<form class="navbar-search">
+						<input type="text" placeholder="<!-- patTemplate:gtfwgetlang key="search_menu" / -->" class="search-query" id="search-query" autocomplete="off"> <i class="icon-clear-search" id="search-clear"></i>
+					</form>
+				</li>
+				<li id="resultmenu-count" style="border-bottom:1px solid #E7E8EA!important;cursor:default;margin-bottom:0;padding:10px"></li>
+				<li style="border-bottom:0px solid #ccc;cursor:default;margin-bottom:0;display:none;" id="searchmenu-more">
+					<a style="font-size:11px;text-align:right;float:right;margin:10px -15px 10px 0px" class="xhr dest_subcontent-element" href="#"><em><!-- patTemplate:gtfwgetlang key="more_results" / --></em></a>
+				</li>
+			</ul>
+		</li>
+    </div>
+</div>
+
+<div class="navbar">
+    <div class="header"><a href="<!-- patTemplate:gtfwgeturl module="core.home" sub="landingPage" action="view" type="html" params=""  / -->"><h1>header</h1></a></div> 
+    <!-- module menu -->
+
+
+    <div class="sub_header">
+        <div class="fixed-bar">
+            <!-- patTemplate:gtfwrendermodule name="menu_module" module="comp.menu" submodule="moduleMenu" action="view" type="html" params="" / -->
+        </div>
+    </div>
+
+    <!-- end of module menu -->
+    <div style="clear: both;"></div>
+    <!-- side menu -->
+    <div id="sidebar-container">
+        <a id="slick-toggle" href="#"></a>
+        <div class="sidebar">
+            <div id="side_menu" class="side_nav grid_3 push_down">
+                <!-- patTemplate:gtfwrendermodule name="side_menu" module="comp.menu" submodule="sideMenu" action="view" type="html" params="" / -->
+            </div>
+
+        </div><!-- Sidebar END -->		
+    </div>
+    <!-- side menu -->
+</div>
+
+<div class="container3">  
+
+    <div class="span11" id="subcontent-element">
+        <!-- patTemplate:link src="content" / -->
+    </div><!--/container-->       
+</div><!--/container-->
+    <!-- patTemplate:gtfwrendermodule name="bottom_toolbar" module="comp.toolbar" submodule="bottomToolbar" action="view" type="html" params="" / -->
+<script type="text/javascript">
+    var url_menu = "<!-- patTemplate:gtfwgeturl module="comp.menu" sub="searchMenu" action="view" type="html" params="" htmlentities="no"  / -->";
+    var menus;
+    $(function(){
+        $.get(url_menu+'&type=json', function(data){
+            menus = $.parseJSON(data);
+            // $('#resultmenu-count').text(menus.length+' menu');
+            $('#resultmenu-count').text('');
+            $('#searchmenu-more a').attr('href', url_menu+'&key='+$('#search-query').val());
+        });
+        $('#search-clear').on('click', function(){
+            $('#search-query').val('').trigger('keyup');
+        });
+        $('#search-query').off('keyup').on('keyup', function(){
+            $('.searchmenu-item').remove();
+            var key = $(this).val();
+            var found = new Array();
+            var j = 0;
+            for (var i = menus.length - 1; i >= 0; i--) {
+                if (menus[i].title.search(new RegExp(key, 'i')) != -1) {
+                    found.push(menus[i]);
+                    if (key != '') {
+                        if (j < 5) {
+                            $('#resultmenu-count').after('<li class="searchmenu-item" style="border-bottom:1px solid #E7E8EA!important;cursor:pointer;margin-bottom:0;padding:10px"><a class="xhr dest_subcontent-element" style="display:block!important" href="'+menus[i].url+'"><img src="assets/images/btn/'+menus[i].icon_small+'" width="16px" height="16px" style="margin-bottom:4px"> '+menus[i].title+'</a></li>');
+                        }
+                        j++;
+                    }
+                }
+            };
+            if (found.length > 5) {
+                $('#searchmenu-more').show();
+            } else {
+                $('#searchmenu-more').hide();                
+            };
+            if (key != '') {
+                $('#resultmenu-count').html('<span style="font-size:11px;font-weight:bold"><em><!-- patTemplate:gtfwgetlang key="search_results" / --> : '+found.length+' data</em></span>');
+            } else {
+                $('#resultmenu-count').text('');
+                $('#searchmenu-more').hide();
+            };
+            $('#searchmenu-more a').attr('href', url_menu+'&key='+$('#search-query').val());
+        });
+    });
+</script>
+<!-- /patTemplate:tmpl -->

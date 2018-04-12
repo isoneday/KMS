@@ -1,0 +1,103 @@
+<!-- patTemplate:tmpl name="content" -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL_ACTION}">
+    <input type="hidden" name="dataId" value="{DATAID}" />
+    <div class="content-box-form" style="height:340px;">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <table class="table-edit-popup">
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="parent" / --></th>
+                <td>
+                    <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="parent"  / -->
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="menu" / --></th>
+                <td>
+                    <!-- patTemplate:tmpl name="item_menu" -->
+                    <img src="assets/images/btn/{CODE}.png">&nbsp;
+                    <input type="text" name="menu[{CODE}]" value="{TEXT}" required="required" size="40" title="<!-- patTemplate:gtfwgetlang key="menu" / -->" tabindex="2" />
+                           <br/>
+                    <!-- /patTemplate:tmpl -->
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="menu_desc" / --></th>
+                <td>
+                    <!-- patTemplate:tmpl name="item_menu_desc" -->
+                    <img src="assets/images/btn/{CODE}.png"><p></p>
+                    <textarea id="menu_desc_{CODE}" name="menu_desc[{CODE}]" cols="10" rows="2" title="<!-- patTemplate:gtfwgetlang key="menu_desc" / -->" tabindex="2" >{TEXT}</textarea>
+                    <br/>
+                    <!-- /patTemplate:tmpl -->
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="order" / --></th>
+                <td>
+                    <input type="text" name="order" value="{ORDER}" size="5" title="<!-- patTemplate:gtfwgetlang key="order" / -->" tabindex="3" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="information" / --></th>
+                <td>
+                    <textarea name="desc" rows="1" cols="40" title="<!-- patTemplate:gtfwgetlang key="description" / -->" tabindex="4">{DESC}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="show" / --></th>
+                <td>
+                    <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="show"  / -->
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="icon_small" / --></th>
+                <td>
+                    <input type="text" name="icon_small" value="{ICON_SMALL}" size="30" title="<!-- patTemplate:gtfwgetlang key="icon_small" / -->" tabindex="6" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="icon_medium" / --></th>
+                <td>
+                    <input type="text" name="icon" value="{ICON}" size="30" title="<!-- patTemplate:gtfwgetlang key="icon_medium" / -->" tabindex="7" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="icon_large" / --></th>
+                <td>
+                    <input type="text" name="icon_large" value="{ICON_LARGE}" size="30" title="<!-- patTemplate:gtfwgetlang key="icon_large" / -->" tabindex="8" />
+                </td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="view_model"/ --></th>
+                <td><input id="view_model_1" type="radio" name="view_model" value="1" {MODEL}/><label for="view_model_1"> <!-- patTemplate:gtfwgetlang key="set_as_grid"/ --> </label>
+                    <input id="view_model_2" type="radio" name="view_model" value="0" {NMODEL}/><label for="view_model_2"> <!-- patTemplate:gtfwgetlang key="set_as_content_menu"/ --></label></td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="is_system_menu"/ --></th>
+                <td>
+                    <input id="is_system_menu" type="checkbox" name="is_system_menu" value="1" {LAST_MENU} />&nbsp;<label for="is_system_menu"><!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="class_style" / --></th>
+                <td>
+                    <input type="text" name="class" value="{CLASS}" size="30" title="<!-- patTemplate:gtfwgetlang key="icon_style" / -->" tabindex="9" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="10" ><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="11"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        <!-- patTemplate:tmpl name="item_body_tiny" -->
+        setTinyMce('menu_desc_{CODE}');                
+        <!-- /patTemplate:tmpl -->                          
+    });
+</script>
+
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,162 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class ViewDetailRegistrasiUlang extends HtmlResponse
+{
+   	function TemplateModule()
+   	{
+      	$this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+      	$this->SetTemplateFile('view_detail_registrasiulang.html');
+   	}
+   
+   	function ProcessRequest()
+   	{	
+   	    $ObjRegistrasiUlang = GtfwDispt()->load->business('RegistrasiUlang', 'applicant.regist.ulang');
+		
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+		$this->aplikanId = $ObjRegistrasiUlang->getAplikanId($this->user);
+        // $id = $_GET['id']->Integer()->Raw();
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0])?$msg[0][0]:NULL;
+        $message['content'] = isset($msg[0][1])?$msg[0][1]:NULL;
+        $message['style'] = isset($msg[0][2])?$msg[0][2]:NULL;
+		
+		
+        $detail = $ObjRegistrasiUlang->getDetailRegistrasiUlang($this->aplikanId);
+		$detailTranskrip = $ObjRegistrasiUlang->getDetailTranskrip($this->aplikanId);
+		$total = $ObjRegistrasiUlang->countDetailTranskrip();
+		$detailKrs = $ObjRegistrasiUlang->getDetailKrs($this->aplikanId);
+
+        
+		$nav[0]['url'] = GtfwDispt()->GetUrl('applicant.regist.ulang', 'DetailRegistrasiUlang', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'Personal Data';
+        $title = GtfwLangText('detail');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+        
+		
+      	return compact('detail','detailTranskrip','detailKrs', 'message');
+   	}
+   
+   	function ParseTemplate($rdata = NULL)
+   	{
+		extract($rdata);
+		
+		/* echo "<pre>";
+		print_r($detailKrs);
+		echo"</pre>"; */
+		
+        $tabActive = $_GET['tabActive']->mrVariable;
+        $this->mrTemplate->addVar('content', 'TAB_ACTIVE', $tabActive);
+        
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+        
+        if (!empty($detail)) {
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+
+            $this->mrTemplate->addVars('bank', $detail);
+            $this->mrTemplate->addVar('bank', 'BTN_INPUT', GtfwDispt()->GetUrl('applicant.regist.ulang', 'inputRegistrasiUlang', 'view', 'html').'&id='.$detail['aplikan_id']);
+			if(!empty($detail['pks_origin'])){
+				$this->mrTemplate->addVar('dataPks', 'IS_EMPTY', 'NO');
+                $this->mrTemplate->addVar('bank', 'FILE_PKS', GtfwDispt()->GetUrl('applicant.regist.ulang', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detail['pks_file'].'&download='.$detail['pks_origin']);
+			}else {
+				$this->mrTemplate->addVar('dataPks', 'IS_EMPTY', 'YES');
+			}
+			
+			if(!empty($detail['pks_origin'])){
+				$this->mrTemplate->addVar('dataBuku', 'IS_EMPTY', 'NO');
+				$this->mrTemplate->addVar('bank', 'FILE_BUKU', GtfwDispt()->GetUrl('applicant.regist.ulang', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detail['buku_file'].'&download='.$detail['buku_origin']);
+			}else {
+				$this->mrTemplate->addVar('dataBuku', 'IS_EMPTY', 'YES');
+			}
+		}
+		
+		if (!empty($detailTranskrip)) {
+			$this->mrTemplate->addVar('dataTranskrip', 'IS_EMPTY', 'NO');
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+            //$detailTranskrip['tanggal_daftar'] = $this->date2stirng($detailTranskrip['time']);
+			//$this->mrTemplate->addVars('transkrip', $detailTranskrip);
+			$this->mrTemplate->clearTemplate('transkrip');
+			
+			$jumTranskrip = count($detailTranskrip);
+            for ($i=0; $i < $jumTranskrip ; $i++) {
+				$detailTranskrip[$i]['tanggal_daftar'] = $this->date2stirng($detailTranskrip[$i]['time']);
+                $this->mrTemplate->addVars('transkrip', $detailTranskrip[$i]);
+			
+				$this->mrTemplate->addVar('transkrip', 'FILE_TRANSKRIP', GtfwDispt()->GetUrl('applicant.regist.ulang', 'Lampiran', 'view', 'html').'&id='.$detail['aplikan_id'].'&file='.$file_path.$detailTranskrip[$i]['file'].'&download='.$detailTranskrip[$i]['file_origin']);
+			
+				$this->mrTemplate->addVar('transkrip', 'NAME', $detailTranskrip[$i]['file_origin']);
+				$this->mrTemplate->addVar('transkrip', 'URL_TRANSKRIP', GtfwDispt()->GetUrl('applicant.regist.ulang', 'deleteTranskrip', 'do', 'json') . '&id=' . $detailTranskrip[$i]['id']);
+                $this->mrTemplate->parseTemplate('transkrip', 'a');
+			}
+		}else {
+            $this->mrTemplate->addVar('dataTranskrip', 'IS_EMPTY', 'YES');
+        }
+		
+		
+		if (!empty($detailKrs)) {
+			$this->mrTemplate->addVar('dataKrs', 'IS_EMPTY', 'NO');
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+			//$this->mrTemplate->addVars('krs', $detailKrs);
+			$this->mrTemplate->clearTemplate('krs');
+			
+			$jumkrs = count($detailKrs);
+            for ($i=0; $i < $jumkrs ; $i++) {
+				$detailKrs[$i]['tanggal_daftar'] = $this->date2stirng($detailKrs[$i]['time']);
+                 //echo "<pre>";var_dump($detailKrs[$i]);echo "</pre>";
+				$this->mrTemplate->addVar('krs','TANGGAL_DAFTAR', $detailKrs[$i]['tanggal_daftar']);
+                $this->mrTemplate->addVar('krs','SEMESTER', $detailKrs[$i]['semester']);
+
+				$this->mrTemplate->addVar('krs', 'FILE_KRS', GtfwDispt()->GetUrl('applicant.regist.ulang', 'Lampiran', 'view', 'html').'&id='.$detailKrs[$i]['aplikan_id'].'&file='.$file_path.$detailKrs[$i]['file'].'&download='.$detailKrs[$i]['file_origin']);
+
+				$this->mrTemplate->addVar('krs', 'NAME', $detailKrs[$i]['file_origin']);
+				$this->mrTemplate->addVar('krs', 'URL_KRS', GtfwDispt()->GetUrl('applicant.regist.ulang', 'deleteKrs', 'do', 'json') . '&id=' . $detailKrs[$i]['id']);
+                $this->mrTemplate->parseTemplate('krs', 'a');
+			}
+        }else {
+            $this->mrTemplate->addVar('dataKrs', 'IS_EMPTY', 'YES');
+        }
+        
+		
+		if(!empty($detail['aplikan_id'])) {
+			$this->mrTemplate->addVar('dataBTN', 'IS_EMPTY', 'NO');
+			$this->mrTemplate->addVar('inputTranskrip', 'IS_EMPTY', 'NO');
+			$this->mrTemplate->addVar('inputKrs', 'IS_EMPTY', 'NO');
+			$this->mrTemplate->addVar('dataBTN', 'BTN_INPUT', GtfwDispt()->GetUrl('applicant.regist.ulang', 'inputRegistrasiUlang', 'view', 'html').'&id='.$detail['aplikan_id']);	
+			$this->mrTemplate->addVar('inputTranskrip', 'BTN_INPUT', GtfwDispt()->GetUrl('applicant.regist.ulang', 'addTranskrip', 'view', 'html').'&id='.$detail['aplikan_id']);
+			$this->mrTemplate->addVar('inputKrs', 'BTN_INPUT', GtfwDispt()->GetUrl('applicant.regist.ulang', 'addKrs', 'view', 'html').'&id='.$detail['aplikan_id']);
+		}else{
+			$this->mrTemplate->addVar('dataBTN', 'IS_EMPTY', 'YES');
+			$this->mrTemplate->addVar('inputTranskrip', 'IS_EMPTY', 'YES');
+			$this->mrTemplate->addVar('inputKrs', 'IS_EMPTY', 'YES');
+			$this->mrTemplate->addVar('dataBTN', 'BTN_INPUT', GtfwDispt()->GetUrl('applicant.regist.ulang', 'inputRegistrasiUlang', 'view', 'html').'&id='.$detail['aplikan_id']);
+		}
+		
+	}
+
+    function date2stirng($date){
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrd = explode('-', $date);
+        $dateString = $arrd[2].' '.$bln[(int)$arrd[1]].' '.$arrd[0];
+
+        return $dateString;
+    }
+}
+?>

@@ -1,0 +1,66 @@
+<!-- patTemplate:tmpl name="content" -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+ <div class="content-box-form" style="height:340px;">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+   
+     <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+   
+<table class="table-edit-popup">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="judul" / --></th>
+        <td>
+            <input type="text" name="judul" value="{JUDUL}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="jenis" / --></th>
+        <td>
+            <input type="text" name="jenis" value="{JENIS}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="pembicara" / --></th>
+        <td>
+            <input type="text" name="pembicara" value="{PEMBICARA}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="lokasi" / --></th>
+        <td>
+            <input type="text" name="lokasi" value="{LOKASI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="peserta" / --></th>
+        <td>
+            <input type="text" name="peserta" value="{PESERTA}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="tanggal" / --></th>
+        <td>
+            <input type="date" name="tanggal" value="{TANGGAL}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+      
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="lam_filedata" / --></th>
+                <td>
+                    <input type="file" name="lam_filedata" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                     <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                 <br>Status : {LAM_FILEDATA}
+
+                </td>
+            </tr>
+    
+    </table>
+<div class="modal-footer">
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="10" ><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="11"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+    </div>
+
+</form>
+<!-- /patTemplate:tmpl -->

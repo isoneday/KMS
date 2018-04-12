@@ -1,0 +1,26 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoAddTranskrip extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRegistrasiUlang', 'applicant.regist.ulang');
+        
+        $post = $_POST->AsArray();
+		
+        $result = $proses->inputTranskrip();
+		
+        if ($result) {
+            $url = GtfwDispt()->GetUrl('applicant.regist.ulang', 'detailRegistrasiUlang', 'view', 'html').'&ascomponent=1&tabActive=nilai';
+            return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popupUnit);");
+        } else {
+            $url = GtfwDispt()->GetUrl('applicant.regist.ulang', 'detailRegistrasiUlang', 'view', 'html').'&ascomponent=1&tabActive=nilai';
+            return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popupUnit);");
+        }
+    }
+}
+
+?>

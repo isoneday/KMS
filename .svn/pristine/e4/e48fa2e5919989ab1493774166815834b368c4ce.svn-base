@@ -1,0 +1,133 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessRefDepartment
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjRefDepartment = GtfwDispt()->load->business('RefDepartment');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        $Val->set_rules('jurkode', GtfwLangText('jurKode'), 'required');
+        $Val->set_rules('jurfakkode', GtfwLangText('jurFakKode'), 'required');
+        $Val->set_rules('jurnamaresmi', GtfwLangText('jurNamaResmi'), 'required');
+        $Val->set_rules('jurnamasingkat', GtfwLangText('jurNamaSingkat'), 'required');
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjRefDepartment->StartTrans();
+                $params = array(
+                    $post['jurkode'],
+                    $post['jurkodeuniv'],
+                    $post['jurfakkode'],
+                    $post['jurnamaresmi'],
+                    $post['jurnamasingkat'],
+                    $post['jurnamaasing'],
+                    $post['juralamat'],
+                    $post['jurtelp'],
+                    $post['jurfax'],
+                    $post['juremail'],
+                    $post['jurkontakperson'],
+                    $post['jurluaskebunpercobaan'],
+                    $post['jurluasruangkuliah'],
+                    $post['jurjumlahruangkuliah'],
+                    $post['jurluaslaboratorium'],
+                    $post['jurjumlahruanglaboratorium'],
+                    $post['jurluasruangdosentetap'],
+                    $post['jurluasruangadministrasi'],
+                    $post['jurjumlahjudulbuku'],
+                    $post['jurjumlaheksemplarbuku'],
+                    $this->user
+                );
+                $result = $result && $this->ObjRefDepartment->insertRefDepartment($params);
+                $this->ObjRefDepartment->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjRefDepartment->StartTrans();
+                $params = array(
+                    $post['jurkode'],
+                    $post['jurkodeuniv'],
+                    $post['jurfakkode'],
+                    $post['jurnamaresmi'],
+                    $post['jurnamasingkat'],
+                    $post['jurnamaasing'],
+                    $post['juralamat'],
+                    $post['jurtelp'],
+                    $post['jurfax'],
+                    $post['juremail'],
+                    $post['jurkontakperson'],
+                    $post['jurluaskebunpercobaan'],
+                    $post['jurluasruangkuliah'],
+                    $post['jurjumlahruangkuliah'],
+                    $post['jurluaslaboratorium'],
+                    $post['jurjumlahruanglaboratorium'],
+                    $post['jurluasruangdosentetap'],
+                    $post['jurluasruangadministrasi'],
+                    $post['jurjumlahjudulbuku'],
+                    $post['jurjumlaheksemplarbuku'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjRefDepartment->updateRefDepartment($params);
+                $this->ObjRefDepartment->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('ref.department', 'RefDepartment', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.department', 'refdepartment', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.department', 'inputRefDepartment', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.department', (empty($post['id'])?'add':'update').'RefDepartment', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjRefDepartment->deleteRefDepartment($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('ref.department', 'RefDepartment', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

@@ -1,0 +1,21 @@
+<?php
+/** 
+* @copyright Copyright (c) 2014, PT Gamatechno Indonesia
+* @license http://gtfw.gamatechno.com/#license
+*/
+
+class DoDeleteRefReligion extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefReligion', 'ref.religion');
+        
+        $id = $_GET['id']->Integer()->Raw();                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.religion', 'RefReligion', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

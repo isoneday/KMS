@@ -1,0 +1,7 @@
+{
+    "name": "core.packager",
+    "version": "1",
+    "require": {
+        "modules" : ["core.menu"]
+    }
+}

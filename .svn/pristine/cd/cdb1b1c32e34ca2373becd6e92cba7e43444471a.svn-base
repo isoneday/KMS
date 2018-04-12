@@ -1,0 +1,95 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+<tbody>    
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+        <td>{NAME}</td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="table" / --></th>
+        <td><a class="popup_table" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="detail" / -->">{TABLE}</a></td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="dependency_source" / --></th>
+        <td>
+            <table class="table-form" id="table-source" style="width: 50%;">
+                <tr>
+                    <th><!-- patTemplate:gtfwgetlang key="table" / --></th>
+                    <th><!-- patTemplate:gtfwgetlang key="column" / --></th>
+                </tr>
+                <!-- patTemplate:tmpl name="source" type="condition" conditionvar="IS_EMPTY" -->
+                <!-- patTemplate:sub condition="YES" -->
+                <tr>
+                    <td colspan="2" style="text-align: center;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+                </tr>
+                <!-- /patTemplate:sub -->
+                <!-- patTemplate:sub condition="NO" -->
+                <!-- patTemplate:tmpl name="source_item" -->
+                <tr>
+                    <td>{TABLE}</td>
+                    <td>{FIELD}</td>
+                </tr>
+                <!-- /patTemplate:tmpl -->
+                <!-- /patTemplate:sub -->                
+                <!-- /patTemplate:tmpl -->
+            </table> 
+        </td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="dependency_target" / --></th>
+        <td>
+            <table class="table-form" id="table-target" style="width: 50%;">
+                <tr>
+                    <th><!-- patTemplate:gtfwgetlang key="table" / --></th>
+                    <th><!-- patTemplate:gtfwgetlang key="column" / --></th>
+                </tr>
+                <!-- patTemplate:tmpl name="target" type="condition" conditionvar="IS_EMPTY" -->
+                <!-- patTemplate:sub condition="YES" -->
+                <tr>
+                    <td colspan="2" style="text-align: center;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+                </tr>
+                <!-- /patTemplate:sub -->
+                <!-- patTemplate:sub condition="NO" -->
+                <!-- patTemplate:tmpl name="target_item" -->
+                <tr>
+                    <td>{TABLE}</td>
+                    <td>{FIELD}</td>
+                </tr>
+                <!-- /patTemplate:tmpl -->
+                <!-- /patTemplate:sub -->                
+                <!-- /patTemplate:tmpl -->
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="description" / --></th>
+        <td>{DESC}</td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="sample_data" / --></th>
+        <td><pre>{SAMPLE_DATA}</pre></td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="menu_name" / --></th>
+        <td>{MENU_NAME}</td>
+    </tr>
+    <tr>
+        <th style="width:200px"><!-- patTemplate:gtfwgetlang key="module_name" / --></th>
+        <td>{MODULE_NAME}</td>
+    </tr>
+</tbody>
+</table>
+<script type="text/javascript">
+var popupTable;
+$(function(){    
+    $('.popup_table').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupTable = showGtPopup(url, title, 800, null, 320, true);
+        return false;
+    });
+})
+</script>
+<!-- /patTemplate:tmpl -->

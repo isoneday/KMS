@@ -1,0 +1,61 @@
+<?php
+
+$sql["count_refoccupation"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_refoccupation"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.pkjrId AS `pkjrId`,
+    a.pkjrId AS `id`,
+    a.pkjrNama AS `pkjrNama`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_pekerjaan a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refoccupation"] = "
+SELECT 
+    a.pkjrId AS `pkjrId`,
+    a.pkjrId AS `id`,
+    a.pkjrNama AS `pkjrNama`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_pekerjaan a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE pkjrId = %d
+";
+$sql["insert_refoccupation"] = "
+INSERT INTO ref_pekerjaan
+(
+    pkjrNama,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_refoccupation"] = "
+UPDATE ref_pekerjaan
+SET 
+    pkjrNama = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE pkjrId = %d
+";
+$sql["delete_refoccupation"] = "
+DELETE FROM ref_pekerjaan
+WHERE pkjrId = %d
+";
+$sql["list_refoccupation"] = "
+SELECT
+    pkjrId AS `id`,
+    pkjrNama AS `name`
+FROM
+    ref_pekerjaan
+ORDER BY pkjrNama
+";

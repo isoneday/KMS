@@ -1,0 +1,140 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"  style="text-align: center;">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+
+<div  class="content-box" >
+    <tbody>
+   <h3>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    
+    <tr>
+        <td colspan="17" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+
+    <!-- /patTemplate:sub -->
+<!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <td>
+<th style="text-style:  !important;"> General Information</th>
+<table border="0"> 
+    <tr> 
+        <th style="text-align: left">personal id </th>
+        <td>: {PERSONAL_ID}</td><br>
+    </tr> 
+    <tr> 
+        <th style="text-align: left">full name </th>
+          <td>: {REAL_NAME}</td><br>
+    </tr>
+    <tr>
+    <th style="text-align: left">username</th>     
+     <td>: {NAME}</td>
+    </tr> 
+<tr>
+    <th style="text-align: left">gender</th>     
+     <td>: {JENIS_KELAMIN}</td>
+    </tr> 
+
+    <tr>
+    <th style="text-align: left">religion</th>     
+     <td>: {AGAMA}</td>
+    </tr> 
+    <tr>
+    <th style="text-align: left">joined in company</th>     
+     <td>: {TAHUN_MASUK}</td>
+    </tr> 
+    <tr>
+    <th style="text-align: left">place of birth</th>     
+     <td>: {TEMPAT_LAHIR}</td>
+    </tr> 
+    <tr>
+    <th style="text-align: left">address</th>     
+     <td>: {ALAMAT}</td>
+    </tr> 
+    <tr>
+    <th style="text-align: left">zip code</th>     
+     <td>: {KODE_POS}</td>
+    </tr> 
+    
+    <tr>
+    <th style="text-align: left">job position</th>     
+     <td>: {POSISI_KERJA}</td>
+    </tr> 
+    
+
+    <tr>
+    <th style="text-align: left">desc </th>     
+     <td>: {DESC}</td>
+    </tr> 
+    <tr>
+    <th style="text-align: left">status </th>     
+     <td>: {ACTIVE}</td>
+    </tr> 
+
+    </table> 
+<br>
+<th style="text-style: bold  !important;"> CONTACT INFORMATION</th><br><br>
+    <table>
+ <tr>
+     <th style="text-align: left">mobile </th>     
+     <td>: +{NO_HP}</td>
+    </tr> 
+<tr>
+     <th style="text-align: left">Whatshapp </th>     
+     <td>: +{NO_HP}</td>
+    </tr> 
+<tr>
+     <th style="text-align: left">email </th>     
+     <td>: {EMAIL}</td>
+    </tr> 
+
+           </table>    
+<br>         
+       <div class="gt-upd-cont" id="gt-cont-undefined">
+
+<th style="text-style: bold  !important;"> PHOTO PROFILE</th><br><br>
+
+        <img class="gt-img-view"  src="{FILEPHOTO}" style="width: 300px; height: 300px; border: 1px solid rgb(0, 0, 0); cursor: pointer;">
+</div>
+       
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</h3>
+    </tbody>
+<!--         <div class="gtfw_popbox_content modal-body" id="popbox-subcontent">  
+              <img class="gt-img-view"  src="files/employee/277195a5b61de8b8743b286e975ca889.jpg" >
+    </div>
+ -->
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modmyprofile" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modmyprofile" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+{SCRIPT}
+</script>
+<!-- /patTemplate:tmpl -->

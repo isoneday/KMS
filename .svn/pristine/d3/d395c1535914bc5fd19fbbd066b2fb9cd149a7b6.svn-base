@@ -1,0 +1,96 @@
+<?php
+
+$sql["count_state"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_state"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.state_id AS `id`,
+    a.state_country_id AS `country_id`,
+    a.state_code AS `code`,
+    a.state_name AS `name`,
+    a.state_status AS `status`,
+    a.state_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    b.`country_name` AS country,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_state a
+LEFT JOIN ref_country b ON b.country_id = a.state_country_id
+LEFT JOIN gtfw_user c ON c.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_state"] = "
+SELECT 
+    a.state_id AS `id`,
+    a.state_country_id AS `country_id`,
+    a.state_code AS `code`,
+    a.state_name AS `name`,
+    a.state_status AS `status`,
+    a.state_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    b.`country_name` AS country,
+	IF((d.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), d.`user_real_name`, CONCAT( d.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert                
+FROM ref_state a
+LEFT JOIN ref_country b ON b.country_id = a.state_country_id
+LEFT JOIN gtfw_user c ON c.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE state_id = %d
+";
+$sql["insert_state"] = "
+INSERT INTO ref_state
+(
+    state_country_id,
+    state_code,
+    state_name,
+    state_status,
+    state_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_state"] = "
+UPDATE ref_state
+SET 
+    state_country_id = %s,
+    state_code = %s,
+    state_name = %s,
+    state_status = %s,
+    state_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE state_id = %d
+";
+$sql["delete_state"] = "
+DELETE FROM ref_state
+WHERE state_id = %d
+";
+$sql["list_state"] = "
+SELECT
+    state_id AS `id`,
+    state_name AS `name`
+FROM
+    ref_state
+WHERE state_country_id = %d
+ORDER BY state_name
+";

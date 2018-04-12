@@ -1,0 +1,8 @@
+{
+    "name": "ref.agama",
+    "version": "1",
+    "require": {
+        "modules" : ["core.setting"]
+    },
+    "table": ["ref_religion"]
+}

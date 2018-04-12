@@ -1,0 +1,9 @@
+{
+    "name": "core.group",
+    "version": "1",
+    "require": {
+        "modules" : ["core.menu", "core.setting"],
+        "libraries" : ["CURL"]
+    },
+    "table": ["gtfw_group", "gtfw_group_module", "gtfw_group_menu"]
+}

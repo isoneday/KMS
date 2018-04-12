@@ -1,0 +1,64 @@
+<!-- patTemplate:tmpl name="document" -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Enterprise Corporate Suite 1.2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <!-- Le styles -->
+         <link href="assets/css/loader-common.css" rel="stylesheet">
+		
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/iestyles.css" />
+        <![endif]-->
+                
+        <script src="assets/js/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <!-- patTemplate:link src="body" / -->
+    </body>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="assets/js/loader.js"></script>
+
+    <script type="text/javascript" >
+        $(document).ready(function() {
+            hideMenu();
+            $('#slick-toggle').toggle(function(){hideMenu()}, function(){showMenu()});
+        });
+        
+        function hideMenu(){
+            cur = $('#slick-toggle');
+            cur.addClass('slick-icon');
+
+            $('#side_menu .clearfix').children('li').children('a').children('.menu-label').hide();
+            $('.sidebar').animate({width:50}, 300);
+            $(".container3").width('96%').animate({left:'54px'}, 300);
+            
+        }
+        
+        function showMenu(){
+            cur = $('#slick-toggle');
+            $('#side_menu .clearfix').children('li').children('a').children('.menu-label').show();
+            $('.sidebar').animate({width:220}, 300);
+            $(".container3").width('85.5%').animate({left:'220px'},300, function(){              
+                cur.removeClass('slick-icon');
+            });            
+        }
+        
+
+         
+    </script>
+</html>
+<!-- /patTemplate:tmpl -->

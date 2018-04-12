@@ -1,0 +1,1042 @@
+/* 
+    Document   : button.css
+    Created on : Oct 1, 2013, 2:31:17 PM
+    Author     : Zaenal Arifin
+    Description:
+        Class for action button.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.btn-add{
+    display: inline-block;
+    background: url("../images/btn/add.png") no-repeat 5px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-add:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-treeview{
+    display: inline-block;
+    background: url("../images/btn/btn-treeview.png") no-repeat 5px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-treeview:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-building-map{
+    display: inline-block;
+    background: url("../images/btn/btn-building-map.png") no-repeat 5px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-building-map:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-floor-map{
+    display: inline-block;
+    background: url("../images/btn/btn-floor-map.png") no-repeat 5px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-floor-map:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-approve-list{
+    display: inline-block;
+    background: url("../images/btn/accept-koli.png") no-repeat 5px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-approve-list:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-remove-list{
+    display: inline-block;
+    background: url("../images/btn/cancel-accept-koli.png") no-repeat 5px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-remove-list:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-thumbnail{
+    background: url("../images/btn/picture.png") no-repeat scroll 8px 6px #fff;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    color: #444444;
+    display: inline;
+    font-size: 12px;
+    height: 24px;
+    margin: 0 5px;
+    padding: 7px 8px 7px 25px;
+}
+.btn-thumbnail:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+
+}
+.btn-table{
+    background: url("../images/btn/table.png") no-repeat scroll 8px 6px transparent;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    color: #444444;
+    display: inline;
+    font-size: 12px;
+    height: 24px;
+    margin: 0 5px;
+    padding: 7px 8px 7px 25px;
+}
+.btn-table:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+
+}
+
+.btn-printer{
+    display: inline-block;
+    background: url("../images/btn/printer.png") no-repeat 5px 5px;
+    padding: 5px 5px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-printer:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-delete{
+    display: inline-block;
+    background: url("../images/btn/delete.png") no-repeat 5px 6px;
+    padding: 5px 5px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-delete:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-excel{
+    display: inline-block;
+    background: url("../images/btn/excel.png") no-repeat 5px 6px;
+    padding: 5px 5px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-excel:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-pdf{
+    display: inline-block;
+    background: url("../images/btn/pdf.png") no-repeat 5px 6px;
+    padding: 5px 5px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-print-pdf{
+    display: inline-block;
+    background: url("../images/btn/print-pdf.png") no-repeat 5px 6px;
+    padding: 5px 5px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-pdf:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-display-thumb{
+    /* display: inline-block;*/
+    background: url("../images/btn/button-view-photo.png") no-repeat 5px 6px;
+    padding: 6px 3px 7px 23px;
+    margin: 0px 4px 0px 0px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 8px;
+}
+.btn-display-thumb:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-display-table{
+    /* display: inline-block;*/
+    background: url("../images/btn/button-view-table.png") no-repeat 5px 6px;
+    padding: 6px 3px 7px 23px;
+    margin: 0px 4px 0px 0px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 8px;
+}
+.btn-display-table:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+
+}
+.btn-send-mail{
+    display: inline-block;
+    background: url("../images/btn/mails-stack.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-send-mail:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+
+}
+.btn-duplicates{
+    /* display: inline-block;*/
+    background: url("../images/btn/icon-duplicates.png") no-repeat 5px 5px;
+    padding: 6px 3px 7px 23px;
+    margin: 0px 4px 0px 0px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 8px;
+}
+.btn-duplicates:hover{ 
+    cursor: pointer;
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-detail {
+    background: url("../images/btn/detail.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.btn-detailInline{
+    display: inline-block;
+    background: url("../images/btn/detail.png") no-repeat 9px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+
+.btn-costing {
+    background: url("../images/btn/btn-costing.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-confirmation {
+    background: url("../images/buttons/button-tindaklanjuti.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-export-vcard {
+    background: url("../images/btn/card.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 17px;
+    width: 16px;
+}
+.btn-detail-monthly {
+    background: url("../images/btn/btn-monthly.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-detail-daily {
+    background: url("../images/btn/btn-daily.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-convert {
+    background: url("../images/btn/icon-conversion.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-prospect-info{
+    background: url("../images/icons/icon-info-24x24.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 19px;
+    width: 24px;
+}
+.btn-user {
+    background: url("../images/btn/icon_users.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 15px;
+    width: 16px;
+}
+.btn-create-officer {
+    background: url("../images/btn/btn-officer.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 15px;
+    width: 16px;
+}
+.btn-reset-password {
+    background: url("../images/btn/btn-reset-password.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-sync {
+    background: url("../images/btn/button-sinkronisasi.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-finish {
+    background: url("../images/btn/btn-finish.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-assignment {
+    background: url("../images/btn/btn-assignment.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-assign-gallery {
+    background: url("../images/btn/btn-assign-gallery.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-print-pdf:hover{ 
+    color:#fff;
+    background-color: #DD132B;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+
+.btn-print-excel{
+    display: inline-block;
+    background: url("../images/btn/btn-print-excel.png") no-repeat 5px 6px;
+    padding: 5px 5px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+
+.btn-print-excel:hover{ 
+    color:#fff;
+    background-color: #336633;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+
+.btn-flush-top{
+    display: inline-block;
+    background: url("../images/btn/flush.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+
+.btn-flush-top:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+
+}
+
+.btn-unflush-top{
+    display: inline-block;
+    background: url("../images/btn/cancel-flush.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+
+.btn-unflush-top:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+
+}
+.btn-urgent{
+    display: inline-block;
+    background: url("../images/btn/flag.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+
+.btn-urgent:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+
+.btn-urgent-row{
+    background: url("../images/btn/flag.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+
+.btn-duplicate {
+    background: url("../images/btn/icon-duplicates.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 15px;
+    width: 16px;
+}
+
+.btn-printer-icon {
+    background: url("../images/btn/printer.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.btn-printer-excel {
+    background: url("../images/btn/excel.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.btn-flush {
+    background: url("../images/btn/recycle.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.btn-flush-small{
+    display: inline-block;
+    background: url("../images/btn/recycle.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-flush-small:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-cancel-request{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/cancel.png") no-repeat 0 0;
+}
+.btn-cancel-request-detail{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/cancel-urgent.png") no-repeat 0 0;
+}
+.btn-cancel-approve{
+    display: inline-block;
+    background: url("../images/btn/cancel.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-cancel-approve:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+
+.btn-cancel-approve-line {
+    background: url("../images/btn/cancel.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-cancel-flush {
+    background: url("../images/btn/cancel-flush.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-cancel-flush:hover{ 
+    background-position: right;
+}
+
+.btn-cancel-urgent {
+    background: url("../images/btn/cancel-urgent.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-approve {
+    background: url("../images/btn/approve.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.btn-approve-document {
+    background: url("../images/btn/btn-approval.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+/* .btn-cancel-approve {
+    background: url("../images/btn/cancel-approve.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+} */
+.btn-accept-koli {
+    background: url("../images/btn/accept-koli.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-cancel-accept-koli {
+    background: url("../images/btn/cancel-accept-koli.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-receiving {
+    background: url("../images/btn/receiving.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-cancel-receiving {
+    background: url("../images/btn/cancel-receiving.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-create-new-do {
+    background: url("../images/btn/create-new-do.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-sent {
+    background: url("../images/btn/sent.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-cancel-sent{
+    background: url("../images/btn/cancel-sent.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-receive{
+    background: url("../images/btn/receive.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-cancel-receive{
+    background: url("../images/btn/btn-cancel-receive.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+/* .btn-printer-icon{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/printer-icon.png") no-repeat 0 0;
+} 
+.btn-printer-icon:hover{ 
+    background-position: right;
+}*/
+.btn-add-icon{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/add.png") no-repeat 0 0;
+}
+.btn-add-icon:hover{ 
+    background-position: right;
+}
+.btn-add-icon-custom{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/add-custom.png") no-repeat 0 0;
+}
+.btn-add-icon-custom:hover{ 
+    background-position: right;
+}
+.btn-add-icon-custom-group{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/add-custom-group.png") no-repeat 0 0;
+}
+.btn-add-icon-custom-group:hover{ 
+    background-position: right;
+}
+.btn-add-realization{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/add -realization.png") no-repeat 0 0;
+}
+.btn-add-realization:hover{ 
+    background-position: right;
+}
+.btn-edit{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/edit.png") no-repeat 0 0;
+}
+.btn-edit:hover{ 
+    background-position: right;
+}
+.btn-edit-user{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/icon_users_edit.png") no-repeat 0 0;
+}
+.btn-edit-user:hover{ 
+    background-position: right;
+}
+.btn-list-down{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/graphics/nav_down.png") no-repeat 0 0;
+}
+.btn-list-up{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/graphics/nav_up.png") no-repeat 0 0;
+}
+.external{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin-left:-3px;
+    background: url("../images/icons/external.png") no-repeat 0 0;
+}
+.internal{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin-left:-3px;
+    background: url("../images/icons/internal.png") no-repeat 0 0;
+}
+.btn-remove{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/btn-remove.png") no-repeat 0 0;
+}
+.btn-remove:hover{ 
+    background-position: right;
+}
+.btn-remove-icon{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/button-delete.gif") no-repeat 0 0;
+}
+.btn-remove-icon:hover{ 
+    background-position: right;
+}
+.btn-mapping{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/building-mapping.gif") no-repeat 0 0;
+}
+.btn-mapping:hover{ 
+    background-position: right;
+}
+.btn-submit{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/btn-submit-request.png") no-repeat 0 0;
+}
+.btn-submit:hover{ 
+    background-position: right;
+}
+.btn-edit-submit{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/button-edit-submit.gif") no-repeat 0 0;
+}
+.btn-edit-submit:hover{ 
+    background-position: right;
+}
+.btn-delete-icon{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/icon-delete.png") no-repeat 0 0;
+}
+.btn-printer-icon:hover{ 
+    background-position: right;
+}
+
+.btn-thumb-up{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url("../images/btn/thumb-up.gif") no-repeat 0 0;
+}
+.btn-thumb-down{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url("../images/btn/thumb-down.gif") no-repeat 0 0;
+}
+.btn-prev{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url("../images/btn/prev.gif") no-repeat 0 0;
+}
+.btn-prev:hover{ 
+    background-position: right;
+}
+.btn-prev-last{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url("../images/btn/prev-last.gif") no-repeat 0 0;
+}
+.btn-prev-last:hover{ 
+    background-position: right;
+}
+.btn-next{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url("../images/btn/next.gif") no-repeat 0 0;
+}
+.btn-next:hover{ 
+    background-position: right;
+}
+.btn-next-last{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url("../images/btn/next-last.gif") no-repeat 0 0;
+}
+.btn-next-last:hover{ 
+    background-position: right;
+}
+.btn-read{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/mail-open-document-text.png") no-repeat 0 0;
+}
+.btn-read:hover{ 
+    opacity: 0.5;
+}
+.btn-reply{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/mail-reply.png") no-repeat 0 0;
+}
+.btn-reply:hover{ 
+    opacity: 0.5;
+}
+.btn-forward{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/mails-stack.png") no-repeat 0 0;
+}
+.btn-forward:hover{ 
+    opacity: 0.5;
+}
+.btn-floor {
+    background: url("../images/btn/approve.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-room{
+    background: url("../images/btn/approve.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.btn-approve-asset{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/btn-approval.gif") no-repeat 0 0;
+}
+.btn-approve-asset:hover{ 
+    background-position: right;
+}
+.btn-reload{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/icon-reload.png") no-repeat 0 0;
+}
+.btn-reload:hover{ 
+    background-position: right;
+}
+.btn-conversion{
+    background: url("../images/btn/icon-conversion.png") no-repeat 5px 5px;
+    padding: 6px 3px 7px 23px;
+    margin: 0px 4px 0px 0px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 8px;
+}
+.btn-conversion:hover{ 
+    cursor: pointer;
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-backup{
+    background: url("../images/btn/icon-backup.png") no-repeat 5px 5px;
+    padding: 6px 3px 7px 23px;
+    margin: 0px 4px 0px 0px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 8px;
+}
+.btn-backup:hover{ 
+    cursor: pointer;
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-generate{
+    background: url("../images/btn/icon-generate.png") no-repeat 5px 5px;
+    padding: 6px 3px 7px 23px;
+    margin: 0px 4px 0px 0px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 8px;
+}
+.btn-generate:hover{ 
+    cursor: pointer;
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-order{
+    display: inline-block;
+    height: 13px;
+    width: 18px;
+    background: url("../images/btn/order.gif") no-repeat 0 0;
+}
+.btn-order-act{
+    display: inline-block;
+    height: 9px;
+    width: 16px;
+    background: url("../images/btn/order.gif") no-repeat 0 0;
+}
+.btn-locked{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/icon-hand-down-grey.gif") no-repeat 0 0;
+}
+.btn-unlocked{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url("../images/btn/icon-hand-green.gif") no-repeat 0 0;
+}
+.btn-edit-has-title {
+    display: inline-block;
+    background: url("../images/btn/edit.png") no-repeat 5px 6px;
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color: #444;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-respon{
+    display: inline-block;
+    background: url("../images/btn/small-application-form-file.png") no-repeat 5px 2px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-respon:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}
+.btn-nonrespon{
+    display: inline-block;
+    background: url("../images/btn/cancel.png") no-repeat 9px 6px; 
+    padding: 5px 8px 5px 25px;
+    font-size: 12px;
+    color:#444;
+    border-radius:4px;
+    border: 1px solid #ccc;
+    min-height: 17px;
+}
+.btn-nonrespon:hover{ 
+    color:#fff;
+    background-color: #888;
+    list-style: none;
+    border: 1px solid #888;
+    text-decoration: none;
+}

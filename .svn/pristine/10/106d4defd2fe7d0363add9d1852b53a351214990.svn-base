@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class ReferensiAgama extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/referensi.agama/business/mysqlt/referensiagama.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countReferensiAgama($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(agama_name) LIKE('%$name%')";
+        }
+        $query = $this->mSqlQueries['count_referensiagama'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getReferensiAgama($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(agama_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_referensiagama'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailReferensiAgama($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_referensiagama'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertReferensiAgama($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_referensiagama'], $params);
+    }
+    
+    public function updateReferensiAgama($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_referensiagama'], $params);
+    }
+    
+    public function deleteReferensiAgama($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_referensiagama'], array($id));
+    }
+    
+    public function listReferensiAgama()
+    {
+        return $this->Open($this->mSqlQueries['list_referensiagama'], array());
+    }
+}
+
+// End of file ReferensiAgama.class.php

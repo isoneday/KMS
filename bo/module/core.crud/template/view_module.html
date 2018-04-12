@@ -1,0 +1,121 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="form" -->
+<form class="xhr dest_subcontent-element" id="form_input" method="post" action="{URL_ACTION}" >
+	<div class="content-box-form">
+		<table id="table_input" class="table-edit" style="width: 100%;">
+			<tr class="subhead">
+				<th colspan="2">
+					<strong><!-- patTemplate:gtfwgetlang key="crud" / --></strong>
+				</th>
+			</tr>
+			<tr>
+				<th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="menu" / --></th>
+				<td>
+					<div id="div_menu">
+					<!-- patTemplate:gtfwrendermodule module="core.menu" submodule="comboMenu" action="view" name="menu"  / -->
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th><!-- patTemplate:gtfwgetlang key="module" / --></th>
+				<td>
+					<input type="text" name="module" value="{MODULE}" size="50" title="<!-- patTemplate:gtfwgetlang key="module" / -->" tabindex="2" />&nbsp;&nbsp;<em>*) <!-- patTemplate:gtfwgetlang key="alpaanddot" / --></em>
+				</td>
+			</tr>
+			<tr>
+				<th><!-- patTemplate:gtfwgetlang key="actions" / --></th>
+				<td>
+					<!-- patTemplate:tmpl name="actions" -->
+					<div class="actions">
+					<input type="hidden" name="action[{ID}][code]" value="{CODE}" />
+					<div style="display: inline-block; width: 150px;"><label><input type="checkbox" class="action" name="action[{ID}][id]" value="{ID}" id="{NAME}" /> {NAME}</label></div>
+					<div style="display: inline-block;">Response :</div>
+					<div style="display: inline-block; width: 60px;"><label><input type="checkbox" class="view" name="action[{ID}][view]" value="1" id="view_{NAME}" disabled="disabled" /> View</label></div>
+					<div style="display: inline-block; width: 100px;"><label><input type="checkbox" class="do" name="action[{ID}][do]" value="1" id="do_{NAME}" disabled="disabled" /> Do</label></div>
+					<label><input type="radio" class="default" name="default" value="{ID}" disabled="disabled" /> Default</label>
+					</div>
+					<!-- /patTemplate:tmpl -->
+				</td>
+			</tr>
+			<tr>
+				<th><!-- patTemplate:gtfwgetlang key="combobox" / --></th>
+				<td>
+					<input type="radio" name="combobox" id="combobox1" value="1" tabindex="3" /> <label for="combobox1">Yes</label>&nbsp;&nbsp;
+					<input type="radio" name="combobox" id="combobox0"  value="0" tabindex="4" /> <label for="combobox0">No</label>
+				</td>
+			</tr>
+			<tr>
+				<th><!-- patTemplate:gtfwgetlang key="description" / --></th>
+				<td>
+					<textarea name="desc" cols="50" rows="2" title="<!-- patTemplate:gtfwgetlang key="description" / -->" tabindex="5">{DESC}</textarea>
+				</td>
+			</tr>
+			<tr id="select_table">
+				<th><!-- patTemplate:gtfwgetlang key="table" / --></th>
+				<td>
+					<!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="table"  / -->*
+				</td>
+			</tr>
+			<tr class="crud">
+				
+			</tr>
+		</table>
+	</div>
+	<div class="form-footer" style="padding:14px 230px 15px!important">
+		<button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="7"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="save" / --></span></button>
+        <button type="reset" class="ui-button-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="8"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="reset" / --></span></button>
+        <button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="9"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button>
+    </div>
+</form>
+<!-- /patTemplate:tmpl -->
+<script type="text/javascript">
+$(function(){
+    //getTable();
+    $('#table').on('change', function(){
+        getTable();
+    });
+    $('.action').on('click', function(){
+        disAction($(this));      
+    });
+});
+
+function disAction(elm)
+{
+    var checked = elm.attr('checked');
+    if (checked) {  
+        elm.closest('.actions').find('.view').removeAttr('disabled');
+        elm.closest('.actions').find('.do').removeAttr('disabled');
+        elm.closest('.actions').find('.type').removeAttr('disabled');
+        elm.closest('.actions').find('.default').removeAttr('disabled');
+    } else {
+        elm.closest('.actions').find('.view').attr('disabled', 'disabled');
+        elm.closest('.actions').find('.do').attr('disabled', 'disabled');
+        elm.closest('.actions').find('.type').attr('disabled', 'disabled');
+        elm.closest('.actions').find('.default').attr('disabled', 'disabled');  
+    } 
+    
+}
+
+function getTable()
+{
+    var table_name = $('#table').val();
+    
+    $.get('{URL_TABLE}&table='+table_name+'&ascomponent=1', function(data) {
+        $('.crud').remove();
+        $(data).appendTo('#table_input');
+    });    
+}
+</script>
+<style>
+input{
+    display: inline-block !important;
+}
+label{
+    display: inline !important;
+}
+</style>
+<!-- /patTemplate:tmpl -->

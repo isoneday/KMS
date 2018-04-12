@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateRefUniversity extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefUniversity', 'ref.university');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.university', 'RefUniversity', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupRefUniversity);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('ref.university', 'updateRefUniversity', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

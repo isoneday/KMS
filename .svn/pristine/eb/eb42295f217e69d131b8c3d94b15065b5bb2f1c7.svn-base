@@ -1,0 +1,4 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:gtfwrendermodule name="widget" module="core.widget" submodule="widget" action="view" type="html" params="" / -->
+<!-- /patTemplate:tmpl -->

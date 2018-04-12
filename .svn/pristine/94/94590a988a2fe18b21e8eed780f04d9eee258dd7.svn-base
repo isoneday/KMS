@@ -1,0 +1,182 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailApplicantData extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_applicantdata.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantData = GtfwDispt()->load->business('ApplicantData', 'applicant.data');
+
+        $id = $_GET['id']->Integer()->Raw();
+
+        $dataFoto = $ObjApplicantData->GetListFoto($id);
+        $dataPendaftar = $ObjApplicantData->GetListPendaftar($id);
+        $dataWali = $ObjApplicantData->GetListWali($id);
+        $dataSaudara = $ObjApplicantData->GetListSaudara($id);
+        $dataAktifitasOrganisasi = $ObjApplicantData->GetListAktifitas($id);
+        $dataPrestasi = $ObjApplicantData->GetListPrestasi($id);
+        $dataAkademik = $ObjApplicantData->GetListAkademik($id);
+        $dataBeasiswa = $ObjApplicantData->GetListBeasiswa($id);
+
+        return compact('dataFoto','dataPendaftar','dataWali','dataSaudara','dataAktifitasOrganisasi','dataPrestasi','dataAkademik','dataBeasiswa');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        
+        if (!empty($dataFoto)) {
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_lampiran');
+            $this->mrTemplate->AddVar('foto', 'FILEPATH', $file_path);
+            $this->mrTemplate->addVars('foto', $dataFoto[0]);
+        }
+
+        if (!empty($dataPendaftar)) {
+            
+            // LIST IDENTITAS MAHASISWA BEGIN /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            $tglLahir = $this->date2string($dataPendaftar[0]['tanggal_lahir']);
+            $this->mrTemplate->AddVar('biodata', 'TANGGALLAHIR', $tglLahir);
+
+            $tglRegis = $this->date2string($dataPendaftar[0]['tanggal_registrasi']);
+            $this->mrTemplate->AddVar('biodata', 'TANGGALREGISTRASI', $tglRegis);
+
+            $this->mrTemplate->addVars('biodata', $dataPendaftar[0]);
+
+            $this->mrTemplate->addVars('biodataHead', $dataPendaftar[0]);
+
+            // LIST IDENTITAS MAHASISWA END //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        // LIST WALI START -------------------------------------------------------------------------------------------------------------
+        if (!empty($dataWali)) {
+            $jumwali = count($dataWali);
+            for ($i=0; $i < $jumwali ; $i++) { 
+                if ($dataWali[$i]['ortu_status'] == 'N') {
+                    $dataWali[$i]['ortu_status'] = 'Hidup';
+                } else {
+                    $dataWali[$i]['ortu_status'] = 'Meninggal';
+                }
+                // echo "<pre>";var_dump($detailwali[$i]);echo "</pre>";
+                $ortu_tgl_lhr = $this->date2string($dataWali[$i]['ortu_tgl_lhr']);
+                $this->mrTemplate->AddVar('dataorangtuawali', 'ORTUTGLLHR', $ortu_tgl_lhr);
+                $this->mrTemplate->addVars('dataorangtuawali', $dataWali[$i]);
+                $this->mrTemplate->parseTemplate('dataorangtuawali', 'a');
+            }
+        }
+        // LIST WALI END ---------------------------------------------------------------------------------------------------------------
+        
+
+        // LIST SAUDARA START -------------------------------------------------------------------------------------------------------------
+        if (!empty($dataSaudara)) {
+            $this->mrTemplate->addVars('saudara', $dataSaudara[0]);
+        }
+        // LIST SAUDARA END     -------------------------------------------------------------------------------------------------------------
+        // echo "<pre>";
+        // print_r($dataPrestasi);
+        // exit;
+
+        // LIST AKTIFITAS START -------------------------------------------------------------------------------------------------------------
+        if (!empty($dataAktifitasOrganisasi)) {
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_aktifitas');
+            $jumaktifitasorganisasi = count($dataAktifitasOrganisasi);
+            for ($i=0; $i < $jumaktifitasorganisasi ; $i++) { 
+                $this->mrTemplate->addVars('dataorganisasi', $dataAktifitasOrganisasi[$i]);
+                $this->mrTemplate->addVar('dataorganisasi', 'FILE_ORGANISASI', GtfwDispt()->GetUrl('applicant.personal.data', 'Lampiran', 'view', 'html').'&id='.$dataAktifitasOrganisasi[$i]['id'].'&file='.$file_path.$dataAktifitasOrganisasi[$i]['file'].'&download='.$dataAktifitasOrganisasi[$i]['file_origin']);
+                $this->mrTemplate->parseTemplate('dataorganisasi', 'a');
+            }
+        }
+        // LIST AKTIFITAS END   -------------------------------------------------------------------------------------------------------------
+
+        // LIST PRESTASI START  -------------------------------------------------------------------------------------------------------------
+        if (!empty($dataPrestasi)) {
+            $jumpresnonakad = count($dataPrestasi);
+            for ($i=0; $i < $jumpresnonakad ; $i++) { 
+                $this->mrTemplate->addVars('dataprestasinonakademik', $dataPrestasi[$i]);
+                $this->mrTemplate->parseTemplate('dataprestasinonakademik', 'a');
+            }
+        }
+        // LIST PRESTASI END    -------------------------------------------------------------------------------------------------------------
+        
+        // LIST AKADEMIK START  -------------------------------------------------------------------------------------------------------------
+        if (!empty($dataAkademik)) {
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_akademik');
+            $jumdataakademik = count($dataAkademik);
+            for ($i=0; $i < $jumdataakademik ; $i++) { 
+                if ($dataAkademik[$i]['akademik_is_cuti'] == 'N') {
+                    $dataAkademik[$i]['akademik_is_cuti'] = 'Tidak Cuti';
+                } else {
+                    $dataAkademik[$i]['akademik_is_cuti'] = 'Cuti';
+                }
+                $this->mrTemplate->addVars('dataakademik', $dataAkademik[$i]);
+                $this->mrTemplate->addVar('dataakademik', 'FILE_AKADEMIK', GtfwDispt()->GetUrl('applicant.personal.data', 'Lampiran', 'view', 'html').'&id='.$dataAkademik[$i]['id'].'&file='.$file_path.$dataAkademik[$i]['file'].'&download='.$dataAkademik[$i]['file_origin']);
+                $this->mrTemplate->parseTemplate('dataakademik', 'a');
+            }
+        }
+        // LIST AKADEMIK END    -------------------------------------------------------------------------------------------------------------
+        
+
+
+       // LIST BEASISWA START  -------------------------------------------------------------------------------------------------------------
+        if (!empty($dataBeasiswa)) {
+            $jumbeasiswa = count($dataBeasiswa);
+            for ($i=0; $i < $jumbeasiswa ; $i++) { 
+                if ($dataBeasiswa[$i]['beasiswa_status'] == '1') {
+                    $dataBeasiswa[$i]['beasiswa_status'] = 'Aktif';
+                } else {
+                    $dataBeasiswa[$i]['beasiswa_status'] = 'Tidak Aktif';
+                }
+
+                $beasiswa_tanggal_daftar = $this->date2string($dataBeasiswa[$i]['beasiswa_tanggal_daftar']);
+                $this->mrTemplate->AddVar('beasiswa', 'TANGGALDAFTAR', $beasiswa_tanggal_daftar);
+                $this->mrTemplate->addVars('beasiswa', $dataBeasiswa[$i]);
+                $this->mrTemplate->parseTemplate('beasiswa', 'a');
+            }
+        }
+    }
+
+    function date2int($date) {
+        $bln = array(
+            1 => '01',
+            2 => '02',
+            3 => '03',
+            4 => '04',
+            5 => '05',
+            6 => '06',
+            7 => '07',
+            8 => '08',
+            9 => '09',
+            10 => '10',
+            11 => '11',
+            12 => '12'
+        );
+        $arrtgl = explode('-', $date);
+        return $arrtgl[2] . '/' . $bln[(int) $arrtgl[1]] . '/' . $arrtgl[0];
+    }
+
+    function date2string($date) {
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrtgl = explode('-', $date);
+        return $arrtgl[2] . '&nbsp;' . $bln[(int) $arrtgl[1]] . '&nbsp;' . $arrtgl[0];
+    }
+
+}
+
+?>

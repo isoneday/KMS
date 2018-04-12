@@ -1,0 +1,74 @@
+<?php
+
+$sql["count_refagama"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_refagama"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.religion_id AS `id`,
+    a.religion_name AS `name`,
+    a.religion_status AS `status`,
+    a.religion_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`
+FROM ref_religion a
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refagama"] = "
+SELECT 
+    a.religion_id AS `id`,
+    a.religion_name AS `name`,
+    a.religion_status AS `status`,
+    a.religion_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`
+FROM ref_religion a
+WHERE religion_id = %d
+";
+$sql["insert_refagama"] = "
+INSERT INTO ref_religion
+(
+    religion_name,
+    religion_status,
+    religion_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_refagama"] = "
+UPDATE ref_religion
+SET 
+    religion_name = %s,
+    religion_status = %s,
+    religion_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE religion_id = %d
+";
+$sql["delete_refagama"] = "
+DELETE FROM ref_religion
+WHERE religion_id = %d
+";
+$sql["list_refagama"] = "
+SELECT
+    religion_id AS `id`,
+    religion_name AS `name`
+FROM
+    ref_religion
+ORDER BY religion_name
+";

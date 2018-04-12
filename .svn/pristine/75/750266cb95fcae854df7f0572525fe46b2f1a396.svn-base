@@ -1,0 +1,61 @@
+<?php
+
+$sql["count_refresidence"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_refresidence"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.tempatTinggalId AS `tempatTinggalId`,
+    a.tempatTinggalId AS `id`,
+    a.tempatTinggalNama AS `tempatTinggalNama`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_tempat_tinggal a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refresidence"] = "
+SELECT 
+    a.tempatTinggalId AS `tempatTinggalId`,
+    a.tempatTinggalId AS `id`,
+    a.tempatTinggalNama AS `tempatTinggalNama`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_tempat_tinggal a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE tempatTinggalId = %d
+";
+$sql["insert_refresidence"] = "
+INSERT INTO ref_tempat_tinggal
+(
+    tempatTinggalNama,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_refresidence"] = "
+UPDATE ref_tempat_tinggal
+SET 
+    tempatTinggalNama = %s,
+    update_user_id = %s,
+    update_timestamp = NOW() 
+WHERE tempatTinggalId = %d
+";
+$sql["delete_refresidence"] = "
+DELETE FROM ref_tempat_tinggal
+WHERE tempatTinggalId = %d
+";
+$sql["list_refresidence"] = "
+SELECT
+    tempatTinggalId AS `id`,
+    tempatTinggalNama AS `name`
+FROM
+    ref_tempat_tinggal
+ORDER BY tempatTinggalNama
+";

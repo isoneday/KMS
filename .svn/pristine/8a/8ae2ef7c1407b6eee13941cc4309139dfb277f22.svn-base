@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoAdd{CLASS} extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('Process{CLASS}', '{MODULE}');
+        
+        $post = $_POST->AsArray();
+        
+        $result = $proses->input();
+        
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+        if ($result) {
+            if (!empty($elmId)) {
+                $url = GtfwDispt()->GetUrl('{MODULE}', 'combo{CLASS}', 'view', 'html').'&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('div_$elmId', '".$url."');closeGtPopup(popup$elmId);");
+            } else {
+                $url = GtfwDispt()->GetUrl('{MODULE}', '{CLASS}', 'view', 'html').'&display&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popup{CLASS});");
+            }
+        } else {
+            if (!empty($elmId)) {
+                return array('exec' => "replaceContentWithUrl('popup-$elmId', '" . GtfwDispt()->GetUrl('{MODULE}', (empty($post['dataId']) ? 'add{CLASS}' : 'update{CLASS}'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+            } else {
+                return array('exec' => "replaceContentWithUrl('popup-subcontent', '" . GtfwDispt()->GetUrl('{MODULE}', (empty($post['dataId']) ? 'add{CLASS}' : 'update{CLASS}'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+            }
+        }       
+    }
+}
+
+?>

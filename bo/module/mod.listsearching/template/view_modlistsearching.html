@@ -1,0 +1,202 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<!-- patTemplate:tmpl name="search" -->
+<div>
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+          
+        <select name="idmasdok">
+                <option value='0'> -- SELECT TYPE -- </option>
+                <option value='1'> product Documentation</option>
+                <option value='2'> Meeting Documentation </option>
+                <option value='3'> Training Documentation</option>
+         </select>
+                    <button class="btn">
+          <!-- patTemplate:gtfwgetlang key="search"/ --></button>
+         
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+padding="100px 0";
+</script>
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="id_meeting" style="{STYLE_JUDUL}">
+<div class="pageBar" >
+        <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+</div>
+<table class="table-common">
+<thead>
+      <h3 class="id_meeting" style="{STYLE_JUDUL}">Meeting Documentation</h3>
+      <h3 class="id_produk" style="{STYLE_JENIS}">Product Documentation</h3>
+      <h3 class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">Training Documentation</h3>
+
+    <tr>
+   <th class="id_meeting" style="{STYLE_JUDUL}" >topic</th>
+   <th class="id_meeting" style="{STYLE_JUDUL}">leader</th>
+   <th class="id_meeting" style="{STYLE_JUDUL}">status</th>
+   <th class="id_meeting" style="{STYLE_JUDUL}">upload by</th>
+   <th class="id_meeting" style="{STYLE_JUDUL}">upload date</th>
+   <th class="id_meeting" style="{STYLE_JUDUL}">attachment</th>
+     
+        <th class="id_produk" style="{STYLE_JENIS}">tittle</th>
+        <th class="id_produk" style="{STYLE_JENIS}">name product</th>
+        <th class="id_produk" style="{STYLE_JENIS}">type product</th>
+        <th class="id_produk" style="{STYLE_JENIS}">division product</th>
+        <th class="id_produk" style="{STYLE_JENIS}">upload by</th>
+        <th class="id_produk" style="{STYLE_JENIS}">upload date</th>
+        <th class="id_produk" style="{STYLE_JENIS}">attachment</th>
+     
+            <th class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">tittle</th>
+            <th class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">speaker</th>
+            <th class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">type training</th>
+            <th class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">upload by</th>
+            <th class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">upload date</th>
+            <th class="id_pembicara" style="{STYLE_TYPE_PRODUCT}">attachment</th>
+     
+
+     
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="3" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td class="id_meeting" style="{STYLE_JUDUL_VALUE}">{TOPIK}</td>
+        <td class="id_meeting" style="{STYLE_JUDUL_VALUE}">{PEMBICARA}</td>
+        <td class="id_meeting" style="{STYLE_JUDUL_VALUE}">{STATUS}</td>
+        <td class="id_meeting" style="{STYLE_JUDUL_VALUE}">{UPLOADBY}</td>
+        <td class="id_meeting" style="{STYLE_JUDUL_VALUE}">{TIME}</td>
+        <td  class="id_meeting" style="{STYLE_JUDUL_VALUE}"><a href="{FILEPATH}{FILE_DOWNLOAD}"  target="_blank"  class="" title=""><b>Open File</b></a></td>
+
+       <td class="id_produk" style="{STYLE_JENIS_VALUE}">{KMSDATA_KEYWORD}</td>
+        <td class="id_produk" style="{STYLE_JENIS_VALUE}">{NAMA_PRODUK}</td>
+        <td class="id_produk" style="{STYLE_JENIS_VALUE}">{JENIS_PRODUK}</td>
+        <td class="id_produk" style="{STYLE_JENIS_VALUE}">{BIDANG_PRODUK}</td>
+        <td class="id_produk" style="{STYLE_JENIS_VALUE}">{UPLOADBY}</td>
+        <td class="id_produk" style="{STYLE_JENIS_VALUE}">{TIME}</td>
+        <td  class="id_produk" style="{STYLE_JENIS_VALUE}"><a href="{FILEPATH}{FILE_DOWNLOAD}"  target="_blank"  class="" title=""><b>Open File</b></a></td>
+
+
+        <td class="id_pembicara" style="{STYLE_TYPE_VALUE}">{TOPIK}</td>
+        <td class="id_pembicara" style="{STYLE_TYPE_VALUE}">{PEMBICARA}</td>
+        <td class="id_pembicara" style="{STYLE_TYPE_VALUE}">{JENIS}</td>
+        <td class="id_pembicara" style="{STYLE_TYPE_VALUE}">{UPLOADBY}</td>
+        <td class="id_pembicara" style="{STYLE_TYPE_VALUE}">{TIME}</td>
+        <td  class="id_pembicara" style="{STYLE_TYPE_VALUE}"><a href="{FILEPATH}{FILE_DOWNLOAD}"  target="_blank"  class="" title=""><b>Open File</b></a></td>
+      
+</p>
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar" >
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+
+<div class="id_pembicara">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modlistsearching" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modlistsearching" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupModListsearching;
+    $('.popup_modlistsearching').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupModListsearching = showGtPopup(url, title);
+        return false;
+    });
+//   function $('#idmasdok').on('change', {
+  //     var c = $("#idmasdok").val();
+  //     //alert(c);
+  //     if(c == 3){
+  //        $('.id_pembicara').show();
+  //     } else {
+  //        $('.id_pembicara').hide();
+  //     }
+  //     if(c == 2){
+  //        $('.id_meeting').show();
+  //     } else {
+  //        $('.id_meeting').hide();
+  //     }
+  //     if(c == 1){
+  //        $('.id_produk').show();
+  //     } else {
+  //        $('.id_produk').hide();
+  //     }
+     
+  // }
+
+  /*$('#idmasdok').on('change', function(){
+      var c = $("#idmasdok").val();
+      //alert(c);
+      if(c == 3){
+         $('.id_pembicara').show();
+      } else {
+         $('.id_pembicara').hide();
+      }
+      if(c == 2){
+         $('.id_meeting').show();
+      } else {
+         $('.id_meeting').hide();
+      }
+      if(c == 1){
+         $('.id_produk').show();
+      } else {
+         $('.id_produk').hide();
+      }
+     
+    $('#form_search').submit();
+  });*/
+                               
+</script>
+<!-- /patTemplate:tmpl -->

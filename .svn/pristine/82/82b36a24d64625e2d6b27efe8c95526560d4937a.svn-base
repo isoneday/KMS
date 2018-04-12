@@ -1,0 +1,70 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<form id="form_input" method="post" action="{ACTION}" class="xhr dest_subcontent-element">
+<table class="table-edit">
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="modules" / --></th>
+        <td>
+            <input type="hidden" id="access" name="access" />
+            <div id="menu_list">
+            {MENU}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+            <button class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="process" / --></button>
+            <button type="reset" class="btn" ><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+        </td>
+    </tr>
+</table>
+</form>
+</div>
+
+
+<script type="text/javascript">
+$(function () {
+    
+	$("#menu_list").jstree({
+		"plugins" : [ "themes", "html_data", "checkbox", "ui" ],
+        "themes" : { "theme" : "classic" }
+    });
+    
+    $('#form_input').submit(function(){
+        var checked_ids = []; 
+        $("#menu_list").find(".jstree-undetermined").each(function(i,element){            
+            checked_ids.push($(element).attr("id"));
+        
+            if ($(this).find(".jstree-undetermined").length == 0) {  
+                $(this).find(".jstree-checked").each(function(i, element){          
+                    checked_ids.push($(element).attr("id"));
+                });         
+            }
+        });
+
+        $("#menu_list").find(".jstree-checked").each(function(i, element){ //also includes the ones below 'undetermined' parent
+            var id = $(element).attr("id");
+            if (!inArray(id, checked_ids)) {
+                checked_ids.push(id);
+            }        
+        }); 
+
+        //console.log(checked_ids);
+        $('#access').val(checked_ids);
+    });
+});
+
+function inArray(needle, haystack) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}
+</script>
+<!-- /patTemplate:tmpl -->

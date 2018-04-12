@@ -1,0 +1,64 @@
+<?php
+
+$sql["count_refeducation"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_refeducation"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.refJenPdkKode AS `id`,
+    a.refJenPdkKode AS `refJenPdkKode`,
+    a.refJenPdkKodeDikti AS `refJenPdkKodeDikti`,
+    a.refJenPdkNama AS `refJenPdkNama`,
+    a.refJenPdkDesc AS `refJenPdkDesc`
+FROM ref_jenjang_pendidikan a
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refeducation"] = "
+SELECT 
+    a.refJenPdkKode AS `refJenPdkKode`,
+    a.refJenPdkKode AS `id`,
+    a.refJenPdkKodeDikti AS `refJenPdkKodeDikti`,
+    a.refJenPdkNama AS `refJenPdkNama`,
+    a.refJenPdkDesc AS `refJenPdkDesc`
+FROM ref_jenjang_pendidikan a
+WHERE refJenPdkKode = %d
+";
+$sql["insert_refeducation"] = "
+INSERT INTO ref_jenjang_pendidikan
+(
+    refJenPdkKode,
+    refJenPdkKodeDikti,
+    refJenPdkNama,
+    refJenPdkDesc
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_refeducation"] = "
+UPDATE ref_jenjang_pendidikan
+SET 
+    refJenPdkKode = %s,
+    refJenPdkKodeDikti = %s,
+    refJenPdkNama = %s,
+    refJenPdkDesc = %s
+WHERE refJenPdkKode = %d
+";
+$sql["delete_refeducation"] = "
+DELETE FROM ref_jenjang_pendidikan
+WHERE refJenPdkKode = %d
+";
+$sql["list_refeducation"] = "
+SELECT
+    jenjangpendidikan_id AS `id`,
+    jenjangpendidikan_name AS `name`,
+    jenjangpendidikan_kode AS `kode`
+FROM
+    ref_jenjang_pendidikan
+ORDER BY jenjangpendidikan_name
+";

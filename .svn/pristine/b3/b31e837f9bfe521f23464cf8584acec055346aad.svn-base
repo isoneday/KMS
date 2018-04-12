@@ -1,0 +1,95 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessSyaratDokumen
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjSyaratDokumen = GtfwDispt()->load->business('SyaratDokumen');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjSyaratDokumen->StartTrans();
+                $params = array(
+                    $post['code'],
+                    $post['name'],
+                    $post['is_active'],
+                    $this->user
+                );
+                $result = $result && $this->ObjSyaratDokumen->insertSyaratDokumen($params);
+                $this->ObjSyaratDokumen->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjSyaratDokumen->StartTrans();
+                $params = array(
+                    $post['code'],
+                    $post['name'],
+                    $post['is_active'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjSyaratDokumen->updateSyaratDokumen($params);
+                $this->ObjSyaratDokumen->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('ref.syarat.dokumen', 'SyaratDokumen', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.syarat.dokumen', 'syaratdokumen', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.syarat.dokumen', 'inputSyaratDokumen', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.syarat.dokumen', (empty($post['id'])?'add':'update').'SyaratDokumen', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjSyaratDokumen->deleteSyaratDokumen($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('ref.syarat.dokumen', 'SyaratDokumen', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

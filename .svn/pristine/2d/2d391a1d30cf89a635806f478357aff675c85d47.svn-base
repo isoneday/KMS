@@ -1,0 +1,127 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessApplicantInterview
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+		
+		foreach($post['nilai'] as $var)
+			{
+			$this->ObjApplicantInterview->StartTrans();
+			$params = array(
+				$post['aplikanwawancara_beasiswa_id'],
+				$post['aplikanwawancara_aplikan_id'],
+				$var['aspekwawancara_id'],
+				$var['nilai'],
+                $this->user
+			);
+			$result =  $this->ObjApplicantInterview->insertNilai($params);
+				
+			
+			$this->ObjApplicantInterview->EndTrans($result); 
+			}
+			
+		$this->ObjApplicantInterview->StartTrans();
+		$result = 	$this->ObjApplicantInterview->updateStatusWawancara($post['aplikanwawancara_aplikan_id']);
+		
+		$this->ObjApplicantInterview->EndTrans($result); 
+		  
+		if ($result) {
+			$msg = GtfwLangText('msg_update_success');
+			$css = $this->cssDone;
+		} else {
+			$msg = GtfwLangText('msg_update_fail');
+			$css = $this->cssFail;
+		} 
+			
+        if ($result) {
+            Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.interview', 'applicantinterview', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('applicant.interview', 'inputApplicantInterview', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.interview', (empty($post['id'])?'add':'update').'ApplicantInterview', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjApplicantInterview->deleteApplicantInterview($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	function updateLolos($id,$name,$mail)
+    {
+        $result = $this->ObjApplicantInterview->updateApplicantInterviewLolos($id);
+
+        //$result = 1;
+		
+        if ($result) {
+            /*$this->ObjMail = GtfwDispt()->load->process('ProcessEmailTemplate', 'applicant.interview');
+
+            $email      = $mail;
+            $subject    = 'Discount Request';
+            $message    = 'Hello, '. $name . '<br />';
+            $message    .= 'Anda mendapatkan permintaan persetujuan untuk memasukan discount .<br />';
+            $message    .= 'Mohon cek <b>Discount Request</b> pada halaman admin.<br />';
+            $message    .= 'Terimakasih.';
+
+            $this->ObjMail->send_mail_notification($email, $message, $subject);*/
+
+
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	function updateTidakLolos($id)
+    {
+        $result =  $this->ObjApplicantInterview->updateApplicantInterviewTidakLolos($id);
+		
+        if ($result) {
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	
+}
+
+?>

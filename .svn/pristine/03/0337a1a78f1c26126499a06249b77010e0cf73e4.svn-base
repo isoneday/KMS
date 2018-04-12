@@ -1,0 +1,86 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class Salutation extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.salutation/business/mysqlt/salutation.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countSalutation()
+    {
+        $query = $this->mSqlQueries['count_salutation'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getSalutation($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(salutation_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_salutation'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailSalutation($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_salutation'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertSalutation($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_salutation'], $params);
+    }
+    
+    public function updateSalutation($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_salutation'], $params);
+    }
+    
+    public function deleteSalutation($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_salutation'], array($id));
+    }
+    
+    public function listSalutation()
+    {
+        return $this->Open($this->mSqlQueries['list_salutation'], array());
+    }
+	
+	public function checkSalutationName($param)
+    {
+        if (is_array($param)) extract($param);
+        $str = '';
+        if (!empty($id))
+            $str = "AND salutation_id != $id";
+        $query = str_replace('--FILTER--', $str, $this->mSqlQueries['check_salutation_name']);
+        $result = $this->Open($query, array($name));
+        if (!empty($result)) {
+            return true;
+        }
+    }
+}
+
+// End of file Salutation.class.php

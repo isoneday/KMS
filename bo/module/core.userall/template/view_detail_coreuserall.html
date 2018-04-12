@@ -1,0 +1,48 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+    <tbody>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="real_name" / --></th>
+            <td>{REAL_NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="username" / --></th>
+            <td>{NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="email" / --></th>
+            <td>{EMAIL}</td>
+        </tr>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+            <td>{DESC}</td>
+        </tr>
+        <tr>
+            <th style="width:150px"><!-- patTemplate:gtfwgetlang key="lang" / --></th>
+            <td>{ACTIVE_LANG_NAME}</td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="group" / --></th>
+            <td>
+                <!-- patTemplate:tmpl name="group" -->
+                <br/><h5>{NAME}</h5>
+                <!-- patTemplate:tmpl name="item" -->
+                &nbsp;&nbsp;&nbsp;&nbsp;{IMG} {GROUP_NAME}</br>
+                <!-- /patTemplate:tmpl -->
+                <!-- /patTemplate:tmpl -->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+    var popupGroupDetail;
+    $('.popup_group_detail').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupGroupDetail = showGtPopup(url, title, 850, null, 320, true);
+        return false;
+    });
+</script>
+<!-- /patTemplate:tmpl -->

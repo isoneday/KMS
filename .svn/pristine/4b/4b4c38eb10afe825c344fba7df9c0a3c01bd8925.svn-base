@@ -1,0 +1,34 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+
+    <table>
+        <tbody>
+            <tr><td width="90"><b>NIM</b></td><td> : {APLIKAN_NIM}</td></tr>
+            <tr><td><b>Nama</b></td><td> : {APLIKAN_NAMA}</td></tr>
+        </tbody>
+    </table>
+</div>	
+
+   <hr>
+<div class="content-box">   
+   <h3><!-- patTemplate:gtfwgetlang key="penilaian" / --></h3>
+   <form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+   <input type="hidden" name="aplikanwawancara_aplikan_id" value="{ID}">
+   <input type="hidden" name="aplikanwawancara_beasiswa_id" value="{ID_BEASISWA}">
+   <table>
+        <tbody>
+		{PERTANYAAN}	
+		<tr><td></td><td></td><td></td><td><br><input type="submit" value="<!-- patTemplate:gtfwgetlang key="save" / -->" /></td></tr>
+        </tbody>
+    </table>
+   </form>
+
+</div>
+<!-- /patTemplate:tmpl -->

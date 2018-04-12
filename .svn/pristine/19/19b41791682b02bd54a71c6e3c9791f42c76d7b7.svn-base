@@ -1,0 +1,93 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessInterviewCategory
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjInterviewCategory = GtfwDispt()->load->business('InterviewCategory');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjInterviewCategory->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $post['bobot'],
+                    $this->user
+                );
+                $result = $result && $this->ObjInterviewCategory->insertInterviewCategory($params);
+                $this->ObjInterviewCategory->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjInterviewCategory->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $post['bobot'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjInterviewCategory->updateInterviewCategory($params);
+                $this->ObjInterviewCategory->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('setup.interview.category', 'InterviewCategory', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('setup.interview.category', 'interviewcategory', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('setup.interview.category', 'inputInterviewCategory', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('setup.interview.category', (empty($post['id'])?'add':'update').'InterviewCategory', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjInterviewCategory->deleteInterviewCategory($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('setup.interview.category', 'InterviewCategory', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

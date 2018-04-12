@@ -1,0 +1,90 @@
+<?php
+
+$sql["count_refuniversity"] = "
+SELECT 
+    COUNT(universitas_id) AS total
+FROM ref_universitas
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_refuniversity"] = "
+SELECT 
+    a.universitas_id AS `id`,
+    a.universitas_kode AS `universitas_kode`,
+    a.universitas_name AS `name`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_universitas a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refuniversity"] = "
+SELECT 
+    a.universitas_id AS `universitas_id`,
+    a.universitas_kode AS `universitas_kode`,
+    a.satkerParentId AS `satkerParentId`,
+    a.satkerUnitId AS `satkerUnitId`,
+    a.universitas_name AS `universitas_name`,
+    a.satkerStruktural AS `satkerStruktural`,
+    a.satkerCreationDate AS `satkerCreationDate`,
+    a.satkerLastUpdate AS `satkerLastUpdate`,
+    a.satkerUserId AS `satkerUserId`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_universitas a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE universitas_id = %d
+";
+$sql["insert_refuniversity"] = "
+INSERT INTO ref_universitas
+(
+    universitas_id,
+    universitas_kode,
+    satkerParentId,
+    satkerUnitId,
+    universitas_name,
+    satkerStruktural,
+    satkerCreationDate,
+    satkerLastUpdate,
+    satkerUserId
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_refuniversity"] = "
+UPDATE ref_universitas
+SET 
+    universitas_id = %s,
+    universitas_kode = %s,
+    satkerParentId = %s,
+    satkerUnitId = %s,
+    universitas_name = %s,
+    satkerStruktural = %s,
+    satkerCreationDate = %s,
+    satkerLastUpdate = %s,
+    satkerUserId = %s
+WHERE universitas_id = %d
+";
+$sql["delete_refuniversity"] = "
+DELETE FROM ref_universitas
+WHERE universitas_id = %d
+";
+$sql["list_refuniversity"] = "
+SELECT
+    universitas_id AS `id`,
+    universitas_name AS `name`
+FROM
+    ref_universitas
+ORDER BY universitas_name
+";

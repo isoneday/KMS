@@ -1,0 +1,88 @@
+<!-- patTemplate:tmpl name="content" -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form" style="height:300px">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <table class="table-edit-popup">
+
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="country" / --></th>
+                <td>
+                    <div id="div_country" data-url="{URL_COUNTRY}">
+                        <!-- patTemplate:gtfwrendermodule module="ref.country" submodule="comboCountry" action="view" name="country_id" type="html" params="" / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="state" / --></th>
+                <td>
+                    <div id="div_state" data-url="{URL_STATE}">
+                        <!-- patTemplate:gtfwrendermodule module="ref.state" submodule="comboState" action="view" name="state"  / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="category" / --></th>
+                <td>
+                    <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="category"  / -->
+                    &nbsp;*</td>
+            </tr>
+
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="code" / --></th>
+                <td>
+                    <input type="text" name="code" value="{CODE}" required="required" />&nbsp;*         
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+                <td>
+                    <input type="text" name="name" value="{NAME}" required="required" />&nbsp;*            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="latitude" / --></th>
+                <td>
+                    <input type="text" name="latitude" value="{LATITUDE}" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="longitude" / --></th>
+                <td>
+                    <input type="text" name="longitude" value="{LONGITUDE}" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="timezone" / --></th>
+                <td>
+                    <input type="text" name="timezone" value="{TIMEZONE}" />            
+                </td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="status"/ --></th>
+                <td><input type="radio" name="status" value="1" {STATUS}/> <!-- patTemplate:gtfwgetlang key="active"/ --> 
+                           <input type="radio" name="status" value="0" {NSTATUS}/> <!-- patTemplate:gtfwgetlang key="not_active"/ --></td>
+            </tr>
+            <tr>
+                <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                <td>
+                    <textarea name="desc" cols="30" rows="3">{DESC}</textarea>            
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">    
+        <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function(){
+    
+        $('#div_country').on('change', '#country', function(){
+            $('#div_state').fadeOut().load($('#div_state').data('url')+'&country_id='+$(this).val()).fadeIn();
+        })
+    })
+</script>
+<!-- /patTemplate:tmpl -->

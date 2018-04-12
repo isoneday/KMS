@@ -1,0 +1,148 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="warning_box" visibility="hidden" -->
+   <div class="{CLASS_PESAN}">
+      <div style="float: right" onclick="javascript: $(this.parentNode).hide('slow')"><img src="images/icon-warning-16x16.gif"></div>
+      {ISI_PESAN}
+   </div>
+<!-- /patTemplate:tmpl -->
+
+	<div class="pageBar">
+		<div class="toolbar">
+			<!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+		</div>
+	</div>
+
+   <form method="post" name="formFolder-{FOLDERID}" action="{URL_SUBMIT}"  class="std_form">
+      <!-- patTemplate:tmpl name="table_in" -->
+      <h4 style="color:#555555;margin-top:15px;font-style:italic"><!-- patTemplate:gtfwgetlang key="received_message" / --></h4>
+      <table class="table-form" style="margin:15px 0 10px;width:100%">
+         <thead>
+            <tr>
+               <th style="width:30px">No</th>
+               <th style="width:5px">&nbsp;</th>
+               <th style="width:75px"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+			   <th style="width:200px"><!-- patTemplate:gtfwgetlang key="from" / --></th>
+               <th><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+               <th style="width:150px"><!-- patTemplate:gtfwgetlang key="received" / --></th>
+            </tr>
+         </thead>
+         <tbody>
+         <!-- patTemplate:tmpl name="message_list_in" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr><td colspan="6" style="text-align:center"><em>-- <!-- patTemplate:gtfwgetlang key="data_not_found" / --> --</em></td></tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <tr class="{CLASS_NAME}" style="font-weight: {FONT_WEIGHT}">
+               <td style="text-align:center">{NUMBER}</td>
+               <td><input type="checkbox" name="ctrlId[]" value="{CTRL_ID}"></td>
+               <td class="links" style="text-align:center">
+                  <a class="btn-read" onclick="popup_mesage = showGtPopup('{URL_READ}','<!-- patTemplate:gtfwgetlang key="read" / -->',600,null,null,false); var Obj = this.parentNode; while(Obj.tagName.toLowerCase() != 'tr') Obj = Obj.parentNode; Obj.style.fontWeight = 'normal';" title="<!-- patTemplate:gtfwgetlang key="read" / -->"></a>
+                  <a class="btn-reply" onclick="popup_mesage = showGtPopup('{URL_REPLY}','<!-- patTemplate:gtfwgetlang key="reply" / -->',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="reply" / -->"></a>
+                  <a class="btn-forward" onclick="popup_mesage = showGtPopup('{URL_REPLY}&forward','<!-- patTemplate:gtfwgetlang key="forward" / -->',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="forward" / -->"></a>
+               </td>
+			   <td>{SENDERNAME}</td>
+               <td><a style="cursor:pointer" onclick="popup_mesage = showGtPopup('{URL_READ}','<!-- patTemplate:gtfwgetlang key="read" / -->',600,null,null,false); var Obj = this.parentNode; while(Obj.tagName.toLowerCase() != 'tr') Obj = Obj.parentNode; Obj.style.fontWeight = 'normal';" title="<!-- patTemplate:gtfwgetlang key="read" / -->">{MSG_SUBJECT}</a></td>
+               <td style="text-align:center">{CTRLSENTDATELABEL}</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+         <!-- /patTemplate:tmpl -->
+         </tbody>
+      </table>
+	  <br />
+      <!-- /patTemplate:tmpl -->
+      <!-- patTemplate:tmpl name="table_out" -->
+      <h4 style="color:#555555;margin-top:15px;font-style:italic"><!-- patTemplate:gtfwgetlang key="sent_message" / --></h4>
+      <table class="table-form" style="margin:15px 0 10px;width:100%">
+         <thead>
+            <tr>
+               <th style="width:30px">No</th>
+               <th style="width:5px">&nbsp;</th>
+               <th style="width:75px"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+			   <th style="width:200px"><!-- patTemplate:gtfwgetlang key="to" / --></th>
+               <th><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+               <th style="width:150px"><!-- patTemplate:gtfwgetlang key="sent" / --></th>
+               <th style="width:150px"><!-- patTemplate:gtfwgetlang key="received" / --></th>
+            </tr>
+         </thead>
+         <tbody>
+         <!-- patTemplate:tmpl name="message_list_out" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr><td colspan="7" style="text-align:center"><em>-- <!-- patTemplate:gtfwgetlang key="data_not_found" / --> --</em></td></tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <tr class="{CLASS_NAME}">
+               <td style="text-align:center">{NUMBER}</td>
+               <td><input type="checkbox" name="ctrlId[]" value="{CTRL_ID}"></td>
+               <td class="links" style="text-align:center">
+                  <a class="btn-read" onclick="popup_mesage = showGtPopup('{URL_DETAIL}','<!-- patTemplate:gtfwgetlang key="read" / -->',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="read" / -->"></a>
+                  <a class="btn-forward" onclick="popup_mesage = showGtPopup('{URL_REPLY}&forward','<!-- patTemplate:gtfwgetlang key="forward" / -->',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="forward" / -->"></a>
+               </td>
+			   <td>{RECIPIENTNAME}</td>
+               <td><a style="cursor:pointer" onclick="popup_mesage = showGtPopup('{URL_DETAIL}','<!-- patTemplate:gtfwgetlang key="read" / -->',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="read" / -->">{MSG_SUBJECT}</a></td>
+               <td style="text-align:center">{CTRLSENTDATELABEL}</td>
+               <td style="text-align:center">{CTRLREADDATELABEL}</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+         <!-- /patTemplate:tmpl -->
+         </tbody>
+      </table>
+      <br />
+	  <!-- /patTemplate:tmpl -->
+      <!-- patTemplate:tmpl name="table_draft" -->
+      <h4 style="color:#555555;margin-top:15px;font-style:italic"><!-- patTemplate:gtfwgetlang key="saved_message" / --></h4>
+      <table class="table-form" style="margin:15px 0 10px;width:100%">
+         <thead>
+            <tr>
+               <th style="width:30px">No</th>
+               <th style="width:5px">&nbsp;</th>
+			   <th style="width:75px"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+               <th style="width:200px"><!-- patTemplate:gtfwgetlang key="to" / --></th>
+               <th><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+               <th style="width:150px"><!-- patTemplate:gtfwgetlang key="saved" / --></th>
+            </tr>
+         </thead>
+         <tbody>
+         <!-- patTemplate:tmpl name="message_list_draft" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr><td colspan="6" style="text-align:center"><em>-- <!-- patTemplate:gtfwgetlang key="data_not_found" / --> --</em></td></tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <tr class="{CLASS_NAME}">
+               <td style="text-align:center">{NUMBER}</td>
+               <td><input type="checkbox" name="ctrlId[]" value="{CTRL_ID}"></td>
+               <td class="links" style="text-align:center">
+                  <a class="btn-read" onclick="popup_mesage = showGtPopup('{URL_DETAIL}','read',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="read" / -->"></a>
+                  <a class="btn-edit" onclick="popup_mesage = showGtPopup('{URL_EDIT}','<!-- patTemplate:gtfwgetlang key="edit" / -->',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="edit" / -->"></a>
+               </td>
+			   <td>{RECIPIENTNAME}</td>
+               <td><a style="cursor:pointer" onclick="popup_mesage = showGtPopup('{URL_DETAIL}','read',600,null,null,true)" title="<!-- patTemplate:gtfwgetlang key="read" / -->">{MSG_SUBJECT}</a></td>
+               <td style="text-align:center">{MSGDATEMODIFYLABEL}</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+         <!-- /patTemplate:tmpl -->
+         </tbody>
+      </table>
+      <!-- /patTemplate:tmpl -->
+      <table class="table-edit" width="100%">
+         <tbody>
+            <tr>
+               <td colspan='2' class="links">
+                  <a onclick="javascript: $('#folder-{FOLDERID} input[name=&quot;ctrlId[]&quot;]').each(function(){this.checked = true;}); void(0);" style="float: left"><button type="button" class="btn"><!-- patTemplate:gtfwgetlang key="select_all" / --></button></a>
+                  <a onclick="javascript: $('#folder-{FOLDERID} input[name=&quot;ctrlId[]&quot;]').each(function(){this.checked = false;}); void(0);" style="float: left"><button type="button" class="btn"><!-- patTemplate:gtfwgetlang key="un_select_all" / --></button></a>
+                  <a onclick="javascript: $('#folder-{FOLDERID} input[name=&quot;ctrlId[]&quot;]').each(function(){this.checked = !this.checked;}); void(0);" style="float: left"><button type="button" class="btn"><!-- patTemplate:gtfwgetlang key="select_inverse" / --></button></a>
+               </td>
+            </tr>
+            <tr><td colspan='2'><label><input type="radio" name="operation" value="delete"> <!-- patTemplate:gtfwgetlang key="delete" / --></label></td></tr>
+            <tr><td colspan='2'><label style="display: inline;"><input type="radio" name="operation" value="move"> <!-- patTemplate:gtfwgetlang key="move_to" / --></label>&nbsp;&nbsp;:&nbsp;&nbsp;<!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="ctrlFolderId"  / --></td></tr>
+            <tr><td colspan='2'><label><input type="radio" name="operation" value="unread"> <!-- patTemplate:gtfwgetlang key="mark_as_unread" / --></label></td></tr>
+            <tr class="buttons">
+               <!--<td width="150px">&nbsp;</td>-->
+               <td colspan='2'>
+                  <input type="hidden" name="folderId" value="{FOLDERID}">
+                  <input type="submit" value="<!-- patTemplate:gtfwgetlang key="save_change" / -->" class="btn btn-primary">
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </form>
+<!-- /patTemplate:tmpl -->

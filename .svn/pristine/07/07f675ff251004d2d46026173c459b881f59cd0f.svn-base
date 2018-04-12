@@ -1,0 +1,91 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessJabatanOrganisasi
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjJabatanOrganisasi = GtfwDispt()->load->business('JabatanOrganisasi');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjJabatanOrganisasi->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $this->user
+                );
+                $result = $result && $this->ObjJabatanOrganisasi->insertJabatanOrganisasi($params);
+                $this->ObjJabatanOrganisasi->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjJabatanOrganisasi->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjJabatanOrganisasi->updateJabatanOrganisasi($params);
+                $this->ObjJabatanOrganisasi->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('ref.jabatan.organisasi', 'JabatanOrganisasi', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.jabatan.organisasi', 'jabatanorganisasi', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.jabatan.organisasi', 'inputJabatanOrganisasi', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.jabatan.organisasi', (empty($post['id'])?'add':'update').'JabatanOrganisasi', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjJabatanOrganisasi->deleteJabatanOrganisasi($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('ref.jabatan.organisasi', 'JabatanOrganisasi', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

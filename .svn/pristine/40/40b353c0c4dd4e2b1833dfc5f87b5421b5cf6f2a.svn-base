@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewComboCurrency extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/ref.currency/template');
+        $this->SetTemplateFile('view_combo_currency.html');
+    }
+
+    function ProcessRequest() {
+        $ObjCurrency = GtfwDispt()->load->business('Currency', 'ref.currency');
+
+        $msg = Messenger::Instance()->Receive(__file__, $this->mComponentName);
+        $comboData = !empty($msg[0]) ? $msg[0] : null;
+
+        // apakah perlu UntilFetched
+        if (!empty($msg[0]))
+            Messenger::Instance()->Send('ref.currency', 'comboCurrency', 'view', 'html', $msg[0], Messenger::UntilFetched);
+
+        $allowAdd = Security::Authorization()->IsAllowedToAccess('ref.currency', 'addCurrency', 'view', 'html');
+
+        Messenger::Instance()->SendToComponent('ref.currency', 'comboCurrency', 'view', 'html', 'currency_id', array('dataId' => (!empty($input['currency_id']) ? $input['currency_id'] : null), 'elmId' => 'currency', 'tabindex' => '7'), Messenger::CurrentRequest);
+        if (isset($comboData['type'])) {
+            $type = 'PO';
+        } else {
+            $type = '';
+        }
+        if ($type == 'PO') {
+            $list = $ObjCurrency->listCurrencyWithRate();
+        } else {
+            $list = $ObjCurrency->listCurrency();
+        } 
+
+        return compact('list', 'comboData', 'allowAdd', 'type');
+    }
+
+    function ParseTemplate($rdata = null) {
+        extract($rdata);
+
+        if (!empty($comboData)) {
+            $comboData['name'] = empty($comboData['name']) ? $comboData['elmId'] : $comboData['name'];
+            $this->mrTemplate->addVars('combobox', $comboData);
+        }
+
+        if (!empty($comboData['elmId'])) {
+            $this->mrTemplate->addVar('combobox', 'ELMID', $comboData['elmId']);
+
+            if (!empty($comboData['showAdd']) and $allowAdd) {
+                $this->mrTemplate->setAttribute('button_add', 'visibility', 'show');
+                $this->mrTemplate->addVar('button_add', 'ELMID', $comboData['elmId']);
+                $this->mrTemplate->addVar('button_add', 'URL', GtfwDispt()->GetUrl('ref.currency', 'addCurrency', 'view', 'html') . '&elmId=' . $comboData['elmId']);
+            }
+        }
+
+        if (!empty($comboData['first'])) {
+            if ($comboData['first'] === 'all') {
+                $this->mrTemplate->addVar('combolist', 'ID', 'all');
+                $this->mrTemplate->addVar('combolist', 'NAME', "-- " . ucwords(GtfwLangText('all')) . " --");
+                $this->mrTemplate->parseTemplate('combolist', 'a');
+            } elseif ($comboData['first'] === 'select') {
+                $this->mrTemplate->addVar('combolist', 'ID', '');
+                $this->mrTemplate->addVar('combolist', 'NAME', "-- " . ucwords(GtfwLangText('select')) . " --");
+                $this->mrTemplate->parseTemplate('combolist', 'a');
+            }
+        }
+
+        if (!empty($list)) {
+            foreach ($list as $val) {
+                if (!empty($comboData['dataId']) AND $val['id'] == $comboData['dataId']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                if (!empty($type)) {
+                    $val['id'] = $val['id'] . '|' . $val['buy'];
+                }
+                $this->mrTemplate->addVars('combolist', $val);
+                $this->mrTemplate->parseTemplate('combolist', 'a');
+            }
+        }
+    }
+
+}
+
+?>

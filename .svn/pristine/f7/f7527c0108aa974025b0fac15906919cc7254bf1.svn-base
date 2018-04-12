@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateTempatTinggal extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessTempatTinggal', 'ref.tempat.tinggal');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.tempat.tinggal', 'TempatTinggal', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupTempatTinggal);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('ref.tempat.tinggal', 'updateTempatTinggal', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

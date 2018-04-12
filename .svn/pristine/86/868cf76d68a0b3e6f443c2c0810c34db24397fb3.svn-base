@@ -1,0 +1,27 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">Kode Univ</th>
+        <td>{KODE_UNIV}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Name</th>
+        <td>{NAME}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Jenjangpendidikan Id</th>
+        <td>{JENJANGPENDIDIKAN_ID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Is Eksakta</th>
+        <td>{IS_EKSAKTA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Jurusan Id</th>
+        <td>{JURUSAN_ID}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

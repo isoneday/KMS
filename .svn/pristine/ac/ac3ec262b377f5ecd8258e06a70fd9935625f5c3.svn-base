@@ -1,0 +1,53 @@
+<?php
+
+$sql["count_refbank"] = "
+SELECT 
+    COUNT(bank_id) AS total
+FROM ref_bank
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_refbank"] = "
+SELECT 
+    a.bank_id AS `bank_id`,
+    a.bank_name AS `bank_name`
+FROM ref_bank a
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refbank"] = "
+SELECT 
+    a.bank_id AS `bank_id`,
+    a.bank_name AS `bank_name`
+FROM ref_bank a
+WHERE bank_id = %d
+";
+$sql["insert_refbank"] = "
+INSERT INTO ref_bank
+(
+    bank_name
+) VALUES (
+    %s
+)
+";
+$sql["update_refbank"] = "
+UPDATE ref_bank
+SET 
+    bank_name = %s
+WHERE bank_id = %d
+";
+$sql["delete_refbank"] = "
+DELETE FROM ref_bank
+WHERE bank_id_id = %d
+";
+$sql["list_refbank"] = "
+SELECT
+    bank_id AS `id`,
+    bank_name AS `name`
+FROM
+    ref_bank
+ORDER BY bank_name
+";

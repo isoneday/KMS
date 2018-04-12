@@ -1,0 +1,10 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule name="breadcrumb" module="comp.breadcrump" submodule="breadcrump" action="view" type="html" params="" / -->
+
+<ol>
+<!-- patTemplate:tmpl name="links" -->
+    <li><a href="{URL}" class="{CLASS}">{NAME}</a></li>
+<!-- /patTemplate:tmpl -->
+</ol>
+
+<!-- /patTemplate:tmpl -->

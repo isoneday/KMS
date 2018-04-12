@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateInterviewCategory extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessInterviewCategory', 'setup.interview.category');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('setup.interview.category', 'InterviewCategory', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupInterviewCategory);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('setup.interview.category', 'updateInterviewCategory', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

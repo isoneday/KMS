@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+		
+    RewriteEngine on
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+<IfModule mod_php5.c>
+  php_value short_open_tag 1
+</IfModule>
+	
+	

@@ -1,0 +1,190 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<script>
+    $("#tabs-personaldata").tabs();
+    var tabs = ["bank","nilai"];
+    var factive = '{TAB_ACTIVE}';
+    if (factive != "") {
+        var tab_active = tabs.indexOf(factive) + 1;
+        $("#tabs-personaldata > ul > li:nth-child("+tab_active+") a").trigger('click');
+        console.log(tab_active);
+    }
+	
+	var popupUnit;
+    $('.popup_unit').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupUnit = showGtPopup(url, title, 640, null, 320, true);
+        return false;
+    });
+	
+	$(function(){
+        $('.confirm_delete').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            //gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="company" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="company" / -->',function(status){
+			gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' ?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' Data Nilai ',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<div class="content-box-form">
+    <div id="tabs-personaldata">
+        <ul>
+            <li><a href="#tabs-personaldata-1">Data Bank</a></li>
+            <li><a href="#tabs-personaldata-2">Data Nilai</a></li>
+        </ul>
+        <div id="tabs-personaldata-1">
+            <!-- patTemplate:tmpl name="bank" -->
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            <h3 style="display: inline-block;">Data Bank &nbsp;</h3>
+							<!-- patTemplate:tmpl name="dataBTN" type="condition" conditionvar="IS_EMPTY" -->
+							<!-- patTemplate:sub condition="YES" -->
+                            <a href="{BTN_INPUT}" title="Input Data" class="popup_unit btn-add">Input Data</a>
+							<!-- /patTemplate:sub -->
+							<!-- patTemplate:sub condition="NO" -->
+							<a href="{BTN_INPUT}" title="Update Data" class="popup_unit btn-add">Update Data</a>
+							<!-- /patTemplate:sub -->
+							<!-- /patTemplate:tmpl -->
+
+						</th>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Nama Bank</th>
+                        <td>{NAMABANK}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">No Rekening</th>
+                        <td>{NOREKENING}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Buku Tabungan</th>
+						<!-- patTemplate:tmpl name="dataBuku" type="condition" conditionvar="IS_EMPTY" -->
+						<!-- patTemplate:sub condition="YES" -->
+						<td>Data Not Found</td>
+						<!-- /patTemplate:sub -->
+						<!-- patTemplate:sub condition="NO" -->
+                        <td><a href="{FILE_BUKU}" class="" title="">Download disini</a></td>
+						<!-- /patTemplate:sub -->
+						<!-- /patTemplate:tmpl -->
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Perjanjian Kerja Sama</th>
+                        <!-- patTemplate:tmpl name="dataPks" type="condition" conditionvar="IS_EMPTY" -->
+						<!-- patTemplate:sub condition="YES" -->
+						<td>Data Not Found</td>
+						<!-- /patTemplate:sub -->
+						<!-- patTemplate:sub condition="NO" -->
+                        <td><a href="{FILE_PKS}" class="" title="">Download disini</a></td>
+						<!-- /patTemplate:sub -->
+						<!-- /patTemplate:tmpl -->
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-2">
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="6">
+                            <h3 style="display: inline-block;">Data Transkrip &nbsp;</h3>
+							<!-- patTemplate:tmpl name="inputTranskrip" type="condition" conditionvar="IS_EMPTY" -->
+							<!-- patTemplate:sub condition="YES" -->
+							<!-- /patTemplate:sub -->
+							<!-- patTemplate:sub condition="NO" -->
+							<a href="{BTN_INPUT}" title="Input Data" class="popup_unit btn-add">Input Data</a>
+							<!-- /patTemplate:sub -->
+							<!-- /patTemplate:tmpl -->
+						</th>
+                    </tr>
+					<!-- patTemplate:tmpl name="dataTranskrip" type="condition" conditionvar="IS_EMPTY" -->
+					<!-- patTemplate:sub condition="YES" -->
+					<tr>
+						<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+					</tr>
+					<!-- /patTemplate:sub -->
+					<!-- patTemplate:sub condition="NO" -->
+                    <tr>
+                        <th>No</th>
+						<th>ACTION</th>
+                        <th>File Transkrip</th>
+                        <th>Tanggal Upload</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="transkrip" -->
+                    <tr>
+                        <td>{PAT_ROW_VAR}</td>
+                        <td class="links">
+							<a class="confirm_delete btn-delete-icon" href="{URL_TRANSKRIP}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{FILE_ORIGIN}" ></a>						       
+						</td>
+                        <td><a href="{FILE_TRANSKRIP}" class="" title="">Download disini</a></td>
+                        <td>{TANGGAL_DAFTAR}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+					<!-- /patTemplate:sub -->
+					<!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+			
+			<table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="6">
+                            <h3 style="display: inline-block;">Data KRS &nbsp;</h3>
+							<!-- patTemplate:tmpl name="inputKrs" type="condition" conditionvar="IS_EMPTY" -->
+							<!-- patTemplate:sub condition="YES" -->
+							<!-- /patTemplate:sub -->
+							<!-- patTemplate:sub condition="NO" -->
+							<a href="{BTN_INPUT}" title="Input Data" class="popup_unit btn-add">Input Data</a>
+							<!-- /patTemplate:sub -->
+							<!-- /patTemplate:tmpl -->
+                        </th>
+                    </tr>
+					<!-- patTemplate:tmpl name="dataKrs" type="condition" conditionvar="IS_EMPTY" -->
+					<!-- patTemplate:sub condition="YES" -->
+					<tr>
+						<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+					</tr>
+					<!-- /patTemplate:sub -->
+					<!-- patTemplate:sub condition="NO" -->
+                    <tr>
+                        <th>No</th>
+						<th>ACTION</th>
+                        <th>File KRS</th>
+                        <th>Semester</th>
+						<th>Tanggal Upload</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="krs" -->
+                    <tr>
+                        <td>{PAT_ROW_VAR}</td>
+                        <td class="links">
+							<a class="confirm_delete btn-delete-icon" href="{URL_KRS}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{FILE_ORIGIN}" ></a>
+						           
+						</td>
+                        <td><a href="{FILE_KRS}" class="" title="">Download disini</a></td>
+                        <td>{SEMESTER}</td>
+						<td>{TANGGAL_DAFTAR}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+					<!-- /patTemplate:sub -->
+					<!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+        </div>
+	</div>        
+</div>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,58 @@
+<?php
+
+$sql["count_jenisaktifitas"] = "
+SELECT 
+    COUNT(jenisaktifitas_id) AS total
+FROM ref_jenis_aktifitas
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_jenisaktifitas"] = "
+SELECT 
+    a.jenisaktifitas_id AS `id`,
+    a.jenisaktifitas_name AS `name`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_jenis_aktifitas a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_jenisaktifitas"] = "
+SELECT 
+    a.jenisaktifitas_id AS `id`,
+    a.jenisaktifitas_name AS `name`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_jenis_aktifitas a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE jenisaktifitas_id = %d
+";
+$sql["insert_jenisaktifitas"] = "
+INSERT INTO ref_jenis_aktifitas
+(
+    jenisaktifitas_name
+) VALUES (
+    %s
+)
+";
+$sql["update_jenisaktifitas"] = "
+UPDATE ref_jenis_aktifitas
+SET 
+    jenisaktifitas_name = %s
+WHERE jenisaktifitas_id = %d
+";
+$sql["delete_jenisaktifitas"] = "
+DELETE FROM ref_jenis_aktifitas
+WHERE jenisaktifitas_id = %d
+";
+$sql["list_jenisaktifitas"] = "
+SELECT
+    jenisaktifitas_id AS `id`,
+    jenisaktifitas_name AS `name`
+FROM
+    ref_jenis_aktifitas
+ORDER BY jenisaktifitas_name
+";

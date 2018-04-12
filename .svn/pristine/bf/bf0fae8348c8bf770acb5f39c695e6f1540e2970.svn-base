@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class ScholarshipsData extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/scholarships.data/business/mysqlt/scholarshipsdata.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countScholarshipsData($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(beasiswa_name) LIKE('%$name%')";
+        }
+        $query = $this->mSqlQueries['count_scholarshipsdata'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getScholarshipsData($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(beasiswa_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_scholarshipsdata'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailScholarshipsData($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_scholarshipsdata'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertScholarshipsData($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_scholarshipsdata'], $params);
+    }
+    
+    public function updateScholarshipsData($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_scholarshipsdata'], $params);
+    }
+    
+    public function deleteScholarshipsData($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_scholarshipsdata'], array($id));
+    }
+    
+    public function listScholarshipsData()
+    {
+        return $this->Open($this->mSqlQueries['list_scholarshipsdata'], array());
+    }
+}
+
+// End of file ScholarshipsData.class.php

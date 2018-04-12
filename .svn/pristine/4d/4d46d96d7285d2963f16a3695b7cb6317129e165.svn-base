@@ -1,0 +1,125 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<script>
+	var popupUnit;
+    $('.popup_unit').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupUnit = showGtPopup(url, title, 640, null, 320, true);
+        return false;
+    });
+	
+	$(function(){
+        $('.confirm_delete').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            //gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="company" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="company" / -->',function(status){
+			gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' ?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' Data Nilai ',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<div class="content-box">
+
+    <table>
+        <!-- patTemplate:tmpl name="foto" -->
+        <tr>
+            <th style="width: 150px;" rowspan="6"><img width="150px" height="120px" src={FILEPATH}{FILE}></th>
+        </tr>
+		<!-- /patTemplate:tmpl -->
+		<!-- patTemplate:tmpl name="biodataHead" -->
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="nama" / --></th>
+            <td>{NAMA}</td>
+			
+			<th style="width: 200px;">Biaya Hidup</th>
+            <td>{HIDUP}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+            <td>{NIM}</td>
+			
+			<th style="width: 200px;">Biaya Perkuliahan</th>
+            <td>{PERKULIAHAN}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="universitas" / --></th>
+            <td>{UNIVERSITAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="fakultas" / --></th>
+            <td>{FAKULTAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="prodiname" / --></th>
+            <td>{PRODI_NAME}</td>
+        </tr>
+        <!-- /patTemplate:tmpl -->
+    </table>
+</div>	
+
+   <hr>
+<div class="content-box">   
+	<a class="popup_unit btn-respon" href="{URL_LOLOS}" title="Approval Pembayaran">  Approve</a>
+	
+	<a class="popup_unit btn-nonrespon" href="{URL_LIST}" title="List Pencairan">  List</a>
+	
+   <form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+   <input type="hidden" name="aplikanwawancara_aplikan_id" value="{ID}">
+   <input type="hidden" name="aplikanwawancara_beasiswa_id" value="{ID_BEASISWA}">
+	<table class="table-details">
+		<tbody>
+			<tr>
+				<th colspan="6">
+					<h3 style="display: inline-block;">Data KRS &nbsp;</h3>
+				</th>
+			</tr>
+			<!-- patTemplate:tmpl name="dataKrs" type="condition" conditionvar="IS_EMPTY" -->
+			<!-- patTemplate:sub condition="YES" -->
+			<tr>
+				<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+			</tr>
+			<!-- /patTemplate:sub -->
+			<!-- patTemplate:sub condition="NO" -->
+			<tr>
+				<th>No</th>
+				<th>ACTION</th>
+				<th>File KRS</th>
+				<th>Semester</th>
+				<th>Tanggal Upload</th>
+			</tr>
+			<!-- patTemplate:tmpl name="krs" -->
+			<tr>
+				<td>{PAT_ROW_VAR}</td>
+				<td class="links">
+					<a class="confirm_delete btn-delete-icon" href="{URL_KRS}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{FILE_ORIGIN}" ></a>
+						   
+				</td>
+				<td><a href="{FILE_KRS}" class="" title="">Download disini</a></td>
+				<td>{SEMESTER}</td>
+				<td>{TANGGAL_DAFTAR}</td>
+			</tr>
+			<!-- /patTemplate:tmpl -->
+			<!-- /patTemplate:sub -->
+			<!-- /patTemplate:tmpl -->
+		</tbody>
+	</table>
+	
+   </form>
+
+</div>
+<!-- /patTemplate:tmpl -->

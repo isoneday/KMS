@@ -1,0 +1,42 @@
+<!-- patTemplate:tmpl name="content" -->
+<script language="javascript">
+    $(document).ready(function() {
+        /*
+        $('.side_menu').bind('hover',
+            function() {
+                var submenu_class = $(this).parent().find('.submenu');
+                if (submenu_class.size() > 0) {
+                    var offset = submenu_class.offset();
+                    var height = 0;
+                    var li_height = 45;
+                    var id_submenu = submenu_class.attr('id');
+                    
+                     $('.'+id_submenu).each(
+                        function() {
+                            height += li_height; 
+                        }
+                     );
+                            
+                    // move position if top plus height over the pixel
+                    var windows_height = screen.height;   
+                      
+                    
+                    if (offset.top + height > body_height - 43) {
+                        // overide the offset
+                        var dif_top =  offset.top + height - body_height + 43;
+                        //dif_top = offset.top - dif_top;
+                        submenu_class.css('top','-'+dif_top+'px');
+                        submenu_class.css('z-index','99999');
+                        
+                    }
+                }
+                
+                
+            }
+        );
+        */
+        
+    });
+</script>
+{MENU}
+<!-- /patTemplate:tmpl -->

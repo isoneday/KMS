@@ -1,0 +1,11 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputJenisAktifitas');
+   
+class ViewUpdateJenisAktifitas extends ViewInputJenisAktifitas
+{
+    
+}
+?>

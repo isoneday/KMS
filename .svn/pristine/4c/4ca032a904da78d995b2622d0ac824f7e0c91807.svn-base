@@ -1,0 +1,74 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefUkt extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.ukt/business/mysqlt/refukt.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefUkt()
+    {
+
+        $query = $this->mSqlQueries['count_refukt'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefUkt($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($uktnama)) {
+            $str .= " AND LOWER(uktNama) LIKE('%$uktnama%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refukt'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefUkt($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refukt'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefUkt($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refukt'], $params);
+    }
+    
+    public function updateRefUkt($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refukt'], $params);
+    }
+    
+    public function deleteRefUkt($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refukt'], array($id));
+    }
+    
+    public function listRefUkt()
+    {
+        return $this->Open($this->mSqlQueries['list_refukt'], array());
+    }
+}
+
+// End of file RefUkt.class.php

@@ -1,0 +1,29 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateStatus extends JsonResponse
+{	
+	function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessApplicantPencairan', 'applicant.pencairan');
+		
+        $post = $_POST->AsArray();
+        $id = $_GET['id']->Integer()->Raw();
+		$nim = $_GET['nim']->Integer()->Raw();
+		$id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+		
+		$result = $proses->updateStatus($id, $nim, $id_beasiswa);
+
+		if ($result) {
+            $url = GtfwDispt()->GetUrl('applicant.pencairan', 'applicantPencairan', 'view', 'html').'&id='. $id .'&nim='. $nim .'&id_beasiswa='. $id_beasiswa .'&ascomponent=1';
+            return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popupUnit);");
+        } else {
+            $url = GtfwDispt()->GetUrl('applicant.pencairan', 'applicantPencairan', 'view', 'html').'&id='. $id .'&nim='. $nim .'&id_beasiswa='. $id_beasiswa .'&ascomponent=1';
+            return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popupUnit);");
+        }       
+    }
+}
+
+?>

@@ -1,0 +1,39 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+    <tbody>
+
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="country"/ --></th>
+            <td>{COUNTRY}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="code"/ --></th>
+            <td>{CODE}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="name"/ --></th>
+            <td>{NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="symbol"/ --></th>
+            <td>{SYMBOL}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="status"/ --></th>
+            <td>{STATUS}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="desc"/ --></th>
+            <td>{DESC}</td>
+        </tr>
+        <tr>
+            <th style="width:40%"><!-- patTemplate:gtfwgetlang key="submitted"/ --></th>
+            <td>{LAST_INSERT}</td>
+        </tr>
+        <tr>
+            <th style="width:40%"><!-- patTemplate:gtfwgetlang key="modified"/ --></th>
+            <td>{LAST_UPDATE}</td>
+        </tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

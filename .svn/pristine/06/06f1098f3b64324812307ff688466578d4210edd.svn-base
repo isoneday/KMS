@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class MasterType extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.master.type/business/mysqlt/mastertype.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countType($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($name)) {
+            $str .= " AND LOWER(msttype_name) LIKE('%$name%')";
+        }
+        $query = $this->mSqlQueries['count_type'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getType($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($name)) {
+            $str .= " AND LOWER(msttype_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+        $query = $this->mSqlQueries['get_type'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+
+    public function getDetailType($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_type'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function insertType($params) {
+        return $this->Execute($this->mSqlQueries['insert_type'], $params);
+    }
+
+    public function updateType($params) {
+        return $this->Execute($this->mSqlQueries['update_type'], $params);
+    }
+
+    public function deleteType($id) {
+        return $this->Execute($this->mSqlQueries['delete_type'], array($id));
+    }
+
+    public function listType() {
+        return $this->Open($this->mSqlQueries['list_type'], array());
+    }
+
+}
+
+// End of file Type.class.php

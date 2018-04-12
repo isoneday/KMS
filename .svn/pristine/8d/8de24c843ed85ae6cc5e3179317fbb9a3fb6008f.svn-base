@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoDelete{CLASS} extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('Process{CLASS}', '{MODULE}');
+        
+        $id = $_GET['id']->Integer()->Raw();                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('{MODULE}', '{CLASS}', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

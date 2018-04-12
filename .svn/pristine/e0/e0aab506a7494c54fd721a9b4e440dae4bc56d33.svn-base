@@ -1,0 +1,156 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="data" -->
+<form method="POST" action="{URL_ACTION}" name="frmInput" class="" id="frmInput" onSubmit="return cekform(this);" enctype="multipart/form-data">
+	<div class="TabbedPanels" id="tp1" style="width:650px;">
+	  <ul class="TabbedPanelsTabGroup">
+		<li class="TabbedPanelsTab TabbedPanelsTabSelected">IDENTITAS</li>
+		<li class="TabbedPanelsTab">PENILAIAN WAWANCARA</li>
+	  </ul>
+	  
+	  <div class="TabbedPanelsContentGroup">
+	  
+		<div style="display: block;" class="TabbedPanelsContent TabbedPanelsContentVisible">
+			<input type="hidden" name="temp" id="temp" >
+			   <table class="table-details" width="100%">
+				  <tr class="subhead">
+					 <th style="font-size:15px;" colspan="2">Data Pribadi</th>
+				  </tr>
+
+				  <tr>
+					 <th width="150">Jurusan</th>
+					 <td>{APLIKAN_JURUSAN_ID}</td>
+				  </tr>
+				  <tr>
+					 <th>Prodi</th>
+					 <td>{APLIKAN_PRODI_ID}</td>
+				  </tr>
+				  <tr>
+					 <th>Jenjang Pendidikan</th>
+					 <td>{APLIKAN_JENJANGPENDIDIKAN_ID}</td>
+				  </tr>
+				  <tr>
+					 <th>Angkatan</th>
+					 <td>{APLIKAN_ANGKATAN}</td>
+				  </tr>
+				  <tr>
+					 <th>NPM</th>
+					 <td>{APLIKAN_NIM}</td>
+				  </tr>
+				  <tr>
+					 <th>Jalur Masuk</th>
+					 <td> N/A </td>
+				  </tr>
+				  <tr>
+					 <th>Nama</th>
+					 <td>{APLIKAN_NAMA}</td>
+				  </tr>
+				  <tr>
+					 <th>Tempat Lahir</th>
+					 <td>{APLIKAN_TEMPAT_LAHIR}</td>
+				  </tr>
+				  <tr>
+					 <th>Tgl Lahir</th>
+					 <td>{APLIKAN_TANGGAL_LAHIR}</td>
+				  </tr>
+				  <tr>
+					 <th>Jenis Kelamin</th>
+					 <td>{APLIKAN_JENIS_KELAMIN}</td>
+				  </tr>
+				  <tr>
+					 <th>Jumlah Saudara</th>
+					 <td>N/A</td>
+				  </tr>
+				  <tr>
+					 <th>Nama Bank</th>
+					 <td>N/A</td>
+				  </tr>
+				  <tr>
+					 <th>No. Rekening</th>
+					 <td>N/A</td>
+				  </tr>
+				  <tr>
+					 <th>No. Telp</th>
+					 <td>{APLIKAN_TELEPON}</td>
+				  </tr>
+				  <tr>
+					 <th>Alamat Asal</th>
+					 <td>{APLIKAN_ALAMAT}</td>
+				  </tr>
+				  <tr>
+					 <th>Alamat Tinggal</th>
+					 <td>{APLIKAN_TEMPATTINGGAL_ID}</td>
+				  </tr>
+
+				  <tr class="buttons_galihsam">
+					<td>&nbsp;</td>
+					<td style="text-align:right;float: right;">
+						<input name="lanjut_wali" value="Selanjutnya &raquo;&raquo;&raquo;" class="" type="button" onclick="javascript:tp1.showPanel(1);" />
+					</td>
+				  </tr>
+			   </table>			
+		
+		</div>
+	  
+		<div style="" class="TabbedPanelsContent">
+			<input type="hidden" name="pegId" value="{ID}"/>
+			<input type="hidden" name="dataId" value="{DATA_ID_UPDATE}"/>
+			   <table class="table-edit" width="100%">
+				  	  
+				  <!-- patTemplate:tmpl name="kategori_wawancara" -->
+				  {KATEGORIWAWANCARA_NAME}
+				  <tr>
+					 <th width="60%">{KATEGORIWAWANCARA_BOBOT}</th>
+					 <td >
+					 	{KATEGORIWAWANCARA_ID}
+					 </td>
+				  </tr>
+				  <!-- /patTemplate:tmpl -->
+				  
+				  
+				  <tr class="subhead" style="display:none">
+					 <th colspan="2" style="font-size:15px;">Hasil</th>
+				  </tr>
+				  
+				  <tr style="display:none">
+					 <th>Status</th>
+					 <td><!-- patTemplate:gtfwrendermodule module="combobox" submodule="combobox" action="view" name="status"  / --></td>
+				  </tr>
+				  
+				  <tr style="display:none">
+					 <th>Keterangan</th>
+					 <td><textarea name="ket" cols="30"  rows="5" class="plain">{KET_SEKARANG}</textarea></td>
+				  </tr>
+				  <tr class="buttons">
+					
+					<td colspan="2" style="text-align: center">
+						<input type="hidden" name="idBeaPost" value="{ID_BEASISWA}"/>
+						<input type="hidden" name="niuPost" value="{NIU}"/>
+						<input style="float:none" name="btnsimpan" value=" Ubah " class="buttonSubmit" type="submit">
+						<input style="float:none" name="btnbalik" value=" Batal " class="buttonSubmit" type="button" onclick="window.location.href = '{URL_BALIK}'">
+					</td>
+				  </tr>
+
+				  <!--
+				  <tr class="buttons_galihsam">
+					<td>
+						<input name="back_beasiswa" value="&laquo;&laquo;&laquo; Sebelumnya" class="" type="button" onclick="javascript:tp1.showPanel(4);" />
+					</td>
+					<td style="text-align:right;float: right;"></td>
+				  </tr>-->
+			   </table>
+		</div>
+	  <!------------------------------------------------------- Form PENILAIAN WAWANCARA End ------------------------------------------------------->	
+
+
+	  </div>
+	</div>
+	</form>	
+
+<!-- /patTemplate:tmpl -->
+<!-- /patTemplate:tmpl -->

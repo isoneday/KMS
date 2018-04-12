@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateSyaratDokumen extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessSyaratDokumen', 'ref.syarat.dokumen');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.syarat.dokumen', 'SyaratDokumen', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupSyaratDokumen);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('ref.syarat.dokumen', 'updateSyaratDokumen', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

@@ -1,0 +1,293 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<div class="dataquest">
+
+    <table>
+    <!-- patTemplate:tmpl name="foto" -->
+        <tr>
+            <th style="width: 150px;" rowspan="6"><img width="150px" height="120px" src={FILEPATH}{FILE}></th>
+        </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- patTemplate:tmpl name="biodatahead" -->
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+            <td>{NAMA}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+            <td>{NIM}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="university" / --></th>
+            <td>{UNIVERSITAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="fakultas" / --></th>
+            <td>{FAKULTAS_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="prodi" / --></th>
+            <td>{PRODI_NAME}</td>
+        </tr>
+        <!-- /patTemplate:tmpl -->
+    </table>
+
+</div>
+<script type="text/javascript">
+    $("#tabs-identity").tabs();
+</script>
+
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <input type="hidden" name="id" value="{ID}" />
+        <input type="hidden" name="appl_id" value="{APPLID}"  />
+        <input type="hidden" name="div_id" value="{DIVID}"  />
+        <div id="tabs-identity">
+            <ul>
+                <li><a href="#tabs-identity-1">Biodata</a></li>
+                <li><a href="#tabs-identity-2">Orang Tua / Wali</a></li>
+                <li><a href="#tabs-identity-3">Saudara</a></li>
+                <li><a href="#tabs-identity-4">Aktifitas</a></li>
+                <li><a href="#tabs-identity-5">Data Prestasi Non Akademik</a></li>
+                <li><a href="#tabs-identity-6">Data Akademik</a></li>
+                <li><a href="#tabs-identity-7">Beasiswa</a></li>
+            </ul>
+            <div id="tabs-identity-1">
+            <!-- patTemplate:tmpl name="biodata" -->
+                <table class="table-edit-popup">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>BIODATA</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Nim</th>
+                        <td>{NIM}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Angkatan</th>
+                        <td>{ANGKATAN}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Universitas</th>
+                        <td>{UNIVERSITAS_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Fakultas</th>
+                        <td>{FAKULTAS_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jurusan</th>
+                        <td>{JURUSAN_NAME}</td>
+                    </tr>
+                     <tr>
+                        <th style="width:200px">Program Pendidikan</th>
+                        <td>{PRODI_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jenjang Pendidikan</th>
+                        <td>{JENJANGPENDIDIKAN_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Nama</th>
+                        <td>{NAMA}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Email</th>
+                        <td>{EMAIL}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jenis Kelamin</th>
+                        <td>{JENIS_KELAMIN}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tempat Lahir</th>
+                        <td>{TEMPAT_LAHIR}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tanggal Lahir</th>
+                        <td>{TANGGALLAHIR}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Agama</th>
+                        <td>{AGAMA_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">No Ktp</th>
+                        <td>{NO_KTP}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Telepon</th>
+                        <td>{TELEPON}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Alamat</th>
+                        <td>{ALAMAT}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tempat Tinggal</th>
+                        <td>{TEMPATTINGGAL_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Pembiayaan Kuliah</th>
+                        <td>{PEMBIAYAANKULIAH_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Sumber Info</th>
+                        <td>{SUMBERINFO_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tanggal Registrasi</th>
+                        <td>{TANGGALREGISTRASI}</td>
+                    </tr>
+                </table>
+                <!-- /patTemplate:tmpl -->
+            </div>
+
+            <div id="tabs-identity-2">  
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>DATA ORANG TUA/WALI</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Nama dan Keterangan</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Pendidikan Terakhir</th>
+                        <th>Pekerjaan</th>
+                        <th>Penghasilan</th>
+                        <th>Status Wali</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataorangtuawali" -->
+                    <tr>
+                        <td><b>{ORTU_NAMA}</b> - {ORTU_JABATAN}</td>
+                        <td>{ORTUTGLLHR}</td>
+                        <td>{ORTU_PENDIDIKAN_NAMA}</td>
+                        <td>{ORTU_PEKERJAAN_NAMA}</td>
+                        <td>{ORTU_PENGHASILAN}</td>
+                        <td>{ORTU_STATUS}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </table>
+            </div>
+            <div id="tabs-identity-3"> 
+                <!-- patTemplate:tmpl name="saudara" --> 
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>DATA SAUDARA</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jumlah Saudara</th>
+                        <td>{SAUDARA_JUMLAH}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jumlah Saudara Yang Ditanggung Orang Tua</th>
+                        <td>{SAUDARA_JUMLAH_TANGGUNGAN}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jumlah Saudara Yang Sudah Bekerja</th>
+                        <td>{SAUDARA_JUMLAH_BEKERJA}</td>
+                    </tr>
+                </table>
+                <!-- /patTemplate:tmpl -->
+            </div>
+            <div id="tabs-identity-4">  
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="4" ><strong>Data Aktifitas Organisasi</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Nama Organisasi</th>
+                        <th>Periode/Tahun</th>
+                        <th>Jenis Aktifitas</th>
+                        <th>Lingkup</th>
+                        <th>Jabatan</th>
+                        <th>Keterangan</th>
+                        <th>File</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataorganisasi" -->
+                    <tr>
+                        <td>{ORG_NAMA}</td>
+                        <td>{ORG_PERIODE}</td>
+                        <td>{ORG_JENISAKTIFITAS_NAMA}</td>
+                        <td>{ORG_LINGKUP_NAMA}</td>
+                        <td>{ORG_JABATAN_NAMA}</td>
+                        <td>{ORG_KETERANGAN}</td>
+                        <td><a href="{FILE_ORGANISASI}" class="" title="">download file</a></td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </table>
+            </div>
+            <div id="tabs-identity-5">  
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Data Prestasi Non Akademik</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Nama Kegiatan</th>
+                        <th>Periode/Tahun</th>
+                        <th>Lingkup</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataprestasinonakademik" -->
+                    <tr>
+                        <td>{PRESTASI_NAMA}</td>
+                        <td>{PRESTASI_PERIODE}</td>
+                        <td>{PRESTASI_LINGKUP_NAMA}</td>
+                        <td>{PRESTASI_KETERANGAN}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+
+                </table>
+            </div>
+            <div id="tabs-identity-6">  
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>DATA AKADEMIK</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Semester</th>
+                        <th>Periode/Tahun</th>
+                        <th>IPS</th>
+                        <th>IPK</th>
+                        <th>Status</th>
+                        <th>file</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataakademik" -->
+                    <tr>
+                        <td>{AKADEMIK_SEMESTER_NAMA}</td>
+                        <td>{AKADEMIK_PERIODE}</td>
+                        <td>{AKADEMIK_IPS}</td>
+                        <td>{AKADEMIK_IPK}</td>
+                        <td>{AKADEMIK_IS_CUTI}</td>
+                        <td><a href="{FILE_AKADEMIK}" class="" title="">download file</a></td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </table>
+            </div>
+            <div id="tabs-identity-7">  
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>BEASISWA</strong></th>
+                    </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama Beasiswa</th>
+                        <th>Tanggal Daftar</th>
+                        <th>Status</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="beasiswa" -->
+                    <tr>
+                        <td>{PAT_ROW_VAR}</td>
+                        <td>{BEASISWA_NAMA}</td>
+                        <td>{TANGGALDAFTAR}</td>
+                        <td>{BEASISWA_STATUS}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- /patTemplate:tmpl -->

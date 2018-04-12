@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailSalutation extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_salutation.html');
+    }
+
+    function ProcessRequest() {
+        $ObjSalutation = GtfwDispt()->load->business('Salutation', 'ref.salutation');
+
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());
+
+        $detail = $ObjSalutation->getDetailSalutation($id);
+
+        return compact('detail');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+
+        if (!empty($detail)) {
+            $detail['status'] == 1 ? $detail['status'] = GtfwLangText('active') : $detail['status'] = GtfwLangText('not_active');
+            $this->mrTemplate->addVars('content', $detail);
+        }
+    }
+
+}
+
+?>

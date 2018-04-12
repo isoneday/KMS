@@ -1,0 +1,198 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<!-- patTemplate:tmpl name="search" -->
+<div>
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+         
+           <!-- patTemplate:gtfwrendermodule module="mod.kmsdata" submodule="comboModKmsdata" 
+           action="view" name="idmasdok" id="idmasdok" key="idmasdok" / -->          
+              &nbsp;
+                    <button class="btn">
+          <!-- patTemplate:gtfwgetlang key="search"/ -->
+          </button>
+    
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+padding="100px 0";
+</script>
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+          </button>
+         
+    
+    </div>
+    <div class="id_produk" style="display:none;">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+    </div>
+</div>
+<table class="table-common">
+<thead>
+    <tr>
+      <th>name product</th>
+      <th>tittle</th>
+        
+        <th class="id_pembicara" style="display:none;">judul dokumentasi</th>
+        <th class="id_meeting" style="display:none;">jenis dokumentasi</th>
+        <th class="id_pembicara" style="display:none;">name product</th>
+        <th>type product</th>
+        <th class="id_pembicara" style="display:none;">divisi product</th>
+      
+        <th class="id_meeting" style="display:none;">name product</th>
+        <th class="id_meeting" style="display:none;">type product</th>
+       
+        <th class="id_produk" style="display:none;">name product</th>
+        <th class="id_produk" style="display:none;">type product</th>
+        <th class="id_produk" style="display:none;">divisi product</th>
+        <th class="id_produk" style="display:none;">upload by</th>
+        <th class="id_produk" style="display:none;">tanggal upload</th>
+        <th class="id_pembicara" style="display:none;">tanggal upload</th>
+
+
+        <th  class="id_pembicara" style="display:none;">attachment</th>
+
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="3" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td>{NAMA_PRODUK}</td>
+        <td>{KMSDATA_KEYWORD}</td>
+        
+        <td class="id_pembicara" style="display:none;">{KMSDATA_KEYWORD}</td>
+        <td class="id_meeting" style="display:none;">{NAMA_DOKUMENTASI}</td>
+      <td class="id_meeting" style="display:none;">{NAMA_PRODUK}</td>
+        <td>{JENIS_PRODUK}</td>
+       
+        <td class="id_pembicara" style="display:none;">{NAMA_PRODUK}</td>
+        <td class="id_pembicara" style="display:none;">{JENIS_PRODUK}</td>
+        <td class="id_pembicara" style="display:none;">{BIDANG_PRODUK}</td>
+     
+        <td class="id_produk" style="display:none;">{NAMA_PRODUK}</td>
+        <td class="id_produk" style="display:none;">{JENIS_PRODUK}</td>
+        <td class="id_produk" style="display:none;">{BIDANG_PRODUK}</td>
+        <td class="id_produk" style="display:none;">{UPLOADBY}</td>
+        <td class="id_produk" style="display:none;">{TIME}</td>
+        
+
+        <td class="id_pembicara" style="display:none;">{TIME}</td>
+   
+    <td  class="id_pembicara" style="display:none;"><a href="{FILEPATH}{FILE_DOWNLOAD}"  target="_blank"  class="" title=""><b>Open File</b></a></td>
+
+</p>
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="id_produk"style="display:none;">
+<div class="pageBar">
+    <div class="toolbar" >
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modlistsearching" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modlistsearching" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupModListsearching;
+    $('.popup_modlistsearching').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupModListsearching = showGtPopup(url, title);
+        return false;
+    });
+//   function $('#idmasdok').on('change', {
+  //     var c = $("#idmasdok").val();
+  //     //alert(c);
+  //     if(c == 3){
+  //        $('.id_pembicara').show();
+  //     } else {
+  //        $('.id_pembicara').hide();
+  //     }
+  //     if(c == 2){
+  //        $('.id_meeting').show();
+  //     } else {
+  //        $('.id_meeting').hide();
+  //     }
+  //     if(c == 1){
+  //        $('.id_produk').show();
+  //     } else {
+  //        $('.id_produk').hide();
+  //     }
+     
+  // }
+
+  $('#idmasdok').on('change', function(){
+      var c = $("#idmasdok").val();
+      //alert(c);
+      if(c == 3){
+         $('.id_pembicara').show();
+      } else {
+         $('.id_pembicara').hide();
+      }
+      if(c == 2){
+         $('.id_meeting').show();
+      } else {
+         $('.id_meeting').hide();
+      }
+      if(c == 1){
+         $('.id_produk').show();
+      } else {
+         $('.id_produk').hide();
+      }
+     
+    $('#form_search').submit();
+  });
+                               
+</script>
+<!-- /patTemplate:tmpl -->

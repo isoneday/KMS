@@ -1,0 +1,154 @@
+<?php
+
+/**
+ * @author Prima Noor
+ */
+class ProcessCity {
+
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct() {
+        $this->Obj = GtfwDispt()->load->business('City');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $Val->set_rules('country_id', GtfwLangText('country'), 'required');
+        $Val->set_rules('state', GtfwLangText('state'), 'required');
+        $Val->set_rules('category', GtfwLangText('category'), 'required');
+        $Val->set_rules('code', GtfwLangText('code'), 'required|callback_external_callbacks[ProcessCity,ref.city,isCodeAvailable]');
+        $Val->set_rules('name', GtfwLangText('name'), 'required|callback_external_callbacks[ProcessCity,ref.city,isNameAvailable]');
+
+        $result = $Val->run();
+        if ($result === true) {
+            if (empty($_SESSION['ref.city']['data_id'])) {
+                $result = TRUE;
+                $this->Obj->StartTrans();
+                $params = array(
+                    $post['state'],
+                    $post['category'],
+                    $post['code'],
+                    $post['name'],
+                    $post['latitude'],
+                    $post['longitude'],
+                    $post['timezone'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user
+                );
+                $result = $result && $this->Obj->insertCity($params);
+                $this->Obj->EndTrans($result);
+                if ($result) {
+                    unset($post);
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $result = TRUE;
+                $this->Obj->StartTrans();
+                $params = array(
+                    $post['state'],
+                    $post['category'],
+                    $post['code'],
+                    $post['name'],
+                    $post['latitude'],
+                    $post['longitude'],
+                    $post['timezone'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user,
+                    $_SESSION['ref.city']['data_id']
+                );
+                $result = $result && $this->Obj->updateCity($params);
+                $this->Obj->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result === true) {
+            unset($_SESSION['ref.city']['data_id']);
+            Messenger::Instance()->Send('ref.city', 'city', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.city', 'city', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.city', 'inputCity', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.city', (empty($_SESSION['ref.city']['data_id'])?'add':'update').'City', 'view', 'html');
+        }
+        return $result;
+    }
+
+    function delete($id) {
+        $result = $this->Obj->deleteCity($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;
+        }
+        Messenger::Instance()->Send('ref.city', 'city', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+
+        return $result;
+    }
+
+    /**
+     * custom validation
+     * check if name available
+     * @param mixed value from post
+     * @param array(mixed) optional
+     * @return array of 'message' dan 'result'
+     */
+    function isNameAvailable($name) {
+        $post = $_POST->AsArray();
+        $result['message'] = '';
+        $result['result'] = false;
+
+        $param['name'] = $name;
+        if (!empty($_SESSION['ref.city']['data_id']))
+            $param['id'] = $_SESSION['ref.city']['data_id'];
+
+        if ($this->Obj->checkName($param)) {
+            $result['message'] = GtfwLangText('custom_validation_city_name_not_available');
+        } else {
+            $result['result'] = true;
+        }
+        return $result;
+    }
+
+    function isCodeAvailable($code) {
+        $post = $_POST->AsArray();
+        $result['message'] = '';
+        $result['result'] = false;
+
+        $param['code'] = $code;
+        if (!empty($_SESSION['ref.city']['data_id']))
+            $param['id'] = $_SESSION['ref.city']['data_id'];
+
+        if ($this->Obj->checkName($param)) {
+            $result['message'] = GtfwLangText('custom_validation_city_code_not_available');
+        } else {
+            $result['result'] = true;
+        }
+        return $result;
+    }
+
+}
+
+?>

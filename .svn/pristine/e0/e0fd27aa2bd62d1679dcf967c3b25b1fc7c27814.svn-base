@@ -1,0 +1,25 @@
+<!-- patTemplate:tmpl name="content" -->
+            <!-- Login Layout
+            ================================================== -->
+            <div class="five columns alpha">
+                <div class="login">
+                    <div class="login_wrapper">
+                        <img src="assets/images/coporate.png" class="logo"/>
+                        <form action="{URL_ACTION}" method="post" onsubmit="return dosubmit(this)" accept-charset="utf-8">	
+                            <input type="hidden" id="salt" name="salt" value="{LOGIN_SALT}" />
+                            <input type="hidden" id="back_to" name="back_to" value="" />
+                            <input type="hidden" id="hashed" name="hashed" value="0" />
+                            <input type="text" autocomplete="off" title="Username or email" name="username" class="text-input email-input" placeholder="username"/>
+                            <!-- Label and text input -->
+                            <input type="password" id="regularInput" title="Password" name="password" class="pass" placeholder="password"/>
+                            <input type="hidden" name="password_hashed" />
+                            <div class="log_btn"><button type="submit" class="btn btn-primary" tabindex="3">Login</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- end login -->
+            <div class="two columns alpha">&nbsp;</div>
+            <script src="assets/js/login.js"></script>
+        <!-- End Document
+        ================================================== -->
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,75 @@
+<!-- patTemplate:tmpl name="content" -->
+
+<input type="hidden" id="access" name="access" />
+<div id="menu_list">
+{MENU}
+</div>
+            
+
+<script type="text/javascript">
+$(function () {    
+    $('.check_action').off('change');
+    $('.check_action').on('change', function(){
+        var ids = $(this).attr('id').split('_');
+        $('#label_'+ids[1]+'_'+ids[2]).toggleClass('label-disabled');
+    });
+    
+	$("#menu_list").jstree({
+		"plugins" : [ "themes", "html_data", "checkbox", "ui" ],
+        "themes" : { "theme" : "classic" }
+	}).unbind('check_node.jstree').bind('check_node.jstree', function(e, data) {
+        parent = $(data.args[0].parentElement.parentElement);
+        parent.find('input[type="checkbox"]').attr('checked', 'checked');
+        parent.find('[id^="label_"]').removeClass('label-disabled');
+        setAccess();
+//        if (menuid) {
+//            $('[id^="check_'+menuid+'_"]').attr('checked', 'checked');
+//            $('[id^="label_'+menuid+'_"]').removeClass('label-disabled');
+//        }
+    }).unbind('uncheck_node.jstree').bind('uncheck_node.jstree', function(e, data) {
+        parent = $(data.args[0].parentElement.parentElement);
+        parent.find('input[type="checkbox"]').removeAttr('checked', 'checked');
+        parent.find('[id^="label_"]').addClass('label-disabled');
+        setAccess();
+//        menuid = $(data.args[0].parentElement.parentElement);
+//        if (menuid) {
+//            $('[id^="check_'+menuid+'_"]').removeAttr('checked');
+//            $('[id^="label_'+menuid+'_"]').addClass('label-disabled');
+//        }
+    }).bind("loaded.jstree", function (event, data) {
+        setAccess();
+	});
+    
+});
+
+function setAccess() {    
+    var checked_ids = []; 
+    $("#menu_list").find(".jstree-undetermined").each(function(i,element){            
+        checked_ids.push($(element).attr("id"));
+    
+        if ($(this).find(".jstree-undetermined").length == 0) {  
+            $(this).find(".jstree-checked").each(function(i, element){          
+                checked_ids.push($(element).attr("id"));
+            });         
+        }
+    });
+
+    $("#menu_list").find(".jstree-checked").each(function(i, element){ //also includes the ones below 'undetermined' parent
+        var id = $(element).attr("id");
+        if (!inArray(id, checked_ids)) {
+            checked_ids.push(id);
+        }        
+    }); 
+
+    $('#access').val(checked_ids);
+}
+
+function inArray(needle, haystack) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}
+</script>
+<!-- /patTemplate:tmpl -->

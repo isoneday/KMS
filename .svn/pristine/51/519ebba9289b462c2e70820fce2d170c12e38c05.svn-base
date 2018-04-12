@@ -1,0 +1,1684 @@
+<?php
+
+$sql["count_applicantdata"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_applicantdata"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.kmhsPdrNim AS `kmhsPdrNim`,
+    a.kmhsPdrNiu AS `id`,
+    a.kmhsPdrNiu AS `kmhsPdrNiu`,
+    a.kmhsPdrAngk AS `kmhsPdrAngk`,
+    a.kmhsPdrNif AS `kmhsPdrNif`,
+    a.kmhsPdrFakId AS `kmhsPdrFakId`,
+    a.kmhsPdrProdiId AS `kmhsPdrProdiId`,
+    a.kmhsPdrJurId AS `kmhsPdrJurId`,
+    a.kmhsPdrJenPdkId AS `kmhsPdrJenPdkId`,
+    a.kmhsPdrIsLulus AS `kmhsPdrIsLulus`,
+    a.kmhsPdrBlnLulus AS `kmhsPdrBlnLulus`,
+    a.kmhsPdrThnLulus AS `kmhsPdrThnLulus`,
+    a.kmhsPdrNama AS `kmhsPdrNama`,
+    a.kmhsPdrTmpLahir AS `kmhsPdrTmpLahir`,
+    a.kmhsPdrTglLahir AS `kmhsPdrTglLahir`,
+    a.kmhsPdrJenisKelamin AS `kmhsPdrJenisKelamin`,
+    a.kmhsPdrAlamatAsal AS `kmhsPdrAlamatAsal`,
+    a.kmhsPdrAlamatJogja AS `kmhsPdrAlamatJogja`,
+    a.kmhsPdrNoTelp AS `kmhsPdrNoTelp`,
+    a.kmhsPdrJmlTanggKel AS `kmhsPdrJmlTanggKel`,
+    a.kmhsPdrKetTanggKel AS `kmhsPdrKetTanggKel`,
+    a.kmhsPdrJmlSaudara AS `kmhsPdrJmlSaudara`,
+    a.kmhsPdrBank AS `kmhsPdrBank`,
+    a.kmhsPdrRekening AS `kmhsPdrRekening`,
+    a.kmhsPdrJalurMasuk AS `kmhsPdrJalurMasuk`,
+    a.kmhsPdrAgama AS `kmhsPdrAgama`,
+    a.kmhsPdrNoKtp AS `kmhsPdrNoKtp`,
+    a.kmhsPdrStatTptTgl AS `kmhsPdrStatTptTgl`,
+    a.kmhsPdrRmhSaudara AS `kmhsPdrRmhSaudara`,
+    a.kmhsPdrBiayaKuliah AS `kmhsPdrBiayaKuliah`,
+    a.kmhsPdrBiayaSaudara AS `kmhsPdrBiayaSaudara`,
+    a.kmhsPdrAktifitas AS `kmhsPdrAktifitas`,
+    a.kmhsPdrTptKerja AS `kmhsPdrTptKerja`,
+    a.kmhsPdrGajiKerja AS `kmhsPdrGajiKerja`,
+    a.kmhsPdrJamKerja AS `kmhsPdrJamKerja`,
+    a.kmhsPdrUkt AS `kmhsPdrUkt`,
+    a.kmhsPdrShowDaftar AS `kmhsPdrShowDaftar`,
+    a.kmhsPdrLastUpdate AS `kmhsPdrLastUpdate`,
+    a.kmhsUnitId AS `kmhsUnitId`,
+    a.kmhsPdrTidakMampuFile AS `kmhsPdrTidakMampuFile`,
+    a.kmhsPdrTidakBeasiswaLainFile AS `kmhsPdrTidakBeasiswaLainFile`,
+    a.kmhsPdrFotoFile AS `kmhsPdrFotoFile`,
+    a.kmhsPdrKartuKeluargaFile AS `kmhsPdrKartuKeluargaFile`,
+    a.kmhsPdrRekomendasiFakultasFile AS `kmhsPdrRekomendasiFakultasFile`,
+    a.kmhsPdrJumlahSaudara AS `kmhsPdrJumlahSaudara`,
+    a.kmhsPdrJumlahSaudaraDitanggung AS `kmhsPdrJumlahSaudaraDitanggung`,
+    a.kmhsPdrJumlahSaudaraBekerja AS `kmhsPdrJumlahSaudaraBekerja`,
+    a.kmhsPdrEmail AS `kmhsPdrEmail`,
+    a.kmhsPdrSumberInformasiBeasiswa AS `kmhsPdrSumberInformasiBeasiswa`,
+    a.kmhsPdrSatkerId AS `kmhsPdrSatkerId`,
+    a.kmhsPdrTanggal AS `kmhsPdrTanggal`
+FROM kemahasiswaan_pendaftar a
+WHERE
+    1 = 1
+    --search--
+ORDER BY kmhsPdrTanggal DESC 
+--limit--    
+";
+$sql["get_detail_applicantdata"] = "
+SELECT 
+    a.kmhsPdrNim AS `kmhsPdrNim`,
+    a.kmhsPdrNiu AS `kmhsPdrNiu`,
+    a.kmhsPdrAngk AS `kmhsPdrAngk`,
+    a.kmhsPdrNif AS `kmhsPdrNif`,
+    a.kmhsPdrFakId AS `kmhsPdrFakId`,
+    a.kmhsPdrProdiId AS `kmhsPdrProdiId`,
+    a.kmhsPdrJurId AS `kmhsPdrJurId`,
+    a.kmhsPdrJenPdkId AS `kmhsPdrJenPdkId`,
+    a.kmhsPdrIsLulus AS `kmhsPdrIsLulus`,
+    a.kmhsPdrBlnLulus AS `kmhsPdrBlnLulus`,
+    a.kmhsPdrThnLulus AS `kmhsPdrThnLulus`,
+    a.kmhsPdrNama AS `kmhsPdrNama`,
+    a.kmhsPdrTmpLahir AS `kmhsPdrTmpLahir`,
+    a.kmhsPdrTglLahir AS `kmhsPdrTglLahir`,
+    a.kmhsPdrJenisKelamin AS `kmhsPdrJenisKelamin`,
+    a.kmhsPdrAlamatAsal AS `kmhsPdrAlamatAsal`,
+    a.kmhsPdrAlamatJogja AS `kmhsPdrAlamatJogja`,
+    a.kmhsPdrNoTelp AS `kmhsPdrNoTelp`,
+    a.kmhsPdrJmlTanggKel AS `kmhsPdrJmlTanggKel`,
+    a.kmhsPdrKetTanggKel AS `kmhsPdrKetTanggKel`,
+    a.kmhsPdrJmlSaudara AS `kmhsPdrJmlSaudara`,
+    a.kmhsPdrBank AS `kmhsPdrBank`,
+    a.kmhsPdrRekening AS `kmhsPdrRekening`,
+    a.kmhsPdrJalurMasuk AS `kmhsPdrJalurMasuk`,
+    a.kmhsPdrAgama AS `kmhsPdrAgama`,
+    a.kmhsPdrNoKtp AS `kmhsPdrNoKtp`,
+    a.kmhsPdrStatTptTgl AS `kmhsPdrStatTptTgl`,
+    a.kmhsPdrRmhSaudara AS `kmhsPdrRmhSaudara`,
+    a.kmhsPdrBiayaKuliah AS `kmhsPdrBiayaKuliah`,
+    a.kmhsPdrBiayaSaudara AS `kmhsPdrBiayaSaudara`,
+    a.kmhsPdrAktifitas AS `kmhsPdrAktifitas`,
+    a.kmhsPdrTptKerja AS `kmhsPdrTptKerja`,
+    a.kmhsPdrGajiKerja AS `kmhsPdrGajiKerja`,
+    a.kmhsPdrJamKerja AS `kmhsPdrJamKerja`,
+    a.kmhsPdrUkt AS `kmhsPdrUkt`,
+    a.kmhsPdrShowDaftar AS `kmhsPdrShowDaftar`,
+    a.kmhsPdrLastUpdate AS `kmhsPdrLastUpdate`,
+    a.kmhsUnitId AS `kmhsUnitId`,
+    a.kmhsPdrTidakMampuFile AS `kmhsPdrTidakMampuFile`,
+    a.kmhsPdrTidakBeasiswaLainFile AS `kmhsPdrTidakBeasiswaLainFile`,
+    a.kmhsPdrFotoFile AS `kmhsPdrFotoFile`,
+    a.kmhsPdrKartuKeluargaFile AS `kmhsPdrKartuKeluargaFile`,
+    a.kmhsPdrRekomendasiFakultasFile AS `kmhsPdrRekomendasiFakultasFile`,
+    a.kmhsPdrJumlahSaudara AS `kmhsPdrJumlahSaudara`,
+    a.kmhsPdrJumlahSaudaraDitanggung AS `kmhsPdrJumlahSaudaraDitanggung`,
+    a.kmhsPdrJumlahSaudaraBekerja AS `kmhsPdrJumlahSaudaraBekerja`,
+    a.kmhsPdrEmail AS `kmhsPdrEmail`,
+    a.kmhsPdrSumberInformasiBeasiswa AS `kmhsPdrSumberInformasiBeasiswa`,
+    a.kmhsPdrSatkerId AS `kmhsPdrSatkerId`,
+    a.kmhsPdrTanggal AS `kmhsPdrTanggal`
+FROM kemahasiswaan_pendaftar a
+WHERE kmhsPdrNim = %d
+";
+$sql["insert_applicantdata"] = "
+INSERT INTO kemahasiswaan_pendaftar
+(
+    kmhsPdrNim,
+    kmhsPdrNiu,
+    kmhsPdrAngk,
+    kmhsPdrNif,
+    kmhsPdrFakId,
+    kmhsPdrProdiId,
+    kmhsPdrJurId,
+    kmhsPdrJenPdkId,
+    kmhsPdrIsLulus,
+    kmhsPdrBlnLulus,
+    kmhsPdrThnLulus,
+    kmhsPdrNama,
+    kmhsPdrTmpLahir,
+    kmhsPdrTglLahir,
+    kmhsPdrJenisKelamin,
+    kmhsPdrAlamatAsal,
+    kmhsPdrAlamatJogja,
+    kmhsPdrNoTelp,
+    kmhsPdrJmlTanggKel,
+    kmhsPdrKetTanggKel,
+    kmhsPdrJmlSaudara,
+    kmhsPdrBank,
+    kmhsPdrRekening,
+    kmhsPdrJalurMasuk,
+    kmhsPdrAgama,
+    kmhsPdrNoKtp,
+    kmhsPdrStatTptTgl,
+    kmhsPdrRmhSaudara,
+    kmhsPdrBiayaKuliah,
+    kmhsPdrBiayaSaudara,
+    kmhsPdrAktifitas,
+    kmhsPdrTptKerja,
+    kmhsPdrGajiKerja,
+    kmhsPdrJamKerja,
+    kmhsPdrUkt,
+    kmhsPdrShowDaftar,
+    kmhsPdrLastUpdate,
+    kmhsUnitId,
+    kmhsPdrTidakMampuFile,
+    kmhsPdrTidakBeasiswaLainFile,
+    kmhsPdrFotoFile,
+    kmhsPdrKartuKeluargaFile,
+    kmhsPdrRekomendasiFakultasFile,
+    kmhsPdrJumlahSaudara,
+    kmhsPdrJumlahSaudaraDitanggung,
+    kmhsPdrJumlahSaudaraBekerja,
+    kmhsPdrEmail,
+    kmhsPdrSumberInformasiBeasiswa,
+    kmhsPdrSatkerId,
+    kmhsPdrTanggal
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_applicantdata"] = "
+UPDATE kemahasiswaan_pendaftar
+SET 
+    kmhsPdrNim = %s,
+    kmhsPdrNiu = %s,
+    kmhsPdrAngk = %s,
+    kmhsPdrNif = %s,
+    kmhsPdrFakId = %s,
+    kmhsPdrProdiId = %s,
+    kmhsPdrJurId = %s,
+    kmhsPdrJenPdkId = %s,
+    kmhsPdrIsLulus = %s,
+    kmhsPdrBlnLulus = %s,
+    kmhsPdrThnLulus = %s,
+    kmhsPdrNama = %s,
+    kmhsPdrTmpLahir = %s,
+    kmhsPdrTglLahir = %s,
+    kmhsPdrJenisKelamin = %s,
+    kmhsPdrAlamatAsal = %s,
+    kmhsPdrAlamatJogja = %s,
+    kmhsPdrNoTelp = %s,
+    kmhsPdrJmlTanggKel = %s,
+    kmhsPdrKetTanggKel = %s,
+    kmhsPdrJmlSaudara = %s,
+    kmhsPdrBank = %s,
+    kmhsPdrRekening = %s,
+    kmhsPdrJalurMasuk = %s,
+    kmhsPdrAgama = %s,
+    kmhsPdrNoKtp = %s,
+    kmhsPdrStatTptTgl = %s,
+    kmhsPdrRmhSaudara = %s,
+    kmhsPdrBiayaKuliah = %s,
+    kmhsPdrBiayaSaudara = %s,
+    kmhsPdrAktifitas = %s,
+    kmhsPdrTptKerja = %s,
+    kmhsPdrGajiKerja = %s,
+    kmhsPdrJamKerja = %s,
+    kmhsPdrUkt = %s,
+    kmhsPdrShowDaftar = %s,
+    kmhsPdrLastUpdate = %s,
+    kmhsUnitId = %s,
+    kmhsPdrTidakMampuFile = %s,
+    kmhsPdrTidakBeasiswaLainFile = %s,
+    kmhsPdrFotoFile = %s,
+    kmhsPdrKartuKeluargaFile = %s,
+    kmhsPdrRekomendasiFakultasFile = %s,
+    kmhsPdrJumlahSaudara = %s,
+    kmhsPdrJumlahSaudaraDitanggung = %s,
+    kmhsPdrJumlahSaudaraBekerja = %s,
+    kmhsPdrEmail = %s,
+    kmhsPdrSumberInformasiBeasiswa = %s,
+    kmhsPdrSatkerId = %s,
+    kmhsPdrTanggal = %s
+WHERE kmhsPdrNim_id = %d
+";
+$sql["delete_applicantdata"] = "
+DELETE FROM kemahasiswaan_pendaftar
+WHERE kmhsPdrNim_id = %d
+";
+$sql["list_applicantdata"] = "
+SELECT
+    kmhsPdrNim_id AS `id`,
+    kmhsPdrNim_name AS `name`
+FROM
+    kemahasiswaan_pendaftar
+ORDER BY kmhsPdrNim_name
+";
+
+//=== GET COMBO ===
+$sql['get_combo_ukt']="
+SELECT 
+  `uktId` AS 'id',
+  `uktNama` AS 'name'
+FROM
+  `ref_ukt` 
+";
+
+$sql['get_combo_pembiayaan_kuliah']="
+SELECT 
+  `pembiayaanKuliahId` AS 'id',
+  `pembiayaanKuliahNama` AS 'name'
+FROM
+  `ref_pembiayaan_kuliah` 
+";
+
+$sql['get_combo_tempat_tinggal']="
+SELECT 
+  `tempatTinggalId` AS 'id',
+  `tempatTinggalNama` AS 'name'
+FROM
+  `ref_tempat_tinggal` 
+";
+
+$sql['get_combo_fakultas']="
+SELECT 
+  `fakKode` as 'id',
+  `fakNamaResmi` as 'name'
+FROM
+  `ref_fakultas` 
+";
+
+$sql['get_combo_jurusan']="
+SELECT 
+    jurKode			AS id,
+    jurNamaResmi	AS name
+FROM 
+	ref_jurusan
+";
+
+$sql['get_combo_prodi']="
+SELECT 
+  `prodiKode` AS 'id',
+  `prodiNama` AS 'name'
+FROM
+  `ref_program_studi` 
+";
+
+$sql['get_combo_jenjang']="
+SELECT 
+    refJenPdkKode	AS id,
+    refJenPdkKode	AS name
+FROM 
+	ref_jenjang_pendidikan
+";
+
+$sql['get_combo_jalur']="
+SELECT 
+  `jllrKode` AS 'id',
+  `jllrNama` AS 'name'
+FROM
+  `ref_jalur` 
+";
+
+$sql['get_combo_beasiswa']="
+SELECT 
+    kmhsBeaId	AS id,
+    kmhsBeaNama	AS name
+FROM kemahasiswaan_beasiswa
+LEFT JOIN kemahasiswaan_beasiswa_prodi ON kmhsBeaProdiRefKmhsBeaId = kmhsBeaId
+%filter_prodi%
+%filter_aktif%
+";
+
+$sql['get_combo_tipe_beasiswa']="
+SELECT 
+    kmhsRefTipeDaftId	AS id,
+    kmhsrefTipeDaftNama	AS name
+FROM 
+	kemahasiswaan_ref_tipe_daftar
+";
+
+$sql['get_combo_jenis_aktifitas']="
+SELECT 
+  `jenisAktifitasId` AS 'id',
+  `jenisAktifitasNama` AS 'name'
+FROM
+  `ref_jenis_aktifitas` 
+";
+
+$sql['get_combo_satuan_kerja']="
+SELECT 
+  `satkerId` AS 'id',
+  `satkerNama` AS 'name' 
+FROM
+  `pub_satuan_kerja` 
+WHERE satkerParentId != '0' 
+";
+
+$sql['get_kota']="
+SELECT 
+    kotaKode	AS id,
+    kotaNama	AS name
+FROM 
+	ref_kota
+ORDER BY
+	kotaKode
+";
+
+$sql['get_bank']="
+SELECT 
+    bankKode	AS id,
+    bankNama	AS name
+FROM 
+	ref_bank
+ORDER BY
+	bankKode
+";
+
+$sql['get_pekerjaan']="
+SELECT 
+    pkjrId		AS id,
+    pkjrNama	AS name
+FROM 
+	ref_pekerjaan
+ORDER BY
+	pkjrId
+";
+
+//== GET DETAIL FOR ONCHANGE FUNCTION ==
+// $sql['cek_statu_sdaftar']="
+// SELECT 
+	// COUNT(a.kmhsTransDaftBeaId) AS cek_stat_daftar
+// FROM
+	// kemahasiswaan_trans_daftar_beasiswa a
+// LEFT JOIN kemahasiswaan_beasiswa b ON b.kmhsBeaId = a.kmhsTransDaftBeaId
+// WHERE
+	// a.kmhsTransDaftBeaStatPdrId = '1'
+// OR
+	// a.kmhsTransDaftBeaStatPdrId = '6'
+// AND
+	// a.kmhsTransDaftBeaPdrNiu = '%s'
+// AND
+	// NOW() NOT BETWEEN b.kmhsBeaPeriodeMulai AND b.kmhsBeaPeriodeAkhir
+// ";
+
+$sql['cek_status_id']="
+SELECT 
+	kmhsTransDaftBeaStatPdrId AS statusId
+FROM
+	kemahasiswaan_trans_daftar_beasiswa
+WHERE
+	kmhsTransDaftBeaPdrNiu = '%s'
+ORDER BY kmhsTransDaftBeaId DESC
+";
+
+$sql['cek_statu_sdaftar']="
+SELECT 
+	COUNT(a.kmhsTransDaftBeaId) AS cek_stat_daftar
+FROM
+	kemahasiswaan_trans_daftar_beasiswa a
+WHERE
+	a.kmhsTransDaftBeaStatPdrId = '1'
+AND
+	a.kmhsTransDaftBeaPdrNiu = '%s'
+";
+
+$sql['cek_status_diterima']="
+SELECT 
+	COUNT(a.kmhsTransDaftBeaId) AS cek_status_dtrm
+FROM 
+	kemahasiswaan_trans_daftar_beasiswa a
+LEFT JOIN 
+	kemahasiswaan_beasiswa b ON b.kmhsBeaId = a.kmhsTransDaftBeaId
+WHERE 
+	a.kmhsTransDaftBeaStatPdrId = '6'
+AND 
+	b.kmhsBeaPeriodeAkhir > NOW()
+AND 
+	a.kmhsTransDaftBeaPdrNiu = '%s'
+";
+
+$sql['cek_statu_sdaftar_diterima']="
+SELECT 
+	COUNT(a.kmhsTransDaftBeaId) AS cek_stat_daftar
+FROM
+	kemahasiswaan_trans_daftar_beasiswa a
+LEFT JOIN kemahasiswaan_beasiswa b ON b.kmhsBeaId = a.kmhsTransDaftBeaId
+WHERE
+	a.kmhsTransDaftBeaStatPdrId = '6'
+AND
+	a.kmhsTransDaftBeaPdrNiu = '%s'
+AND
+	b.kmhsBeaPeriodeAkhir > NOW()
+";
+
+$sql['get_data_bea_main']="
+SELECT 
+    kmhsBeaId	AS idBea,
+    kmhsBeaNama	AS nmBea
+FROM 
+	kemahasiswaan_beasiswa
+WHERE 
+	kmhsBeaId = '%s'
+";
+
+$sql['get_data_syarat_main_by_idbea']="
+SELECT
+	a.beasyaId			AS id,
+	a.beasyaBeaId		AS idBea,
+	a.beasyaSyarefId	AS idSyaref,
+	a.beasyaJenisId		AS jenis,
+	b.syarefKode		AS kodeSyarat,
+	
+	CASE
+	WHEN
+		a.beasyaJenisId = '0' THEN 'Rentang'
+	WHEN 
+		a.beasyaJenisId = '1' THEN 'Bobot'
+	END 				AS nm_jenis,
+	
+	a.beasyaBobot		AS bobot,
+	b.syarefNama		AS nm_syarat,
+	b.syarefIsOtomatis	AS isOtomatis
+FROM
+	beasiswa_syarat a
+LEFT JOIN 
+	ref_syarat b ON b.syarefId = a.beasyaSyarefId
+WHERE 
+	a.beasyaBeaId = '%s'
+ORDER BY
+	a.beasyaJenisId ASC
+";
+
+$sql['get_data_syarat_is_otomatis']="
+SELECT
+	a.beasyaId			AS id,
+	a.beasyaBeaId		AS idBea,
+	a.beasyaSyarefId	AS idSyaref,
+	a.beasyaJenisId		AS jenis,
+	
+	CASE
+	WHEN
+		a.beasyaJenisId = '0' THEN 'Rentang'
+	WHEN 
+		a.beasyaJenisId = '1' THEN 'Bobot'
+	END 				AS nm_jenis,
+	
+	a.beasyaBobot		AS bobot,
+	b.syarefNama		AS nm_syarat
+FROM
+	beasiswa_syarat a
+LEFT JOIN 
+	ref_syarat b ON b.syarefId = a.beasyaSyarefId
+WHERE 
+	a.beasyaBeaId = '%s'
+AND
+	syarefIsOtomatis = '1'
+ORDER BY
+	a.beasyaJenisId ASC
+";
+
+$sql['get_rec_syarat_rentang']="
+SELECT
+	a.beasyaId			AS id,
+	a.beasyaBeaId		AS idBea,
+	a.beasyaSyarefId	AS idSyaref,
+	a.beasyaJenisId		AS jenis,
+	
+	CASE
+	WHEN
+		a.beasyaJenisId = '0' THEN 'Rentang'
+	WHEN 
+		a.beasyaJenisId = '1' THEN 'Bobot'
+	END 				AS nm_jenis,
+	
+	a.beasyaBobot		AS bobot,
+	b.syarefNama		AS nm_syarat
+FROM
+	beasiswa_syarat a
+LEFT JOIN 
+	ref_syarat b ON b.syarefId = a.beasyaSyarefId
+WHERE 
+	a.beasyaBeaId = '%s'
+AND
+	a.beasyaJenisId = '0'
+ORDER BY
+	a.beasyaSyarefId
+";
+
+$sql['get_rec_syarat_bobot']="
+SELECT
+	a.beasyaId			AS id,
+	a.beasyaBeaId		AS idBea,
+	a.beasyaSyarefId	AS idSyaref,
+	a.beasyaJenisId		AS jenis,
+	
+	CASE
+	WHEN
+		a.beasyaJenisId = '0' THEN 'Rentang'
+	WHEN 
+		a.beasyaJenisId = '1' THEN 'Bobot'
+	END 				AS nm_jenis,
+	
+	a.beasyaBobot		AS bobot,
+	b.syarefNama		AS nm_syarat
+FROM
+	beasiswa_syarat a
+LEFT JOIN 
+	ref_syarat b ON b.syarefId = a.beasyaSyarefId
+WHERE 
+	a.beasyaBeaId = '%s'
+AND
+	a.beasyaJenisId = '1'
+ORDER BY
+	a.beasyaSyarefId
+";
+
+$sql['get_data_syarat_rentang']="
+SELECT
+	beasyarenBeasyaId		AS idRen,
+	beasyarenRentangTanda	AS tanda,
+	beasyarenRentangNilai	AS nilai
+FROM
+	beasiswa_syarat_rentang
+WHERE 
+	beasyarenBeasyaId = '%s'
+ORDER BY
+	beasyarenBeasyaId
+";
+
+$sql['get_data_syarat_bobot']="
+SELECT
+	b.syarefdetId			AS id,
+	c.syarefKode			AS kode_induk,
+	b.syarefdetKode			AS kode,
+	b.syarefdetNilaiText	AS name
+FROM
+	beasiswa_syarat_bobot a
+LEFT JOIN 
+	ref_syarat_detail b ON b.syarefdetId = a.beasyabodetSyarefdetId
+LEFT JOIN 
+	ref_syarat c ON b.syarefdetSyarefId = c.syarefId
+WHERE 
+	a.beasyabodetBeasyaId = '%s'
+ORDER BY
+	a.beasyabodetBeasyaId
+";
+
+$sql['get_data_syarat_dokumen']="
+SELECT
+	a.beadokId				AS idBeaDok,
+	a.beadokbeaId			AS idBea,
+	a.beadokIsWajib			AS isWajib,
+	b.syardokNama			AS syardok_nm
+FROM
+	beasiswa_dokumen a
+LEFT JOIN 
+	ref_syarat_dokumen b ON b.syardokId = a.beadokSyardokId
+WHERE
+	a.beadokbeaId = '%s'
+ORDER BY
+	a.beadokIsWajib DESC
+";
+
+$sql['get_data_syarat_dokumen_wajib']="
+SELECT
+	a.beadokId				AS idBeaDok,
+	a.beadokbeaId			AS idBea,
+	a.beadokIsWajib			AS isWajib,
+	b.syardokNama			AS syardok_nm
+FROM
+	beasiswa_dokumen a
+LEFT JOIN 
+	ref_syarat_dokumen b ON b.syardokId = a.beadokSyardokId
+WHERE
+	a.beadokbeaId = '%s'
+AND
+	beadokIsWajib = 'Y'
+ORDER BY
+	a.beadokId
+";
+
+$sql['get_count_duplicate_data_daftar'] = "
+SELECT 
+	COUNT(kmhsTransDaftBeaId) AS duplicate_data
+FROM
+	kemahasiswaan_trans_daftar_beasiswa
+WHERE
+	kmhsTransDaftBeaId = '%s'
+AND
+	kmhsTransDaftBeaPdrNiu = '%s'
+AND
+	kmhsRefTipeDaftId = '%s'
+AND
+	kmhsTransDaftBeaStatPdrId = '1'
+";
+
+
+
+//== GET DETAIL FOR POPUP FUNCTION ==
+$sql['get_data_syarat_pendf']="
+SELECT 
+	beasyapenBeasyaId		AS beasyaId,
+	beasyapenSyarefdetId	AS SyarefdetId,
+	syarefNama				AS nmSyarat,
+	beasyaJenisId			AS jenis,
+	beasyapenNilai			AS nilaiRentang,
+	syarefdetNilaiText		AS nilaiBobot
+FROM
+	beasiswa_syarat_pendaftar a
+LEFT JOIN 
+	beasiswa_syarat b ON b.beasyaId = a.beasyapenBeasyaId
+LEFT JOIN 
+	ref_syarat c ON c.syarefId = b.beasyaSyarefId
+LEFT JOIN 
+	ref_syarat_detail d ON d.syarefdetId = a.beasyapenSyarefdetId
+WHERE 
+	a.beasyapenNiu = '%s'
+AND
+	a.beasyapenBeaId = '%s'
+";
+
+$sql['get_data_dok_pendf']="
+SELECT
+	c.syardokNama		AS syardok_nm,
+	CASE
+		WHEN
+			b.beadokIsWajib = 'N' THEN 'Tidak Wajib'
+		WHEN 
+			b.beadokIsWajib = 'Y' THEN 'Wajib'
+	END AS isWajib,
+	beapendokFile		AS nmFile
+FROM
+	beasiswa_pendaftar_dokumen a
+LEFT JOIN 
+	beasiswa_dokumen b ON b.beadokId = a.beapendokbeadokId
+LEFT JOIN 
+	ref_syarat_dokumen c ON c.syardokId = b.beadokSyardokId
+WHERE 
+	a.beapendokNiu = '%s'
+AND
+	b.beadokbeaId = '%s'
+GROUP BY
+	a.beapendokNiu, a.beapendokbeadokId
+ORDER BY
+	a.beapendokId
+";
+
+
+// cek IPK, Gaji, Jml Saudara, Usia
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$sql['cek_ipk_lokal']="
+SELECT
+	kmhsPdrHsSemester 		AS semId,
+	kmhsPdrHsIp 			AS ip,
+	kmhsPdrHsIpk 			AS ipk
+FROM
+	kemahasiswaan_pendaftar_history_studi
+WHERE
+	kmhsPdrHsPdrNiu = '%s'
+ORDER BY kmhsPdrHsSemester DESC
+LIMIT 0,1
+";
+
+$sql['cek_usia_lokal']="
+SELECT 
+	YEAR(CURDATE()) - YEAR(kmhsPdrTglLahir) AS umur 
+FROM kemahasiswaan_pendaftar
+WHERE kmhsPdrNiu = '%s'
+";
+
+$sql['cek_jmlsdr_lokal']="
+SELECT	
+	COUNT(kmhsSdrPdrNiu)	AS jmlsdr
+FROM
+	kemahasiswaan_saudara_mahasiswa
+WHERE
+	kmhsSdrPdrNiu = '%s'
+";
+
+$sql['cek_gaji_lokal']="
+SELECT	
+	SUM(kmhsOrtupenghasilan)	AS gaji
+FROM
+	kemahasiswaan_ortu_mahasiswa
+WHERE
+	kmhsOrtuPdrNiu = '%s'
+";
+
+$sql['cek_semester_lokal']="
+SELECT	
+	SUM(kmhsOrtupenghasilan)	AS gaji
+FROM
+	kemahasiswaan_ortu_mahasiswa
+WHERE
+	kmhsOrtuPdrNiu = '%s'
+";
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//== GET FOR UPDATE PROCESSING ==
+$sql['get_list_wali_up']="
+SELECT
+    kmhsOrtuId     			AS id,
+    kmhsOrtuPdrNiu     		AS niu,
+    kmhsOrtuNama     		AS nama,
+    kmhsOrtuTptLahir     	AS tpt_lahir,
+    kmhsOrtuTglLahir     	AS tgl_lahir,
+    kmhsOrtuPenddTerakhir   AS pend_trkh,
+    kmhsOrtuPekerjaanId     AS kerjaId,
+    pkjrNama     		AS kerjaNm,
+    kmhsOrtuKetPekerjaan    AS ket_kerja,
+    kmhsOrtupenghasilan     AS hasil,
+    kmhsOrtuIsMeninggal		AS isMng,
+
+	CASE
+		WHEN
+			kmhsOrtuIsMeninggal = 'N' THEN 'Hidup'
+		WHEN 
+			kmhsOrtuIsMeninggal = 'Y' THEN 'Meninggal'
+	END AS isMngKet,
+
+    kmhsOrtuTglMeninggal	AS tglMng,
+    kmhsOrtuKet     		AS ket,
+
+	CASE
+		WHEN
+			kmhsOrtuKet = 1 THEN 'Ayah'
+		WHEN 
+			kmhsOrtuKet = 2 THEN 'Ibu'
+		WHEN 
+			kmhsOrtuKet = 3 THEN 'Wali'
+	END AS ketKlg
+FROM 
+	kemahasiswaan_ortu_mahasiswa
+LEFT JOIN
+	ref_pekerjaan ON pkjrId = kmhsOrtuPekerjaanId	
+WHERE 
+	kmhsOrtuId = '%s'
+";
+
+$sql['get_list_sdr_up']="
+SELECT 
+    kmhsSdrMhsId     		AS id,
+    kmhsSdrPdrNiu     		AS niu,
+    kmhsSdrMhsSusunan		AS anak_ke,
+    kmhsSdrMhsNama			AS nama,
+    kmhsSdrMhsTptLahir		AS tpt_lahir,
+    kmhsSdrMhsTglLahir		AS tgl_lahir,
+    kmhsSdrMhsPenddTerakhir	AS pend_trkh,
+    kmhsSdrMhsPekerjaanId	AS kerja,
+    pkjrNama     		AS kerjaNm,
+    kmhsSdrMhsKetPekerjaan	AS ket_kerja,
+    kmhsSdrMhsIsMenikah		AS menikahID,
+    kmhsSdrMhsJnsKel		AS jkelID,
+    kmhsSdrMhsStatus		AS statklgID,
+
+	CASE
+		WHEN
+			kmhsSdrMhsJnsKel = 'L' THEN 'Laki-Laki'
+		WHEN 
+			kmhsSdrMhsJnsKel = 'P' THEN 'Perempuan'
+	END 					AS jkel,
+	
+	CASE
+		WHEN
+			kmhsSdrMhsIsMenikah = 'N' THEN 'Belum Menikah'
+		WHEN 
+			kmhsSdrMhsIsMenikah = 'Y' THEN 'Menikah'
+	END 					AS menikah,
+	
+	CASE
+		WHEN
+			kmhsSdrMhsStatus = '1' THEN 'Kakak'
+		WHEN 
+			kmhsSdrMhsStatus = '2' THEN 'Adik'
+	END 					AS statklg
+FROM 
+	kemahasiswaan_saudara_mahasiswa
+LEFT JOIN
+	ref_pekerjaan ON pkjrId = kmhsSdrMhsPekerjaanId
+WHERE 
+	kmhsSdrMhsId = '%s'
+";
+
+$sql['get_list_aktift_up']="
+SELECT 
+    kmhsAktiftMhsId			AS id,
+    kmhsAktiftPdrNiu		AS niu,
+    kmhsAktiftNamaOrg   	AS nama,
+    kmhsAktiftPeriode		AS tahun,
+    kmhsAktiftJabatan		AS jabatan,
+    kmhsAktiftKeterangan	AS ket,
+    kmhsAktiftJenisAktifitas AS jns,
+    kmhsAktiftFile AS 'file',
+    kmhsAktiftLingkup
+FROM 
+	kemahasiswaan_aktifitas_mahasiswa
+WHERE 
+	kmhsAktiftMhsId = '%s'
+";
+
+$sql['get_list_prest_up']="
+SELECT 
+    kmhsPrestMhsId			AS id,
+    kmhsPrestPdrNiu			AS niu,
+    kmhsPrestNamaKegiatan   AS nama,
+    kmhsPrestPeriode		AS tahun,
+    kmhsPrestNamaPrestasi	AS prestasi,
+    kmhsPrestKeterangan		AS ket,
+    kmhsPrestLingkup
+FROM 
+	kemahasiswaan_prestasi_mahasiswa
+WHERE 
+	kmhsPrestMhsId = '%s'
+";
+
+$sql['get_list_history_up']="
+SELECT 
+    kmhsPdrHsId			AS id,
+    kmhsPdrHsSemester	AS semester,
+    kmhsPdrHsPdrNiu     AS niu,
+    kmhsPdrHsTahun		AS tahun,
+    kmhsPdrHsJmlSks		AS sks,
+    kmhsPdrHsSisaSks	AS sisasks,
+    kmhsPdrHsIp			AS ips,
+    kmhsPdrHsIpk		AS ipk,
+    kmhsPdrHsIsCuti		AS cutiID,
+    kmhsPdrHsKHSFile	AS nama_upload_khs,
+	CASE
+	WHEN
+		kmhsPdrHsIsCuti = 'N' THEN 'Tidak Cuti'
+	WHEN 
+		kmhsPdrHsIsCuti	= 'Y' THEN 'Cuti'
+	END 				AS cuti
+FROM 
+	kemahasiswaan_pendaftar_history_studi
+WHERE 
+	kmhsPdrHsId = '%s'
+";
+
+
+
+
+
+//===GET===
+$sql['get_pendaftar_by_niu']="
+SELECT 
+    kmhsPdrNim     		AS nim,
+    kmhsPdrNiu    	 	AS niu,
+    kmhsPdrAngk			AS angkatan,
+	jllrKode			AS jalurID,
+	jllrNama			AS jalur,
+    kmhsPdrNif			AS nif,
+    kmhsPdrFakId		AS fakID,
+    fakNamaResmi		AS fakName,
+    kmhsPdrJurId		AS jurID,
+    jurNamaResmi		AS jurName,
+	prodiKode			AS prodiId,
+    prodiNama			AS prodiName,
+    kmhsPdrJenPdkId		AS jenjang,
+    kmhsPdrIsLulus		AS isLulus,
+    kmhsPdrBlnLulus		AS blnLulus,
+    kmhsPdrThnLulus		AS thnLulus,
+    kmhsPdrNama			AS nama,
+    kmhsPdrTmpLahir		AS tptLahir,
+    kmhsPdrTglLahir		AS tglLahir,
+    kmhsPdrAgama		AS agama,
+    kmhsPdrNoKtp		AS ktp,
+	kmhsPdrJenisKelamin	AS jenis_kelamin,
+    kmhsPdrAlamatAsal	AS almtAsal,
+    kmhsPdrAlamatJogja	AS almtJogja,
+    kmhsPdrNoTelp		AS telp,
+    kmhsPdrJmlSaudara	AS jmlSdr,
+    kmhsPdrBank			AS bank,
+    kmhsPdrRekening		AS noRek,
+    kmhsPdrStatTptTgl	AS status_tptTgl,
+    kmhsPdrRmhSaudara	AS rmhSaudara,
+    kmhsPdrBiayaKuliah	AS biKuliah,
+    kmhsPdrBiayaSaudara	AS biSaudara,
+    kmhsPdrAktifitas	AS aktift,
+    kmhsPdrTptKerja		AS tptKerja,
+    kmhsPdrGajiKerja	AS gajiKerja,
+    kmhsPdrJamKerja		AS jamKerja,
+	
+    CONCAT(refJenPdkKode,'(',refJenPdkNama,')')	AS jenjangDetail,
+    kmhsPdrTidakMampuFile,
+    kmhsPdrTidakBeasiswaLainFile,
+    kmhsPdrSatkerId AS 'mitraId',
+    kmhsPdrFotoFile,
+    kmhsPdrUkt,
+    kmhsPdrKartuKeluargaFile,
+    kmhsPdrJumlahSaudara,
+    kmhsPdrJumlahSaudaraDitanggung,
+    kmhsPdrJumlahSaudaraBekerja,
+    kmhsPdrRekomendasiFakultasFile,
+    satkerNama,
+    uktNama
+FROM 
+	kemahasiswaan_pendaftar
+LEFT JOIN
+	ref_fakultas ON fakKode	= kmhsPdrFakId
+LEFT JOIN
+	ref_jurusan ON jurKode	= kmhsPdrJurId
+LEFT JOIN 
+	ref_program_studi ON kmhsPdrProdiId	= prodiKode
+LEFT JOIN
+	ref_jenjang_pendidikan ON refJenPdkKode = kmhsPdrJenPdkId
+LEFT JOIN 
+	ref_jalur ON jllrKode	= kmhsPdrJalurMasuk
+LEFT JOIN pub_satuan_kerja
+   ON kmhsPdrSatkerId = satkerId
+LEFT JOIN ref_ukt
+   ON uktId = kmhsPdrUkt
+WHERE 
+	kmhsPdrNiu = '%s'
+";
+
+$sql['get_pendaftar_wali']="
+SELECT
+    kmhsOrtuId     			AS id,
+    kmhsOrtuPdrNiu     		AS niu,
+    kmhsOrtuNama     		AS nama,
+    kmhsOrtuTptLahir     	AS tpt_lahir,
+    kmhsOrtuTglLahir     	AS tgl_lahir,
+    kmhsOrtuPenddTerakhir   AS pend_trkh,
+    kmhsOrtuPekerjaanId     AS kerjaId,
+    pkjrNama     			AS kerjaNm,
+    kmhsOrtuKetPekerjaan    AS ket_kerja,
+    kmhsOrtupenghasilan     AS hasil,
+    kmhsOrtuIsMeninggal		AS isMng,
+	CASE
+		WHEN
+			kmhsOrtuIsMeninggal = 'N' THEN 'Hidup'
+		WHEN 
+			kmhsOrtuIsMeninggal = 'Y' THEN 'Meninggal'
+	END AS isMngKet,
+
+    kmhsOrtuTglMeninggal	AS tglMng,
+    kmhsOrtuKet     		AS ket,
+
+	CASE
+		WHEN
+			kmhsOrtuKet = 1 THEN 'Ayah'
+		WHEN 
+			kmhsOrtuKet = 2 THEN 'Ibu'
+		WHEN 
+			kmhsOrtuKet = 3 THEN 'Wali'
+	END AS ketKlg
+FROM 
+	kemahasiswaan_ortu_mahasiswa
+LEFT JOIN
+	ref_pekerjaan ON pkjrId = kmhsOrtuPekerjaanId	
+WHERE 
+	kmhsOrtuPdrNiu = '%s'
+";
+
+$sql['get_pendaftar_saudara']="
+SELECT 
+    kmhsSdrMhsId     		AS id,
+    kmhsSdrPdrNiu     		AS niu,
+    kmhsSdrMhsSusunan		AS anak_ke,
+    kmhsSdrMhsNama			AS nama,
+    kmhsSdrMhsTptLahir		AS tpt_lahir,
+    kmhsSdrMhsTglLahir		AS tgl_lahir,
+    kmhsSdrMhsPenddTerakhir	AS pend_trkh,
+    kmhsSdrMhsPekerjaanId	AS kerja,
+    pkjrNama     			AS kerjaNm,
+    kmhsSdrMhsKetPekerjaan	AS ket_kerja,
+
+	CASE
+		WHEN
+			kmhsSdrMhsJnsKel = 'L' THEN 'Laki-Laki'
+		WHEN 
+			kmhsSdrMhsJnsKel = 'P' THEN 'Perempuan'
+	END 					AS jkel,
+	
+	CASE
+		WHEN
+			kmhsSdrMhsIsMenikah = 'N' THEN 'Belum Menikah'
+		WHEN 
+			kmhsSdrMhsIsMenikah = 'Y' THEN 'Menikah'
+	END 					AS menikah,
+	
+	CASE
+		WHEN
+			kmhsSdrMhsStatus = '1' THEN 'Kakak'
+		WHEN 
+			kmhsSdrMhsStatus = '2' THEN 'Adik'
+	END 					AS statklg
+FROM 
+	kemahasiswaan_saudara_mahasiswa
+LEFT JOIN
+	ref_pekerjaan ON pkjrId = kmhsSdrMhsPekerjaanId
+WHERE 
+	kmhsSdrPdrNiu = '%s'
+";
+
+$sql['get_pendaftar_history']="
+SELECT 
+    kmhsPdrHsId			AS id,
+    kmhsPdrHsSemester	AS semester,
+    kmhsPdrHsPdrNiu     AS niu,
+    kmhsPdrHsTahun		AS tahun,
+    kmhsPdrHsJmlSks		AS sks,
+    kmhsPdrHsSisaSks	AS sisasks,
+    kmhsPdrHsIp			AS ips,
+    kmhsPdrHsIpk		AS ipk,
+    kmhsPdrHsKHSFile	AS nama_upload_khs,
+	CASE
+	WHEN
+		kmhsPdrHsIsCuti = 'N' THEN 'Tidak Cuti'
+	WHEN 
+		kmhsPdrHsIsCuti	= 'Y' THEN 'Cuti'
+	END 				AS cuti
+FROM 
+	kemahasiswaan_pendaftar_history_studi
+WHERE 
+	kmhsPdrHsPdrNiu = '%s'
+";
+
+$sql['get_pendaftar_aktifitas']="
+SELECT 
+    kmhsAktiftMhsId			AS id,
+    kmhsAktiftPdrNiu    	AS niu,
+    kmhsAktiftNamaOrg		AS nama,
+    kmhsAktiftPeriode		AS periode,
+    (SELECT 
+        `syarefdetNilaiText` 
+      FROM
+        `ref_syarat_detail` 
+      WHERE syarefdetId = kmhsAktiftJabatan) AS jabatan,
+    kmhsAktiftJabatan as 'jabatanId',
+    kmhsAktiftKeterangan	AS keterangan,
+    jenisAktifitasNama AS 'jns',
+    kmhsAktiftJenisAktifitas AS 'jnsId',
+    kmhsAktiftFile AS 'file',
+    kmhsAktiftLingkup
+FROM 
+	kemahasiswaan_aktifitas_mahasiswa
+	LEFT JOIN ref_jenis_aktifitas ON jenisAktifitasId = kmhsAktiftJenisAktifitas
+WHERE 
+	kmhsAktiftPdrNiu = '%s'
+";
+
+$sql['get_pendaftar_prestasi']="
+SELECT 
+    kmhsPrestMhsId			AS id,
+    kmhsPrestPdrNiu    		AS niu,
+    kmhsPrestNamaKegiatan	AS nama,
+    kmhsPrestPeriode		AS periode,
+    kmhsPrestNamaPrestasi	AS prestasi,
+    kmhsPrestKeterangan		AS keterangan,
+    kmhsPrestLingkup
+FROM 
+	kemahasiswaan_prestasi_mahasiswa
+WHERE 
+	kmhsPrestPdrNiu = '%s'
+";
+
+$sql['get_pendaftar_beasiswa']="
+SELECT 
+	a.kmhsTransDaftBeaId 		AS idBea,
+	b.kmhsBeaNama 				AS nmBea,
+	c.kmhsSumBeaNama 			AS nmSumber,
+	d.kmhsRefJnsBeaNama 		AS nmjenis,
+	b.kmhsBeaPeriodeMulai 		AS perAwal,
+	b.kmhsBeaPeriodeAkhir 		AS perAkhir,
+	a.kmhsTransDaftBeaTanggal 	AS tglDaftar,
+	f.refStatPdrId 				AS statID,
+	f.refStatPdrNama 			AS stat,
+	e.kmhsRefTipeDaftId 		AS tipeID,
+	e.kmhsrefTipeDaftNama 		AS tipeDaftar,
+	beasyaId
+FROM 
+	kemahasiswaan_trans_daftar_beasiswa a
+LEFT JOIN
+	kemahasiswaan_beasiswa b ON b.kmhsBeaId = a.kmhsTransDaftBeaId
+LEFT JOIN
+	kemahasiswaan_sumber_beasiswa c ON c.kmhsSumBeaId = b.kmhsRefSumBeaId
+LEFT JOIN
+	kemahasiswaan_ref_jenis_beasiswa d ON d.kmhsRefJnsBeaId = b.kmhsRefJnsBeaId
+LEFT JOIN
+	kemahasiswaan_ref_tipe_daftar e ON e.kmhsRefTipeDaftId = a.kmhsRefTipeDaftId
+LEFT JOIN
+	kemahasiswaan_ref_status_pendaftaran_beasiswa f ON f.refStatPdrId = a.kmhsTransDaftBeaStatPdrId
+LEFT JOIN `beasiswa_syarat` 
+    ON beasyaBeaId = a.kmhsTransDaftBeaId
+WHERE 
+	a.kmhsTransDaftBeaPdrNiu = '%s'
+";
+
+$sql['get_count'] = "
+SELECT 
+	COUNT(kmhsSumBeaId) AS total
+FROM 
+	kemahasiswaan_sumber_beasiswa
+WHERE 
+	kmhsSumBeaNama LIKE %s
+LIMIT 1
+";   
+
+$sql['get_max_id'] = "
+SELECT 
+	MAX(kmhsSumBeaId) AS id
+FROM 
+    kemahasiswaan_sumber_beasiswa
+";   
+
+$sql['get_kode'] = "
+SELECT 
+	COUNT(kmhsSumBeaId) AS cekCode
+FROM 
+	kemahasiswaan_sumber_beasiswa
+WHERE 
+	kmhsSumBeaId = %s
+LIMIT 1
+";   
+
+$sql['get_data']="
+SELECT 
+    kmhsSumBeaId     AS id,
+    kmhsSumBeaNama   AS nama,
+    kmhsSumBeaDesc   AS ket
+FROM 
+	kemahasiswaan_sumber_beasiswa
+WHERE 
+	kmhsSumBeaNama LIKE '%s'
+ORDER BY 
+	kmhsSumBeaId
+LIMIT %s,%s
+";
+
+$sql['get_data_desc']="
+SELECT 
+    kmhsSumBeaId     AS id,
+    kmhsSumBeaNama   AS nama,
+    kmhsSumBeaDesc   AS ket
+FROM 
+	kemahasiswaan_sumber_beasiswa
+WHERE 
+	kmhsSumBeaNama LIKE '%s'
+ORDER BY 
+	kmhsSumBeaNama ASC
+LIMIT %s,%s
+";
+
+
+
+//  DO ADD START ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//	add identitas -------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_identitas'] = "
+INSERT INTO
+	kemahasiswaan_pendaftar(
+		kmhsPdrNim, kmhsPdrNiu, kmhsPdrAngk, kmhsPdrNif, kmhsPdrFakId, kmhsPdrProdiId, kmhsPdrJurId, kmhsPdrJenPdkId, kmhsPdrIsLulus, kmhsPdrBlnLulus,
+		kmhsPdrThnLulus, kmhsPdrNama, kmhsPdrTmpLahir, kmhsPdrTglLahir, kmhsPdrJenisKelamin, kmhsPdrAlamatAsal, kmhsPdrAlamatJogja, kmhsPdrNoTelp,
+		kmhsPdrJmlSaudara, kmhsPdrBank, kmhsPdrRekening, kmhsPdrJalurMasuk, kmhsPdrAgama, kmhsPdrNoKtp, kmhsPdrStatTptTgl, kmhsPdrRmhSaudara,
+		kmhsPdrBiayaKuliah, kmhsPdrBiayaSaudara, kmhsPdrAktifitas, kmhsPdrTptKerja, kmhsPdrGajiKerja, kmhsPdrJamKerja)
+VALUES
+	('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',
+	 '%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',
+	 '%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',
+	 '%s','%s')
+";
+
+//	add wali -----------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_wali'] = "
+INSERT INTO
+	kemahasiswaan_ortu_mahasiswa(
+		kmhsOrtuPdrNiu,kmhsOrtuNama,kmhsOrtuTptLahir,kmhsOrtuTglLahir,kmhsOrtuPenddTerakhir,kmhsOrtuPekerjaanId,kmhsOrtuKetPekerjaan,
+		kmhsOrtupenghasilan,kmhsOrtuIsMeninggal,kmhsOrtuTglMeninggal,kmhsOrtuKet)
+VALUES
+	('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')
+";
+
+//	add saudara --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_saudara'] = "
+INSERT INTO
+	kemahasiswaan_saudara_mahasiswa(
+		kmhsSdrPdrNiu,kmhsSdrMhsNama,kmhsSdrMhsSusunan,kmhsSdrMhsJnsKel,kmhsSdrMhsTptLahir,kmhsSdrMhsTglLahir,
+		kmhsSdrMhsPenddTerakhir,kmhsSdrMhsPekerjaanId,kmhsSdrMhsKetPekerjaan,kmhsSdrMhsIsMenikah,kmhsSdrMhsStatus)
+VALUES
+	('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')
+";
+
+//	add aktifitas --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_aktifitas'] = "
+INSERT INTO kemahasiswaan_aktifitas_mahasiswa (
+  kmhsAktiftPdrNiu,
+  kmhsAktiftNamaOrg,
+  kmhsAktiftPeriode,
+  kmhsAktiftJabatan,
+  kmhsAktiftKeterangan,
+  kmhsAktiftJenisAktifitas,
+  kmhsAktiftLingkup
+) 
+VALUES
+  ('%s', '%s', '%s', '%s', '%s', '%s', '%s')
+";
+
+//	add prestasi --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_prestasi'] = "
+INSERT INTO
+	kemahasiswaan_prestasi_mahasiswa(kmhsPrestPdrNiu,kmhsPrestNamaKegiatan,kmhsPrestPeriode,kmhsPrestNamaPrestasi,kmhsPrestKeterangan,kmhsPrestLingkup)
+VALUES
+	('%s','%s','%s','%s','%s','%s')
+";
+
+//	add history --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_history'] = "
+INSERT INTO
+	kemahasiswaan_pendaftar_history_studi(kmhsPdrHsSemester,kmhsPdrHsPdrNiu,kmhsPdrHsTahun,kmhsPdrHsJmlSks,kmhsPdrHsSisaSks,kmhsPdrHsIp,kmhsPdrHsIpk,kmhsPdrHsIsCuti)
+VALUES
+	('%s','%s','%s','%s','%s','%s','%s','%s')
+";
+
+//	add beasiswa --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_beasiswa'] = "
+INSERT INTO
+	kemahasiswaan_trans_daftar_beasiswa(kmhsTransDaftBeaId,kmhsTransDaftBeaTanggal,kmhsTransDaftBeaPdrNiu,kmhsTransDaftBeaStatPdrId,kmhsRefTipeDaftId)
+VALUES
+	('%s','%s','%s','%s','%s')
+";
+
+//	add syardet --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_syardet'] = "
+INSERT INTO
+	beasiswa_syarat_pendaftar(beasyapenBeasyaId,beasyapenNiu,beasyapenBeaId,beasyapenSyarefdetId,beasyapenNilai)
+VALUES
+	('%s','%s','%s','%s','%s')
+";
+
+//	add syardok --------------------------------------------------------------------------------------------------------------------------------------------------
+$sql['do_add_syardok'] = "
+INSERT INTO
+	beasiswa_pendaftar_dokumen(beapendokbeadokId,beapendokNiu,beapendokFile)
+VALUES
+	('%s','%s','%s')
+";
+
+//  DO ADD END ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+
+
+//  DO UDPATE FOR ITEM DATA START ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//	update data wali start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_update_wali'] = "
+UPDATE 
+	kemahasiswaan_ortu_mahasiswa
+SET 
+	kmhsOrtuNama			= '%s',
+	kmhsOrtuTptLahir		= '%s',
+	kmhsOrtuTglLahir		= '%s',
+	kmhsOrtuPenddTerakhir	= '%s',
+	kmhsOrtuPekerjaanId		= '%s',
+	kmhsOrtuKetPekerjaan	= '%s',
+	kmhsOrtupenghasilan		= '%s',
+	kmhsOrtuIsMeninggal		= '%s',
+	kmhsOrtuTglMeninggal	= '%s',
+	kmhsOrtuKet				= '%s'
+WHERE 
+	kmhsOrtuId = '%d'
+";
+
+//	update data saudara start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_update_sdr'] = "
+UPDATE 
+	kemahasiswaan_saudara_mahasiswa
+SET 
+	kmhsSdrMhsNama			= '%s',
+	kmhsSdrMhsSusunan		= '%s',
+	kmhsSdrMhsJnsKel		= '%s',
+	kmhsSdrMhsTptLahir		= '%s',
+	kmhsSdrMhsTglLahir		= '%s',
+	kmhsSdrMhsPenddTerakhir	= '%s',
+	kmhsSdrMhsPekerjaanId	= '%s',
+	kmhsSdrMhsKetPekerjaan	= '%s',
+	kmhsSdrMhsIsMenikah		= '%s',
+	kmhsSdrMhsStatus		= '%s'
+WHERE 
+	kmhsSdrMhsId = '%d'
+";  
+
+//	update data aktifitas start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_update_aktift'] = "
+UPDATE 
+	kemahasiswaan_aktifitas_mahasiswa
+SET 
+	kmhsAktiftNamaOrg		= '%s',
+	kmhsAktiftPeriode		= '%s',
+	kmhsAktiftJabatan		= '%s',
+	kmhsAktiftKeterangan	= '%s',
+	kmhsAktiftJenisAktifitas = '%s',
+	kmhsAktiftLingkup = '%s'
+WHERE 
+	kmhsAktiftMhsId = '%d'
+";  
+
+//	update data prestasi start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_update_prest'] = "
+UPDATE 
+	kemahasiswaan_prestasi_mahasiswa
+SET 
+	kmhsPrestNamaKegiatan	= '%s',
+	kmhsPrestPeriode		= '%s',
+	kmhsPrestNamaPrestasi	= '%s',
+	kmhsPrestKeterangan		= '%s',
+	kmhsPrestLingkup = '%s'
+WHERE 
+	kmhsPrestMhsId = '%d'
+";  
+
+//	update data history start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_update_hist'] = "
+UPDATE 
+	kemahasiswaan_pendaftar_history_studi
+SET 
+	kmhsPdrHsSemester	= '%s',
+	kmhsPdrHsTahun		= '%s',
+	kmhsPdrHsJmlSks		= '%s',
+	kmhsPdrHsSisaSks	= '%s',
+	kmhsPdrHsIp			= '%s',
+	kmhsPdrHsIpk		= '%s',
+	kmhsPdrHsIsCuti		= '%s'
+WHERE 
+	kmhsPdrHsId = '%d'
+";  
+
+
+//  DO UPDATE FOR ITEM DATA END ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+
+
+//  DO DELETE FOR ITEM DATA START ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//	delete data wali start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_delete_wali'] = "
+DELETE FROM
+	kemahasiswaan_ortu_mahasiswa
+WHERE 
+	kmhsOrtuId = %s
+";
+
+//	delete data saudara start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_delete_saudara'] = "
+DELETE FROM
+	kemahasiswaan_saudara_mahasiswa
+WHERE 
+	kmhsSdrMhsId = %s
+";
+
+//	delete data aktifitas start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_delete_aktifitas'] = "
+DELETE FROM
+	kemahasiswaan_aktifitas_mahasiswa
+WHERE 
+	kmhsAktiftMhsId = %s
+";
+
+//	delete data prestasi start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_delete_prestasi'] = "
+DELETE FROM
+	kemahasiswaan_prestasi_mahasiswa
+WHERE 
+	kmhsPrestMhsId = %s
+";
+
+//	delete data history start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_delete_history'] = "
+DELETE FROM
+	kemahasiswaan_pendaftar_history_studi
+WHERE 
+	kmhsPdrHsId = %s
+";
+
+//	delete data beasiswa start ----------------------------------------------------------------------------------------------------------------------------------
+$sql['do_delete_beasiswa'] = "
+DELETE FROM
+	kemahasiswaan_trans_daftar_beasiswa
+WHERE 
+	kmhsTransDaftBeaId = %s
+AND
+	kmhsTransDaftBeaPdrNiu = %s
+";
+
+//  DO DELETE FOR ITEM DATA END ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+
+
+//  DO ADD UPDATE |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+$sql['do_update_identitas'] = "
+UPDATE 
+	kemahasiswaan_pendaftar
+SET 
+   #kmhsPdrJenPdkId 	= '%s',
+   #kmhsPdrFakId 	= '%s',
+   #kmhsPdrJurId 	= '%s',
+   #kmhsPdrProdiId 	= '%s',
+   kmhsPdrAngk 	= '%s',
+   kmhsPdrNiu 	= '%s',
+   kmhsPdrJalurMasuk 	= '%s',
+   kmhsPdrNama 	= '%s',
+   kmhsPdrTmpLahir 	= '%s',
+	#kmhsPdrTglLahir 	= '%s',
+	kmhsPdrJenisKelamin = '%s',
+	kmhsPdrAlamatAsal 	= '%s',
+	kmhsPdrAlamatJogja 	= '%s',
+	kmhsPdrNoTelp 		= '%s',
+	kmhsPdrJmlSaudara 	= '%s',
+	kmhsPdrBank 		= '%s',
+	kmhsPdrRekening 	= '%s',
+	kmhsPdrAgama 		= '%s',
+	kmhsPdrNoKtp 		= '%s',
+	kmhsPdrStatTptTgl 	= '%s',
+	kmhsPdrRmhSaudara 	= '%s',
+	kmhsPdrBiayaKuliah 	= '%s',
+	kmhsPdrBiayaSaudara = '%s',
+	kmhsPdrAktifitas 	= '%s',
+	kmhsPdrTptKerja 	= '%s',
+	kmhsPdrGajiKerja 	= '%s',
+	kmhsPdrJamKerja 	= '%s',
+	kmhsPdrUkt 	= '%s'#,
+	#kmhsPdrJumlahSaudara = '%s',
+	#kmhsPdrJumlahSaudaraDitanggung = '%s',
+	#kmhsPdrJumlahSaudaraBekerja = '%s'
+WHERE 
+	kmhsPdrNiu = '%d'
+";  
+
+$sql['do_update_jumlah_saudara'] = "
+UPDATE 
+	kemahasiswaan_pendaftar
+SET 
+	kmhsPdrJumlahSaudara = '%s',
+	kmhsPdrJumlahSaudaraDitanggung = '%s',
+	kmhsPdrJumlahSaudaraBekerja = '%s'
+WHERE 
+	kmhsPdrNiu = '%d'
+";  
+
+$sql['do_delete'] = "
+DELETE FROM
+	kemahasiswaan_sumber_beasiswa
+WHERE 
+	kmhsSumBeaId = %s   
+";
+
+$sql['do_update_field_tidak_mampu'] = "
+UPDATE 
+  `kemahasiswaan_pendaftar` 
+SET
+  `kmhsPdrTidakMampuFile` = '%s' 
+WHERE `kmhsPdrNiu` = '%s'
+";
+
+$sql['do_update_field_foto'] = "
+UPDATE 
+  `kemahasiswaan_pendaftar` 
+SET
+  `kmhsPdrFotoFile` = '%s' 
+WHERE `kmhsPdrNiu` = '%s'
+";
+
+$sql['do_update_field_kk'] = "
+UPDATE 
+  `kemahasiswaan_pendaftar` 
+SET
+  `kmhsPdrKartuKeluargaFile` = '%s' 
+WHERE `kmhsPdrNiu` = '%s'
+
+";
+
+$sql['do_update_field_rekomendasi_fakultas'] = "
+UPDATE 
+  `kemahasiswaan_pendaftar` 
+SET
+  `kmhsPdrRekomendasiFakultasFile` = '%s' 
+WHERE `kmhsPdrNiu` = '%s'
+
+";
+
+$sql['do_update_field_tidak_beasiswa_lain'] = "
+UPDATE 
+  `kemahasiswaan_pendaftar` 
+SET
+  `kmhsPdrTidakBeasiswaLainFile` = '%s' 
+WHERE `kmhsPdrNiu` = '%s'
+"; 
+
+$sql['do_update_field_aktifitas'] = "
+UPDATE 
+  `kemahasiswaan_aktifitas_mahasiswa` 
+SET
+  `kmhsAktiftFile` = '%s' 
+WHERE `kmhsAktiftMhsId` = '%s' ;
+";
+
+$sql['do_update_field_khs'] = "
+UPDATE 
+  `kemahasiswaan_pendaftar_history_studi` 
+SET
+  `kmhsPdrHsKHSFile` = '%s' 
+WHERE CONCAT(
+    kmhsPdrHsTahun,kmhsPdrHsSemester
+  ) = '%s' 
+  AND `kmhsPdrHsPdrNiu` = '%s'
+";
+
+$sql['get_aktifitas_id'] = "
+SELECT 
+  `kmhsAktiftMhsId` 
+FROM
+  `kemahasiswaan_aktifitas_mahasiswa` 
+WHERE kmhsAktiftPdrNiu = '%s' 
+  AND kmhsAktiftJenisAktifitas = '%s' 
+  AND kmhsAktiftNamaOrg = '%s' 
+  AND kmhsAktiftPeriode = '%s' 
+";
+
+$sql['get_data_syarat_detil'] = "
+SELECT 
+  jenisAktifitasId AS 'id_master',
+  jenisAktifitasNama 'label_master',
+  `syarefdetId` AS 'id_child',
+  syarefdetNilaiText AS 'label_child' 
+FROM
+  `ref_syarat_detail` 
+  JOIN `ref_syarat` 
+    ON syarefId = syarefdetSyarefId 
+  JOIN `ref_jenis_aktifitas` 
+    ON jenisAktifitasSyaratId = syarefId 
+";
+
+$sql['insert_beasiswa_syarat_pendaftar'] = "
+INSERT INTO `beasiswa_syarat_pendaftar` (
+  `beasyapenBeasyaId`,
+  `beasyapenNiu`,
+  `beasyapenBeaId`,
+  `beasyapenSyarefdetId`
+) 
+VALUES
+  (
+    '%s',
+    '%s',
+    '%s',
+    '%s'
+  )
+";
+
+$sql['get_label_jabatan'] = "
+SELECT 
+  `syarefdetNilaiText` 
+FROM
+  `ref_syarat_detail` 
+WHERE syarefdetId = '%s' 
+";
+
+$sql['get_group_user_login'] = "
+SELECT 
+  `GroupId` 
+FROM `gtfw_user_group`
+WHERE UserId = '%s'
+";
+
+$sql['get_status_pendaftaran_beasiswa'] = "
+SELECT 
+  IFNULL(
+    refStatPdrNama,
+    'Belum Mendaftar Beasiswa'
+  ) AS 'status' 
+FROM
+  `kemahasiswaan_pendaftar` 
+  LEFT JOIN `kemahasiswaan_trans_daftar_beasiswa` 
+    ON kmhsPdrNim = kmhsTransDaftBeaPdrNiu 
+  LEFT JOIN `kemahasiswaan_ref_status_pendaftaran_beasiswa` 
+    ON refStatPdrId = kmhsTransDaftBeaStatPdrId 
+WHERE kmhsPdrNim = '%s' 
+LIMIT 1
+";
+
+?>

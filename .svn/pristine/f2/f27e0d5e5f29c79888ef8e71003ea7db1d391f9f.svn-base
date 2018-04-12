@@ -1,0 +1,19 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+
+    <tr>
+        <th style="width:200px">UktNama</th>
+        <td>{UKTNAMA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">UktBobot</th>
+        <td>{UKTBOBOT}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">UktNilaiPenyetaraan</th>
+        <td>{UKTNILAIPENYETARAAN}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

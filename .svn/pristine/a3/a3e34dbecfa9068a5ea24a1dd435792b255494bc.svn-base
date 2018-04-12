@@ -1,0 +1,91 @@
+<?php
+
+$sql["count_salutation"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_salutation"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.salutation_id AS `id`,
+    a.salutation_name AS `name`,
+    a.salutation_status AS `status`,
+    a.salutation_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.`user_real_name`, CONCAT( u1.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_salutation a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_salutation"] = "
+SELECT 
+    a.salutation_id AS `id`,
+    a.salutation_name AS `name`,
+    a.salutation_status AS `status`,
+    a.salutation_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+IF((a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.user_real_name, CONCAT(u1.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert ,
+IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), u2.user_real_name, CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update   
+FROM ref_salutation a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`    
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+WHERE salutation_id = %d
+";
+$sql["insert_salutation"] = "
+INSERT INTO ref_salutation
+(
+    salutation_name,
+    salutation_status,
+    salutation_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_salutation"] = "
+UPDATE ref_salutation
+SET 
+    salutation_name = %s,
+    salutation_status = %s,
+    salutation_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE salutation_id = %d
+";
+$sql["delete_salutation"] = "
+DELETE FROM ref_salutation
+WHERE salutation_id = %d
+";
+$sql["list_salutation"] = "
+SELECT
+    salutation_id AS `id`,
+    salutation_name AS `name`
+FROM
+    ref_salutation
+ORDER BY salutation_name
+";
+
+$sql['check_salutation_name'] = "
+SELECT
+    salutation_id AS `id`
+FROM
+    ref_salutation
+WHERE
+    LOWER(salutation_name) = LOWER(%s)
+    --FILTER--
+";

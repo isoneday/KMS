@@ -1,0 +1,201 @@
+/* CSS Document */
+
+#common {
+	page: A4;
+	size:portrait !important;
+	padding: 0.5cm 0.5cm;
+}
+
+#common-landscape {
+	page: A4;
+	size:landscape !important;
+	padding: 0.5cm 0.5cm;
+}
+
+#page {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	width: 19cm;
+	overflow: hidden;
+	margin: 0px auto 0px 30px;
+	padding: 0px 0px 0px 0px;
+}
+
+#page-landscape {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	width: 27cm;
+	overflow: hidden;
+	margin: 0px auto 0px 30px;
+	padding: 0px 0px 0px 0px;
+}
+
+#page-landscape-laporan-aset {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	width: 33cm;
+	overflow: hidden;
+	margin: 0px auto 0px 30px;
+	padding: 0px 0px 0px 0px;
+}
+
+div .page-break {
+   page-break-after: always;
+}
+
+.headerImg {
+	text-align:center;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.header {
+	border-bottom: 3px double #999999;
+	height: 55px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-align:center;
+}
+
+.header h1 {
+	text-transform:uppercase;
+	font-size: 20pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-align:center;
+}
+
+.header .appName {
+	text-transform:uppercase;
+	font-size: 14pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.header img {
+	float: none;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content {
+	border: 1px solid #FFFFFF;
+	clear: both;
+	margin: 0px auto 0px auto;
+	padding: 20px 0px 0px 0px;
+}
+
+.content h1 {
+	font-size: 14pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	font-weight:bold;
+}
+
+.content .subjudul_1
+{
+	font-size:10pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-transform:capitalize;
+	font-weight:bold;
+}
+
+.content .subjudul_2
+{
+	font-size: 9pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-transform:capitalize;
+	font-weight:bold;
+}
+
+.content h2 {
+	font-size: 12pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content h3 {
+	font-size: 10pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content p {
+	font-size: 12px;
+	text-align: justify;
+	margin: 5px 0px 5px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content .page {
+	border: 1px solid #ffffff;
+	border-collapse: collapse;
+	margin: 0.1cm 0px 0.4cm 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content .page th {
+	border: 1px solid #ffffff;
+	text-align: center;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 0px 5px 5px;
+}
+
+.content .page td {
+	border: 1px solid #ffffff;
+	text-align: left;
+	margin: 0px 0px 0px 0px;
+	padding: 3px 10px 3px 5px;
+}
+
+.content .pageList {
+	border: 1px solid #999999;
+	border-collapse: collapse;
+	margin: 0.1cm 0px 0.4cm 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content .pageList th {
+	border: 1px solid #999999;
+	text-align: center;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 0px 5px 5px;
+	font-weight:normal;
+	background-color:#CCCCCC;
+}
+
+.content .pageList td {
+	border: 1px solid #999999;
+	text-align: left;
+	margin: 0px 0px 0px 0px;
+	padding: 3px 10px 3px 5px;
+}
+
+/*.content table {
+	border: 1px solid #ffffff;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.4cm 0px 0.4cm 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.content th {
+	border: 1px solid #ffffff;
+	text-align: center;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 0px 5px 5px;
+}
+
+.content td {
+	border: 1px solid #ffffff;
+	text-align: left;
+	margin: 0px 0px 0px 0px;
+	padding: 3px 10px 3px 5px;
+}
+*/
+
+/*.table-common {
+	width: 100% !important;
+}*/	

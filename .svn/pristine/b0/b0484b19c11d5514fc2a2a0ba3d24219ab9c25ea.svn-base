@@ -1,0 +1,1614 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <input type="hidden" name="id" value="{ID}" >
+    <input type="hidden" name="full_name" value="{FULL_NAME}" >
+    <input type="hidden" name="parent_number" value="{PARENT_NUMBER}" >
+    <input type="hidden" name="emp_position" value="{EMP_POSITION}" >
+    <input type="hidden" name="emp_unit" value="{EMP_UNIT}" >
+    <div id="tabs-input-officer">
+        <ul>
+            <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <p style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data_app_list" / --> --</p>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="item" -->
+            <li><a href="#{TABS_ID}">{NAME}</a></li>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </ul>
+        <!-- patTemplate:tmpl name="tabs-input-officer-1" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-1">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="crm_status_admin" name="crm_status_admin" value="{CRM_STATUS_ADMIN}" />
+                <input type="hidden" id="crm_status_officer" name="crm_status_officer" value="{CRM_STATUS_OFFICER}" />
+                <input type="hidden" name="crm_officer_id" value="{CRM_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_crm" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_crm" id="create_crm" value="1" {CREATE_CRM} /><label for="create_crm">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_crm" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_crm_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="officer_is_sales"/ --></th>
+                            <td>
+                                <input type="checkbox" name="crm_is_sales" id="crm_is_sales" value="1" {CRM_IS_SALES} /><label for="crm_is_sales">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="crm_is_all" id="view_crm_all_data" value="1" {CRM_IS_ALL} /><label for="view_crm_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_crm_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="crm_is_admin" name="crm_is_admin" value="1" {CRM_IS_ADMIN} /><label for="crm_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_crm_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="crm.officer" submodule="comboCrmOfficer" action="view" name="crm_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="crm_desc" cols="40" rows="1" >{CRM_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-2" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-2">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="hr_status_admin" name="hr_status_admin" value="{HR_STATUS_ADMIN}" />
+                <input type="hidden" id="hr_status_officer" name="hr_status_officer" value="{HR_STATUS_OFFICER}" />
+                <input type="hidden" name="hr_officer_id" value="{HR_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_hr" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_hr" id="create_hr" value="1" {CREATE_HR} /><label for="create_hr">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_hr" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_hr_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="hr_is_all" id="view_hr_all_data" value="1" {HR_IS_ALL} /><label for="view_hr_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_hr_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="hr_is_admin" name="hr_is_admin" value="1" {HR_IS_ADMIN} /><label for="hr_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_hr_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="emp.officer" submodule="comboEmpOfficer" action="view" name="hr_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="hr_desc" cols="40" rows="1" >{HR_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-3" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-3">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="fin_status_admin" name="fin_status_admin" value="{FIN_STATUS_ADMIN}" />
+                <input type="hidden" id="fin_status_officer" name="fin_status_officer" value="{FIN_STATUS_OFFICER}" />
+                <input type="hidden" name="fin_officer_id" value="{FIN_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_fin" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_fin" id="create_fin" value="1" {CREATE_FIN} /><label for="create_fin">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_fin" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_fin_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="fin_is_all" id="view_fin_all_data" value="1" {FIN_IS_ALL} /><label for="view_fin_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_fin_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="fin_is_admin" name="fin_is_admin" value="1" {FIN_IS_ADMIN} /><label for="fin_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="is_finance"/ --></th>
+                            <td>
+                                <input type="checkbox" name="fin_is_finance" id="fin_is_finance" value="1" {FIN_IS_FINANCE} /><label for="fin_is_finance">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="is_accounting"/ --></th>
+                            <td>
+                                <input type="checkbox" name="fin_is_accounting" id="fin_is_accounting" value="1" {FIN_IS_ACCOUNTING} /><label for="fin_is_accounting">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_fa_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="fin.officer" submodule="comboFinOfficer" action="view" name="fin_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="fin_desc" cols="40" rows="1" >{FIN_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-4" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-4">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="fxa_status_admin" name="fxa_status_admin" value="{FXA_STATUS_ADMIN}" />
+                <input type="hidden" id="fxa_status_officer" name="fxa_status_officer" value="{FXA_STATUS_OFFICER}" />
+                <input type="hidden" name="fxa_officer_id" value="{FXA_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_fxa" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_fxa" id="create_fxa" value="1" {CREATE_FXA} /><label for="create_fxa">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_fxa" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_fxa_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="fxa_is_all" id="view_fxa_all_data" value="1" {FXA_IS_ALL} /><label for="view_fxa_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_fxa_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="fxa_is_admin" name="fxa_is_admin" value="1" {FXA_IS_ADMIN} /><label for="fxa_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_fa_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="fxa.officer" submodule="comboFxaOfficer" action="view" name="fxa_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="fxa_desc" cols="40" rows="1" >{FXA_DESC}</textarea>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="asset_varian_data" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width:270px;"><!-- patTemplate:gtfwgetlang key="asset_varian" / --></th>
+                            <td>
+                                <div id="div_asset">
+                                    <!-- patTemplate:gtfwrendermodule module="fxa.ref.asset.varian" submodule="comboAssetVarian" action="view" name="asset_var_id"  / -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>
+                                <input type="button" class="btn-add" id="div_attachment" name="attachment" value="<!-- patTemplate:gtfwgetlang key="select" / -->" onClick="addAttachment()"/>						
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>
+                                <table class="table-form" style="width: 60%;">
+                                    <tbody id="body_attachment">
+                                        <tr>
+                                            <th style="width:8%;"><!-- patTemplate:gtfwgetlang key="action" / --></th>   
+                                            <th><!-- patTemplate:gtfwgetlang key="asset_varian" / --></th>					
+                                        </tr>
+                                        <!-- patTemplate:tmpl name="data_emp" type="condition" conditionvar="IS_EMPTY" -->
+                                        <!-- patTemplate:sub condition="YES" -->
+                                        <tr id="hidden_attach">
+                                            <td colspan="3" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="data_not_found" / --> --</td>
+                                        </tr>
+                                        <!-- /patTemplate:sub -->
+                                        <!-- patTemplate:sub condition="NO" -->
+                                        <!-- patTemplate:tmpl name="html_attachment" -->
+                                        {HTML_ATTACHMENT}
+                                        <!-- /patTemplate:tmpl -->
+                                        <!-- /patTemplate:sub -->
+                                        <!-- /patTemplate:tmpl -->
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-5" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-5">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="inv_status_admin" name="inv_status_admin" value="{INV_STATUS_ADMIN}" />
+                <input type="hidden" id="inv_status_officer" name="inv_status_officer" value="{INV_STATUS_OFFICER}" />
+                <input type="hidden" name="inv_officer_id" value="{INV_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_inv" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_inv" id="create_inv" value="1" {CREATE_INV} /><label for="create_inv">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_inv" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_inv_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="inv_is_all" id="view_inv_all_data" value="1" {INV_IS_ALL} /><label for="view_inv_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_inv_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="inv_is_admin" name="inv_is_admin" value="1" {INV_IS_ADMIN} /><label for="inv_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_inv_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="inv.officer" submodule="comboInvOfficer" action="view" name="inv_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="inv_desc" cols="40" rows="1" >{INV_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-6" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-6">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="ga_status_admin" name="ga_status_admin" value="{GA_STATUS_ADMIN}" />
+                <input type="hidden" id="ga_status_officer" name="ga_status_officer" value="{GA_STATUS_OFFICER}" />
+                <input type="hidden" name="ga_officer_id" value="{GA_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_ga" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_ga" id="create_ga" value="1" {CREATE_GA} /><label for="create_ga">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_ga" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_ga_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_is_all" id="view_ga_all_data" value="1" {GA_IS_ALL} /><label for="view_ga_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_ga_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="ga_is_admin" name="ga_is_admin" value="1" {GA_IS_ADMIN} /><label for="ga_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_ga_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="ga.officer" submodule="comboGaOfficer" action="view" name="ga_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="ga_desc" cols="40" rows="1" >{GA_DESC}</textarea>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="approval_status" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_personal_vehicle"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_personalveh" id="ga_approval_personalveh" value="1" {IS_PERSONAL_VEH} /><label for="ga_approval_personalveh">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_goods_stock_transaction"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_goodsstocktrf" id="ga_approval_goodsstocktrf" value="1" {IS_GOODS_STOCK_TRANS} /><label for="ga_approval_goodsstocktrf">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_goods_usage_request"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_goodsusagereq" id="ga_approval_goodsusagereq" value="1" {IS_GOODS_USAGE_REQ} /><label for="ga_approval_goodsusagereq">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_delivery"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_delivery" id="ga_approval_delivery" value="1" {IS_APPROVAL_DELIVERY} /><label for="ga_approval_delivery">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_mail_number"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_mailnum" id="ga_approval_mailnum" value="1" {IS_MAIL_NUMBER} /><label for="ga_approval_mailnum">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_document_number"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_docnum" id="ga_approval_docnum" value="1" {IS_DOCUMENT_NUMBER} /><label for="ga_approval_docnum">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_parking_reimburse"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_parkreimburse" id="ga_approval_parkreimburse" value="1" {IS_PARKING_REIMBURSE} /><label for="ga_approval_parkreimburse">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_fuel_reimburse"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_fuelreimburse" id="ga_approval_fuelreimburse" value="1" {IS_FUEL_REIMBURSE} /><label for="ga_approval_fuelreimburse">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_toll_reimburse"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_tollreimburse" id="ga_approval_tollreimburse" value="1" {IS_TOLL_REIMBURSE} /><label for="ga_approval_tollreimburse">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_taxi_voucher"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_taxivou" id="ga_approval_taxivou" value="1" {IS_TAXI_VOUCHER} /><label for="ga_approval_taxivou">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_taxi_voucher_detail_realization"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_taxivoudetreal" id="ga_approval_taxivoudetreal" value="1" {IS_VOUCHER_REALIZATION} /><label for="ga_approval_taxivoudetreal">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_stamp_duty"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_stampduty" id="ga_approval_stampduty" value="1" {IS_STAMP_DUTY} /><label for="ga_approval_stampduty">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_vehicle_contract"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_vehiclecont" id="ga_approval_vehiclecont" value="1" {IS_VEHICLE_CONTRACT} /><label for="ga_approval_vehiclecont">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_vehicle_fuel"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_vehiclefuel" id="ga_approval_vehiclefuel" value="1" {IS_VEHICLE_FUEL} /><label for="ga_approval_vehiclefuel">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_vehicle_service"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_vehicleserv" id="ga_approval_vehicleserv" value="1" {IS_VEHICLE_SERVICE} /><label for="ga_approval_vehicleserv">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="approval_vehicle_cost"/ --></th>
+                            <td>
+                                <input type="checkbox" name="ga_approval_vehiclecost" id="ga_approval_vehiclecost" value="1" {IS_VEHICLE_COST} /><label for="ga_approval_vehiclecost">&nbsp;&nbsp;<!-- patTemplate:gtfwgetlang key="can_approve"/ --></label>          
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-7" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-7">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="prod_status_admin" name="prod_status_admin" value="{PROD_STATUS_ADMIN}" />
+                <input type="hidden" id="prod_status_officer" name="prod_status_officer" value="{PROD_STATUS_OFFICER}" />
+                <input type="hidden" name="prod_officer_id" value="{PROD_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_prod" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_prod" id="create_prod" value="1" {CREATE_PROD} /><label for="create_prod">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_prod" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_prod_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="prod_is_all" id="view_prod_all_data" value="1" {PROD_IS_ALL} /><label for="view_prod_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_prod_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="prod_is_admin" name="prod_is_admin" value="1" {PROD_IS_ADMIN} /><label for="prod_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_prod_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="prod.officer" submodule="comboProdOfficer" action="view" name="prod_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="prod_desc" cols="40" rows="1" >{PROD_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-8" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-8">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="proj_status_admin" name="proj_status_admin" value="{PROJ_STATUS_ADMIN}" />
+                <input type="hidden" id="proj_status_officer" name="proj_status_officer" value="{PROJ_STATUS_OFFICER}" />
+                <input type="hidden" name="proj_officer_id" value="{PROJ_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_proj" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_proj" id="create_proj" value="1" {CREATE_PROJ} /><label for="create_proj">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_proj" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_proj_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="proj_is_all" id="view_proj_all_data" value="1" {PROJ_IS_ALL} /><label for="view_proj_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_proj_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="proj_is_admin" name="proj_is_admin" value="1" {PROJ_IS_ADMIN} /><label for="proj_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_proj_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="proj.officer" submodule="comboProjOfficer" action="view" name="proj_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="proj_desc" cols="40" rows="1" >{PROJ_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-9" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-9">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="pcs_status_admin" name="pcs_status_admin" value="{PCS_STATUS_ADMIN}" />
+                <input type="hidden" id="pcs_status_officer" name="pcs_status_officer" value="{PCS_STATUS_OFFICER}" />
+                <input type="hidden" name="pcs_officer_id" value="{PCS_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_pcs" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_pcs" id="create_pcs" value="1" {CREATE_PCS} /><label for="create_pcs">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_pcs" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_pcs_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="pcs_is_all" id="view_pcs_all_data" value="1" {PCS_IS_ALL} /><label for="view_pcs_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_pcs_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="pcs_is_admin" name="pcs_is_admin" value="1" {PCS_IS_ADMIN} /><label for="pcs_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_pcs_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="pcs.officer" submodule="comboPcsOfficer" action="view" name="pcs_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="pcs_desc" cols="40" rows="1" >{PCS_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-10" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-10">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="qc_status_admin" name="qc_status_admin" value="{QC_STATUS_ADMIN}" />
+                <input type="hidden" id="qc_status_officer" name="qc_status_officer" value="{QC_STATUS_OFFICER}" />
+                <input type="hidden" name="qc_officer_id" value="{QC_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_qc" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_qc" id="create_qc" value="1" {CREATE_QC} /><label for="create_qc">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_qc" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_qc_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="qc_is_all" id="view_qc_all_data" value="1" {QC_IS_ALL} /><label for="view_qc_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_qc_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="qc_is_admin" name="qc_is_admin" value="1" {QC_IS_ADMIN} /><label for="qc_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_qc_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="qc.officer" submodule="comboQcOfficer" action="view" name="qc_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="qc_desc" cols="40" rows="1" >{QC_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-11" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-11">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="sales_status_admin" name="sales_status_admin" value="{SALES_STATUS_ADMIN}" />
+                <input type="hidden" id="sales_status_officer" name="sales_status_officer" value="{SALES_STATUS_OFFICER}" />
+                <input type="hidden" name="sales_officer_id" value="{SALES_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_sales" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_sales" id="create_sales" value="1" {CREATE_SALES} /><label for="create_sales">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_sales" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_sales_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="sales_is_all" id="view_sales_all_data" value="1" {SALES_IS_ALL} /><label for="view_sales_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_sales_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="sales_is_admin" name="sales_is_admin" value="1" {SALES_IS_ADMIN} /><label for="sales_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_sales_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="sales.officer" submodule="comboSalesOfficer" action="view" name="sales_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="sales_desc" cols="40" rows="1" >{SALES_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-12" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-12">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="cms_status_admin" name="cms_status_admin" value="{CMS_STATUS_ADMIN}" />
+                <input type="hidden" id="cms_status_officer" name="cms_status_officer" value="{CMS_STATUS_OFFICER}" />
+                <input type="hidden" name="cms_officer_id" value="{CMS_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_cms" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_cms" id="create_cms" value="1" {CREATE_CMS} /><label for="create_cms">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_cms" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_cms_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="cms_is_all" id="view_cms_all_data" value="1" {CMS_IS_ALL} /><label for="view_cms_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_cms_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="cms_is_admin" name="cms_is_admin" value="1" {CMS_IS_ADMIN} /><label for="cms_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_cms_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="cms.officer" submodule="comboCmsOfficer" action="view" name="cms_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="cms_desc" cols="40" rows="1" >{CMS_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+        <!-- patTemplate:tmpl name="tabs-input-officer-13" type="simplecondition" requiredvars="DIV_ID" -->
+        <div id="tabs-input-officer-13">
+            <div class="content-box-form" style="height:350px;">
+                <input type="hidden" id="taf_status_admin" name="taf_status_admin" value="{TAF_STATUS_ADMIN}" />
+                <input type="hidden" id="taf_status_officer" name="taf_status_officer" value="{TAF_STATUS_OFFICER}" />
+                <input type="hidden" name="taf_officer_id" value="{TAF_OFFICER_ID}" />
+                <table class="table-edit-popup" style="width: 100%;">
+                    <!-- patTemplate:tmpl name="create_taf" type="condition" conditionvar="IS_EMPTY" -->
+                    <!-- patTemplate:sub condition="YES" -->
+                    <tr>
+                        <th style="width: 270px; font-weight: bold;"><!-- patTemplate:gtfwgetlang key="are_you_sure_want_to_create_this_officer"/ --> ?</th>
+                        <td>
+                            <input type="checkbox" name="create_taf" id="create_taf" value="1" {CREATE_TAF} /><label for="create_taf">&nbsp;<!-- patTemplate:gtfwgetlang key="yes"/ --></label>            
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- patTemplate:sub condition="NO" -->
+                    <tr style="display:none;">
+                        <th style="width: 270px; font-weight: bold;"></th>
+                        <td>
+                            <input type="text" name="create_taf" value="1" />
+                        </td>
+                    </tr>
+                    <!-- /patTemplate:sub -->
+                    <!-- /patTemplate:tmpl -->
+
+                    <tbody id="row_taf_officer">
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="main_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="employee" / --></th>
+                            <td>
+                                <b>{FULL_NAME}</b><br/><br/>
+                                <ul>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="emp_number" / --> : {PARENT_NUMBER}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="position" / --> : {EMP_POSITION}</p></li>
+                                    <li><p><!-- patTemplate:gtfwgetlang key="unit_dept" / --> : {EMP_UNIT}</p></li>
+                                </ul>
+
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="condition"/ --></th>
+                            <td>
+                                <input type="checkbox" name="taf_is_all" id="view_taf_all_data" value="1" {TAF_IS_ALL} /><label for="view_taf_all_data">&nbsp;<!-- patTemplate:gtfwgetlang key="view_all_data"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr id="officer_taf_is_admin" class="">
+                            <th style="width: 270px;">&nbsp;</th>
+                            <td>
+                                <input type="checkbox" id="taf_is_admin" name="taf_is_admin" value="1" {TAF_IS_ADMIN} /><label for="taf_is_admin">&nbsp;<!-- patTemplate:gtfwgetlang key="officer_is_admin"/ --></label>            
+                            </td>
+                        </tr>
+                        <tr class="subhead">
+                            <th colspan="2"><!-- patTemplate:gtfwgetlang key="parent_information" / --></th>
+                        </tr>
+                        <tr>
+                            <th style="width: 270px;"><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                            <td>
+                                <div id="div_taf_off_id">
+                                    <!-- patTemplate:gtfwrendermodule module="taf.officer" submodule="comboTafOfficer" action="view" name="taf_off_id"/ -->
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+                            <td>
+                                <textarea name="taf_desc" cols="40" rows="1" >{TAF_DESC}</textarea>            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /patTemplate:tmpl -->
+
+
+    </div>
+    <div class="form-footer" style="padding:14px 297px 15px!important;">  
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="1"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="2"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="3"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>         
+    </div>
+</form>
+<script type="text/javascript">
+    $(function(){
+        $("#tabs-input-officer").tabs();
+
+        //crm
+        if($('#crm_status_admin').val()== '1'){
+            $('#officer_crm_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_crm_is_admin').addClass('hidden_field');
+        }
+        if($('#crm_status_officer').val()== '1'){
+            $('#row_crm_officer').removeClass('hidden_field');
+        }else{
+            $('#row_crm_officer').addClass('hidden_field');
+        }
+        toggle_hide('crm','#view_crm_all_data','#officer_crm_is_admin');
+        toggle_hide('crm_off','#create_crm','#row_crm_officer');
+        //end of crm
+        
+        //hr
+        if($('#hr_status_admin').val()== '1'){
+            $('#officer_hr_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_hr_is_admin').addClass('hidden_field');
+        }
+        if($('#hr_status_officer').val()== '1'){
+            $('#row_hr_officer').removeClass('hidden_field');
+        }else{
+            $('#row_hr_officer').addClass('hidden_field');
+        }
+        toggle_hide('hr','#view_hr_all_data','#officer_hr_is_admin');
+        toggle_hide('hr_off','#create_hr','#row_hr_officer');
+        //end of hr
+        
+        //fin
+        if($('#fin_status_admin').val()== '1'){
+            $('#officer_fin_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_fin_is_admin').addClass('hidden_field');
+        }
+        if($('#fin_status_officer').val()== '1'){
+            $('#row_fin_officer').removeClass('hidden_field');
+        }else{
+            $('#row_fin_officer').addClass('hidden_field');
+        }
+        toggle_hide('fin','#view_fin_all_data','#officer_fin_is_admin');
+        toggle_hide('fin_off','#create_fin','#row_fin_officer');
+        //end of fin
+        
+        //fxa
+        if($('#fxa_status_admin').val()== '1'){
+            $('#officer_fxa_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_fxa_is_admin').addClass('hidden_field');
+        }
+        if($('#fxa_status_officer').val()== '1'){
+            $('#row_fxa_officer').removeClass('hidden_field');
+        }else{
+            $('#row_fxa_officer').addClass('hidden_field');
+        }
+        toggle_hide('fxa','#view_fxa_all_data','#officer_fxa_is_admin');
+        toggle_hide('fxa_off','#create_fxa','#row_fxa_officer');
+        //end of fxa
+        
+        //inv
+        if($('#inv_status_admin').val()== '1'){
+            $('#officer_inv_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_inv_is_admin').addClass('hidden_field');
+        }
+        if($('#inv_status_officer').val()== '1'){
+            $('#row_inv_officer').removeClass('hidden_field');
+        }else{
+            $('#row_inv_officer').addClass('hidden_field');
+        }
+        toggle_hide('inv','#view_inv_all_data','#officer_inv_is_admin');
+        toggle_hide('inv_off','#create_inv','#row_inv_officer');
+        //end of inv
+        //ga
+        if($('#ga_status_admin').val()== '1'){
+            $('#officer_ga_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_ga_is_admin').addClass('hidden_field');
+        }
+        if($('#ga_status_officer').val()== '1'){
+            $('#row_ga_officer').removeClass('hidden_field');
+        }else{
+            $('#row_ga_officer').addClass('hidden_field');
+        }
+        toggle_hide('ga','#view_ga_all_data','#officer_ga_is_admin');
+        toggle_hide('ga_off','#create_ga','#row_ga_officer');
+        //end of ga
+        //prod
+        if($('#prod_status_admin').val()== '1'){
+            $('#officer_prod_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_prod_is_admin').addClass('hidden_field');
+        }
+        if($('#prod_status_officer').val()== '1'){
+            $('#row_prod_officer').removeClass('hidden_field');
+        }else{
+            $('#row_prod_officer').addClass('hidden_field');
+        }
+        toggle_hide('prod','#view_prod_all_data','#officer_prod_is_admin');
+        toggle_hide('prod_off','#create_prod','#row_prod_officer');
+        //end of prod
+        //proj
+        if($('#proj_status_admin').val()== '1'){
+            $('#officer_proj_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_proj_is_admin').addClass('hidden_field');
+        }
+        if($('#proj_status_officer').val()== '1'){
+            $('#row_proj_officer').removeClass('hidden_field');
+        }else{
+            $('#row_proj_officer').addClass('hidden_field');
+        }
+        toggle_hide('proj','#view_proj_all_data','#officer_proj_is_admin');
+        toggle_hide('proj_off','#create_proj','#row_proj_officer');
+        //end of proj
+        //pcs
+        if($('#pcs_status_admin').val()== '1'){
+            $('#officer_pcs_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_pcs_is_admin').addClass('hidden_field');
+        }
+        if($('#pcs_status_officer').val()== '1'){
+            $('#row_pcs_officer').removeClass('hidden_field');
+        }else{
+            $('#row_pcs_officer').addClass('hidden_field');
+        }
+        toggle_hide('pcs','#view_pcs_all_data','#officer_pcs_is_admin');
+        toggle_hide('pcs_off','#create_pcs','#row_pcs_officer');
+        //end of pcs
+        //qc
+        if($('#qc_status_admin').val()== '1'){
+            $('#officer_qc_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_qc_is_admin').addClass('hidden_field');
+        }
+        if($('#qc_status_officer').val()== '1'){
+            $('#row_qc_officer').removeClass('hidden_field');
+        }else{
+            $('#row_qc_officer').addClass('hidden_field');
+        }
+        toggle_hide('qc','#view_qc_all_data','#officer_qc_is_admin');
+        toggle_hide('qc_off','#create_qc','#row_qc_officer');
+        //end of qc
+        //sales
+        if($('#sales_status_admin').val()== '1'){
+            $('#officer_sales_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_sales_is_admin').addClass('hidden_field');
+        }
+        if($('#sales_status_officer').val()== '1'){
+            $('#row_sales_officer').removeClass('hidden_field');
+        }else{
+            $('#row_sales_officer').addClass('hidden_field');
+        }
+        toggle_hide('sales','#view_sales_all_data','#officer_sales_is_admin');
+        toggle_hide('sales_off','#create_sales','#row_sales_officer');
+        //end of sales
+        //cms
+        if($('#cms_status_admin').val()== '1'){
+            $('#officer_cms_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_cms_is_admin').addClass('hidden_field');
+        }
+        if($('#cms_status_officer').val()== '1'){
+            $('#row_cms_officer').removeClass('hidden_field');
+        }else{
+            $('#row_cms_officer').addClass('hidden_field');
+        }
+        toggle_hide('cms','#view_cms_all_data','#officer_cms_is_admin');
+        toggle_hide('cms_off','#create_cms','#row_cms_officer');
+        //end of cms
+        //taf
+        if($('#taf_status_admin').val()== '1'){
+            $('#officer_taf_is_admin').removeClass('hidden_field');
+        }else{
+            $('#officer_taf_is_admin').addClass('hidden_field');
+        }
+        if($('#taf_status_officer').val()== '1'){
+            $('#row_taf_officer').removeClass('hidden_field');
+        }else{
+            $('#row_taf_officer').addClass('hidden_field');
+        }
+        toggle_hide('taf','#view_taf_all_data','#officer_taf_is_admin');
+        toggle_hide('taf_off','#create_taf','#row_taf_officer');
+        //end of taf
+    });
+    
+    function toggle_hide(type, id_checkbox, id_field){
+        $(id_checkbox).click(function(){
+            if(this.checked){
+                $(id_field).removeClass('hidden_field');
+                if(type =='crm'){
+                    $('#crm_status_admin').val('1');
+                }
+                if(type =='crm_off'){
+                    $('#crm_status_officer').val('1');
+                }
+                if(type =='hr'){
+                    $('#hr_status_admin').val('1');
+                }
+                if(type =='hr_off'){
+                    $('#hr_status_officer').val('1');
+                }
+                if(type =='fxa'){
+                    $('#fxa_status_admin').val('1');
+                }
+                if(type =='fxa_off'){
+                    $('#fxa_status_officer').val('1');
+                }
+                if(type =='inv'){
+                    $('#inv_status_admin').val('1');
+                }
+                if(type =='inv_off'){
+                    $('#inv_status_officer').val('1');
+                }
+                if(type =='ga'){
+                    $('#ga_status_admin').val('1');
+                }
+                if(type =='ga_off'){
+                    $('#ga_status_officer').val('1');
+                }
+                if(type =='prod'){
+                    $('#prod_status_admin').val('1');
+                }
+                if(type =='prod_off'){
+                    $('#prod_status_officer').val('1');
+                }
+                if(type =='proj'){
+                    $('#proj_status_admin').val('1');
+                }
+                if(type =='proj_off'){
+                    $('#proj_status_officer').val('1');
+                }
+                if(type =='pcs'){
+                    $('#pcs_status_admin').val('1');
+                }
+                if(type =='pcs_off'){
+                    $('#pcs_status_officer').val('1');
+                }
+                if(type =='qc'){
+                    $('#qc_status_admin').val('1');
+                }
+                if(type =='qc_off'){
+                    $('#qc_status_officer').val('1');
+                }
+                if(type =='sales'){
+                    $('#sales_status_admin').val('1');
+                }
+                if(type =='sales_off'){
+                    $('#sales_status_officer').val('1');
+                }
+                if(type =='cms'){
+                    $('#cms_status_admin').val('1');
+                }
+                if(type =='cms_off'){
+                    $('#cms_status_officer').val('1');
+                }
+                if(type =='taf'){
+                    $('#taf_status_admin').val('1');
+                }
+                if(type =='taf_off'){
+                    $('#taf_status_officer').val('1');
+                }
+            }else{
+                $(id_field).addClass('hidden_field');
+                if(type =='crm'){
+                    $('#crm_status_admin').val('0');
+                    $('[name=crm_is_admin]').removeAttr('checked');                
+                }
+                if(type =='crm_off'){
+                    $('#crm_status_officer').val('0');
+                    $('[name=create_crm]').removeAttr('checked');                
+                }
+                if(type =='hr'){
+                    $('#hr_status_admin').val('0');
+                    $('[name=hr_is_admin]').removeAttr('checked');                
+                }
+                if(type =='hr_off'){
+                    $('#hr_status_officer').val('0');
+                    $('[name=create_hr]').removeAttr('checked');                
+                }
+                if(type =='fxa'){
+                    $('#fxa_status_admin').val('0');
+                    $('[name=fxa_is_admin]').removeAttr('checked');                
+                }
+                if(type =='fxa_off'){
+                    $('#fxa_status_officer').val('0');
+                    $('[name=create_fxa]').removeAttr('checked');                
+                }
+                if(type =='inv'){
+                    $('#inv_status_admin').val('0');
+                    $('[name=inv_is_admin]').removeAttr('checked');                
+                }
+                if(type =='inv_off'){
+                    $('#inv_status_officer').val('0');
+                    $('[name=create_inv]').removeAttr('checked');                
+                }
+                if(type =='ga'){
+                    $('#ga_status_admin').val('0');
+                    $('[name=ga_is_admin]').removeAttr('checked');                
+                }
+                if(type =='ga_off'){
+                    $('#ga_status_officer').val('0');
+                    $('[name=create_ga]').removeAttr('checked');                
+                }
+                if(type =='prod'){
+                    $('#prod_status_admin').val('0');
+                    $('[name=prod_is_admin]').removeAttr('checked');                
+                }
+                if(type =='prod_off'){
+                    $('#prod_status_officer').val('0');
+                    $('[name=create_prod]').removeAttr('checked');                
+                }
+                if(type =='proj'){
+                    $('#proj_status_admin').val('0');
+                    $('[name=proj_is_admin]').removeAttr('checked');                
+                }
+                if(type =='proj_off'){
+                    $('#proj_status_officer').val('0');
+                    $('[name=create_proj]').removeAttr('checked');                
+                }
+                if(type =='pcs'){
+                    $('#pcs_status_admin').val('0');
+                    $('[name=pcs_is_admin]').removeAttr('checked');                
+                }
+                if(type =='pcs_off'){
+                    $('#pcs_status_officer').val('0');
+                    $('[name=create_pcs]').removeAttr('checked');                
+                }
+                if(type =='qc'){
+                    $('#qc_status_admin').val('0');
+                    $('[name=qc_is_admin]').removeAttr('checked');                
+                }
+                if(type =='qc_off'){
+                    $('#qc_status_officer').val('0');
+                    $('[name=create_qc]').removeAttr('checked');                
+                }
+                if(type =='sales'){
+                    $('#sales_status_admin').val('0');
+                    $('[name=sales_is_admin]').removeAttr('checked');                
+                }
+                if(type =='sales_off'){
+                    $('#sales_status_officer').val('0');
+                    $('[name=create_sales]').removeAttr('checked');                
+                }
+                if(type =='cms'){
+                    $('#cms_status_admin').val('0');
+                    $('[name=cms_is_admin]').removeAttr('checked');                
+                }
+                if(type =='cms_off'){
+                    $('#cms_status_officer').val('0');
+                    $('[name=create_cms]').removeAttr('checked');                
+                }
+                if(type =='taf'){
+                    $('#taf_status_admin').val('0');
+                    $('[name=taf_is_admin]').removeAttr('checked');                
+                }
+                if(type =='taf_off'){
+                    $('#taf_status_officer').val('0');
+                    $('[name=create_taf]').removeAttr('checked');                
+                }
+            }
+        });
+    }
+    
+    function addAttachment(){	
+        serAttachmentVal	= $('#asset_var_id').val();
+        serAttachmentText	= $('#asset_var_id option:selected').text();	
+		
+        var title_del = "<!-- patTemplate:gtfwgetlang key="delete" / -->";        
+        var title_asset = "<!-- patTemplate:gtfwgetlang key="select_asset_varian" / -->";        
+        var title_asset_exist = "<!-- patTemplate:gtfwgetlang key="asset_varian_is_exist" / -->";  
+        
+        if(serAttachmentVal == ''){ alert(title_asset); return false; }
+        if($('#serAttachmentVal_'+serAttachmentVal).length>0){
+            alert(title_asset_exist);
+            $('#asset_var_id').val('');
+            return false;
+        }		 
+        $('#hidden_attach').hide();
+        line=document.getElementById('body_attachment').rows.length;
+			
+        $('<tr class="table-common-even"><td align="center" width="8%" class="links"><a href="javascript:removeAttachment('+line+')"  id="deleteAttachment_'+line+'" class="confirm_delete btn-delete-icon" title="'+title_del+'"></a>'+
+            '</td><td><input type="hidden" id="serAttachmentVal_'+serAttachmentVal+'" name=serAttachmentVal[] value="'+serAttachmentVal+'"/> \n\<input type="hidden" id="serAttachmentText_'+line+'" name=serAttachmentText[] value="'+serAttachmentText+'"/>'+serAttachmentText+
+            '</tr>'
+    ).appendTo($('#body_attachment'));
+			
+        $('#asset_var_id').val('');
+    }
+	
+    function removeAttachment(line){
+        theTable=document.getElementById('body_attachment');
+        var l=theTable.rows.length
+        if(line<l){
+            for(i=parseInt(line)+1;i<=l;i++){
+                //$('#serNo_'+i)			.attr('id','serNo_'+(i-1)).text(i-1);
+                $('#serAttachmentText_'+i)	.attr('id', 'serAttachmentText_'+(i-1));
+                $('#serAttachmentName_'+i)	.attr('id', 'serAttachmentName_'+(i-1));
+                $('#serAttachmentVal_'+i)	.attr('id', 'serAttachmentVal_'+(i-1));		
+                $('#deleteAttachment_'+i)	.attr('id', 'deleteAttachment_'+(i-1)).attr('href',"javascript:removeAttachment('"+(i-1)+"')");
+            }
+            var no_neww = $('#body_attachment tr').length;        
+            if(no_neww <= 3){
+                $('#hidden_attach').show();
+            }  
+        }		
+        theTable.deleteRow(line);
+    }
+        
+</script>
+<style>
+    .hidden_field{
+        display: none;
+    }
+</style>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,4 @@
+A less error occured trying to build your bundle. Please paste the error below in an issue for us at http://github.com/twitter/bootsrap! thanks!
+
+
+{"type":"Parse","message":"Syntax Error on line 207","index":6048,"filename":"bootstrap.css","line":207,"column":0,"extract":["@fluidGridGutterWidth:    2.127659574%;","@iconSpritePath: img/glyphicons-halflings.png;","@iconWhiteSpritePath: img/glyphicons-halflings-white.png;"]}

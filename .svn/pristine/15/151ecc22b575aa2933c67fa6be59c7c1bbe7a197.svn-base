@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoDeleteType extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessType', 'ref.structural.position.type');
+        
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.structural.position.type', 'type', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

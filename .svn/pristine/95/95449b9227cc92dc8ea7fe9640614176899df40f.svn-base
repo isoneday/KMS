@@ -1,0 +1,24 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+<tbody>
+    <tr>
+    	<td colspan="2">
+	        <!-- patTemplate:tmpl name="button_update" visibility="visible" -->
+            <a class="xhr dest_subcontent-element btn-edit-has-title" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="privacypolicy" / -->">
+				Edit Privacy Policy
+            </a>
+	        <!-- /patTemplate:tmpl -->
+    	</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Name</th>
+        <td><h3>{NAME}</h3></td>
+    </tr>
+    <tr>
+        <th style="width:200px">Info</th>
+        <td>{INFO}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

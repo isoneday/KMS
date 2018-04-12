@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewlistInterview extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_list_interview.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+
+        $universitas_id = $_GET['id']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+
+        $listInterview = $ObjApplicantInterview->listInterview($universitas_id);
+
+        $listGroup = $ObjApplicantInterview->listGroup($this->user);
+		
+        $i = 0;
+		foreach($listInterview as $var)
+			{
+			if($var['aplikanbeasiswa_beasiswa_id'] == $id_beasiswa)
+				{
+				$data[$i]['aplikan_id'] = $var['aplikan_id'];
+                $data[$i]['aplikan_nim'] = $var['aplikan_nim'];
+				$data[$i]['aplikan_nama'] = $var['aplikan_nama'];
+				$data[$i]['aplikan_angkatan'] = $var['aplikan_angkatan'];
+				$data[$i]['aplikan_tanggal_lahir'] = $var['aplikan_tanggal_lahir'];
+				$data[$i]['aplikan_telepon'] = $var['aplikan_telepon'];
+				$data[$i]['aplikan_tanggal_registrasi'] = $var['aplikan_tanggal_registrasi'];
+                $data[$i]['statuspendaftaran_name'] = $var['statuspendaftaran_name'];
+				$i++;
+				}
+			}
+				 
+        return compact('data', 'id_beasiswa','universitas_id','listGroup');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+       $no = 1;
+        if (!empty($data) AND count($data) > 0) {
+			$this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            foreach ($data as $val) {
+                $val['no'] = $no;
+                
+                if($listGroup['usergroup_group_id'] == "1" OR $listGroup['usergroup_group_id'] == "3" ){
+                    $this->mrTemplate->addVar('dataurl', 'LIST_GROUP_EMPTY', 'NO');
+                    $group['url_detail'] = GtfwDispt()->GetUrl('applicant.interview', 'detailApplicant', 'view', 'html') . 
+                    '&id=' . $val['aplikan_id'] .
+                    '&id_beasiswa=' . $this->user
+                    ;
+
+                    $group['url'] = GtfwDispt()->GetUrl('applicant.interview', 'approveApplicant', 'view', 'html') . 
+                    '&id=' . $val['aplikan_id'] .
+                    '&nim=' . $val['aplikan_nim'] .
+                    '&id_beasiswa=' . $id_beasiswa
+                    ;
+
+                    
+                } else {
+                    $this->mrTemplate->addVar('dataurl', 'LIST_GROUP_EMPTY', 'YES');
+                    $group['url_detail'] = GtfwDispt()->GetUrl('applicant.interview', 'detailApplicant', 'view', 'html') . 
+                    '&id=' . $val['aplikan_id'] .
+                    '&id_beasiswa=' . $this->user
+                    ;
+                }
+
+                $this->mrTemplate->addVars('dataurl', $group);
+                
+                $this->mrTemplate->addVars('item', $val);
+                $this->mrTemplate->parseTemplate('item', 'a');
+                $no++;
+                
+            }
+
+
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+                
+		
+    }
+
+}
+
+?>

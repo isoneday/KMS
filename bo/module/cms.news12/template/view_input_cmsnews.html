@@ -1,0 +1,79 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="title" / --></th>
+        <td>
+            <input type="text" name="title" value="{TITLE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="content" / --></th>
+        <td>
+            <textarea name="content" cols="50" rows="2" >{CONTENT}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="snippet" / --></th>
+        <td>
+            <textarea name="snippet" cols="50" rows="2" >{SNIPPET}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="photo" / --></th>
+        <td>
+            <textarea name="photo" cols="50" rows="2" >{PHOTO}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="photo_origin" / --></th>
+        <td>
+            <input type="text" name="photo_origin" value="{PHOTO_ORIGIN}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="photo_path" / --></th>
+        <td>
+            <input type="text" name="photo_path" value="{PHOTO_PATH}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="photo_type" / --></th>
+        <td>
+            <input type="text" name="photo_type" value="{PHOTO_TYPE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="photo_size" / --></th>
+        <td>
+            <input type="text" name="photo_size" value="{PHOTO_SIZE}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="status" / --></th>
+        <td>
+            <input type="radio" name="status" id="status1" value="1" checked="" /> <label for="status1"><!-- patTemplate:gtfwgetlang key="yes" / --></label>
+            <input type="radio" name="status" id="status0"  value="0" /> <label for="status0"><!-- patTemplate:gtfwgetlang key="no" / --></label>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="newscat_id" / --></th>
+        <td>
+            <input type="number" name="newscat_id" value="{NEWSCAT_ID}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

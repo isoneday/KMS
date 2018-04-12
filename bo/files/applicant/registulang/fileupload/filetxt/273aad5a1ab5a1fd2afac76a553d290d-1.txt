@@ -1,0 +1,271 @@
+tujuan
+                                    HANDOUT
+                              PELATIHAN OPERATOR
+                          SISTEM INFORMASI PEMBAYARAN
+                            MODEL PEMBAYARAN MANUAL
+                                DISUSUN OLEH :
+                             Tim Academic Software
+                                       
+                                       
+                             SAINT MARY'S COLLEGE
+                                     2016
+                                       
+Daftar Isi
+Daftar Isi	2
+Pendahuluan	3
+1.	Tinjauan Sistem	3
+2.	Tujuan	3
+Flowchart	4
+1.	Setting Data Master Pembayaran	4
+2.	Pendaftaran Mahasiswa Baru	5
+3.	Persiapan Pembayaran Registrasi dan Heregistrasi	6
+4.	Pembayaran Registrasi dan Heregistrasi	7
+Panduan Teknis	8
+1.	Setting Data Master Pembayaran	8
+1.1.	Setting Jenis Pembayaran	8
+1.2.	Setting Jenis Biaya	9
+2.	Persiapan Fase Pembayaran	10
+2.1.	Input dan Aktifkan Data Periode	10
+2.2.	Setting Tarif Pendaftaran PMB	11
+2.3.	Setting Tarif Pembayaran Mahasiswa	12
+2.4.	Setting Tagihan	14
+3.	Proses Pembayaran Tagihan	18
+3.1.	Proses Verifikasi Pembayaran	19
+4.	Proses Unverifikasi Pembayaran	19
+5.	Pembatalan Pembayaran Tagihan	20
+6.	Proses Pembayaran Sumbangan	20
+6.1.	Setting Tarif Sumbangan	20
+6.2.	Pembayaran Sumbangan	21
+6.3.	Verifikasi Pembayaran Sumbangan	23
+7.	Proses Pembatalan Pembayaran Sumbangan	24
+
+Pendahuluan
+Tinjauan Sistem
+Sistem Informasi Pembayaran Mahasiswa merupakan sistem informasi berbasis web yang dikembangkan untuk meningkatkan kualitas penyelenggaraan kegiatan pembayaran mahasiswa. Penyelenggaraan ini mencakup persiapan pembayaran, pengelolaan tarif pembayaran, proses pembayaran dan penanganan proses pembayaran mahasiswa yang terintegrasi dengan Sistem Informasi Registrasi dan Sistem Informasi Akademik.
+Hasil akhir dari sistem ini adalah terciptanya sebuah sistem yang mendukung kegiatan pembayaran mahasiswa. Diharapkan dengan adanya sistem ini, pengelolaan pembayaran dapat berlangsung lebih efektif dan efisien.
+Tujuan
+Tujuan dari dilakukannya pelatihan Sistem Informasi Pembayaran bagi operator adalah sebagai berikut :
+  1. Melatih para operator untuk dapat menggunakan aplikasi dalam mengelola pembayaran mahasiswa.
+  2. Operator dapat memantau pembayaran mahasiswa melalui aplikasi gtPembayaran sekaligus dapat mendapatkan laporan mengenai pembayaran yang dilakukan oleh mahasiswa.
+Pada handout ini, akan dijelaskan langkah-langkah setting yang perlu dilakukan melalui aplikasi gtPembayaran terkait dengan proses pendaftaran, pembayaran registrasi, dan pembayaran heregistrasi.
+Flowchart
+Sistem Informasi Pembayaran adalah sebuah sistem informasi yang dikhususkan untuk mengelola dan memonitor proses pembayaran mahasiswa mulai dari penerimaan mahasiswa baru, registrasi mahasiswa baru, dan herregistrasi mahasiswa lama.
+  1. Setting Data Master Pembayaran
+
+  2. Pendaftaran Mahasiswa Baru
+
+  3. Persiapan Pembayaran Registrasi dan Heregistrasi
+
+  4. Pembayaran Registrasi dan Heregistrasi
+
+Panduan Teknis
+  1. Setting Data Master Pembayaran
+Sebelum implementasi proses pembayaran mahasiswa, terlebih dahulu harus disiapkan settingan data master yang menjadi dasar langkah yang harus dilakukan sebelum proses pembayaran dilakukan.
+Setting Jenis Pembayaran
+Dalam suatu kegiatan pembayaran di suatu kampus, seorang calon mahasiswa maupun mahasiswa (baik lama atau baru) akan melakukan pembayaran sesuai dengan jenis pembayaran yang dikenakan padanya.
+Setting jenis pembayaran ini merupakan pengaturan jenis-jenis data pembayaran yang akan dilakukan oleh calon mahasiswa maupun mahasiswa tersebut. Pada menu setting jenis pembayaran ini dapat dibuat dan diatur jenis-jenis pembayaran apa saja yang harus dibayarkan disertai dengan integrasi atau hubungan sistem pembayaran dengan sistem lain yang mempunyai keterkaitan atas data yang digunakan. 
+Pada aplikasi sistem pembayaran, jenis pembayaran ini terintegrasi dengan aplikasi sistem Registrasi dan Akademik. Selain itu dilengkapi pula dengan pilihan mahasiswa dengan status tertentu yang dikenakan atas suatu jenis pembayaran.
+Untuk setting Jenis Pembayaran langkah yang dilakukan adalah sebagai berikut :
+   1.    Masuk ke Aplikasi gtPembayaran
+   2.    Pada menu utama pilih menu Referensi Pembayaran--> Jenis Pembayaran.
+   3.    Pada halaman Jenis Pembayaran, tekan tombol Tambah.
+   4.    Isikan data-data yang dibutuhkan seperti :
+   * Kode jenis pembayaran : kode untuk jenis pembayaran.
+   * Nama jenis pembayaran : penamaan jenis pembayaran
+   * Tipe jenis pembayaran : pilihan tipe jenis pembayaran sistem informasi berdasarkan jenis pembayaran.
+   * Integrasi : pilihan integrasi dari jenis pembayaran sistem informasi pembayaran yang berhubungan dengan aplikasi lain. Untuk memilih lakukan dengan mencentang pada kotak yang tersedia.
+   * Status mahasiswa : pilihan status mahasiswa untuk suatu jenis pembayaran. Untuk memilih lakukan dengan mencentang pada kotak yang tersedia.
+   5.    Tekan Simpan untuk menyimpan penambahan atau tekan Batal untuk membatalkan penambahan data.
+                                       
+
+
+Catatan:
+  * Terdapat tiga tipe jenis pembayaran, yaitu reguler, periode, dan pendaftaran.
+  * Jenis pembayaran dengan tipe pendaftaran merupakan jenis pembayaran yang terkait dengan pendaftaran dan digunakan pada saat setting tarif pendaftaran (dijelaskan pada Bab 2.2).
+  * Jenis pembayaran dengan tipe reguler dan periode merupakan jenis pembayaran yang terkait dengan pembayaran mahasiswa baik per angkatan maupun per periode.
+
+Setting Jenis Biaya
+Jenis biaya merupakan detail komponen-komponen biaya yang harus dibayarkan oleh mahasiswa dari suatu jenis pembayaran. Pengaturan jenis biaya juga dikelompokan berdasarkan kelompok jenis biaya tertentu sesuai dengan ketetapan kampus, dilengkapi pula dengan pengaturan aktif atau tidaknya suatu jenis biaya yang akan digunakan.
+Untuk setting Jenis Biaya langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pada menu utama pilih menu Referensi Pembayaran--> Jenis Biaya.
+  3. Pada halaman Jenis Biaya, tekan tombol Tambah.
+  4. Isikan data-data yang dibutuhkan seperti :
+   * nama kelompok jenis biaya : pilihan kelompok untuk jenis biaya
+   * nama jenis biaya : penamaan jenis biaya
+   * status : pilihan aktif atau tidak suatu jenis biaya. Untuk pengaktifan jenis biaya centang pada kolom yang tersedia.
+  5. Tekan Simpan untuk menyimpan penambahan atau tekan Batal untuk membatalkan.
+
+  1. Persiapan Fase Pembayaran
+  1.1. Input dan Aktifkan Data Periode
+Data Periode adalah data periode semester aktif dimana mahasiswa melakukan kegiatan pembayaran. Sebuah periode yang di aktifkan pada aplikasi sistem pembayaran merupakan periode yang terhubung dengan periode pada aplikasi lain yang terintegrasi. Hendaknya periode yang diaktifkan pada aplikasi sistem pembayaran dan aplikasi lain yang terintegrasi adalah sama, karena apabila tidak sama periodenya maka kemungkinan terjadi kegagalan dalam integrasi data dapat terjadi. Penginputan periode baru dan pengaktifan periode pembayaran dilakukan sebelum proses kegiatan pembayaran berlangsung.
+Untuk input dan aktifkan data periode langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pada menu utama pilih menu Referensi Pembayaran--> Periode.
+  3. Pada halaman Periode, tekan tombol Tambahuntuk menginputkan data periode baru . 
+  4. Selanjutnya akan tampil halaman TambahPeriode, isikan data-data yang diperlukan:
+   * Tahun Periode : pilihan Tahun Periodebaru.
+   * Jenis Periode:pilihanJenis Periode. 
+   * Status Set Aktif :pilihan untuk mengaktifkan periode. Untuk mengaktifkan periode centang pada kolom yang tersedia.
+  5. Tekan Simpan untuk menyimpan penambahan atau tekan Batal untuk membatalkan.
+
+
+Catatan:
+  * Pastikan periode yang diaktifkan pada aplikasi sistem Pembayaran sudah sama dengan aplikasi sistem lain yang terintegrasi, yaitu aplikasi sistem Registrasi dan Akademik.
+  5.1. Setting Tarif Pendaftaran PMB
+Tarif pendaftaran untuk pembelian formulir harus ditentukan terlebih dahulu sebelum panitia PMB memulai proses PMB. Langkah-langkah untuk set tariff pendaftaran adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pilih menu ReferensiPembayaranSettingTarifPendaftaran
+  3. Klik tombol Tambah
+
+  4. Isikan data-data tarif pendaftaran yang akan dibuat.
+  5. Klik tombol Tambah untuk menambahkan detil komponen biaya yang harus dibayarkan oleh pendaftar pada saat membeli formulir pendaftaran.
+  6. Klik tombol Simpan untuk menyimpan tarif pendaftaran.
+Secara otomatis akan mengikuti tanggal masa pendaftaran, karena normalnya pembelian formulir tidak meleibihi masa pendaftaran
+  6.1. Setting Tarif Pembayaran Mahasiswa
+Dalam suatu periode pembayaran mahasiswa (baik baru maupun lama) akan membayarkan sejumlah uang kepada bagian pengelola pembayaran mahasiswa. Pembayaran dikelola dengan aplikasi sistem pembayaran mahasiswa dan datanya akan terhubung dengan database registrasi dan akademik untuk mengaktifkan status Registrasi mahasiswa. Besarnya tarif pembayaran akan bisa berbeda antara satu prodi dengan prodi yang lain, antara satu angkatan dengan angkatan yang lain. Pengaturan tarif pembayaran mahasiswa ini dilakukan setiap awal periode baru dan berlaku secara global untuk suatu jurusan prodi maupun angkatan.
+Untuk Setting Tarif Pembayaran Mahasiswa langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pada menu utama pilih menu Referensi Pembayaran Setting Tarif Pembayaran Mahasiswa.
+  3. Pada halaman Setting Tarif Pembayaran Mahasiswa, tekan tombol Tambah.
+  4. Pada tampilan halaman tambah setting tarif pembayaran mahasiswa, isikan data-data yang diperlukan seperti :
+   * Angkatan/ periode masuk : settingan tarif pembayaran berdasarakan tahun angkatan periode masuk mahasiswa.
+   * Jenis pembayaran : pilihan jenis pembayaran.
+   * UKT : pilihan jenis UKT
+   * Gelombang : gelombang pendaftaran masuk.
+   * Strata : tingkat pendidikan.
+   * Fakultas : keterangan fakultas yang di setting tarif pembayarannya.
+   * Program studi : pilihan program studi.
+   * Jalur Masuk : pilihan settingan tarif pembayaran berdasarakan jalur masuk.
+   * Tanggal pembayaran awal dan akhir : keterangan tanggal awal dimulai dan batas akhir  pembayaran.
+   * Waktu kuliah : pilihan waktu untuk kuliah.
+
+  5. Detail Pembayaran : untuk menambah komponen-komponen pembayaran, tekan tombol Tambah. Kemudian pilih Jenis-jenis biaya yang harus dibayarkan pada setting pembayaran ini dengan menekan tombol (pilih). Tutup popup jika Jenis biaya sudah selesai dipilih.
+                                       
+   Jenis biaya yang yang sebelumnya sudah dipilih akan tampil pada halaman tambah setting tarif pembayaran dan isikan nominal jenis biaya pembayaran yang harus dibayarkan.
+
+  6. TekanSimpan untuk menyimpan tarif pembayaran atau tekan Batal untuk membatalkan perubahan.
+Catatan:
+  * Setting Tarif Pembayaran Mahasiswa, merupakan pengelolaan tarif pembayaran yang harus dibayarkan oleh mahasiswa. Pengaturan tarif pembayaran mahasiswa ini dilakukan setiap awal periode baru dan berlaku secara global untuk suatu jurusan prodi maupun angkatan. Dalam suatu kondisi tertentu, misalnya terdapat perubahan tarif pembayaran pada suatu prodi atau angkatan, maka pada aplikasi sistem pembayaran mahasiswa ini disedikan fasilitas untuk melakukan perubahan data tarif pembayaran dengan cara cepat dan  mudah. Fasilitas ini terdapat pada menu Laporan Daftar Tarif.
+  6.1. Setting Tagihan
+Setting tagihan menampilkan sejumlah tarif tagihan yang berlaku per-mahasiswa, dan sebelumnya sudah tersetting secara global pada menu setting tarif pembayaran mahasiswa. Untuk menampilkan tarif tagihan lakukan pencarian untuk data yang akan ditampilkan.  
+Untuk Setting tagihan langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pada menu utama pilih menu Referensi Tagihan Setting Tagihan.
+  3. Pada halaman Setting Tagihan,Untuk menampilkan data Tagihan mahasiswa tertentu, Filter data-data yang akan ditampilkan dengan menekan tombol Cari.
+                                       
+  4. Tombol Filter Detail merupakan tombol tambahan untuk pencarian data lebih akurat, terlebih dalam keadaan khusus. 
+   Terdapat pula filter tambahan yaitu :
+     *    Jalur Pembayaran : Pilihan berdasarkan jalur masuk mahasiswa
+     *    Gelombang : Pilihan berdasarkan Gelombang masuk mahasiswa
+     *    Status Mahasiswa :  Status mahasiswa yang melakukan pembayaran
+     *    Bill Number Menggunakan: Pilihan untuk memunculkan billing number pembayaran berdasarkan NIM,  No Test atau No. Pendaftaran
+     *    Status Bayar : Pilihan Status Bayar mahasiswa
+     *    Tagihan Custom : Filter Tagihan Custom merupakan fasilitas terhadap kasus khusus, terdiri dari pilihan Set Ulang Tagihan yaitu untuk set ulang tagihan yang sebelumnya sudah di ubah, Sedangkan Jangan Set Ulang Tagihan yaitu set tagihan agar perubahan yang telah dilakukan tidak kembali ke asal tagihan sebelumnya.
+   Bill Number Error : pilihan untuk meneruskan atau melewati data mahasiswa yang atributnya menyebabkan billing number error, dan tidak akan disimpan ke bank.
+  5. Setelah menekan tombol Cari pada bagian Pencarian, akan muncul tabel daftar mahasiswa. Selanjutnya tekan tombol untuk melakukan proses simpan tagihan.
+                                       
+Catatan:
+  * Setelah dilakukan proses menyimpan tagihan, status pembayaran Calon Mahasiswa tersebut di aplikasi gtRegistrasi akan menjadi Belum Lunas. Apabila belum melakukan setting tagihan dan belum menyimpan tagihan tersebut, status pembayaran di gtRegistrasi adalah Belum Bayar. Hal ini juga berlaku untuk jenis pembayaran lainnya.
+  * Selama Calon Mahasiswa belum melakukan pembayaran, maka pada saat dilakukan setting tagihan, nama Calon Mahasiswa tersebut akan terus muncul pada tabel tagihan.
+  * Dalam suatu kondisi tertentu, misalnya terdapat perubahan tarif tagihan atau terdapat potongan pembayaran terhadap mahasiswa tertentu, sedangkan tarif tagihan sudah tersimpan, maka pada aplikasi sistem pembayaran mahasiswa ini disediakan fasilitas untuk memudahkan operator dalam melakukan melakukan perubahan tarif tagihan mahasiswa. Untuk merubah tarif tagihan ini dapat dilakukan pada menu Histori Setting Tagihan.
+Menu ini merupakan salah satu fasilitas untuk mengedit data setting tagihan untuk kasus tertentu setelah proses Simpan dan kirim ke Bank dilakukan. Menu edit ini berfungsi dengan syarat mahasiswa tersebut belum melakukan pembayaran. Apabila sudah selesai edit tagihan, maka secara otomatis pula data perubahan tersebut terupdate pada server dan bank.
+Untuk mengedit tarif tagihan melalui menu Histori Setting Tagihan, langkah yang dilakukan adalah sebagai berikut :
+  1. Pada menu utama pilih menu Referensi Tagihan-->Edit Histori Setting Tagihan.
+  2. Lakukan pencarian dari form filter pada halaman Histori Setting Tagihan.
+                                       
+  3. TombolFilter Detail merupakan tombol tambahan untuk pencarian data lebih akurat, terlebih dalam keadaan khusus. 
+   Terdapat pula filter tambahan yaitu :
+     *      Jalur Masuk : Pilihan berdasarkan jalur masuk mahasiswa
+     *      Gelombang : Pilihan berdasarkan Gelombang masuk mahasiswa
+     *      Status Mahasiswa :  Status mahasiswa yang melakukan pembayaran
+     *      Status Bayar : Pilihan keterangan status bayar, terdiri dari Sudah Verifikasi dan Belum Terverifikasi.
+     *      Status Edit : Pilihan keterangan status edit yang dilakukan, terdiri dari Belum diedit dan Sudah di edit.
+  4. Dari hasil proses pencarian data mahasiswa, dan telah ditampilkan data mahasiswa tersebut, pilih tombol Edit pada kolom Aksi.
+                                       
+  5. Selanjutnya akan muncul tampilan pop up halaman edit data tagihan mahasiswa.Berikut adalah halaman untuk edit data tagihan mahasiswa yang akan di ubah data tagihannya.
+                                       
+  6. Tombol Simpan untuk menyimpan hasil perubahan data tagihan, dan perubahan ini juga akan terupdate pada secara otomatis pada server kampus dan bank.
+  1. Proses Pembayaran Tagihan
+Proses pengelolaan data pembayaran mahasiswa dilakukan melalui aplikasi gtPembayaran. Proses pembayaran ini akan menghasilkan data mengenai mana mahasiswa yang telah melakukan registrasi dan mana yang belum. Data pembayaran digunakan untuk men-generate NIM bagi mahasiswa baru, dan menjadi prasyarat melaksanakan KRS bagi mahasiswa lama.
+Syarat pra-kondisi yang harus terpenuhi sebelum menjalankan proses pembayaran mahasiswa adalah sebagai berikut.
+  1. Setting tarif pembayaran telah dibuat
+  2. Setting tagihan pembayaran mahasiswa dan menyimpan tagihan tersebut telah dilakukan.
+  3. Periode yang diaktifkan antara aplikasi gtRegistrasi dan gtFinansi Pembayaran telah sama.
+  4. Calon Mahasiswa sudah melakukan pembayaran melalui bank dan mendapat kuitansi bukti pembayaran.
+Setelah Calon Mahasiswa menunjukkan kuitansi bukti pembayaran, langkah selanjutnya adalah melakukan pembayaran manual sehingga pembayaran Calon Mahasiswa tersebut dapat segera dilakukan. Langkah-langkah untuk melakukan pengelolaan pembayaran registrasi mahasiswa melalui gtPembayaran adalah sebagai berikut.
+  1. Pilih menu PembayaranTagihanPembayaran Tagihan Manual.
+  2. Masukkan Nomor Tes atau No Pendaftaran pada kotak pencarian, kemudian tekan tombol Cari.
+  3. Pada jendela Pembayaran Tagihan Manual, akan tampil tagihan mahasiswa, kemudian klik tombol Bayar.
+
+  4. Selanjutnya akan muncul halaman pop upBayar Tagihan, cek data tagihannya. Apabila sudah sesuai, tekan tombol Bayar.
+                                       
+  4.1. Proses Verifikasi Pembayaran
+Setelah proses pembayaran dilakukan, selanjutnya petugas harus melakukan verifikasi pembayaran agar data pembayaran dan status pembayaran valid dan terkirim ke aplikasi lain yang terkait.
+Langkah-langkah untuk melakukan verifikasi pembayaran adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pilih menu PembayaranTagihanVerifikasiPembayaranTagihan
+  3. Isikan nomor pembayaran, lalu klik tombol Tampilkan.
+  4. Terakhir, klik tombol Verifikasi.
+
+  1. Proses Unverifikasi Pembayaran
+Apabila ternyata terdapat kesalahan pembayaran tagihan, sebelum proses pembatalan bisa dilakukan, petugas harus terlebih dahulu melakukan proses unverifikasi pembayaran.
+Langkah-langkah untuk unverifikasi pembayaran adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pilih menu PembayaranTagihanUnverifikasiPembayaranTagihan
+  3. Isikan nomor pembayaran, lalu klik tombol Tampilkan.
+  4. Terakhir, klik tombol Unverifikasi.
+
+  1. Pembatalan Pembayaran Tagihan
+Apabila ada kesalahan dalam pembayaran, maka pembayaran manual dapat dibatalkan kembali, dengan sebelumnya melakukan unverifikasi pembayaran terlebih dahulu. Langkah-langkah untuk melakukan pembatalan pembayaran tagihan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pilih menu Pembayaran Tagihan  Batal Pembayaran Tagihan.
+  3. Cari data mahasiswa yang akan dibatalkan pembayaran tagihannya berdasarkan nomor pembayaran pada bagian Pencarian.
+  4. Setelah data muncul, klik tombol Batalkan Kuitansi.
+  1. Proses Pembayaran Sumbangan
+  1.1. Setting Tarif Sumbangan
+Setting Tarif Sumbangan merupakan pengelolaan tarif sumbangan yang berlaku untuk mahasiswa baru yang telah melakukan registrasi. Tarif sumbangan yang sudah disusun oleh bagian keuangan selanjutnya diinputkan secara manual per-mahasiswa pada menu data mahasiswa.
+Untuk proses Setting Tarif Sumbangan langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran.
+  2. Pada menu utama pilih menu Referensi Akademik -->Data Mahasiswa.
+  3. Pada halaman data mahasiswa, lakukan pencarian dan tampilkan data mahasiswa yang akan di inputkan nominal tarif sumbangannya.
+
+  4. Selanjutnya tekan tombol  edit pada kolom Aksi, untuk mengedit dan input nominal sumbangannya. Setelah selesai input nominal sumbangan, tekan tombol Simpan, untuk menyimpan tarif sumbangan.
+
+ tujuan 4.1. Pembayaran Sumbangan
+Pembayaran Sumbangan merupakan pengelolaan pembayaran oleh mahasiswa baru dan dilakukan secara manual kepada bagian keuangan. Transaksi yang dilakukan secara manual ini sebagai fasilitas untuk memudahkan melakukan transaksi pembayaran yang tidak dapat dilakukan melalui bank karena biaya tagihan yang dikirim ke bank sudah standar, sedangkan kemungkinan biaya besaran sumbangan berbeda-beda.  
+Syarat pra-kondisi yang harus terpenuhi sebelum menjalankan proses pembayaran sumbangan adalah :
+  * Data mahasiswa baru telah dientrikan.
+  * Tarif Sumbangan telah dibuat pada menu Data Mahasiswa.
+  * Periode yang diaktifkan antara aplikasi pembayaran dan aplikasi lain yang terintegrasi telah sama.
+Untuk proses pembayaran sumbangan langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran.
+  2. Pada menu utama pilih menu Pembayaran Sumbangan Sumbangan.
+  3. Inputkan NIM/Nomor Tes/Nama mahasiswa, tekan tombol Cari pada form pencarian, untukmencari data mahasiswa yang akan melakukan pembayaran.
+  4. Jika berhasil maka data akan langsung ditampilkan, seperti gambar berikut ini:
+
+  5. Pada halaman Sumbangan akan ditampilkan informasi pembayaran sumbangan seperti total sumbangan yang harus dibayar, sumbangan yang sudah dibayarkan, serta kekurangan sumbangan yang harus dibayarkan. Terdapat filter pilihan yang wajib dipilih, yaitu :
+   * Periode : pilihan periode pembayaran sumbangan mahasiswa baru.
+   * Rekening : pilihan rekening bank sebagai tujuan pengiriman pembayaran.
+   Selain itu, terdapat form isian nominal angsuran yang digunakan untuk menginputkan jumlah pembayaran angsuran sumbangan mahasiswa. Tekan tombol Cetakuntuk mendapatkan nomor kuitansi, nomor kuitansi ini akan digunakan pada proses verifikasi pembayaran sekaligus sebagai tanda bukti bahwa pembayaran telah dilakukan. 
+   Jika berhasil cetak maka akan langsung ditampilkan seperti gambar di bawah ini:
+                                       
+   Selain mendapatkan Nomor Kuitansi, bukti pembayaran juga dapat dicetak dalam bentuk hardcopy. Tekan tombol .
+  5.1. Verifikasi Pembayaran Sumbangan
+Langkah selanjutnya setelah melakukan proses cetak kuitansi dan telah mendapatkan nomor kuitansi adalah verifikasi sumbangan. Verifikasi sumbangan menandakan bahwa sudah sah-nya pembayaran yang dilakukan oleh mahasiswa. 
+Untuk Verifikasi sumbangan langkah yang dilakukan adalah sebagai berikut :
+  1. Masuk ke Aplikasi gtPembayaran
+  2. Pada menu utama pilih menu Pembayaran Sumbangan --> Verifikasi Sumbangan
+  3. Inputkan No. kuitansi pembayaran yang sebelumnya sudah dicetak pada langkah pembayaran sumbangan, pada halaman verifikasi pembayaran. Tekan tombol Tampilkan.
+  4. Hasil tampilan halaman verifikasi sumbangan :
+                                       
+  5. Untuk Verifikasi pembayaran klik tombol Verifikasi. Verifikasi yang berhasil maka mahasiswa tersebut sudah berhasil dalam tahap proses pembayaran sumbangannya.
+  1. Proses Pembatalan Pembayaran Sumbangan
+Proses Pembatalan pembayaran sumbangan merupakan proses untuk membatalkan suatu transaksi pembayaran sumbangan yang sudah dilakukan. Dengan catatan, pembayaran yang akan dibatalkan belum diverifikasi atau apabila sudah terjadi verifikasi maka pembayaran tersebut harus di unverifikasi terlebih dahulu.Unverifikasi pembayaran sumbangan oleh mahasiswa merupakan proses membatalkan verifikasi atau pengesahan atas pembayaran yang dilakukan oleh mahasiswa yang sudah diverifikasi sebelumnya.
+Untuk Membatalkan Pembayaran Sumbangan Mahasiswa langkah yang dilakukan adalah sebagai berikut :
+  1. Lakukan proses Unverifikasi pembayaran sumbangan terlebih dahulu pada menu :Pembayaran Sumbangan --> Unverifikasi Sumbangan. 
+  2. Inputkan no. kuitansi pembayaran pada halaman Unverifikasi Sumbangan, dan tekan tombol Tampilkan. Akan tampil informasi pembayaran yang sudah diverifikasi sebelumnya, selanjutnya tekan tombol Unverifikasi.
+
+  3. Setelah melakukan proses Unverifikasi Sumbangan, selanjutnya dapat dilakukan proses pembatalan sumbangan. Pembatalan sumbangan dilakukan pada menu :PembayaranSumbanganBatalSumbangan. Pada halaman BatalPembayaranSumbangan, inputkan nomor kuitansi pembayaran yang akan dibatalkan.
+  4. Akan muncul form detail batal pembayaran sumbangan, tekan tombol BatalkanKuitansi untuk membatalkan transaksi pembayaran sumbangan.
+                                       

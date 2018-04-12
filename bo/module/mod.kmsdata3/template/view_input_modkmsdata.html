@@ -1,0 +1,84 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="data" / --></th>
+        <td>
+            <input type="text" name="data" value="{DATA}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmsdata_userid" / --></th>
+        <td>
+            <input type="text" name="kmsdata_userid" value="{KMSDATA_USERID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmsdata_idkategori" / --></th>
+        <td>
+            <input type="text" name="kmsdata_idkategori" value="{KMSDATA_IDKATEGORI}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmsdata_keyword" / --></th>
+        <td>
+            <input type="text" name="kmsdata_keyword" value="{KMSDATA_KEYWORD}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_enc" / --></th>
+        <td>
+            <input type="text" name="filedata_enc" value="{FILEDATA_ENC}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_origin" / --></th>
+        <td>
+            <input type="text" name="filedata_origin" value="{FILEDATA_ORIGIN}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_txt" / --></th>
+        <td>
+            <input type="text" name="filedata_txt" value="{FILEDATA_TXT}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_path" / --></th>
+        <td>
+            <input type="text" name="filedata_path" value="{FILEDATA_PATH}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_type" / --></th>
+        <td>
+            <input type="text" name="filedata_type" value="{FILEDATA_TYPE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="filedata_size" / --></th>
+        <td>
+            <input type="text" name="filedata_size" value="{FILEDATA_SIZE}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="time" / --></th>
+        <td>
+            <input type="text" name="time" value="{TIME}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

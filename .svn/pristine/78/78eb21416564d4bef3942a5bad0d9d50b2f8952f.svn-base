@@ -1,0 +1,63 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+   
+class ViewAddTranskrip extends HtmlResponse
+{
+    function TemplateModule()
+    {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+        $this->SetTemplateFile('view_input_transkrip.html');
+    }
+
+    function ProcessRequest()
+    {   
+        $ObjRegistrasiUlang = GtfwDispt()->load->business('RegistrasiUlang', 'applicant.regist.ulang');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+		$this->aplikanId = $ObjRegistrasiUlang->getAplikanId($this->user);
+
+        $id = $_GET['id']->Integer()->Raw();
+		$elmId = $_GET['elmId']->SqlString()->Raw();
+		
+		$detail = $ObjRegistrasiUlang->getDetailRegistrasiUlang($this->aplikanId);
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0])?$msg[0][0]:NULL;
+        $message['content'] = isset($msg[0][1])?$msg[0][1]:NULL;
+        $message['style'] = isset($msg[0][2])?$msg[0][2]:NULL;
+
+        $nav[0]['url'] = GtfwDispt()->GetUrl('applicant.regist.ulang', 'DetailRegistrasiUlang', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'Registrasi Ulang';
+        $title = empty($id)?GtfwLangText('add'):GtfwLangText('Edit');
+        //$title = "Input Data";
+		Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+
+        
+        return compact( 'user', 'id', 'message', 'elmId','detail');
+    }
+
+    function ParseTemplate($rdata = NULL)
+    {
+		extract($rdata);
+
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        if (!empty($detail)) {
+            $this->mrTemplate->addVars('content', $detail);
+        }
+		if (!empty($id)) {
+			$this->mrTemplate->addVar('dataId', 'IS_EMPTY', 'NO');
+		}else {
+			$this->mrTemplate->addVar('dataId', 'IS_EMPTY', 'YES');
+		}
+		
+		
+		$this->mrTemplate->addVar('content','ID', $id);
+        $this->mrTemplate->addVar('content', 'URL_BACK', GtfwDispt()->GetUrl('applicant.regist.ulang', 'RegistrasiUlang', 'view', 'html') . '&display');
+        $this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('applicant.regist.ulang', 'addTranskrip', 'do', 'json') . '&elmId=' . $elmId);
+    }
+}
+?>

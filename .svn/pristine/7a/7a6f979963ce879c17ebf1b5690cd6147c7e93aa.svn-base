@@ -1,0 +1,50 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessVerificationDokumen 
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjApplicantRanking = GtfwDispt()->load->business('ApplicantRanking');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+		
+        //echo"<pre>";print_r($post);die;
+		$this->ObjApplicantRanking->StartTrans();
+		
+		foreach($post['data'] as $key=>$val){
+			
+			$result = $this->ObjApplicantRanking->updateVerificationRanking($val, $post['appid'], $key);
+			
+		}
+		
+		$this->ObjApplicantRanking->EndTrans($result);   
+		if ($result) {
+			$msg = GtfwLangText('msg_update_success');
+			$css = $this->cssDone;
+		} else {
+			$msg = GtfwLangText('msg_update_fail');
+			$css = $this->cssFail;
+		} 
+		
+		if ($result) {
+            Messenger::Instance()->Send('applicant.ranking', 'ApplicantRanking', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'wali';
+            Messenger::Instance()->Send('applicant.ranking', 'ApplicantRanking', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+    }
+}
+?>

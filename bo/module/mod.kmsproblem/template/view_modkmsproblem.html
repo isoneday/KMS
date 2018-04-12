@@ -1,0 +1,190 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="problem" / --></th>
+        <td><input type="text" name="problemm" value="{PROBLEMM}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="person_request" / --></th>
+        <td><input type="text" name="person_request" value="{PERSON_REQUEST}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="person_solving" / --></th>
+        <td><input type="text" name="person_solving" value="{PERSON_SOLVING}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+          <select name="idstatus">
+                <option value='0'> -- SELECT TYPE -- </option>
+                <option value='1'>selesai</option>
+                <option value='2'>belum selesai</option>
+         </select>
+          
+            <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+        <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+            <a class="popup_modkmsproblem btn-add" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="modkmsproblem" / -->"><!-- patTemplate:gtfwgetlang key="add" / --></a>
+        <!-- /patTemplate:tmpl -->
+
+
+            <a class="btn-excel" href="{URL_EXCEL}" title="Export Excel">Export</a>
+    </div>
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+<table class="table-common">
+<thead>
+    <tr>
+        <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+        <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+        <th>problem</th>
+        <th>person request</th>
+        <th>PIC</th>
+        <th>status</th>
+        <th>person solving</th>
+        <th>note</th>
+        <th>capture problem</th>
+        <th>capture solved </th>
+        <th>solution</th>
+        <th>upload by</th>
+        <th>last upload by</th>
+  
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="11" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td style="text-align: center;">{NO}</td>        
+        <td class="links">
+            <a class="popup_modkmsproblem btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="modkmsproblem" / -->"></a>
+            <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+            <a class="xhr dest_subcontent-element btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="modkmsproblem" / -->"></a>
+            <!-- /patTemplate:tmpl -->
+            <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+            <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{NAME}" ></a>
+            <!-- /patTemplate:tmpl -->            
+            </ul>
+        </td>
+        <td class="id_pembicara" style="{STYLE_JUDUL_VALUE}">{PROBLEMM}</td>
+        <td class="id_pembicara" style="{STYLE_JUDUL_VALUE}">{PERSON_REQUEST}</td>
+        <td class="id_meeting" style="{STYLE_JENIS_VALUE}">{PIC}</td>
+        <td class="id_meeting" style="{STYLE_JENIS_VALUE}">{ID_STATUSPROBLEM}</td>
+        <td class="id_meeting" style="{STYLE_JENISS_VALUE}">{PERSON_SOLVING}</td> 
+        <td class="id_pembicara"  style="{STYLE_UPLOAD_VALUE}"><font color="red">belum ada</font></td>
+ 
+        <td class="id_pembicara" style="{STYLE_PRODUCT_VALUE}">{CATATAN}</td>
+     
+          <td class="id_pembicara" style="{STYLE_PRODUCT_VALUE}">
+           <!--<img width="150px" height="120px" name="button_file" src={FILEPATH}{FILE}>-->
+           <a href="{FILEPATH}{FILE}"  target="_blank"  class="" title="">download</a>
+
+     </td>
+       <td  class="id_pembicara" style="{STYLE_UPLOAD_VALUE}">
+           <!--<img width="150px" height="120px" name="button_file2" src={FILEPATH2}{FILE2}>-->
+          <font color="red">belum ada </font>
+
+     </td>
+       <td class="id_pembicara" style="{STYLE_UPLOAD_VALUE}">
+           <!--<img width="150px" height="120px" name="button_file3" src={FILEPATH3}{FILE3}>-->
+        <font color="red">  belum ada </font>
+
+     </td>
+
+            <td  class="id_pembicara" style="{STYLE_ATC_VALUE}">
+           <!--<img width="150px" height="120px" name="button_file2" src={FILEPATH2}{FILE2}>-->
+           <a href="{FILEPATH2}{FILE2}"  target="_blank"  class="" title="">download</a>
+
+     </td>
+       <td class="id_pembicara" style="{STYLE_ATC_VALUE}">
+           <!--<img width="150px" height="120px" name="button_file3" src={FILEPATH3}{FILE3}>-->
+           <a href="{FILEPATH3}{FILE3}"  target="_blank"  class="" title="">download</a>
+
+     </td>
+     <td>{UPLOADBY}</td>
+          <td>{LASTUPLOADBY}</td>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modkmsproblem" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modkmsproblem" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupModKmsproblem;
+    $('.popup_modkmsproblem').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupModKmsproblem = showGtPopup(url, title);
+        return false;
+    });
+         
+  function setStatus(){
+      var b = $("#idstatus").val();
+      //alert(c);
+      if(b == 2){
+         $('.id_belumselesai').show();
+      } else {
+         $('.id_belumselesai').hide();
+      }
+      if(b == 1){
+         $('.id_selesai').show();
+      } else {
+         $('.id_selesai').hide();
+      }
+  } 
+                               
+</script>
+<!-- /patTemplate:tmpl -->

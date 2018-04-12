@@ -1,0 +1,118 @@
+<!-- patTemplate:tmpl name="content" -->
+<form name="newMessage" method="post" action="{URL_SUBMIT}" class="std_form">
+	<!-- patTemplate:tmpl name="warning_box" visibility="hidden" -->
+	<div class="{CLASS_PESAN}">
+	   {ISI_PESAN}
+	</div>
+	<!-- /patTemplate:tmpl -->
+	<div class="content-box-form" style="height:300px">
+      <table class="table-edit-popup" width="100%">
+            <tr>
+               <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="send_to" / --></th>
+               <td>
+                  <label><input type='checkbox' name='isBroadcast' value='1' onchange="$('#recipientList')[0].broadcast(this)" {BROADCAST_CHECKED}> <!-- patTemplate:gtfwgetlang key="broadcast" / --></label>
+
+                  <div id="BroadcastUserGroup" style="display: {BROADCAST_DISPLAY}">
+                     <div><label><input type='checkbox' onchange="$('#recipientList')[0].broadcastSelectAll(this.checked)"> <!-- patTemplate:gtfwgetlang key="select_all" / --></label></div>
+                     <!-- patTemplate:tmpl name="list_satuan_kerja" --> 
+                     <div style="float: left; border: 1px solid #14ADD7; border-radius: 4px 4px 4px 4px; padding: 3px 6px 0 4px; margin: 2px;"><label style="white-space: nowrap"><input type='checkbox' name='satkerId[]' value="{ID}" onchange="$('#recipientList')[0].broadcastUser(this)" {CHECKED}>{NAME}</label></div>
+                     <!-- /patTemplate:tmpl -->
+                  </div>
+
+                  <input type='text' name='recipientList' id='recipientList'/>
+               </td>
+            </tr>
+            <tr>
+               <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="subject" / --></td>
+               <td><input type='text' name='msg_subject' value='{MSG_SUBJECT}' size='50'></td>
+            </tr>
+            <tr>
+               <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="message" / --></td>
+               <td><textarea name='msg_content' rows='5' cols='50'>{MSG_CONTENT}</textarea></td>
+            </tr>
+      </table>
+        </div>
+    <div class="modal-footer">    
+                  <input type="hidden" name="msg_id" value="{MSG_ID}">
+                  <input type="hidden" name="msg_in_reply_to" value="{MSG_IN_REPLY_TO}">
+                  <input type="hidden" id="send" name="send" value="" />
+                  <input type="submit" id="send_button" name="send_button" value="<!-- patTemplate:gtfwgetlang key="send" / -->" class="btn btn-primary">
+                  <input type="submit" name="save" value="<!-- patTemplate:gtfwgetlang key="save" / -->" class="btn btn-success">
+    </div>
+   </form>
+   
+   <script>
+$(function(){
+    $('#send_button').off('click').on('click', function(){
+        $('#send').val('send');
+    });
+});
+   (function(){
+    
+        
+      var a = $('#recipientList')[0];
+      var userList = {JSON_USERLIST};
+      
+      var satkerList = [];
+      for (var i = 0; i < userList.length; i++)
+         if (satkerList[userList[i].group] == undefined)
+            satkerList[userList[i].group] = [userList[i]];
+         else satkerList[userList[i].group].push(userList[i]);
+      
+      $(a).tokenInput(
+         userList,
+         {
+            theme: 'facebook',
+            preventDuplicates: true,
+            propertyToSearch: "complete",
+            hintText: "Masukan nama user...",
+            noResultsText: "User tidak ditemukan",
+            searchingText: "Mencari...",
+            tokenFormatter: function(item) { return "<li>" + item.name + "</li>" },
+            prePopulate: {JSON_RECIPIENTLIST}
+         }
+      );
+      
+      a.broadcast = function (Obj)
+      {
+         var subject = Obj.form.msg_subject;
+         var prefix = '{BROADCAST_PREFIX}';
+         var prefixed = (subject.value.substr(0,prefix.length) == prefix);
+         
+         if (Obj.checked)
+         {
+            if (!prefixed) subject.value = prefix + subject.value;
+            return $('#BroadcastUserGroup').slideDown('slow');
+         }
+         else if (prefixed) subject.value = subject.value.substr(prefix.length);
+         
+         $('input[name="satkerId[]"]', a.form).each(function(){
+            if(!this.checked) return;
+            this.checked = false;
+            this.onchange();
+         });
+         //$('#BroadcastUserGroup input').get(0).checked = false;
+         $('#BroadcastUserGroup').slideUp('slow',function(){$('#token-input-recipientList').focus()});
+      }
+      
+      a.broadcastUser = function (Obj)
+      {
+        console.log(satkerList);
+         var group = satkerList[Obj.value];
+         if (group == undefined) return;
+         for (var i = 0; i < group.length; i++)
+            $(a).tokenInput((Obj.checked)?'add':'remove', group[i]);
+         $('#token-input-recipientList').blur();
+      }
+      
+      a.broadcastSelectAll = function (isChecked)
+      {
+         $('input[name="satkerId[]"]', a.form).each(function(){
+            if(this.checked == isChecked) return;
+            this.checked = isChecked;
+            this.onchange();
+         });
+      }
+   })();
+   </script>
+<!-- /patTemplate:tmpl -->

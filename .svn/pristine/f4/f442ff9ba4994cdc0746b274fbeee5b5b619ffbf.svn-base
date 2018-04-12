@@ -1,0 +1,338 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<script>
+    $("#tabs-personaldata").tabs();
+    var tabs = ["biodata","ortu","saudara","aktifitas","prestasi","akademik","lampiran","beasiswa"];
+    var factive = '{TAB_ACTIVE}';
+    if (factive != "") {
+        var tab_active = tabs.indexOf(factive) + 1;
+        $("#tabs-personaldata > ul > li:nth-child("+tab_active+") a").trigger('click');
+        console.log(tab_active);
+    }
+</script>
+<div class="content-box-form">
+    <div id="tabs-personaldata">
+        <ul>
+            <li><a href="#tabs-personaldata-1">Biodata</a></li>
+            <li><a href="#tabs-personaldata-2">Orang Tua/Wali</a></li>
+            <li><a href="#tabs-personaldata-3">Saudara</a></li>
+            <li><a href="#tabs-personaldata-4">Aktifitas</a></li>
+            <li><a href="#tabs-personaldata-5">Data Prestasi Non Akademik</a></li>
+            <li><a href="#tabs-personaldata-6">IPK</a></li>
+            <li><a href="#tabs-personaldata-7">Lampiran</a></li>
+            <li><a href="#tabs-personaldata-8">Beasiswa</a></li>
+        </ul>
+        <div id="tabs-personaldata-1">
+            <!-- patTemplate:tmpl name="biodata" -->
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            <h3 style="display: inline-block;">Biodata &nbsp;</h3>
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Nim</th>
+                        <td>{NIM}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Angkatan</th>
+                        <td>{ANGKATAN}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Universitas</th>
+                        <td>{UNIVERSITAS_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Fakultas</th>
+                        <td>{FAKULTAS_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jurusan</th>
+                        <td>{JURUSAN_NAME}</td>
+                    </tr>
+                     <tr>
+                        <th style="width:200px">Program Pendidikan</th>
+                        <td>{PRODI_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jenjang Pendidikan</th>
+                        <td>{JENJANGPENDIDIKAN_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Nama</th>
+                        <td>{NAMA}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Email</th>
+                        <td>{EMAIL}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Jenis Kelamin</th>
+                        <td>{JENIS_KELAMIN}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tempat Lahir</th>
+                        <td>{TEMPAT_LAHIR}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tanggal Lahir</th>
+                        <td>{TANGGAL_LAHIR}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Agama</th>
+                        <td>{AGAMA_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">No Ktp</th>
+                        <td>{NO_KTP}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Telepon</th>
+                        <td>{TELEPON}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Alamat</th>
+                        <td>{ALAMAT}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tempat Tinggal</th>
+                        <td>{TEMPATTINGGAL_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Pembiayaan Kuliah</th>
+                        <td>{PEMBIAYAANKULIAH_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Sumber Info</th>
+                        <td>{SUMBERINFO_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:200px">Tanggal Registrasi</th>
+                        <td>{TANGGAL_REGISTRASI}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-2">
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="6">
+                            <h3 style="display: inline-block;">Data Orang Tua/Wali &nbsp;</h3>
+                            <!-- patTemplate:tmpl name="btnwali" -->
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                            <!-- /patTemplate:tmpl -->
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Nama dan Keterangan</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Pendidikan Terakhir</th>
+                        <th>Pekerjaan</th>
+                        <th>Penghasilan</th>
+                        <th>Status Wali</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataorangtuawali" -->
+                    <tr>
+                        <td><b>{ORTU_NAMA}</b> - {ORTU_JABATAN}</td>
+                        <td>{ORTU_TGL_LHR}</td>
+                        <td>{ORTU_PENDIDIKAN_NAMA}</td>
+                        <td>{ORTU_PEKERJAAN_NAMA}</td>
+                        <td>{ORTU_PENGHASILAN}</td>
+                        <td>{ORTU_STATUS}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+        </div>
+        <div id="tabs-personaldata-3">
+        <!-- patTemplate:tmpl name="datasaudara" -->
+        <table class="table-details">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        <h3 style="display: inline-block;">Data Saudara &nbsp;</h3>
+                        <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="width:200px">Jumlah Saudara</th>
+                    <td>{SAUDARA_JUMLAH}</td>
+                </tr>
+                <tr>
+                    <th style="width:200px">Jumlah Saudara Yang Ditanggung Orang Tua</th>
+                    <td>{SAUDARA_JUMLAH_TANGGUNGAN}</td>
+                </tr>
+                <tr>
+                    <th style="width:200px">Jumlah Saudara Yang Sudah Bekerja</th>
+                    <td>{SAUDARA_JUMLAH_BEKERJA}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-4">
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="7">
+                            <h3 style="display: inline-block;">Data Aktifitas Organisasi &nbsp;</h3>
+                            <!-- patTemplate:tmpl name="btnorganisasi" -->
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                            <!-- /patTemplate:tmpl -->
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Nama Organisasi</th>
+                        <th>Periode/Tahun</th>
+                        <th>Jenis Aktifitas</th>
+                        <th>Lingkup</th>
+                        <th>Jabatan</th>
+                        <th>Keterangan</th>
+                        <th>File</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataorganisasi" -->
+                    <tr>
+                        <td>{ORG_NAMA}</td>
+                        <td>{ORG_PERIODE}</td>
+                        <td>{ORG_JENISAKTIFITAS_NAMA}</td>
+                        <td>{ORG_LINGKUP_NAMA}</td>
+                        <td>{ORG_JABATAN_NAMA}</td>
+                        <td>{ORG_KETERANGAN}</td>
+                        <td><a href="{FILE_ORGANISASI}" class="" title="">download file</a></td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+        </div>
+        <div id="tabs-personaldata-5">
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="4">
+                            <h3 style="display: inline-block;">Data Prestasi Non Akademik &nbsp;</h3>
+                            <!-- patTemplate:tmpl name="btnnonakademik" -->
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                            <!-- /patTemplate:tmpl -->
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Nama Kegiatan</th>
+                        <th>Periode/Tahun</th>
+                        <th>Lingkup</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataprestasinonakademik" -->
+                    <tr>
+                        <td>{PRESTASI_NAMA}</td>
+                        <td>{PRESTASI_PERIODE}</td>
+                        <td>{PRESTASI_LINGKUP_NAMA}</td>
+                        <td>{PRESTASI_KETERANGAN}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+        </div>
+        <div id="tabs-personaldata-6">
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="6">
+                            <h3 style="display: inline-block;">Data History Akademik &nbsp;</h3>
+                            <!-- patTemplate:tmpl name="btnakademik" -->
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                            <!-- /patTemplate:tmpl -->
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Semester</th>
+                        <th>Periode/Tahun</th>
+                        <th>IPS</th>
+                        <th>IPK</th>
+                        <th>Status</th>
+                        <th>file</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="dataakademik" -->
+                    <tr>
+                        <td>{AKADEMIK_SEMESTER_NAMA}</td>
+                        <td>{AKADEMIK_PERIODE}</td>
+                        <td>{AKADEMIK_IPS}</td>
+                        <td>{AKADEMIK_IPK}</td>
+                        <td>{AKADEMIK_IS_CUTI}</td>
+                        <td><a href="{FILE_AKADEMIK}" class="" title="">download file</a></td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+        </div>
+        <div id="tabs-personaldata-7">
+            <!-- patTemplate:tmpl name="lampiran" -->
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            <h3 style="display: inline-block;">Lampiran File &nbsp;</h3>
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width:300px">File pernyataan tidak mampu</th>
+                        <td><a href="{FILE_TIDAK_MAMPU}" class="" title="">Download disini</a></td>
+                    </tr>
+                    <tr>
+                        <th style="width:300px">File rekomendasi fakultas/jurusan tidak mengikuti beasiswa lain dan mahasiswa aktif</th>
+                        <td><a href="{FILE_REKOMEN}" class="" title="">Download disini</a></td>
+                    </tr>
+                    <tr>
+                        <th style="width:300px">File Essay</th>
+                        <td><a href="{FILE_ESSAY}" class="" title="">Download disini</a></td>
+                    </tr>
+                    <tr>
+                        <th style="width:300px">File Kartu Keluarga</th>
+                        <td><a href="{FILE_KK}" class="" title="">Download disini</a></td>
+                    </tr>
+                    <tr>
+                        <th style="width:300px">File Foto</th>
+                        <td><a href="{FILE_FOTO}" class="" title="">Download disini</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div id="tabs-personaldata-8">
+            <table class="table-details">
+                <tbody>
+                    <tr>
+                        <th colspan="4">
+                            <h3 style="display: inline-block;">Data Beasiswa &nbsp;</h3>
+                            <!-- patTemplate:tmpl name="btnbeasiswa" -->
+                            <a href="{BTN_UPDATE}" title="Update" class="xhr dest_subcontent-element btn-edit-has-title">Update Data</a>
+                            <!-- /patTemplate:tmpl -->
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama Beasiswa</th>
+                        <th>Tanggal Daftar</th>
+                        <th>Status</th>
+                    </tr>
+                    <!-- patTemplate:tmpl name="databeasiswa" -->
+                    <tr>
+                        <td>{PAT_ROW_VAR}</td>
+                        <td>{BEASISWA_NAMA}</td>
+                        <td>{BEASISWA_TANGGAL_DAFTAR}</td>
+                        <td>{BEASISWA_STATUS}</td>
+                    </tr>
+                    <!-- /patTemplate:tmpl -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /patTemplate:tmpl -->

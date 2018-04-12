@@ -1,0 +1,72 @@
+<?php
+
+$sql["count_lingkupprestasi"] = "
+SELECT 
+    COUNT(lingkup_id) AS total
+FROM ref_lingkup
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_lingkupprestasi"] = "
+SELECT 
+    a.lingkup_id AS `id`,
+    a.lingkup_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_lingkup a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_lingkupprestasi"] = "
+SELECT 
+    a.lingkup_id AS `id`,
+    a.lingkup_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_lingkup a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE lingkup_id = %d
+";
+$sql["insert_lingkupprestasi"] = "
+INSERT INTO ref_lingkup
+(
+    lingkup_name,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_lingkupprestasi"] = "
+UPDATE ref_lingkup
+SET 
+    lingkup_name = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE lingkup_id = %d
+";
+$sql["delete_lingkupprestasi"] = "
+DELETE FROM ref_lingkup
+WHERE lingkup_id = %d
+";
+$sql["list_lingkupprestasi"] = "
+SELECT
+    lingkup_id AS `id`,
+    lingkup_name AS `name`
+FROM
+    ref_lingkup
+ORDER BY lingkup_name
+";

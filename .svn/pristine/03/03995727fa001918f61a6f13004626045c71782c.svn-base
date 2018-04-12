@@ -1,0 +1,139 @@
+<?php
+
+/**
+ * @author Prima Noor
+ */
+class ProcessEmailTemplate {
+
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct() {
+        $this->ObjEmailTemplate = GtfwDispt()->load->business('EmailTemplate');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input() {
+        $ObjLang = GtfwDispt()->load->business('Language', 'core.language');
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $Val->set_rules('purpose', GtfwLangText('purpose'), 'required');
+        $Val->set_rules('subject', GtfwLangText('subject'), 'required');
+        $Val->set_rules('from', GtfwLangText('from'), 'required');
+
+        $langList = $ObjLang->listLangCode();
+
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjEmailTemplate->StartTrans();
+                $params = array(
+                    $post['purpose'],
+                    $post['subject'],
+                    $post['from'],
+                    $post['from_name'],
+                    $post['attachment'],
+                    $post['param'],
+                    $this->user
+                );
+                $result = $result && $this->ObjEmailTemplate->insertEmailTemplate($params);
+                $template_id = $this->ObjEmailTemplate->LastInsertId();
+
+                if ($result) {
+                    if (isset($post['body']) || isset($post['alt_body'])) {
+                        foreach ($langList as $key => $lang) {
+                            $params = array(
+                                $template_id,
+                                $lang['id'],
+                                $post['body'][$lang['id']],
+                                $post['alt_body'][$lang['id']],
+                                $this->user
+                            );
+                            $result = $this->ObjEmailTemplate->insertEmailTemplateText($params);
+                        }
+                    }
+                }
+
+                $this->ObjEmailTemplate->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjEmailTemplate->StartTrans();
+                $params = array(
+                    $post['purpose'],
+                    $post['subject'],
+                    $post['from'],
+                    $post['from_name'],
+                    $post['attachment'],
+                    $post['param'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjEmailTemplate->updateEmailTemplate($params);
+                if ($result) {
+                    $result = $result && $this->ObjEmailTemplate->deleteEmailTemplateText($post['id']);
+                    foreach ($langList as $key => $lang) {
+                        $params = array(
+                            $post['id'],
+                            $lang['id'],
+                            $post['body'][$lang['id']],
+                            $post['alt_body'][$lang['id']],
+                            $this->user
+                        );
+                        $result = $result && $this->ObjEmailTemplate->insertEmailTemplateText($params);
+                    }
+                }
+                $this->ObjEmailTemplate->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result) {
+            Messenger::Instance()->Send('comp.email.template', 'EmailTemplate', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('comp.email.template', 'emailtemplate', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('comp.email.template', 'inputEmailTemplate', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('comp.email.template', (empty($post['id'])?'add':'update').'EmailTemplate', 'view', 'html');
+        }
+        return $result;
+    }
+
+    function delete($id) {
+        $result = true;
+        $this->ObjEmailTemplate->StartTrans();
+        $result = $this->ObjEmailTemplate->deleteEmailTemplateText($id);
+        $result = $result && $this->ObjEmailTemplate->deleteEmailTemplate($id);
+        $this->ObjEmailTemplate->EndTrans($result);
+
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;
+        }
+        Messenger::Instance()->Send('comp.email.template', 'EmailTemplate', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+
+        return $result;
+    }
+
+}
+
+?>

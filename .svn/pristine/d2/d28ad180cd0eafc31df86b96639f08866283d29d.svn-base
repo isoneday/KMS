@@ -1,0 +1,29 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+	<!-- patTemplate:sub condition="YES" -->
+
+    <!-- /patTemplate:sub -->
+	<!-- patTemplate:sub condition="NO" -->
+
+    <tr class="crud">
+        <th>Filter(search)</th>
+        <td>
+            <!-- patTemplate:tmpl name="item_filter" -->
+            <label><input type="checkbox" name="filter[]" value="{FIELD}" id="{FIELD}" /> {FIELD}</label><br />
+            <!-- /patTemplate:tmpl -->
+        </td>
+    </tr>
+
+    <tr class="crud">
+        <th>Data Table</th>
+        <td>
+            <!-- patTemplate:tmpl name="item_table" -->
+            <div style="display: inline-block; width: 200px;"><label><input type="checkbox" name="data[]" value="{FIELD}" id="{FIELD}" /> {FIELD}</label></div>
+            <!-- <input type="text" name="label[{FIELD}]" /> -->
+            <br />
+            <!-- /patTemplate:tmpl -->
+        </td>
+    </tr>
+    <!-- /patTemplate:sub -->
+<!-- /patTemplate:tmpl -->
+<!-- /patTemplate:tmpl -->

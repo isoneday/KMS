@@ -1,0 +1,24 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdatePrestasi extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessPersonalData', 'applicant.personal.data');
+        $id = $_POST['id']->Integer()->Raw();
+        $idPrestasi = $_POST['idPrestasi']->Integer()->Raw();
+        
+        $result = $proses->inputPrestasi();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'DetailPersonalData', 'view', 'html').'&display' . '&ascomponent=1&tabActive=prestasi");');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$id.'&idPrestasi='.$idPrestasi.'&ascomponent=1&tabActive=prestasi")');
+        }        
+    }
+}
+
+?>

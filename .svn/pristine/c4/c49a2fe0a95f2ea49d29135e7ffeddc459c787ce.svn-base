@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoDeleteSyaratDokumen extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessSyaratDokumen', 'ref.syarat.dokumen');
+        
+        $id = $_GET['id']->Integer()->Raw();                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.syarat.dokumen', 'SyaratDokumen', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

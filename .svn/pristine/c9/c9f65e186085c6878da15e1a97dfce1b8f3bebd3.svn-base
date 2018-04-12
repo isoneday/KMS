@@ -1,0 +1,41 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+
+    <table class="table-common">
+        <thead>
+            <tr>
+                <th style="width: 40px;">No</th>
+                <th>Bank Pengirim</th>
+                <th>No Bank Pengirim</th>
+                <th>Bank Penerima</th>
+                <th>No Bank Penerima</th>
+                <th>Semester</th>
+                <th>Tanggal</th>
+				<th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+            <!-- patTemplate:tmpl name="item" -->
+            <tr class="{ROW_CLASS}">
+                <td style="text-align: center;">{PAT_ROW_VAR}</td>        
+                <td>{BANKPENGIRIM}</td>
+                <td>{NOBANKPENGIRIM}</td>
+                <td>{BANKPENERIMA}</td>
+                <td>{NOBANKPENERIMA}</td>
+                <td>{SEMESTER}</td>
+                <td>{TANGGAL}</td>
+				<td>{REALNAME}</td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+        </tbody>
+    </table>
+   
+</div>
+<!-- /patTemplate:tmpl -->

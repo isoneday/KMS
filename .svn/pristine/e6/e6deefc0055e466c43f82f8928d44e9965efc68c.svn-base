@@ -1,0 +1,30 @@
+<!-- patTemplate:tmpl name="content" -->
+<div class="content-box">
+	<table class="table-form">
+	<thead>
+		<tr>
+			<th><!-- patTemplate:gtfwgetlang key="field" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="type" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="null" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="key" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="default" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="extra" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="comment" / --></th>
+		</tr>
+	</thead>
+	<tbody>
+	<!-- patTemplate:tmpl name="data" -->
+		<tr>
+			<td>{FIELD}</td>
+			<td>{TYPE}</td>
+			<td>{NULL}</td>
+			<td>{KEY}</td>
+			<td>{DEFAULT}</td>
+			<td>{EXTRA}</td>
+			<td>{COMMENT}</td>
+		</tr>
+	<!-- /patTemplate:tmpl -->
+	</tbody>
+	</table>
+</div>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,671 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<div class="dataquest">
+
+    <table>
+        <tr>
+            <th style="width: 120px;" rowspan="6">{ATTACHMENT}</th>    
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+            <td>{FULL_NAME}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+            <td>{EMP_UNIT}-{UNIT_ID}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="university" / --></th>
+            <td>{EMP_TYPE}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="faculty" / --></th>
+            <td>{EMP_STATUS}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="prodi" / --></th>
+            <td>{EMP_POSITION}</td>
+        </tr>
+    </table>
+
+</div>
+<script type="text/javascript">
+    $("#tabs-identity").tabs();
+</script>
+
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <input type="hidden" name="id" value="{ID}" />
+        <input type="hidden" name="appl_id" value="{APPLID}"  />
+        <input type="hidden" name="div_id" value="{DIVID}"  />
+        <div id="tabs-identity">
+            <ul>
+                <li><a href="#tabs-identity-1">Biodata</a></li>
+                <li><a href="#tabs-identity-2">Orang Tua / Wali</a></li>
+                <li><a href="#tabs-identity-3">Saudara</a></li>
+                <li><a href="#tabs-identity-4">Aktifitas</a></li>
+                <li><a href="#tabs-identity-5">Data Prestasi Non Akademik</a></li>
+                <li><a href="#tabs-identity-6">IPK</a></li>
+                <li><a href="#tabs-identity-7">Beasiswa</a></li>
+            </ul>
+            <div id="tabs-identity-1">
+                <table class="table-edit-popup">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Program Studi</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Program Studi</th>
+                        <td>{STUDY_INTEREST}</td>
+                    <tr>
+                        <th>Asal Calon Dosen</th>
+                        <td>{IS_PERTAMINA}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="tabs-identity-2">	
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Biodata</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Nama Lengkap</th>
+                        <td>{NAME}</td>
+                    </tr>
+                    <tr>
+                        <th>Tempat Lahir</th>
+                        <td>{BIRTH_PLACE}</td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal Lahir</th>
+                        <td>{BIRTH_DATE}</td>
+                    </tr>
+                    <tr>
+                        <th>Jenis Kelamin</th>
+                        <td>{GENDER}</td>
+                    </tr>
+                    <tr>
+                        <th>Alamat Domisili</th>
+                        <td>{LIVING_ADDRESS}</td>
+                    </tr>
+                    <tr>
+                        <th>Kota Domisili</th>
+                        <td>{LIVING_CITY}</td>
+                    </tr>
+                    <tr>
+                        <th>No. KTP.</th>
+                        <td>{IDENTITY_NUMBER}</td>
+                    </tr>
+                    <tr>
+                        <th>Scan. KTP.</th>
+                        <td>{IDENTITY_FILE}</td>
+                    </tr>
+                    <tr>
+                        <th>Alamat Asal</th>
+                        <td>{ORIGINE_ADDRESS}</td>
+                    </tr>
+                    <tr>
+                        <th>Kota Asal</th>
+                        <td>{ORIGINE_CITY}</td>
+                    </tr>
+                    <tr>
+                        <th>AGAMA</th>
+                        <td>{RELIGION}</td>
+                    </tr>
+                    <tr>
+                        <th>Telepon</th>
+                        <td>{PHONE_NUMBER}</td>
+                    </tr>
+                    <tr>
+                        <th>HP.</th>
+                        <td>{MOBILE_NUMBER}</td>
+                    </tr>
+                    <tr>
+                        <th>Email 1</th>
+                        <td>{PRIMARY_EMAIL}</td>
+                    </tr>
+                    <tr>
+                        <th>Email 2</th>
+                        <td>{SECONDARY_EMAIL}</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Ayah</th>
+                        <td>{FATHER_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th>Pekerjaan Ayah</th>
+                        <td>{FATHER_JOB}</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Ibu</th>
+                        <td>{MOTHER_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th>Pekerjaan Ibu</th>
+                        <td>{MOTHER_JOB}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="tabs-identity-3">	
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Pendidikan</strong></th>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>S1</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Nama Perguruan Tinggi</th>
+                        <td>{S1_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Akreditasi</th>
+                        <td>{S1_ACCREDITATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Program Studi</th>
+                        <td>{S1_PROGRAM_STUDY}</td>
+                    </tr>
+                    <tr>
+                        <th>Jurusan</th>
+                        <td>{S1_CONCENTRATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Akreditasi Prodi / Jurusan</th>
+                        <td>{S1_PROGRAM_STUDY_ACCREDITATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Masuk</th>
+                        <td>{S1_START}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Lulus</th>
+                        <td>{S1_END}</td>
+                    </tr>
+                    <tr>
+                        <th>IPK (GPA)</th>
+                        <td>{S1_GPA} Dari Skala {S1_GPA_SCALE}</td>
+                    </tr>
+                    <tr>
+                        <th>Judul Tugas Akhir</th>
+                        <td>{S1_THESIS}</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Supervisor</th>
+                        <td>{S1_SUPERVISOR}</td>
+                    </tr>
+                    <tr>
+                        <th>Ijazah</th>
+                        <td>{S1_DIPLOMA_FILE}</td>
+                    </tr>
+                    <tr>
+                        <th>Transkrip Nilai</th>
+                        <td>{S1_TRANSCRIPT_FILE}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>S2</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Nama Perguruan Tinggi</th>
+                        <td>{S2_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Akreditasi</th>
+                        <td>{S2_ACCREDITATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Program Studi</th>
+                        <td>{S2_PROGRAM_STUDY}</td>
+                    </tr>
+                    <tr>
+                        <th>Jurusan</th>
+                        <td>{S2_CONCENTRATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Akreditasi Prodi / Jurusan</th>
+                        <td>{S2_PROGRAM_STUDY_ACCREDITATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Masuk</th>
+                        <td>{S2_START}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Lulus</th>
+                        <td>{S2_END}</td>
+                    </tr>
+                    <tr>
+                        <th>IPK (GPA)</th>
+                        <td>{S2_GPA} Dari Skala {S2_GPA_SCALE}</td>
+                    </tr>
+                    <tr>
+                        <th>Judul Tugas Akhir</th>
+                        <td>{S2_THESIS}</td>
+                    </tr>
+                    <tr>
+                        <th>Bidang Peminatan/Konsentrasi Thesis</th>
+                        <td>{S2_THESIS_INTEREST}</td>
+                    </tr>
+                    <tr>
+                        <th>Ijazah</th>
+                        <td>{S2_DIPLOMA_FILE}</td>
+                    </tr>
+                    <tr>
+                        <th>Transkrip Nilai</th>
+                        <td>{S2_TRANSCRIPT_FILE}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>S3</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Nama Perguruan Tinggi</th>
+                        <td>{S3_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Akreditasi</th>
+                        <td>{S3_ACCREDITATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Program Studi</th>
+                        <td>{S3_PROGRAM_STUDY}</td>
+                    </tr>
+                    <tr style="display: none;">
+                        <th>Jurusan</th>
+                        <td>{S3_CONCENTRATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Akreditasi Prodi / Jurusan</th>
+                        <td>{S3_PROGRAM_STUDY_ACCREDITATION}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Masuk</th>
+                        <td>{S3_START}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Lulus</th>
+                        <td>{S3_END}</td>
+                    </tr>
+                    <tr>
+                        <th>IPK (GPA)</th>
+                        <td>{S3_GPA} Dari Skala {S3_GPA_SCALE}</td>
+                    </tr>
+                    <tr>
+                        <th>Judul Tugas Akhir</th>
+                        <td>{S3_THESIS}</td>
+                    </tr>
+                    <tr>
+                        <th>Bidang Peminatan/Konsentrasi Thesis</th>
+                        <td>{S3_THESIS_INTEREST}</td>
+                    </tr>
+                    <tr>
+                        <th>Ijazah</th>
+                        <td>{S3_DIPLOMA_FILE}</td>
+                    </tr>
+                    <tr>
+                        <th>Transkrip Nilai</th>
+                        <td>{S3_TRANSCRIPT_FILE}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="tabs-identity-4">	
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="4" ><strong>Publikasi Ilmiah</strong></th>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="4" class="sub-subhead"><strong>Konferensi Nasional</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width:2%;">A</th>
+                        <td>{FIRST_CONV_TITLE}</td>
+                        <th style="width:5%;">Tahun</th>
+                        <td>{FIRST_CONV_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>B</th>
+                        <td>{SECOND_CONV_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{SECOND_CONV_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>C</th>
+                        <td>{THIRD_CONV_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{THIRD_CONV_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>D</th>
+                        <td>{FOURTH_CONV_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FOURTH_CONV_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>E</th>
+                        <td>{FIFTH_CONV_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FIFTH_CONV_YEAR}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="4" class="sub-subhead"><strong>Konferensi Internasional</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">A</th>
+                        <td>{FIRST_CONVINTER_TITLE}</td>
+                        <th style="width: 25%;">Tahun</th>
+                        <td>{FIRST_CONVINTER_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>B</th>
+                        <td>{SECOND_CONVINTER_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{SECOND_CONVINTER_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>C</th>
+                        <td>{THIRD_CONVINTER_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{THIRD_CONVINTER_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>D</th>
+                        <td>{FOURTH_CONVINTER_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FOURTH_CONVINTER_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>E</th>
+                        <td>{FIFTH_CONVINTER_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FIFTH_CONVINTER_YEAR}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="4" class="sub-subhead"><strong>Jurnal Nasional</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">A</th>
+                        <td>{FIRST_JURNAL_TITLE}</td>
+                        <th style="width: 25%;">Tahun</th>
+                        <td>{FIRST_JURNAL_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>B</th>
+                        <td>{SECOND_JURNAL_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{SECOND_JURNAL_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>C</th>
+                        <td>{THIRD_JURNAL_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{THIRD_JURNAL_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>D</th>
+                        <td>{FOURTH_JURNAL_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FOURTH_JURNAL_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>E</th>
+                        <td>{FIFTH_JURNAL_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FIFTH_JURNAL_YEAR}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>Jurnal Internasional</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">A</th>
+                        <td>{FIRST_JURNALINT_TITLE}</td>
+                        <th style="width: 25%;">Tahun</th>
+                        <td>{FIRST_JURNALINT_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>B</th>
+                        <td>{SECOND_JURNALINT_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{SECOND_JURNALINT_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>C</th>
+                        <td>{THIRD_JURNALINT_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{THIRD_JURNALINT_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>D</th>
+                        <td>{FOURTH_JURNALINT_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FOURTH_JURNALINT_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>E</th>
+                        <td>{FIFTH_JURNALINT_TITLE}</td>
+                        <th>Tahun</th>
+                        <td>{FIFTH_JURNALINT_YEAR}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="tabs-identity-5">	
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Sertifikat Bahasa Inggris</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Kategori Sertifikat</th>
+                        <td>{CERTTYPE_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th>Score</th>
+                        <td>{CERTIFICATE_RESULT}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Penerbitan Sertifikat</th>
+                        <td>{CERTIFICATE_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>Scan Sertifikat</th>
+                        <td>{CERTIFICATE_FILE}</td>
+                    </tr>
+
+                </table>
+            </div>
+            <div id="tabs-identity-6">	
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Sertifikat Bahasa Inggris</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Kategori Sertifikat</th>
+                        <td>{CERTTYPE_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th>Score</th>
+                        <td>{CERTIFICATE_RESULT}</td>
+                    </tr>
+                    <tr>
+                        <th>Tahun Penerbitan Sertifikat</th>
+                        <td>{CERTIFICATE_YEAR}</td>
+                    </tr>
+                    <tr>
+                        <th>Scan Sertifikat</th>
+                        <td>{CERTIFICATE_FILE}</td>
+                    </tr>
+
+                </table>
+            </div>
+            <div id="tabs-identity-7">	
+                <table class="table-edit-popup" width="100%">
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Informasi Pendukung</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%;">Pengalaman Organisasi</th>
+                        <td>{ORGANIZATION_EXPERIENCE}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Pengalaman Dosen</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Nama Perguruan Tinggi</th>
+                        <td>{DOSEXP_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Status Dosen</th>
+                        <td>{DOSEXP_DOSEN_STATUS}</td>
+                    </tr>
+                    <tr>
+                        <th>NIDN</th>
+                        <td>{DOSEXP_NIDN_STATUS}</td>
+                    </tr>
+                    <tr>
+                        <th>Jabatan Fungsionalitas</th>
+                        <td>{DOSEXP_POSITION}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" ><strong>Pengalaman Kerja Lain Non Dosen</strong></th>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>A</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Instansi</th>
+                        <td>{FIRST_WORKEXP_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Jabatan Terakhir</th>
+                        <td>{FIRST_WORKEXP_POSITION}</td>
+                    </tr>
+                    <tr>
+                        <th>Dari Tahun</th>
+                        <td>{FIRST_WORKEXP_START} S/D {FIRST_WORKEXP_END}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>B</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Instansi</th>
+                        <td>{SECOND_WORKEXP_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Jabatan Terakhir</th>
+                        <td>{SECOND_WORKEXP_POSITION}</td>
+                    </tr>
+                    <tr>
+                        <th>Dari Tahun</th>
+                        <td>{SECOND_WORKEXP_START} S/D {SECOND_WORKEXP_END}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>C</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Instansi</th>
+                        <td>{THIRD_WORKEXP_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Jabatan Terakhir</th>
+                        <td>{THIRD_WORKEXP_POSITION}</td>
+                    </tr>
+                    <tr>
+                        <th>Dari Tahun</th>
+                        <td>{THIRD_WORKEXP_START} S/D {THIRD_WORKEXP_END}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>D</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Instansi</th>
+                        <td>{FOURTH_WORKEXP_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Jabatan Terakhir</th>
+                        <td>{FOURTH_WORKEXP_POSITION}</td>
+                    </tr>
+                    <tr>
+                        <th>Dari Tahun</th>
+                        <td>{FOURTH_WORKEXP_START} S/D {FOURTH_WORKEXP_END}</td>
+                    </tr>
+                    <tr class="subhead">
+                        <th colspan="2" class="sub-subhead"><strong>E</strong></th>
+                    </tr>
+                    <tr>
+                        <th>Instansi</th>
+                        <td>{FIFTH_WORKEXP_INSTITUTION}</td>
+                    </tr>
+                    <tr>
+                        <th>Jabatan Terakhir</th>
+                        <td>{FIFTH_WORKEXP_POSITION}</td>
+                    </tr>
+                    <tr>
+                        <th>Dari Tahun</th>
+                        <td>{FIFTH_WORKEXP_START_YEAR} S/D {FIFTH_WORKEXP_START_END}</td>
+                    </tr>
+                    <tr>
+                        <th>Prestasi Kulikuler</th>
+                        <td>{KURIKULER_ACHIEVEMENT}</td>
+                    </tr>
+                    <tr>
+                        <th>Prestasi Non Kulikuler</th>
+                        <td>{NONKURIKULER_ACHIEVEMENT}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="subhead">
+                        <th colspan="2"><strong>Opini</strong></th>
+                    </tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>A. Tuliskan motivasi anda untuk melamar sebagai dosen Universitas Pertamina</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{APPLY_MOTIVATION}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>B. Tuliskan persepsi anda mengenai hal-hal positif dalam diri anda yang mendukung anda berprofesi sebagai dosen serta sebaliknya tentang hal-hal negatif dalam diri anda yang menjadi penghambat</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{SELF_EVALUATION}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>C. Tuliskan persepsi anda mengenai profesi anda sebagai seorang dosen</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{PROFESSION_OPINION}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>D. Tuliskan persepsi anda mengenai minat anda terhadap penelitian dan pengabdian masyarakat</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{RESEARCH_INTEREST}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>E. Tuliskan persepsi anda tentang studi lanjut di jenjang yang lebih tinggi.</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{HIGHER_STUDY_OPINION}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>F. Tuliskan persepsi anda tentang rencana pengembangan karir anda di Universitas Pertamina di masa yang akan datang.</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{CAREER_PATH_OPINION}</td>
+                    </tr>
+                    <tr style="height:20px;"></tr>
+                    <tr class="sub-subhead">
+                        <th colspan="2"><strong>G. Tuliskan persepsi anda tentang gaji pertama (take home pay) beserta benefits yang anda harapkan apabila nanti diterima di Universitas Pertamina</th></strong>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{SALARY_REASON}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- /patTemplate:tmpl -->

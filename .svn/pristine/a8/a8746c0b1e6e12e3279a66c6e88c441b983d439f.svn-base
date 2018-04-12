@@ -1,0 +1,72 @@
+<?php
+
+$sql["count_tempattinggal"] = "
+SELECT 
+    COUNT(tempattinggal_id) AS total
+FROM ref_tempat_tinggal
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_tempattinggal"] = "
+SELECT 
+    a.tempattinggal_id AS `id`,
+    a.tempattinggal_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_tempat_tinggal a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_tempattinggal"] = "
+SELECT 
+    a.tempattinggal_id AS `id`,
+    a.tempattinggal_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_tempat_tinggal a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE tempattinggal_id = %d
+";
+$sql["insert_tempattinggal"] = "
+INSERT INTO ref_tempat_tinggal
+(
+    tempattinggal_name,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_tempattinggal"] = "
+UPDATE ref_tempat_tinggal
+SET 
+    tempattinggal_name = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE tempattinggal_id = %d
+";
+$sql["delete_tempattinggal"] = "
+DELETE FROM ref_tempat_tinggal
+WHERE tempattinggal_id = %d
+";
+$sql["list_tempattinggal"] = "
+SELECT
+    tempattinggal_id AS `id`,
+    tempattinggal_name AS `name`
+FROM
+    ref_tempat_tinggal
+ORDER BY tempattinggal_name
+";

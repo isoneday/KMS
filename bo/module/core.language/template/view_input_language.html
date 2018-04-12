@@ -1,0 +1,40 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+	<div class="content-box-form" style="height:270px">
+		<input type="hidden" name="id" value="{ID}" />
+		<table class="table-edit-popup">
+			<tr>
+				<th style="width:150px;"><!-- patTemplate:gtfwgetlang key="code" / --></th>
+				<td>
+					<input type="text" name="code" value="{CODE}" size="50" title="<!-- patTemplate:gtfwgetlang key="code" / -->" tabindex="1" />            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:150px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+				<td>
+					<input type="text" name="name" value="{NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="2" />            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:150px;"><!-- patTemplate:gtfwgetlang key="icon_path" / --></th>
+				<td>
+					<input type="text" name="icon_path" value="{ICON_PATH}" title="<!-- patTemplate:gtfwgetlang key="icon_path" / -->" tabindex="3" />            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:150px;"><!-- patTemplate:gtfwgetlang key="description" / --></th>
+				<td>
+					<textarea name="description" cols="50" rows="2" title="<!-- patTemplate:gtfwgetlang key="description" / -->" tabindex="4">{DESCRIPTION}</textarea>            
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="5"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+		<button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="6"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+	</div>
+</form>
+<!-- /patTemplate:tmpl -->

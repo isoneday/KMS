@@ -1,0 +1,66 @@
+<!-- patTemplate:tmpl name="body" -->
+
+        <!-- Primary Page Layout
+        ================================================== -->
+
+        <!-- Delete everything in this .container and get started on your own site! -->
+		<!-- background switcher -->
+		<div id="menu">
+            <div class="arrow">
+                <img src="assets/images/bg/paint-roller.png" alt="" class="switcher-gear">
+            </div>
+            <div id="bg_switcher" class="bg-switcher">
+                <h5>Background</h5>
+                <a id="one" href="assets/images/bg/01.png"></a>
+                <a id="two" href="assets/images/bg/02.png"></a>
+                <a id="three" href="assets/images/bg/03.png"></a>
+                <a id="four" href="assets/images/bg/04.png"></a>
+                <a id="five" href="assets/images/bg/05.png"></a>
+                <a id="six" href="assets/images/bg/06.jpg"></a>
+				<a id="seven" href="assets/images/bg/07.jpg"></a>
+				<a id="eight" href="assets/images/bg/08.jpg"></a>
+				<a id="nine" href="assets/images/bg/09.jpg"></a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="example-grid"><!-- holder -->	</div>
+            <div class="twelve columns alpha">&nbsp;</div>
+            <div class="four columns alpha">
+                &nbsp;
+            </div>
+            <div class="two columns alpha">&nbsp;</div>
+            <div class="seven columns alpha">
+                <div class="random">		
+                    <!--=============================
+            		Markup for FADE animation
+            		=================================-->
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <img src="assets/images/login/slider1.jpg" />
+                            </li>
+                            <li>
+                                <img src="assets/images/login/slider2.jpg" />
+                            </li>
+                            <li>
+                                <img src="assets/images/login/slider3.jpg" />
+                            </li>
+                            <li>
+                                <img src="assets/images/login/slider4.jpg" />
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+       <!-- content BEGIN -->
+          <!-- patTemplate:link src="content" / -->
+       <!-- content END -->    
+	 
+       </div><!-- container -->
+	  <div id="footer">
+        <!-- Copyright Information -->
+		&copy;<!-- patTemplate:gtfwgetconfig config="organization" name="release_year" / --> | <!-- patTemplate:gtfwgetconfig config="organization" name="copyright" / -->
+	   </div>
+<!-- /patTemplate:tmpl -->

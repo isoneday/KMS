@@ -1,0 +1,165 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="real_name" / --></th>
+        <td><input type="text" name="real_name" value="{REAL_NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="real_name" / -->" tabindex="1" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="username" / --></th>
+        <td><input type="text" name="name" value="{NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="username" / -->" tabindex="2" /></td>        
+    </tr>
+    <tr>
+        <th><!-- patTemplate:gtfwgetlang key="group" / --></th>
+        <td>
+            <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="group"  / -->
+        </td>
+    </tr>
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+            <button class="btn" title="<!-- patTemplate:gtfwgetlang key="search" / -->" tabindex="4"><!-- patTemplate:gtfwgetlang key="search" / --></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+        <ul class="action-btn">
+            <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+            <li>
+                <a class="xhr dest_subcontent-element btn-add" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> User" tabindex="5"><!-- patTemplate:gtfwgetlang key="add" / --></a>
+            </li>
+            <!-- /patTemplate:tmpl -->
+        </ul>
+    </div>
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+<table class="table-common">
+<thead>
+    <tr>
+        <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+        <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+        
+        <th><!-- patTemplate:gtfwgetlang key="real_name" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="username" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="email" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="group" / --></th>
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="9" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td style="text-align: center;">{NO}</td>        
+        <td class="links">
+            <a class="popup_user btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / -->"></a>
+            <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+            <a class="xhr dest_subcontent-element btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> User"></a>
+            <!-- /patTemplate:tmpl -->
+            <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+            <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{NAME}" ></a>
+            <!-- /patTemplate:tmpl -->            
+            </ul>
+        </td>
+        
+        <td>{REAL_NAME}</td>
+        <td>{NAME}</td>
+        <td>{EMAIL}</td>
+        <td>
+            <!-- patTemplate:tmpl name="group" type="condition" conditionvar="ALLOW_DETAIL" -->
+            <!-- patTemplate:sub condition="NO" -->
+            <ul>
+            <!-- patTemplate:tmpl name="item_group_no_anchor" -->
+                <li>{GROUP}</li>
+            <!-- /patTemplate:tmpl -->
+            </ul>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="YES" -->
+            <ul>
+            <!-- patTemplate:tmpl name="item_group_anchor" -->
+                <li><a class="popup_group" href="{URL}" title="{TITLE}">{GROUP}</a></li>
+            <!-- /patTemplate:tmpl -->
+            </ul>
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </td>
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+var popupGroup;
+$(function(){
+    $('.popup_user').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupCity = showGtPopup(url, title, 640, null, 320, true);
+        return false;
+    });
+	$('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' user?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' User',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    });
+    $('.popup_group').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupGroup = showGtPopup(url, title, 640, null, 320, false);
+        return false;
+    });
+});
+
+{SCRIPT}
+</script>
+<style>
+a:hover {
+    text-decoration: none;
+}
+ul li {
+    list-style: none;
+}
+</style>
+<!-- /patTemplate:tmpl -->

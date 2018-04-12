@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefBank extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.bank/business/mysqlt/refbank.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefBank($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($banknama)) {
+            $str .= " AND LOWER(bank_name) LIKE('%$banknama%')";
+        }
+        $query = $this->mSqlQueries['count_refbank'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefBank($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($banknama)) {
+            $str .= " AND LOWER(bank_name) LIKE('%$banknama%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refbank'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefBank($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refbank'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefBank($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refbank'], $params);
+    }
+    
+    public function updateRefBank($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refbank'], $params);
+    }
+    
+    public function deleteRefBank($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refbank'], array($id));
+    }
+    
+    public function listRefBank()
+    {
+        return $this->Open($this->mSqlQueries['list_refbank'], array());
+    }
+}
+
+// End of file RefBank.class.php

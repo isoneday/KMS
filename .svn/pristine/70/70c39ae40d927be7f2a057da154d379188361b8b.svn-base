@@ -1,0 +1,73 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefAgama extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.agama/business/mysqlt/refagama.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefAgama()
+    {
+        $query = $this->mSqlQueries['count_refagama'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefAgama($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(religion_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refagama'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefAgama($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refagama'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefAgama($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refagama'], $params);
+    }
+    
+    public function updateRefAgama($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refagama'], $params);
+    }
+    
+    public function deleteRefAgama($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refagama'], array($id));
+    }
+    
+    public function listRefAgama()
+    {
+        return $this->Open($this->mSqlQueries['list_refagama'], array());
+    }
+}
+
+// End of file RefAgama.class.php

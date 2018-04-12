@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoDeleteRefOccupation extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefOccupation', 'ref.occupation');
+        
+        $id = $_GET['id']->Integer()->Raw();                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.occupation', 'RefOccupation', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

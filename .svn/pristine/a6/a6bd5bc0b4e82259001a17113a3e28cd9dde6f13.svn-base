@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewInputCountry extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_input_country.html');
+    }
+
+    function ProcessRequest() {
+        $ObjCountry = GtfwDispt()->load->business('Country', 'ref.country');
+
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());
+        unset($_SESSION['ref.country']['data_id']);
+        if (!empty($id)) $_SESSION['ref.country']['data_id'] = $id;
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0]) ? $msg[0][0] : NULL;
+        $message['content'] = isset($msg[0][1]) ? $msg[0][1] : NULL;
+        $message['style'] = isset($msg[0][2]) ? $msg[0][2] : NULL;
+
+        if (!empty($post)) {
+            $input = $post;
+        } elseif (!empty($id)) {
+            $input = $ObjCountry->getDetailCountry($id);
+        }
+
+        Messenger::Instance()->SendToComponent('ref.currency', 'comboCurrency', 'view', 'html', 'currency', array(
+            'dataId' => (!empty($input['currency']) ? $input['currency'] : null),
+            'elmId' => 'currency',
+            'first' => 'select',
+            'showAdd' => false,
+            'name' => 'currency',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        return compact('input', 'id', 'message', 'elmId');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        $status = 'checked="checked"';
+        $nstatus = '';
+
+        if (isset($input['status']) && $input['status'] != '1') {
+            $status = '';
+            $nstatus = 'checked="checked"';
+        }
+
+        if (!empty($input)) {
+            $this->mrTemplate->addVars('content', $input);
+        }
+
+        $this->mrTemplate->AddVar('content', 'STATUS', $status);
+        $this->mrTemplate->AddVar('content', 'NSTATUS', $nstatus);
+
+        $this->mrTemplate->addVar('content', 'URL_BACK', GtfwDispt()->GetUrl('ref.country', 'country', 'view', 'html') . '&display');
+        $this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('ref.country', (empty($id) ? 'add' : 'update') . 'Country', 'do', 'json') . '&elmId=' . $elmId);
+    }
+
+}
+
+?>

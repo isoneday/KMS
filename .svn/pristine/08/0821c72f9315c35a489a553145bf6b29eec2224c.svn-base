@@ -1,0 +1,14 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    <tr>
+        <th style="width:200px">KmhsRefJnsBeaNama</th>
+        <td>{KMHSREFJNSBEANAMA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">KmhsRefJnsBeaDesc</th>
+        <td>{KMHSREFJNSBEADESC}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,104 @@
+<?php
+
+
+$sql['get_id_module'] = "
+SELECT
+  `module_id`,
+   menu_id,
+   menutext_menu_name as menuname,
+   actiontext_action_label as aksi
+FROM `gtfw_module`
+LEFT JOIN gtfw_menu  ON  module_id=menu_default_module_id
+LEFT JOIN `gtfw_menu_text` ON  menutext_menu_id=menu_id
+LEFT JOIN gtfw_action_text ON actiontext_action_id = module_action_id AND actiontext_lang_code=menutext_lang_code
+WHERE  menutext_lang_code='%s' AND module='%s' AND module_sub_module='%s' AND module_action='%s' AND module_type='%s'   
+";
+
+$sql['get_default_module_menu'] = "
+SELECT
+  `module_id`,
+    menu_id,
+   menutext_menu_name as menuname,
+   module,
+   module_sub_module,
+   module_action,
+   module_type
+FROM `gtfw_module`
+LEFT JOIN gtfw_menu  ON  module_id=menu_default_module_id
+LEFT JOIN `gtfw_menu_text` ON  menutext_menu_id=menu_id
+WHERE  menutext_lang_code='%s' AND module='%s'  AND module_sub_module='%s' AND module_action='%s' AND module_type='%s' 
+
+";
+
+$sql['list_menu'] = '
+SELECT
+	m.menu_id AS "id",
+	m.menu_parent_id AS "parent_id",
+	t.menutext_menu_name AS "title",
+	md.module AS "mod",
+	md.module_sub_module AS "sub",
+	md.module_action AS "act",
+	md.module_type AS "typ",
+	m.menu_menu_order AS "position",
+	m.menu_icon_path AS "icon",
+	m.menu_icon_small AS "icon_small"
+FROM (
+	SELECT
+		%s AS username,
+		%d AS appId,
+        %s AS lang
+) r
+INNER JOIN gtfw_user gu ON gu.user_user_name = r.username
+LEFT JOIN gtfw_user_group gug ON gu.user_id = gug.usergroup_user_id 
+LEFT JOIN gtfw_group g ON gug.usergroup_group_id = g.group_id
+LEFT JOIN gtfw_group_menu gg ON g.group_id = gg.groupmenu_group_id
+LEFT JOIN gtfw_menu m ON gg.groupmenu_menu_id = m.menu_id
+LEFT JOIN gtfw_menu_text t ON t.menutext_menu_id = m.menu_id AND t.menutext_lang_code = r.lang
+LEFT JOIN gtfw_module md ON md.module_id = m.menu_default_module_id
+ORDER BY
+	m.menu_parent_id, m.menu_menu_order
+';
+
+$sql['get_menu_detail'] = "
+SELECT
+	m.menu_id,
+	mt.menutext_menu_name AS title,
+	md1.module AS `mod`,
+	md1.module_sub_module AS sub,
+	md1.module_action AS act,
+	md1.module_type AS typ,
+	IF(md1.module_id != md.module_id,`at`.actiontext_action_label,'') AS action
+FROM (
+SELECT
+	%s AS `mod`,
+	%s AS sub,
+	%s AS act,
+	%s AS typ,
+	%s AS lang
+) r
+INNER JOIN	gtfw_module md ON md.module = r.`mod` AND md.module_sub_module = r.sub AND md.module_action = r.act AND md.module_type = r.typ
+LEFT JOIN gtfw_action_text `at` ON `at`.actiontext_action_id = md.module_action_id AND `at`.actiontext_lang_code = r.lang
+LEFT JOIN gtfw_menu m ON m.menu_id = md.module_menu_id
+LEFT JOIN gtfw_menu_text mt ON mt.menutext_menu_id = m.menu_id AND mt.menutext_lang_code = r.lang
+LEFT JOIN gtfw_module md1 ON md1.module_id = m.menu_default_module_id
+";
+
+$sql['get_parent'] = '
+SELECT
+    m.menu_id,
+	m.menu_parent_id AS "parent_id",
+	t.menutext_menu_name AS "title",
+	md.module AS "mod",
+	md.module_sub_module AS "sub",
+	md.module_action AS "act",
+	md.module_type AS "typ"
+FROM (
+	SELECT
+        %d AS menu_id,
+        %s AS lang
+) r
+LEFT JOIN gtfw_menu m ON m.menu_id = r.menu_id
+LEFT JOIN gtfw_menu_text t ON t.menutext_menu_id = m.menu_id AND t.menutext_lang_code = r.lang
+LEFT JOIN gtfw_module md ON md.module_id = m.menu_default_module_id
+';
+?>

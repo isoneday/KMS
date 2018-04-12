@@ -1,0 +1,86 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class StudyProgram extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.study.program/business/mysqlt/studyprogram.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countStudyProgram($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(prodi_name) LIKE('%$name%')";
+        }
+        $query = $this->mSqlQueries['count_studyprogram'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getStudyProgram($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(prodi_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_studyprogram'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailStudyProgram($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_studyprogram'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertStudyProgram($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_studyprogram'], $params);
+    }
+    
+    public function updateStudyProgram($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_studyprogram'], $params);
+    }
+    
+    public function deleteStudyProgram($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_studyprogram'], array($id));
+    }
+    
+    public function listStudyProgram()
+    {
+        return $this->Open($this->mSqlQueries['list_studyprogram'], array());
+    }
+
+    public function listStudyProgramByJurusan($id)
+    {
+        return $this->Open($this->mSqlQueries['list_studyprogram_by_jurusan'], array($id));
+    }
+}
+
+// End of file StudyProgram.class.php

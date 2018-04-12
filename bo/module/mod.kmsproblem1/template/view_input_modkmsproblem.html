@@ -1,0 +1,88 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" style="margin: 0;"enctype="multipart/form-data">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;">problem</th>
+        <td>
+            <input type="text" name="problemm" value="{PROBLEMM}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;">person request</th>
+        <td>
+            <input type="text" name="person_request" value="{PERSON_REQUEST}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;">person solving</th>
+        <td>
+            <input type="text" name="person_solving" value="{PERSON_SOLVING}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;">PIC</th>
+        <td>
+            <input type="text" name="pic" value="{PIC}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;">status</th>
+        <td>
+            <input type="text" name="status" value="{STATUS}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;">catatan</th>
+        <td>
+            <input type="text" name="catatan" value="{CATATAN}" required="required" />*            
+        </td>
+    </tr>
+    
+        <tr>
+      
+                <th style="width: 200px;">capture problem</th>
+                <td>
+                    <input type="file" name="lam_filedata" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                     <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                 <br>Status : {LAM_FILEDATA}
+
+                </td>
+            </tr>
+        <tr>
+      
+                <th style="width: 200px;">capture solving</th>
+                <td>
+                    <input type="file" name="lam_filedata2" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                     <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                 <br>Status : {LAM_FILEDATA2}
+
+                </td>
+            </tr>
+<tr>
+      
+                <th style="width: 200px;">solution</th>
+                <td>
+                    <input type="file" name="lam_filedata3" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                     <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                 <br>Status : {LAM_FILEDATA3}
+
+                </td>
+            </tr>
+
+
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

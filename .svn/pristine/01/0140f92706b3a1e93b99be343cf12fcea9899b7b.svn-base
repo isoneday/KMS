@@ -1,0 +1,102 @@
+<!-- patTemplate:tmpl name="content" -->
+<div id="notificationContainer" style="position: fixed; right: 10px; bottom: 32px; width: 240px"></div>
+<script>
+$(document).ready(function() {
+	var max_top = 95; // maximal tinggi notifikasi. kalo lebih, diqueue
+	var notification = {};
+	notification.list = [];
+	notification.queue = [];
+	var container = document.getElementById('notificationContainer');
+	var notificationBar = $("#bottom-toolbar #notifications>ul").get(0);
+    
+	notification.add = function(title, content, url, duration) {
+		if (!title) title = 'title';
+		if (!content) content = 'content';
+		if (!url) url = '';
+		if (!duration) duration = 0;
+		if (notification.queue.length) notification.queue.push([title, content, url, duration]);
+		else if (notification.list.length && notification.list[0].offset().top < max_top) {
+			notification.queue.push([title, content, url, duration]);
+			var timer = setInterval(function() {
+				while (notification.queue.length && (notification.list.length == 0 || notification.list[0].offset().top >= max_top)) {
+					var item = notification.queue.shift();
+					notification.render(item[0], item[1], item[2], item[3]);
+				}
+				if (notification.queue.length == 0) clearInterval(timer);
+			}, 5000);
+		} else notification.render(title, content, url, duration);
+		notificationBar.addNewNotif(content, url);
+	}
+	notification.render = function(title, content, url, duration) {
+		var hoverSave = true;
+		var timerSave = false;
+		var removeItem = function(e) {
+			item.slideUp('slow', function() {
+				item.remove()
+			});
+			notification.list = notification.list.filter(function(o) {
+				if (o == item) return false;
+				return true
+			});
+			if (e) e.stopPropagation();
+		}
+		var item = $('<div/>').addClass('ui-corner-all ui-widget').css({
+			padding: '4px',
+			color: 'white',
+			background: 'black',
+			opacity: 0.6,
+			cursor: 'default',
+			marginBottom: '4px',
+			display: 'none'
+		}).hover(function() {
+			hoverSave = false
+		}, function() {
+			hoverSave = true;
+			if (timerSave) removeItem()
+		});
+		var header = $('<div/>').addClass('ui-corner-all ui-helper-clearfix').appendTo(item);
+		if (duration >= 0) var closeButton = $('<span/>').addClass('ui-icon ui-icon-closethick').attr('title', 'close').css('float', 'right').hover(function() {
+			$(this).toggleClass('ui-state-hover')
+		}).click(removeItem).appendTo(header);
+		var titleContainer = $('<span/>').css({
+			fontWeight: 'bold',
+			float: 'left',
+			width: '200px'
+		}).text(title).appendTo(header);
+		$('<div/>').html(content).css({
+			textAlign: 'justify',
+			fontSize: '10pt'
+		}).appendTo(item);
+		if (url != '') {
+			item.attr('href', url).addClass('dest_subcontent-element').attr('title', 'click to open').hover(function() {
+				$(this).css('opacity', 0.8)
+			}, function() {
+				$(this).css('opacity', 0.6)
+			}).click(removeItem);
+			//xhr_content['.xhr'](item[0]);
+		}
+		if (duration > 0) setTimeout(function() {
+			if (hoverSave) removeItem();
+			else timerSave = true
+		}, duration * 1000);
+		if (notification.list.length == 0) item.appendTo(container);
+		else item.insertBefore(container.firstChild);
+		notification.list.unshift(item);
+		item.fadeIn('slow');
+	}
+   
+    if ({AUTO_NOTIF}) setInterval(function() {
+    	$.getJSON('{URL_UPDATE}', function(data) {
+    		if (!data.notification) return;
+    		data = data.notification;
+    		for (var i = data.length - 1; i >= 0; i--) notification.add(data[i][0], data[i][1], data[i][2], data[i][3])
+    	})
+    }, 15000);
+    container.addNotification = notification.add;
+
+    <!-- patTemplate:tmpl name="oldNotification" visibility="hidden" -->
+    notificationBar.addOldNotif("{NOTIF_CONTENT}","{NOTIF_URL}");
+    <!-- /patTemplate:tmpl -->
+ });
+</script>
+<!-- /patTemplate:tmpl -->

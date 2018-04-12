@@ -1,0 +1,8 @@
+{
+    "name": "core.menu",
+    "version": "1",
+    "require": {
+        "modules" : ["core.setting"]
+    },
+    "table": []
+}

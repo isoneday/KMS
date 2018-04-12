@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class ApplicantRanking extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/applicant.ranking/business/mysqlt/applicantranking.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countApplicantRanking() {
+		$query = $this->mSqlQueries['count_applicantranking'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+        // if (is_array($filter))
+            // extract($filter);
+        // $str = '';
+
+        // if (!empty($beasiswa_name)) {
+            // $str .= " AND LOWER(beasiswa_name) LIKE('%$beasiswa_name%')";
+        // }
+        // if (!empty($beasiswa_dec)) {
+            // $str .= " AND LOWER(beasiswa_desc) LIKE('%$beasiswa_dec%')";
+        // }
+        // $query = $this->mSqlQueries['count_applicantranking'];
+        // $query = str_replace('--search--', $str, $query);
+        // $result = $this->Open($query, array());
+        // return $result[0]['total'];
+    }
+	
+    public function getApplicantRanking($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($beasiswa_name)) {
+            $str .= " AND LOWER(beasiswa_name) LIKE('%$beasiswa_name%')";
+        }
+        if (!empty($beasiswa_dec)) {
+            $str .= " AND LOWER(beasiswa_desc) LIKE('%$beasiswa_dec%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+        $query  = $this->mSqlQueries['get_applicantranking'];
+        $query  = str_replace('--search--', $str, $query);
+        $query  = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+	
+	public function getJumlahPelamar($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_jumlahpelamar'], array($id));
+        if ($result) {
+            return $result[0]['jml'];
+        }
+    }
+	
+	public function getJumlahPelamarUniversitas($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_jumlah_pelamar_universitas'], array($id));
+        if ($result) {
+            return $result[0]['jml'];
+        }
+    }
+	
+	public function getDetailApplicant($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_applicant'], array($id));
+        return $result;
+    }
+	
+    public function getDetailApplicantRanking($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+		
+		if (!empty($idbea)) {
+			$str .= " AND aplikanbeasiswa_beasiswa_id = '$idbea' "; 
+		}
+		
+		if (!empty($universitas)) {
+            $str .= " AND universitas_name LIKE '%$universitas%' ";
+        }
+		
+		$limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+		
+		$query  = $this->mSqlQueries['get_detail_applicantranking'];
+        $query  = str_replace('--search--', $str, $query);
+		$query  = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+		
+		//$result = $this->Open($this->mSqlQueries['get_detail_applicantranking'], array($id));
+        //return $result;
+    }
+    
+    public function getDetailUniversitasApplicantRanking($filter) {
+		if (is_array($filter))
+            extract($filter);
+        $str = '';
+       
+        if (!empty($aplikan_nim)) {
+            $str .= " AND b.aplikan_nim LIKE '%$aplikan_nim%'";
+        }
+        if (!empty($aplikan_nama)) {
+            $str .= " AND b.aplikan_nama LIKE '%$aplikan_nama%'";
+        }
+		
+		if (!empty($idbea)) {
+			$str .= " AND a.`aplikanbeasiswa_beasiswa_id` = '$idbea' "; 
+		}
+		
+		if (!empty($iduniv)) {
+			$str .= " AND b.`aplikan_univ_id` = '$iduniv' ";
+		}
+		
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+       
+	    $query  = $this->mSqlQueries['get_detail_universitas_applicantranking'];
+        $query  = str_replace('--search--', $str, $query);
+		$query  = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+	
+	public function getVerificationApplicantRanking($AppId, $idbea)
+    {
+        $result = $this->Open($this->mSqlQueries['get_verification_applicantranking'], array($AppId, $idbea));
+        return $result;
+    }
+
+    public function suksesApplicantRanking($params) {
+        return $this->Execute($this->mSqlQueries['sukses_applicantranking'], $params);
+    }
+
+    public function failedApplicantRanking($params) {
+        return $this->Execute($this->mSqlQueries['failed_applicantranking'], $params);
+    }
+	
+	public function updateVerificationRanking($val, $appid, $key) {
+        return $this->Execute($this->mSqlQueries['update_verificationranking'], array($val, $appid, $key));
+    }
+
+    public function updateApplicantRanking($params) {
+        return $this->Execute($this->mSqlQueries['update_applicantranking'], $params);
+    }
+
+    public function deleteApplicantRanking($id) {
+        return $this->Execute($this->mSqlQueries['delete_applicantranking'], array($id));
+    }
+
+    public function listApplicantRanking() {
+        return $this->Open($this->mSqlQueries['list_applicantranking'], array());
+    }
+}
+// End of file ApplicantRanking.class.php

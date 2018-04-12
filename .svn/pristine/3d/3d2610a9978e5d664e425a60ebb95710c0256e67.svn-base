@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailApplicantRanking extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_applicantranking.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantRanking = GtfwDispt()->load->business('ApplicantRanking', 'applicant.ranking');
+
+        $id = $_GET['id']->Integer()->Raw();
+
+        $data = $ObjApplicantRanking->getDetailApplicantRanking($id);
+		
+		$i = 0;
+		foreach($data as $var)
+		{ 
+			$data[$i]['total_pelamar'] = $ObjApplicantRanking->getJumlahPelamarUniversitas($var['universitas_id']);
+			$i++;
+		}
+		
+        return compact('data', 'id');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        $this->mrTemplate->addVar('search', 'URL', GtfwDispt()->GetCurrentUrl() . '&display');
+        if (!empty($filter)) {
+            $this->mrTemplate->addVars('search', $filter);
+        }
+
+        if (!empty($data) AND count($data) > 0) {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            $no = $filter['start'] + 1;
+            foreach ($data as $val) {
+                $val['no'] = $no;
+                $val['url_detail'] = GtfwDispt()->GetUrl('applicant.ranking', 'detailUniversitasApplicantRanking', 'view', 'html') . '&idUniv=' . $val['universitas_id'] . '&idBea=' . $id;
+			//print_r($val);die;
+                $this->mrTemplate->addVars('item', $val);
+                $this->mrTemplate->parseTemplate('item', 'a');
+                $no++;
+            }
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+    }
+}
+?>

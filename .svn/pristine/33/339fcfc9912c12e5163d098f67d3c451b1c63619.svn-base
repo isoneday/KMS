@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailApplicant extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_aplikan.html');
+    }
+
+    function ProcessRequest() { 
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+
+        $id = $_GET['id']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+
+        $data = $ObjApplicantInterview->getDetailAplikan($id);
+		
+        $listKategori = $ObjApplicantInterview->listKategori();
+		
+		$i = 0;
+		foreach($listKategori as $var)
+			{
+			$idktg = $var['kategoriwawancara_id'];
+			$aspek = $ObjApplicantInterview->listAspek($idktg);
+			
+			
+			$kategori[$idktg]['kategori'] = $var['kategoriwawancara_name'];
+			$kategori[$idktg]['aspek'] = $aspek;
+			$i++;
+			}
+        return compact('data','id','id_beasiswa','listKategori','kategori');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        if (!empty($data)) {
+            $this->mrTemplate->addVars('content', $data);
+        }
+		$this->mrTemplate->addVar('content', 'id_beasiswa', $id_beasiswa);
+		$this->mrTemplate->addVar('content', 'id', $id);
+		
+		$this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('applicant.interview', 'UpdateApplicantInterview','do','json'));
+		$no = 1;
+		$arr = 0;
+        					
+		
+		$pertanyaan = '';
+		foreach ($listKategori as $val) 
+			{
+				$pertanyaan .= '<tr><td>'. $no .'</td><td colspan="3"><h4>'. $val['kategoriwawancara_name'] .'</h4></td></tr>';
+				$idktg = $val['kategoriwawancara_id'];
+				$nosub = 1;
+				
+				foreach($kategori[$idktg]['aspek'] as $ktg)
+					{
+					$pertanyaan .= '<tr>
+					<td width="20"></td>  
+					<td width="20"> '. $nosub .'</td>  
+					<td>'. $ktg['aspekwawancara_desc'] .'</td>
+					<td> : 
+					<input type="text" name="nilai['. $arr .'][nilai]" >
+					<input type="hidden" name="nilai['. $arr .'][aspekwawancara_id]" value="'. $ktg['aspekwawancara_id'] .'" >
+					</td>
+				</tr>';
+					$nosub++;
+					$arr++;
+					}
+				$no++;
+			}
+		$this->mrTemplate->addVar('content', 'pertanyaan', $pertanyaan);	
+    }
+
+}
+
+?>

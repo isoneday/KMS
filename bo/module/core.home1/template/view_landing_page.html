@@ -1,0 +1,47 @@
+<!-- patTemplate:tmpl name="content" -->
+<div style="margin-top: 100px;" class="row show-grid">
+    <div class="span8">
+        <div id="gallery">
+            <!-- patTemplate:tmpl name="module" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="item_module" -->
+            <div class="gallery-image"> 
+                <a href="{URL}" data-id="{ID}" title="{TITLE}">
+                    <img class="colorScale" src="assets/images/btn/{ICON_LARGE}" style="opacity: 0.9;">
+                </a>  
+            </div>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </div>
+    </div>
+    <div class="span4">
+        <div class="news-wrapper">
+            <h2 class="news-tittle"><i class="icon-comment" style="margin-top:4px;margin-left:2px;"></i> &nbsp;News</h2>
+
+            <div class='tweet query'></div>
+
+        </div>
+        <div class="info-wrapper">
+            <h2 class="news-tittle"><i class="icon-bullhorn" style="margin-top:4px;margin-left:2px;"></i> &nbsp;Information</h2>
+
+            <div class='information'>
+                <p>Software Version : 1.0</p>
+                <p>GTFW Version : 3.6</p>
+                <p>Platform    :  PHP (5.3.27), MYSQL (5.5.24)</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.gallery-image').on('click', 'a', function(){
+            document.cookie = 'mmId='+$(this).data('id');
+        })
+    })
+</script>
+<!-- /patTemplate:tmpl -->

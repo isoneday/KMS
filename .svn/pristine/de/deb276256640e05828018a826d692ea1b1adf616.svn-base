@@ -1,0 +1,110 @@
+<!-- patTemplate:tmpl name="content" -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="multipart/form-data">
+    <div class="content-box-form" style="height:270px">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <input type="hidden" name="id" value="{ID}" />
+        <table class="table-edit-popup">
+			<!-- patTemplate:tmpl name="dataId" type="condition" conditionvar="IS_EMPTY" -->
+			<!-- patTemplate:sub condition="YES" -->
+			<tr>
+				<th style="width: 200px;">Upload Perjanjian Kerja Sama</th>
+				<td>
+					<input type="file" name="lam_pks" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+					 <br><i>* format file (jpg, png, jpeg, pdf)</i>
+				 <br>Status : {LAMPIRAN_3_STATUS}
+				</td>
+			</tr>
+			<tr>
+                <th style="width: 150px;">Nama Bank</th>
+                <td>
+                    <input type="text" name="namabank" value="{NAMABANK}" size="40" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="2" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;">Nomor Rekening</th>
+                <td>
+                    <input type="text" name="norekening" value="{NOREKENING}" size="20" title="<!-- patTemplate:gtfwgetlang key="buku rekening" / -->" tabindex="3" />            
+                </td>
+            </tr>
+			<tr>
+				<th style="width: 200px;">Upload Buku Tabungan</th>
+				<td>
+					<input type="file" name="lam_buku" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+					 <br><i>* format file (jpg, png, jpeg, pdf)</i>
+				 <br>Status : {LAMPIRAN_3_STATUS}
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 200px;">Upload Transkrip Nilai</th>
+				<td>
+					<input type="file" name="lam_transkrip" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+					 <br><i>* format file (jpg, png, jpeg, pdf)</i>
+				 <br>Status : {LAMPIRAN_3_STATUS}
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 200px;">Upload KRS</th>
+				<td>
+					<input type="file" name="lam_krs" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+					 <br><i>* format file (jpg, png, jpeg, pdf)</i>
+				 <br>Status : {LAMPIRAN_3_STATUS}
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 200px;">Semester</th>
+				<td>
+					<select name="semesterkrs">
+						<option value="">-- Select --</option>
+						<!-- patTemplate:tmpl name="semester" -->
+							<option value="{ID}" {SELECTED}>{SEMESTER}</option>
+						<!-- /patTemplate:tmpl -->
+					</select>
+				</td>
+			</tr>
+			<!-- /patTemplate:sub -->
+			<!-- patTemplate:sub condition="NO" -->
+			<!-- patTemplate:tmpl name="data" -->
+			<tr>
+				<th style="width: 200px;">Upload Perjanjian Kerja Sama</th>
+				<td>
+					<input type="file" name="lam_pks" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+					 <br><i>* format file (jpg, png, jpeg, pdf)</i>
+				 <br>Status : {LAMPIRAN_3_STATUS}
+				</td>
+			</tr>
+			<tr>
+                <th style="width: 150px;">Nama Bank</th>
+                <td>
+                    <input type="text" name="namabank" value="{NAMABANK}" size="40" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="2" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;">Nomor Rekening</th>
+                <td>
+                    <input type="text" name="norekening" value="{NOREKENING}" size="20" title="<!-- patTemplate:gtfwgetlang key="buku rekening" / -->" tabindex="3" />            
+                </td>
+            </tr>
+			<tr>
+				<th style="width: 200px;">Upload Buku Tabungan</th>
+				<td>
+					<input type="file" name="lam_buku" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+					 <br><i>* format file (jpg, png, jpeg, pdf)</i>
+				 <br>Status : {LAMPIRAN_3_STATUS}
+				</td>
+			</tr>
+			<!-- /patTemplate:tmpl -->
+			<!-- /patTemplate:sub -->
+			<!-- /patTemplate:tmpl -->
+            
+        </table>
+    </div>
+
+    <div class="modal-footer">    
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="5"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="6"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+    </div>
+
+</form>
+<!-- /patTemplate:tmpl -->

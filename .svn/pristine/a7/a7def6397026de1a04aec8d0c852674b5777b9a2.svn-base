@@ -1,0 +1,10 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputApplicantPencairan');
+   
+class ViewAddApplicantPencairan extends ViewInputApplicantPencairan
+    
+}
+?>

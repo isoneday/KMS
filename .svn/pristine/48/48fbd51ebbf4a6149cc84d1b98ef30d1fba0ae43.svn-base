@@ -1,0 +1,85 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+
+    <table class="table-common">
+        <thead>
+            <tr>
+                <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+                <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+
+                <th><!-- patTemplate:gtfwgetlang key="beasiswa" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="jenis_beasiswa" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="tanggal_berlaku" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="tanggal_penutupan" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="jumlah_pelamar" / --></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- patTemplate:tmpl name="list_beasiswa" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr>
+                <td colspan="3" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="item" -->
+            <tr >
+                <td style="text-align: center;">{NO}</td>        
+                <td class="links">
+                    <a class="xhr dest_subcontent-element btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="applicantinterview" / -->"></a>
+                </td>
+                <td>{BEASISWA_NAME}</td>
+                <td>{JENISBEASISWA_NAME}</td>
+                <td>{BEASISWA_PERIODE_MULAI}</td>
+                <td>{BEASISWA_PERIODE_SELESAI}</td>
+                <td>{JUMLAH}</td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </tbody>
+    </table>
+   
+</div>
+<script type="text/javascript">
+    $(function(){
+    $('.confirm_delete').on('click', function(event){
+    var elm = $(this);
+            var href = elm.attr('href') + '&ascom p onent=1';
+            var name = elm.data('name');
+            gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantinterview" / -->?<br/><strong>' + name + '</strong>', "<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantinterview" / -->', function(status){
+    if (status) {
+    $.post(href, function(data){
+    $.globalEval("result = " + data + ";");
+            if (result['exec']) {
+    $.globalEval(result['exec'] + ";");
+                }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+    /*
+    var popupApplicantInterview;
+    $('.popup_applicantinterview').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupApplicantInterview = showGtPopup(url, title);
+        return false;
+    });*/
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

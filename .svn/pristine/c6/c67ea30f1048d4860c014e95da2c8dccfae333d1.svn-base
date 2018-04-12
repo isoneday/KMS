@@ -1,0 +1,22 @@
+<!-- patTemplate:tmpl name="content" -->
+	<!-- patTemplate:tmpl name="combobox" -->
+    <select name="{NAME}" id="{ELMID}" style="{STYLE}" {SCRIPT}>
+	<!-- patTemplate:tmpl name="combolist" -->
+		<option value="{ID}" {SELECTED}>{NAME}</option>
+	<!-- /patTemplate:tmpl -->       
+	</select>
+    <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+    <button type="button" id="button_add_{ELMID}" value="new" ><img src="assets/images/buttons/button-add.gif" /></button>
+    <script type="text/javascript">
+    var popup{ELMID};
+    
+    $(document).ready(function(){    
+        $('#div_{ELMID}').off('click', '#button_add_{ELMID}').on('click', '#button_add_{ELMID}', function(){
+            popup{ELMID} = showGtPopup('{URL}', '<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="syaratdokumen" / -->', null, null, 'popup-{ELMID}');
+            return false;
+        })
+    });
+    </script>        
+    <!-- /patTemplate:tmpl -->
+	<!-- /patTemplate:tmpl -->
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,40 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="mode" type="condition" conditionvar="MODE" -->
+<!-- patTemplate:sub condition="INPUT" -->
+<div class="content-box">
+<form id="form_import" class="xhr dest-subcontent-element" method="post" enctype="multipart/form-data" action="{URL}">
+    <table class="table-edit">
+        <tr>
+            <th style="width: 200px;">File</th>
+            <td><input type="file" name="file" /></td>        
+        </tr>
+        <tr>
+            <th></th>
+            <td><button type="submit" class="btn btn-primary">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</div>
+<!-- /patTemplate:sub -->
+<!-- patTemplate:sub condition="OUTPUT" -->
+<div class="content-box">
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="fail_message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="content-box">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<table class="table-common">
+    <tbody>
+    <!-- patTemplate:tmpl name="row_item" -->
+    <tr>
+        {ROW_DATA}
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    </tbody>
+</table>
+</div>
+<!-- /patTemplate:sub -->
+<!-- /patTemplate:tmpl -->
+<!-- /patTemplate:tmpl -->

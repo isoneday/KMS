@@ -1,0 +1,55 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+    <tbody>
+
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="code"/ --></th>
+            <td>{CODE}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="name"/ --></th>
+            <td>{NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="capital"/ --></th>
+            <td>{CAPITAL}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="map"/ --></th>
+            <td>{MAP}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="nat_singular"/ --></th>
+            <td>{NAT_SINGULAR}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="nat_plural"/ --></th>
+            <td>{NAT_PLURAL}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="currency"/ --></th>
+            <td>{CURRENCY_NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="currency_code"/ --></th>
+            <td>{CURRENCY_CODE}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="status"/ --></th>
+            <td>{STATUS}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="desc"/ --></th>
+            <td>{DESC}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="submitted"/ --></th>
+            <td>{LAST_INSERT}</td>
+        </tr>
+        <tr>
+            <th style="width:20%"><!-- patTemplate:gtfwgetlang key="modified"/ --></th>
+            <td>{LAST_UPDATE}</td>
+        </tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

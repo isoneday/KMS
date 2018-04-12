@@ -1,0 +1,140 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewApproveApplicant extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_approve_aplikan.html');
+    }
+
+    function ProcessRequest() { 
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+
+        $id = $_GET['id']->Integer()->Raw();
+        $nim = $_GET['nim']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+
+        $data = $ObjApplicantInterview->getDetailAllAplikan($id, $id_beasiswa);
+		$wawancara = $ObjApplicantInterview->getDetailWawancara();
+		$dataPemeriksa = $ObjApplicantInterview->getDataPemeriksa($id, $id_beasiswa);
+		$dataFoto = $ObjApplicantInterview->GetListFoto($nim);
+		$dataPendaftar = $ObjApplicantInterview->GetListPendaftar($nim);
+		
+		$i = 0;
+		$y=0;
+		foreach($dataPemeriksa as $var)
+		{
+			$dataPem[$i]['user_id'] = $var['insert_user_id'];
+			$user_id = $var['insert_user_id'];
+			$dataPem[$i]['user_name'] = $var['user_real_name'];
+			$dataNilai[$user_id] = $ObjApplicantInterview->getDataNilai($id, $id_beasiswa,$user_id);
+			/*foreach($dataNilai[$i] as $vax){
+				$nilai[$user_id]['aspekwawancara_nilai'] = $vax['aspekwawancara_nilai'];
+				$y++;
+			}*/
+			if ($i == 0){
+				$datap1 = $var['insert_user_id'];
+				$user1 = $var['user_real_name'];
+			} else if ($i == 1){
+				$datap2 = $var['insert_user_id'];
+				$user2 = $var['user_real_name'];
+			} else if ($i == 2){
+				$datap3 = $var['insert_user_id'];
+				$user3 = $var['user_real_name'];
+			}
+			$i++;
+		}
+		
+		//$dataAll = $ObjApplicantInterview->getDataAll($datap1, $id, $datap1, $id, $datap2, $id, $datap2, $id,$datap3, $id, $datap3, $id);
+		$dataAll = $ObjApplicantInterview->getDataAll($id, $datap1,$datap2,$datap3);
+		
+        return compact('dataFoto','dataPendaftar','data','id','id_beasiswa','dataAll','datap1','datap2','datap3','user1','user2','user3');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+		/*		
+		echo "<pre>";
+		print_r($dataAll);
+		echo "</pre>";*/
+		if (!empty($dataFoto)) {
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_lampiran');
+            $this->mrTemplate->AddVar('foto', 'FILEPATH', $file_path);
+            $this->mrTemplate->addVars('foto', $dataFoto[0]);
+        }
+			
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        if (!empty($data)) {
+            $this->mrTemplate->addVars('content', $data);
+        }
+
+        if (!empty($dataPendaftar)) {
+            
+            // LIST IDENTITAS MAHASISWA BEGIN /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            $this->mrTemplate->addVars('biodataHead', $dataPendaftar[0]);
+
+            // LIST IDENTITAS MAHASISWA END //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+		
+		if (!empty($dataAll)) {
+            
+			$jumdata = count($dataAll);
+            for ($i=0; $i < $jumdata ; $i++) { 
+                $this->mrTemplate->addVar('data','NILAI-1', $dataAll[$i]['nilai1']);
+				$this->mrTemplate->addVar('data','NILAI-2', $dataAll[$i]['nilai2']);
+				$this->mrTemplate->addVar('data','NILAI-3', $dataAll[$i]['nilai3']);
+				$this->mrTemplate->addVars('data', $dataAll[$i]);
+                $this->mrTemplate->parseTemplate('data', 'a');
+            }
+        }
+		
+		
+		$this->mrTemplate->addVar('content', 'id_beasiswa', $id_beasiswa);
+		$this->mrTemplate->addVar('content', 'id', $id);
+		
+		$this->mrTemplate->addVar('content', 'user1', $user1);
+		$this->mrTemplate->addVar('content', 'user2', $user2);
+		$this->mrTemplate->addVar('content', 'user3', $user3);
+		
+		$this->mrTemplate->addVar('content', 'URL_LOLOS', GtfwDispt()->GetUrl('applicant.interview', 'UpdateApplicantInterviewLolos','do','json').'&id='.$id.'&name='.$dataPendaftar[0]['nama'].'&mail='.$dataPendaftar[0]['email']);
+		$this->mrTemplate->addVar('content', 'URL_TIDAK', GtfwDispt()->GetUrl('applicant.interview', 'UpdateApplicantInterviewTidakLolos', 'do', 'json').'&id='.$id.'&name='.$dataPendaftar[0]['nama'].'&mail='.$dataPendaftar[0]['email']);
+		$no = 1;
+		$arr = 0;
+        					
+		
+		$pertanyaan = '';
+		foreach ($listKategori as $val) 
+			{
+				$pertanyaan .= '<tr><td>'. $no .'</td><td colspan="3"><h4>'. $val['kategoriwawancara_name'] .'</h4></td></tr>';
+				$idktg = $val['kategoriwawancara_id'];
+				$nosub = 1;
+				
+				foreach($kategori[$idktg]['aspek'] as $ktg)
+					{
+					$pertanyaan .= '<tr>
+					<td width="20"></td>  
+					<td width="20"> '. $nosub .'</td>  
+					<td>'. $ktg['aspekwawancara_desc'] .'</td>
+					<td> : 
+					<input type="text" name="nilai['. $arr .'][nilai]" >
+					<input type="hidden" name="nilai['. $arr .'][aspekwawancara_id]" value="'. $ktg['aspekwawancara_id'] .'" >
+					</td>
+				</tr>';
+					$nosub++;
+					$arr++;
+					}
+				$no++;
+			}
+		$this->mrTemplate->addVar('content', 'pertanyaan', $pertanyaan);	
+    }
+
+}
+
+?>

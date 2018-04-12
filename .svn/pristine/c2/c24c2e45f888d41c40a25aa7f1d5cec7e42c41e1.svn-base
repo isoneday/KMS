@@ -1,0 +1,53 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+    <table class="table-search">
+        <tbody>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="title"/ --></th>
+                <td><input type="text" name="title" value="{TITLE}" /></td>        
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="content"/ --></th>
+                <td><input type="text" name="content" value="{CONTENT}" /></td>        
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!-- /patTemplate:tmpl -->
+   <div class="pageBar">
+      <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+   </div>
+   <table class="table-common" width="100%">
+      <thead>
+         <tr>
+            <th width='15px'>No</th>
+            <th>title</th>
+            <th>content</th>
+            <th>date</th>
+         </tr>
+      </thead>
+      <tbody>
+      <!-- patTemplate:tmpl name="notification" type="condition" conditionvar="IS_EMPTY" -->
+         <!-- patTemplate:sub condition="YES" -->
+         <tr><td colspan="6" align="center"><em>-- data_not_found --</em></td></tr>
+         <!-- /patTemplate:sub -->
+         <!-- patTemplate:sub condition="NO" -->
+         <tr class="{CLASS_NAME}">
+            <td align='right'>{NUMBER}</td>
+            <td>{NOTIF_TITLE}</td>
+            <td>{NOTIF_CONTENT}</td>
+            <td align='right'>{NOTIFDATESUBMITLABEL}</td>
+         </tr>
+         <!-- /patTemplate:sub -->
+      <!-- /patTemplate:tmpl -->
+      </tbody>
+   </table>
+<!-- /patTemplate:tmpl -->

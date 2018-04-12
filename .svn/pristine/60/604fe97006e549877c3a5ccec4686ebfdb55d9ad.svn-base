@@ -1,0 +1,249 @@
+<!-- patTemplate:tmpl name="content" -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="multipart/form-data">
+<!-- patTemplate:tmpl name="search" -->
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<script>
+    $("#tabs-personaldata").tabs();
+    var tabs = ["bank","nilai"];
+    var factive = '{TAB_ACTIVE}';
+    if (factive != "") {
+        var tab_active = tabs.indexOf(factive) + 1;
+        $("#tabs-personaldata > ul > li:nth-child("+tab_active+") a").trigger('click');
+        console.log(tab_active);
+    }
+	
+	$(function(){
+        $('.confirm_reject').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            gtConfirm("Apakah anda yakin reject applicant ?","Reject Applicant",function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+<div class="content-box-form">
+
+	
+	
+		<!-- patTemplate:tmpl name="Button" type="condition" conditionvar="IS_EMPTY" -->
+		<!-- patTemplate:sub condition="NO" -->
+			<div id="tabs-personaldata">
+				<ul>
+					<li><a href="#tabs-personaldata-1">Data Bank</a></li>
+					<li><a href="#tabs-personaldata-2">Data Nilai</a></li>
+				</ul>
+				<div id="tabs-personaldata-1">
+					<!-- patTemplate:tmpl name="bank" -->
+					<table class="table-details">
+						<tbody>
+							<tr>
+								<th colspan="2">
+									<h3 style="display: inline-block;">Data Bank &nbsp;</h3>
+								</th>
+							</tr>
+							<tr>
+								<th style="width:200px">Nama Bank</th>
+								<td>{NAMABANK}</td>
+							</tr>
+							<tr>
+								<th style="width:200px">No Rekening</th>
+								<td>{NOREKENING}</td>
+							</tr>
+							<tr>
+								<th style="width:200px">Buku Tabungan</th>
+								<!-- patTemplate:tmpl name="dataBuku" type="condition" conditionvar="IS_EMPTY" -->
+								<!-- patTemplate:sub condition="YES" -->
+								<td>Data Not Found</td>
+								<!-- /patTemplate:sub -->
+								<!-- patTemplate:sub condition="NO" -->
+								<td><a href="{FILE_BUKU}" class="" title="">Download disini</a></td>
+								<!-- /patTemplate:sub -->
+								<!-- /patTemplate:tmpl -->
+							</tr>
+							<tr>
+								<th style="width:200px">Perjanjian Kerja Sama</th>
+								<!-- patTemplate:tmpl name="dataPks" type="condition" conditionvar="IS_EMPTY" -->
+								<!-- patTemplate:sub condition="YES" -->
+								<td>Data Not Found</td>
+								<!-- /patTemplate:sub -->
+								<!-- patTemplate:sub condition="NO" -->
+								<td><a href="{FILE_PKS}" class="" title="">Download disini</a></td>
+								<!-- /patTemplate:sub -->
+								<!-- /patTemplate:tmpl -->
+							</tr>
+						</tbody>
+					</table>
+					<!-- /patTemplate:tmpl -->
+				</div>
+				<div id="tabs-personaldata-2">
+					<table class="table-details">
+						<tbody>
+							<tr>
+								<th colspan="6">
+									<h3 style="display: inline-block;">Data Transkrip &nbsp;</h3>
+								</th>
+							</tr>
+							<!-- patTemplate:tmpl name="dataTranskrip" type="condition" conditionvar="IS_EMPTY" -->
+							<!-- patTemplate:sub condition="YES" -->
+							<tr>
+								<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+							</tr>
+							<!-- /patTemplate:sub -->
+							<!-- patTemplate:sub condition="NO" -->
+							<tr>
+								<th>No</th>
+								<th>File Transkrip</th>
+								<th>Tanggal Upload</th>
+							</tr>
+							<!-- patTemplate:tmpl name="transkrip" -->
+							<tr>
+								<td>{PAT_ROW_VAR}</td>
+								<td><a href="{FILE_TRANSKRIP}" class="" title="">Download disini</a></td>
+								<td>{TANGGAL_DAFTAR}</td>
+							</tr>
+							<!-- /patTemplate:tmpl -->
+							<!-- /patTemplate:sub -->
+							<!-- /patTemplate:tmpl -->
+						</tbody>
+					</table>
+					
+					<table class="table-details">
+						<tbody>
+							<tr>
+								<th colspan="6">
+									<h3 style="display: inline-block;">Data KRS &nbsp;</h3>
+								</th>
+							</tr>
+							<!-- patTemplate:tmpl name="dataKrs" type="condition" conditionvar="IS_EMPTY" -->
+							<!-- patTemplate:sub condition="YES" -->
+							<tr>
+								<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+							</tr>
+							<!-- /patTemplate:sub -->
+							<!-- patTemplate:sub condition="NO" -->
+							<tr>
+								<th>No</th>
+								<th>File KRS</th>
+								<th>Semester</th>
+								<th>Tanggal Upload</th>
+							</tr>
+							<!-- patTemplate:tmpl name="krs" -->
+							<tr>
+								<td>{PAT_ROW_VAR}</td>
+								<td><a href="{FILE_KRS}" class="" title="">Download disini</a></td>
+								<td>{SEMESTER}</td>
+								<td>{TANGGAL_DAFTAR}</td>
+							</tr>
+							<!-- /patTemplate:tmpl -->
+							<!-- /patTemplate:sub -->
+							<!-- /patTemplate:tmpl -->
+						</tbody>
+					</table>
+				</div>
+			</div>  
+	
+		<div class="modal-footer">    
+			<button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="5">Approve</button>
+			<a class="confirm_reject btn-nonrespon" href="{URL_REJECT}" title="File Registrasi Ulang">  Reject</a>
+		</div>
+		<!-- /patTemplate:sub -->
+		<!-- patTemplate:sub condition="YES" -->
+						<div id="tabs-personaldata">
+				<ul>
+					<li><a href="#tabs-personaldata-1">Data Bank</a></li>
+					<li><a href="#tabs-personaldata-2">Data Nilai</a></li>
+				</ul>
+				<div id="tabs-personaldata-1">
+					<!-- patTemplate:tmpl name="bank2" -->
+					<table class="table-details">
+						<tbody>
+							<tr>
+								<th colspan="2">
+									<h3 style="display: inline-block;">Data Bank &nbsp;</h3>
+								</th>
+							</tr>
+							<tr>
+								<th style="width:200px">Nama Bank</th>
+								<td>{NAMABANK}</td>
+							</tr>
+							<tr>
+								<th style="width:200px">No Rekening</th>
+								<td>{NOREKENING}</td>
+							</tr>
+							<tr>
+								<th style="width:200px">Buku Tabungan</th>
+								<!-- patTemplate:tmpl name="dataBuku2" type="condition" conditionvar="IS_EMPTY" -->
+								<!-- patTemplate:sub condition="YES" -->
+								<td>Data Not Found</td>
+								<!-- /patTemplate:sub -->
+								<!-- patTemplate:sub condition="NO" -->
+								<td><a href="{FILE_BUKU}" class="" title="">Download disini</a></td>
+								<!-- /patTemplate:sub -->
+								<!-- /patTemplate:tmpl -->
+							</tr>
+							<tr>
+								<th style="width:200px">Perjanjian Kerja Sama</th>
+								<!-- patTemplate:tmpl name="dataPks2" type="condition" conditionvar="IS_EMPTY" -->
+								<!-- patTemplate:sub condition="YES" -->
+								<td>Data Not Found</td>
+								<!-- /patTemplate:sub -->
+								<!-- patTemplate:sub condition="NO" -->
+								<td><a href="{FILE_PKS}" class="" title="">Download disini</a></td>
+								<!-- /patTemplate:sub -->
+								<!-- /patTemplate:tmpl -->
+							</tr>
+						</tbody>
+					</table>
+					<!-- /patTemplate:tmpl -->
+				</div>
+				<div id="tabs-personaldata-2">
+					<table class="table-details">
+						<tbody>
+							<tr>
+								<th colspan="6">
+									<h3 style="display: inline-block;">Data Transkrip &nbsp;</h3>
+								</th>
+							</tr>
+							<!-- patTemplate:tmpl name="dataTranskrip2" type="condition" conditionvar="IS_EMPTY" -->
+							<!-- patTemplate:sub condition="YES" -->
+							<tr>
+								<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+							</tr>
+							<!-- /patTemplate:sub -->
+							<!-- patTemplate:sub condition="NO" -->
+							<tr>
+								<th>No</th>
+								<th>File Transkrip</th>
+								<th>Tanggal Upload</th>
+							</tr>
+							<!-- patTemplate:tmpl name="transkrip2" -->
+							<tr>
+								<td>{PAT_ROW_VAR}</td>
+								<td><a href="{FILE_TRANSKRIP}" class="" title="">Download disini</a></td>
+								<td>{TANGGAL_DAFTAR}</td>
+							</tr>
+							<!-- /patTemplate:tmpl -->
+							<!-- /patTemplate:sub -->
+							<!-- /patTemplate:tmpl -->
+						</tbody>
+					</table>
+				</div>
+			</div>  
+
+		<!-- /patTemplate:sub -->	
+		<!-- /patTemplate:tmpl -->
+</div>
+</form>
+<!-- /patTemplate:tmpl -->

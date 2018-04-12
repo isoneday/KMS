@@ -1,0 +1,21 @@
+<!-- patTemplate:tmpl name="content" -->
+<div class="row-fluid">	
+<div class="span12" id="icons">       
+    <ul>
+        <li>            
+            <!-- patTemplate:tmpl name="icon_menu" -->
+            <a href="{URL}" class="xhr dest_subcontent-element">
+            <img width="75" height="75" alt="" src="assets/images/btn/{ICON}" />
+                {TITLE}
+            </a>
+            <!-- /patTemplate:tmpl -->
+        </li>
+    </ul>  
+</div>
+<!--
+<div class="span12">
+     !-- patTemplate:gtfwrendermodule name="widget" module="core.widget" submodule="widget" action="view" type="html" params="" / --
+</div>
+-->
+</div>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,156 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class ViewDetailPersonalData extends HtmlResponse
+{
+   	function TemplateModule()
+   	{
+      	$this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+      	$this->SetTemplateFile('view_detail_personaldata.html');
+   	}
+   
+   	function ProcessRequest()
+   	{	
+   	    $ObjPersonalData = GtfwDispt()->load->business('PersonalData', 'applicant.personal.data');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+        // $id = $_GET['id']->Integer()->Raw();
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0])?$msg[0][0]:NULL;
+        $message['content'] = isset($msg[0][1])?$msg[0][1]:NULL;
+        $message['style'] = isset($msg[0][2])?$msg[0][2]:NULL;
+        
+        $detail = $ObjPersonalData->getDetailPersonalData($this->user);
+        $detailwali = $ObjPersonalData->getDetailWali($this->user);
+        $detailsaudara = $ObjPersonalData->getDetailSaudara($this->user);
+        $aktifitasorganisasi = $ObjPersonalData->getAktivitasOrganisasi($this->user);
+        $prestasinonakademik = $ObjPersonalData->getPrestasiNonAkademik($this->user);
+        $dataakademik = $ObjPersonalData->getAkademik($this->user);
+        $beasiswa = $ObjPersonalData->getBeasiswa($this->user);
+
+        $lampiran['tdkmampu'] = $ObjPersonalData->getLampiran($this->user, 238);
+        $lampiran['rekomen'] = $ObjPersonalData->getLampiran($this->user, 288);
+        $lampiran['essay'] = $ObjPersonalData->getLampiran($this->user, 4);
+        $lampiran['kk'] = $ObjPersonalData->getLampiran($this->user, 287);
+
+        // echo "<pre>";var_dump($lampiran);echo "</pre>";
+        
+		$nav[0]['url'] = GtfwDispt()->GetUrl('applicant.personal.data', 'DetailPersonalData', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'Personal Data';
+        $title = GtfwLangText('detail');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+        
+      	return compact('detail', 'detailwali', 'detailsaudara', 'aktifitasorganisasi', 'prestasinonakademik', 'dataakademik', 'lampiran', 'beasiswa', 'message');
+   	}
+   
+   	function ParseTemplate($rdata = NULL)
+   	{
+		extract($rdata);
+
+        $tabActive = $_GET['tabActive']->mrVariable;
+        $this->mrTemplate->addVar('content', 'TAB_ACTIVE', $tabActive);
+        
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+        
+        if (!empty($detail)) {
+            $detail['tanggal_lahir'] = $this->date2stirng($detail['tanggal_lahir']);
+            $detail['jenjangpendidikan_name'] = $detail['jenjangpendidikan_kode'].' ('. $detail['jenjangpendidikan_name'].')';
+            $this->mrTemplate->addVars('biodata', $detail);
+            $this->mrTemplate->addVar('biodata', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id']);
+        }
+        if (!empty($detailwali)) {
+            $jumwali = count($detailwali);
+            for ($i=0; $i < $jumwali ; $i++) { 
+                if ($detailwali[$i]['ortu_status'] == 'N') {
+                    $detailwali[$i]['ortu_status'] = 'Hidup';
+                } else {
+                    $detailwali[$i]['ortu_status'] = 'Meninggal';
+                }
+                // echo "<pre>";var_dump($detailwali[$i]);echo "</pre>";
+                $this->mrTemplate->addVars('dataorangtuawali', $detailwali[$i]);
+                $this->mrTemplate->parseTemplate('dataorangtuawali', 'a');
+            }
+            $this->mrTemplate->addVar('btnwali', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=ortu');
+        }
+        if(!empty($detailsaudara)) {
+            $this->mrTemplate->addVars('datasaudara', $detailsaudara);
+            $this->mrTemplate->addVar('datasaudara', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=saudara');
+        }
+        if (!empty($aktifitasorganisasi)) {
+            $jumaktifitasorganisasi = count($aktifitasorganisasi);
+            for ($i=0; $i < $jumaktifitasorganisasi ; $i++) { 
+                $this->mrTemplate->addVars('dataorganisasi', $aktifitasorganisasi[$i]);
+                $this->mrTemplate->parseTemplate('dataorganisasi', 'a');
+            }
+            $this->mrTemplate->addVar('btnorganisasi', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=aktifitas');
+        }
+        if (!empty($prestasinonakademik)) {
+            $jumpresnonakad = count($prestasinonakademik);
+            for ($i=0; $i < $jumpresnonakad ; $i++) { 
+                $this->mrTemplate->addVars('dataprestasinonakademik', $prestasinonakademik[$i]);
+                $this->mrTemplate->parseTemplate('dataprestasinonakademik', 'a');
+            }
+            $this->mrTemplate->addVar('btnnonakademik', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=prestasi');
+        }
+        if (!empty($dataakademik)) {
+            $jumdataakademik = count($dataakademik);
+            for ($i=0; $i < $jumdataakademik ; $i++) { 
+                if ($dataakademik[$i]['akademik_is_cuti'] == 'N') {
+                    $dataakademik[$i]['akademik_is_cuti'] = 'Tidak Cuti';
+                } else {
+                    $dataakademik[$i]['akademik_is_cuti'] = 'Cuti';
+                }
+                $this->mrTemplate->addVars('dataakademik', $dataakademik[$i]);
+                $this->mrTemplate->parseTemplate('dataakademik', 'a');
+            }
+            $this->mrTemplate->addVar('btnakademik', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=akademik');
+        }
+
+        if(!empty($lampiran)) {
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_lampiran');
+
+            $this->mrTemplate->addVar('lampiran', 'FILE_TIDAK_MAMPU', GtfwDispt()->GetUrl('applicant.personal.data', 'Lampiran', 'view', 'html').'&id='.$detail['id'].'&file='.$file_path.$lampiran['tdkmampu']['dokumen_file'].'&download='.$lampiran['tdkmampu']['dokumen_origin']);
+            $this->mrTemplate->addVar('lampiran', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=lampiran');
+        }
+
+        if (!empty($beasiswa)) {
+            $jumbeasiswa = count($beasiswa);
+            for ($i=0; $i < $jumbeasiswa ; $i++) { 
+                if ($beasiswa[$i]['beasiswa_status'] == '1') {
+                    $beasiswa[$i]['beasiswa_status'] = 'Aktif';
+                } else {
+                    $beasiswa[$i]['beasiswa_status'] = 'Tidak Aktif';
+                }
+                $this->mrTemplate->addVars('databeasiswa', $beasiswa[$i]);
+                $this->mrTemplate->parseTemplate('databeasiswa', 'a');
+            }
+            $this->mrTemplate->addVar('btnbeasiswa', 'BTN_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$detail['id'].'&tabActive=beasiswa');
+        }
+   	}
+
+    function date2stirng($date){
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrd = explode('-', $date);
+        $dateString = $arrd[2].' '.$bln[(int)$arrd[1]].' '.$arrd[0];
+
+        return $dateString;
+    }
+}
+?>

@@ -1,0 +1,24 @@
+<?php
+/** 
+* @copyright Copyright (c) 2014, PT Gamatechno Indonesia
+* @license http://gtfw.gamatechno.com/#license
+*/
+
+class DoUpdateRefReligion extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefReligion', 'ref.religion');
+        $id = $_POST['id']->Integer()->Raw();
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.religion', 'RefReligion', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupRefReligion);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('ref.religion', 'updateRefReligion', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

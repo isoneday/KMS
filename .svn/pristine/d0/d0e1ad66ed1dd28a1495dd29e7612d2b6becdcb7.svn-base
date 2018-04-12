@@ -1,0 +1,123 @@
+<?php
+
+$sql["count_city"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_city"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.city_id AS `id`,
+    d.`country_id` AS country_id,
+    d.`country_name` AS country_name,
+    a.city_state_id AS `state`,
+    c.`state_name` AS state_name,
+    a.city_category AS `category`,
+    a.city_code AS `code`,
+    a.city_name AS `name`,
+    a.city_latitude AS `latitude`,
+    a.city_longitude AS `longitude`,
+    a.city_timezone AS `timezone`,
+    a.city_status AS `status`,
+    a.city_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.`user_real_name`, CONCAT( u1.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified   
+FROM ref_city a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+LEFT JOIN ref_state c ON c.`state_id` = a.`city_state_id`
+LEFT JOIN ref_country d ON d.`country_id` = c.`state_country_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_city"] = "
+    SELECT 
+    a.city_id AS `id`,
+    d.`country_id` AS country_id,
+    d.`country_name` AS country_name,
+    a.city_state_id AS `state`,
+    c.`state_name` AS state_name,
+    a.city_category AS `category`,
+    a.city_code AS `code`,
+    a.city_name AS `name`,
+    a.city_latitude AS `latitude`,
+    a.city_longitude AS `longitude`,
+    a.city_timezone AS `timezone`,
+    a.city_status AS `status`,
+    a.city_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    IF((a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.user_real_name, CONCAT(u1.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert ,
+    IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), u2.user_real_name, CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update   
+FROM ref_city a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`    
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id` 
+LEFT JOIN ref_state c ON c.`state_id` = a.`city_state_id`
+LEFT JOIN ref_country d ON d.`country_id` = c.`state_country_id`
+WHERE a.city_id = %d
+";
+$sql["insert_city"] = "
+INSERT INTO ref_city
+(
+    city_state_id,
+    city_category,
+    city_code,
+    city_name,
+    city_latitude,
+    city_longitude,
+    city_timezone,
+    city_status,
+    city_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_city"] = "
+UPDATE ref_city
+SET 
+    city_state_id = %s,
+    city_category = %s,
+    city_code = %s,
+    city_name = %s,
+    city_latitude = %s,
+    city_longitude = %s,
+    city_timezone = %s,
+    city_status = %s,
+    city_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE city_id = %d
+";
+$sql["delete_city"] = "
+DELETE FROM ref_city
+WHERE city_id = %d
+";
+$sql["list_city"] = "
+SELECT
+    city_id AS `id`,
+    city_name AS `name`
+FROM
+    ref_city
+WHERE city_state_id = %d
+AND city_status = 1
+ORDER BY city_name
+";

@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoDeleteRefDepartment extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefDepartment', 'ref.department');
+        
+        $id = $_GET['id']->Integer()->Raw();                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.department', 'RefDepartment', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

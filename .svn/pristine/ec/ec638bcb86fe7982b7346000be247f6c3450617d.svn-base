@@ -1,0 +1,860 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessPersonalData
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjPersonalData = GtfwDispt()->load->business('PersonalData');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+        $this->aplikanId = $this->ObjPersonalData->getAplikanId($this->user);
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        $Val->set_rules('nim', GtfwLangText('NIM'), 'required');
+        $Val->set_rules('angkatan', GtfwLangText('Angkatan'), 'required');
+        $Val->set_rules('univ_id', GtfwLangText('Universitas'), 'required');
+        $Val->set_rules('fakultas_id', GtfwLangText('Fakultas'), 'required');
+        $Val->set_rules('prodi_id', GtfwLangText('Program Studi'), 'required');
+        $Val->set_rules('jurusan_id', GtfwLangText('Jurusan'), 'required');
+        $Val->set_rules('jenjangpendidikan_id', GtfwLangText('Jenjang Pendidikan'), 'required');
+        $Val->set_rules('tempat_lahir', GtfwLangText('Tempat lahir'), 'required');
+        $Val->set_rules('email', GtfwLangText('Email'), 'required');
+        $Val->set_rules('telepon', GtfwLangText('Telepon'), 'required');
+        $Val->set_rules('no_ktp', GtfwLangText('Nomer KTP'), 'required');
+        $Val->set_rules('alamat', GtfwLangText('Alamat'), 'required');
+
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjPersonalData->StartTrans();
+                $params = array(
+                    $post['nim'],
+                    $post['angkatan'],
+                    $post['univ_id'],
+                    $post['fakultas_id'],
+                    $post['prodi_id'],
+                    $post['jurusan_id'],
+                    $post['jenjangpendidikan_id'],
+                    $post['nama'],
+                    $post['email'],
+                    $post['jenis_kelamin'],
+                    $post['tempat_lahir'],
+                    $post['agama_id'],
+                    $post['no_ktp'],
+                    $post['telepon'],
+                    $post['alamat'],
+                    $post['tempattinggal_id'],
+                    $post['pembiayaankuliah_id'],
+                    $post['sumber_info_id'],
+                    $post['tanggal_registrasi'],
+                    $this->user,
+                    date("Y-m-d h:i:s")
+                );
+                $result = $result && $this->ObjPersonalData->insertPersonalData($params);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Penambahan Data Personal Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Penambahan Data Personal Gagal';
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjPersonalData->StartTrans();
+                $params = array(
+                    $post['nim'],
+                    $post['angkatan'],
+                    $post['univ_id'],
+                    $post['fakultas_id'],
+                    $post['prodi_id'],
+                    $post['jurusan_id'],
+                    $post['jenjangpendidikan_id'],
+                    $post['nama'],
+                    $post['email'],
+                    $post['jenis_kelamin'],
+                    $post['tempat_lahir'],
+                    $post['agama_id'],
+                    $post['no_ktp'],
+                    $post['telepon'],
+                    $post['alamat'],
+                    $post['tempattinggal_id'],
+                    $post['pembiayaankuliah_id'],
+                    $post['sumber_info_id'],
+                    $post['tanggal_registrasi'],
+                    $this->user,
+                    date("Y-m-d h:i:s"),
+                    $post['id']
+                );
+             
+                $result = $result && $this->ObjPersonalData->updatePersonalData($params);
+                $this->ObjPersonalData->EndTrans($result);   
+                if ($result) {
+                    $msg = 'Perubahan Data Personal Sukses';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Perubahan Data Personal Gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+
+        if ($result) {
+             Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'biodata';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+
+        return $result;     
+    }
+
+    function inputOrtu() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $Val->set_rules('ortu_nama', GtfwLangText('Nama'), 'required');
+        $Val->set_rules('ortu_tempat_lahir', GtfwLangText('Tempat lahir'), 'required');
+        $Val->set_rules('ortu_pendidikan_id', GtfwLangText('Pendidikan'), 'required');
+        $Val->set_rules('ortu_pekerjaan_id', GtfwLangText('Pekerjaan'), 'required');
+        $Val->set_rules('ortu_penghasilan', GtfwLangText('Penghasilan'), 'required');
+        $Val->set_rules('ortu_status', GtfwLangText('Nama'), 'required');
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['ortu_id']) {
+                $this->ObjPersonalData->StartTrans();
+                $paramOrtu = array(
+                    $this->aplikanId,
+                    $post['ortu_nama'],
+                    $post['ortu_tempat_lahir'],
+                    $post['ortu_tgl_lhr'],
+                    $post['ortu_pendidikan_id'],
+                    $post['ortu_pekerjaan_id'],
+                    $post['ortu_penghasilan'],
+                    $post['ortu_status'],
+                    $post['aplikanwali_wali_id'],
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertOrtu($paramOrtu);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Penambahan Data Orang tua/Wali Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Penambahan Data Orang tua/Wali gagal';
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjPersonalData->StartTrans();
+                $paramOrtu = array(
+                    $post['ortu_nama'],
+                    $post['ortu_tempat_lahir'],
+                    $post['ortu_tgl_lhr'],
+                    $post['ortu_pendidikan_id'],
+                    $post['ortu_pekerjaan_id'],
+                    $post['ortu_penghasilan'],
+                    $post['ortu_status'],
+                    $post['aplikanwali_wali_id'],
+                    $this->user,
+                    $post['ortu_id']
+                );
+                $result = $result && $this->ObjPersonalData->updateOrtu($paramOrtu);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Pengubahan Data Orang tua/Wali Sukses';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Pengubahan Data Orang tua/Wali Gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+     
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'wali';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+        return $result;
+    }
+
+    function inputSaudara() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['saudara_id']) {
+                $this->ObjPersonalData->StartTrans();
+                $paramSaudara = array(
+                    $this->aplikanId,
+                    $post['saudara_jumlah'],
+                    $post['saudara_jumlah_tanggungan'],
+                    $post['saudara_jumlah_bekerja'],
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertSaudara($paramSaudara);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjPersonalData->StartTrans();
+                $paramSaudara = array(
+                    $post['saudara_jumlah'],
+                    $post['saudara_jumlah_tanggungan'],
+                    $post['saudara_jumlah_bekerja'],
+                    $this->user,
+                    $post['saudara_id']
+                );
+                $result = $result && $this->ObjPersonalData->updateSaudara($paramSaudara);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Pengubahan Data Saudara Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Pengubahan Data Saudara Gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'saudara';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+        return $result;
+    }
+
+    function inputAktifitas() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $Val->set_rules('org_jenisaktifitas_id', GtfwLangText('Jenis aktivitas'), 'required');
+        $Val->set_rules('org_lingkup_id', GtfwLangText('Lingkup'), 'required');
+        $Val->set_rules('org_jabatan_id', GtfwLangText('Jabatan'), 'required');
+        $Val->set_rules('org_nama', GtfwLangText('Nama'), 'required');
+        $Val->set_rules('org_periode', GtfwLangText('Periode'), 'required');
+        $result = $Val->run();
+
+        $file_path = Configuration::Instance()->GetValue('application', 'aplikan_aktifitas');
+        $config = array(
+            "dest" => $file_path,
+            "ext" => "doc,DOC,docx,DOCX,pdf,PDF,jpg,jpeg,JPG,JPEG,png,PNG",
+            "maxsize" => 12097152
+        );
+        $upload = $this->uploadFile('org_file', $config);
+
+        if ($upload != null) {
+            if ($upload['org_file']['error'] === false) {
+                $post['file']          = $upload['org_file']['name_enc'];
+                $post['file_origin']   = $upload['org_file']['name_ori'];
+                $post['file_path']     = $upload['org_file']['file_path'];
+                $post['file_type']     = $upload['org_file']['file_ext'];
+                $post['file_size']     = $upload['org_file']['file_size'];
+            }
+        }
+
+        if ($result) {
+            if (!$post['org_id']) {
+                $this->ObjPersonalData->StartTrans();
+                $paramAktifitas = array(
+                    $this->aplikanId,
+                    $post['org_jenisaktifitas_id'],
+                    $post['org_lingkup_id'],
+                    $post['org_jabatan_id'],
+                    $post['org_nama'],
+                    $post['org_periode'],
+                    $post['org_keterangan'],
+                    (isset($post['file']) ? $post['file'] : null),
+                    (isset($post['file_origin']) ? $post['file_origin'] : null),
+                    (isset($post['file_path']) ? $post['file_path'] : null),
+                    (isset($post['file_type']) ? $post['file_type'] : null),
+                    (isset($post['file_size']) ? $post['file_size'] : null),
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertAktifitas($paramAktifitas);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Penambahan Data Aktifitas Organisasi Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Penambahan Data Aktifitas Organisasi Gagal';
+                    $css = $this->cssFail;
+                }
+            } else {
+                $detail = $this->ObjPersonalData->getAktivitasOrganisasi($this->user, $post['org_id'])[0];
+                $this->ObjPersonalData->StartTrans();
+                $paramAktifitas = array(
+                    $post['org_jenisaktifitas_id'],
+                    $post['org_lingkup_id'],
+                    $post['org_jabatan_id'],
+                    $post['org_nama'],
+                    $post['org_periode'],
+                    $post['org_keterangan'],
+                    (isset($post['file']) ? $post['file'] : $detail['file']),
+                    (isset($post['file_origin']) ? $post['file_origin'] : $detail['file_origin']),
+                    (isset($post['file_path']) ? $post['file_path'] : $detail['file_path']),
+                    (isset($post['file_type']) ? $post['file_type'] : $detail['file_type']),
+                    (isset($post['file_size']) ? $post['file_size'] : $detail['file_size']),
+                    $this->user,
+                    $post['org_id']
+                );
+                @unlink($file_path.$detail['file']);
+                $result = $result && $this->ObjPersonalData->updateAktifitas($paramAktifitas);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Pengubahan Data Aktifitas Organisasi Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Pengubahan Data Aktifitas Organisasi Gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+    
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'aktifitas';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+
+        return $result;
+    }
+
+    function inputPrestasi() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $Val->set_rules('prestasi_lingkup_id', GtfwLangText('Lingkup'), 'required');
+        $Val->set_rules('prestasi_periode', GtfwLangText('Periode'), 'required');
+        $Val->set_rules('prestasi_nama', GtfwLangText('Nama'), 'required');
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['prestasi_id']) {
+                $this->ObjPersonalData->StartTrans();
+                $paramPrestasi = array(
+                    $this->aplikanId,
+                    $post['prestasi_lingkup_id'],
+                    $post['prestasi_periode'],
+                    $post['prestasi_nama'],
+                    $post['prestasi_keterangan'],
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertPrestasi($paramPrestasi);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Penambahan data histori akademik berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Penambahan data histori akademik gagal';
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjPersonalData->StartTrans();
+                $paramPrestasi = array(
+                    $post['prestasi_lingkup_id'],
+                    $post['prestasi_periode'],
+                    $post['prestasi_nama'],
+                    $post['prestasi_keterangan'],
+                    $this->user,
+                    $post['prestasi_id']
+                );
+                $result = $result && $this->ObjPersonalData->updatePrestasi($paramPrestasi);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Pengubahan data histori akademik Berhasil';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Pengubahan data histori akademik Gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            return true;
+        } else {
+            $post['submitted'] = 'prestasi';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            return false;
+        }
+    }
+    
+    function inputAkademik() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $file_path = Configuration::Instance()->GetValue('application', 'aplikan_akademik');
+        $Val->set_rules('akademik_semester_nama', GtfwLangText('Semester'), 'required');
+        $Val->set_rules('akademik_periode', GtfwLangText('Periode'), 'required');
+        $Val->set_rules('akademik_ips', GtfwLangText('IPS'), 'required');
+        $Val->set_rules('akademik_ipk', GtfwLangText('IPK'), 'required');
+        $Val->set_rules('akademik_is_cuti', GtfwLangText('Cuti'), 'required');
+        $result = $Val->run();
+
+        $config = array(
+            "dest" => $file_path,
+            "ext" => "doc,DOC,docx,DOCX,pdf,PDF,jpg,jpeg,JPG,JPEG,png,PNG",
+            "maxsize" => 12097152,
+        );
+        $upload = $this->uploadFile('akademik_file', $config);
+        if ($upload != null) {
+            if ($upload['akademik_file']['error'] === false) {
+                $post['file']          = $upload['akademik_file']['name_enc'];
+                $post['file_origin']   = $upload['akademik_file']['name_ori'];
+                $post['file_path']     = $upload['akademik_file']['file_path'];
+                $post['file_type']     = $upload['akademik_file']['file_ext'];
+                $post['file_size']     = $upload['akademik_file']['file_size'];
+            }
+        }
+
+        if ($result) {
+            if (!$post['akademik_id']) {
+                $this->ObjPersonalData->StartTrans();
+                $paramAkademik = array(
+                    $this->aplikanId,
+                    $post['akademik_semester_nama'],
+                    $post['akademik_periode'],
+                    $post['akademik_ips'],
+                    $post['akademik_ipk'],
+                    $post['akademik_is_cuti'],
+                    (isset($post['file']) ? $post['file'] : null),
+                    (isset($post['file_origin']) ? $post['file_origin'] : null),
+                    (isset($post['file_path']) ? $post['file_path'] : null),
+                    (isset($post['file_type']) ? $post['file_type'] : null),
+                    (isset($post['file_size']) ? $post['file_size'] : null),
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertAkademik($paramAkademik);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Penambahan Data Akademik Sukses';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Penambahan Data Akademik Gagal';
+                    $css = $this->cssFail;
+                }
+            } else {
+                $detail = $this->ObjPersonalData->getAkademik($this->user, $post['akademik_id'])[0];
+                $this->ObjPersonalData->StartTrans();
+                $paramAkademik = array(
+                    $post['akademik_semester_nama'],
+                    $post['akademik_periode'],
+                    $post['akademik_ips'],
+                    $post['akademik_ipk'],
+                    $post['akademik_is_cuti'],
+                    (isset($post['file']) ? $post['file'] : $detail['file']),
+                    (isset($post['file_origin']) ? $post['file_origin'] : $detail['file_origin']),
+                    (isset($post['file_path']) ? $post['file_path'] : $detail['file_path']),
+                    (isset($post['file_type']) ? $post['file_type'] : $detail['file_type']),
+                    (isset($post['file_size']) ? $post['file_size'] : $detail['file_size']),
+                    $this->user,
+                    $post['akademik_id']
+                );
+                @unlink($file_path.$detail['file']);
+                $result = $result && $this->ObjPersonalData->updateAkademik($paramAkademik);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = 'Perubahan Data Akademik Sukses';
+                    $css = $this->cssDone;
+                } else {
+                    $msg = 'Perubahan data gagal';
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+ 
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'akademik';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+
+        return $result;
+    }
+
+    function inputBeasiswa() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['aplikanbeasiswa_id']) {
+                $this->ObjPersonalData->StartTrans();
+                $paramPrestasi = array(
+                    $this->aplikanId,
+                    $post['beasiswa_id'],
+                    $post['beasiswa_status'],
+                    $post['beasiswa_tanggal_daftar'],
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertBeasiswa($paramAktifitas);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjPersonalData->StartTrans();
+                $paramPrestasi = array(
+                    $post['beasiswa_id'],
+                    $post['beasiswa_status'],
+                    $post['beasiswa_tanggal_daftar'],
+                    $this->user,
+                    $post['aplikanbeasiswa_id']
+                );
+                $result = $result && $this->ObjPersonalData->updateBeasiswa($paramAktifitas);
+                $this->ObjPersonalData->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            $post['submitted'] = 'beasiswa';
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+        return $result;
+    }
+
+    function inputLampiran() {
+        $post = $_POST->AsArray();
+        $data = $this->ObjPersonalData->getDetailPersonalData($this->user);
+
+        $Val = GtfwDispt()->load->library('Validation');
+        $result = $Val->run();
+
+        $file_path = Configuration::Instance()->GetValue('application', 'aplikan_lampiran');
+        $config = array(
+            "dest" => $file_path,
+            "ext" => "doc,DOC,docx,DOCX,pdf,PDF,jpg,jpeg,JPG,JPEG,png,PNG",
+            "maxsize" => 2097152,
+        );
+
+        $this->ObjPersonalData->StartTrans();
+
+        /*---LAMPIRAN DOKUMEN KETERANGAN TIDAK MAMPU---*/
+        $upload = $this->uploadFile('lam_tdk_mampu', $config);
+
+        if ($upload != null) {
+            if ($upload['lam_tdk_mampu']['error'] === false) {
+                $post['lam_tdk_mampu_file']          = $upload['lam_tdk_mampu']['name_enc'];
+                $post['lam_tdk_mampu_file_origin']   = $data['nim'].'_lampiran_tidak_mampu.'.$upload['lam_tdk_mampu']['file_ext']/*$upload['lam_tdk_mampu']['name_ori']*/;
+                $post['lam_tdk_mampu_file_path']     = $upload['lam_tdk_mampu']['file_path'];
+                $post['lam_tdk_mampu_file_type']     = $upload['lam_tdk_mampu']['file_ext'];
+                $post['lam_tdk_mampu_file_size']     = $upload['lam_tdk_mampu']['file_size'];
+            }
+
+            $uploadedtdkmampu = $this->ObjPersonalData->getLampiran($this->user,238);
+            if ((int)$uploadedtdkmampu['total'] >= 1) {
+                $paramtdkmampu = array (
+                    $post['lam_tdk_mampu_file'],
+                    $post['lam_tdk_mampu_file_origin'],
+                    $post['lam_tdk_mampu_file_path'],
+                    $post['lam_tdk_mampu_file_type'],
+                    $post['lam_tdk_mampu_file_size'],
+                    $this->user,
+                    $uploadedtdkmampu['dokumen_id']
+                );
+                @unlink($file_path.$uploadedtdkmampu['dokumen_file']);
+                $result = $result && $this->ObjPersonalData->updateLampiran($paramtdkmampu);
+            } else {
+                $paramtdkmampu = array (
+                    $data['id'],
+                    '238', // id syarat dokumen keterangan tidak mampu
+                    $post['lam_tdk_mampu_file'],
+                    $post['lam_tdk_mampu_file_origin'],
+                    $post['lam_tdk_mampu_file_path'],
+                    $post['lam_tdk_mampu_file_type'],
+                    $post['lam_tdk_mampu_file_size'],
+                    'N', // verivikator status NO
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertLampiran($paramtdkmampu);
+            }
+        }
+
+        /*---LAMPIRAN DOKUMEN KETERANGAN REKOMENDASI DARI JURUSAN---*/
+        $upload = $this->uploadFile('lam_rekomen', $config);
+
+        if ($upload != null) {
+            if ($upload['lam_rekomen']['error'] === false) {
+                $post['lam_rekomen_file']          = $upload['lam_rekomen']['name_enc'];
+                $post['lam_rekomen_file_origin']   = $data['nim'].'_lampiran_rekomendasi_fakultas.'.$upload['lam_rekomen']['file_ext']/*$upload['lam_tdk_mampu']['name_ori']*/;
+                $post['lam_rekomen_file_path']     = $upload['lam_rekomen']['file_path'];
+                $post['lam_rekomen_file_type']     = $upload['lam_rekomen']['file_ext'];
+                $post['lam_rekomen_file_size']     = $upload['lam_rekomen']['file_size'];
+            }
+
+            $uploadedrekomen = $this->ObjPersonalData->getLampiran($this->user,288);
+            if ((int)$uploadedrekomen['total'] >= 1) {
+                $paramrekomen = array (
+                    $post['lam_rekomen_file'],
+                    $post['lam_rekomen_file_origin'],
+                    $post['lam_rekomen_file_path'],
+                    $post['lam_rekomen_file_type'],
+                    $post['lam_rekomen_file_size'],
+                    $this->user,
+                    $uploadedrekomen['dokumen_id']
+                );
+                @unlink($file_path.$uploadedrekomen['dokumen_file']);
+                $result = $result && $this->ObjPersonalData->updateLampiran($paramrekomen);
+            } else {
+                $paramrekomen = array (
+                    $data['id'],
+                    '288', // id syarat dokumen rekomendasi fakultas/jurusan tidak mengikuti beasiswa lain dan mahasiswa aktif
+                    $post['lam_rekomen_file'],
+                    $post['lam_rekomen_file_origin'],
+                    $post['lam_rekomen_file_path'],
+                    $post['lam_rekomen_file_type'],
+                    $post['lam_rekomen_file_size'],
+                    'N', // verivikator status NO
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertLampiran($paramrekomen);
+            }
+        }
+
+        /*---LAMPIRAN FILE ESSAY---*/
+        $upload = $this->uploadFile('lam_essay', $config);
+
+        if ($upload != null) {
+            if ($upload['lam_essay']['error'] === false) {
+                $post['lam_essay_file']          = $upload['lam_essay']['name_enc'];
+                $post['lam_essay_file_origin']   = $data['nim'].'_lampiran_essay.'.$upload['lam_essay']['file_ext']/*$upload['lam_tdk_mampu']['name_ori']*/;
+                $post['lam_essay_file_path']     = $upload['lam_essay']['file_path'];
+                $post['lam_essay_file_type']     = $upload['lam_essay']['file_ext'];
+                $post['lam_essay_file_size']     = $upload['lam_essay']['file_size'];
+            }
+
+            $uploadedessay = $this->ObjPersonalData->getLampiran($this->user,4);
+            if ((int)$uploadedessay['total'] >= 1) {
+                $paramessay = array (
+                    $post['lam_essay_file'],
+                    $post['lam_essay_file_origin'],
+                    $post['lam_essay_file_path'],
+                    $post['lam_essay_file_type'],
+                    $post['lam_essay_file_size'],
+                    $this->user,
+                    $uploadedessay['dokumen_id']
+                );
+                @unlink($file_path.$uploadedessay['dokumen_file']);
+                $result = $result && $this->ObjPersonalData->updateLampiran($paramessay);
+            } else {
+                $paramessay = array (
+                    $data['id'],
+                    '4', // id syarat dokumen essay
+                    $post['lam_essay_file'],
+                    $post['lam_essay_file_origin'],
+                    $post['lam_essay_file_path'],
+                    $post['lam_essay_file_type'],
+                    $post['lam_essay_file_size'],
+                    'N', // verivikator status NO
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertLampiran($paramessay);
+            }
+        }
+
+        /*---LAMPIRAN FILE KARTU KELUARGA---*/
+        $upload = $this->uploadFile('lam_kk', $config);
+
+        if ($upload != null) {
+            if ($upload['lam_kk']['error'] === false) {
+                $post['lam_kk_file']          = $upload['lam_kk']['name_enc'];
+                $post['lam_kk_file_origin']   = $data['nim'].'_lampiran_kartu_keluarga.'.$upload['lam_kk']['file_ext']/*$upload['lam_tdk_mampu']['name_ori']*/;
+                $post['lam_kk_file_path']     = $upload['lam_kk']['file_path'];
+                $post['lam_kk_file_type']     = $upload['lam_kk']['file_ext'];
+                $post['lam_kk_file_size']     = $upload['lam_kk']['file_size'];
+            }
+
+            $uploadedkk = $this->ObjPersonalData->getLampiran($this->user,287);
+
+            // echo "<pre>";var_dump($post);echo "</pre>";
+            // echo "<pre>";var_dump($uploadedkk);echo "</pre>";
+
+            if ((int)$uploadedkk['total'] >= 1) {
+                // echo 'masuk update'; exit;
+                $paramkk = array (
+                    $post['lam_kk_file'],
+                    $post['lam_kk_file_origin'],
+                    $post['lam_kk_file_path'],
+                    $post['lam_kk_file_type'],
+                    $post['lam_kk_file_size'],
+                    $this->user,
+                    $uploadedkk['dokumen_id']
+                );
+                @unlink($file_path.$uploadedkk['dokumen_file']);
+                $result = $result && $this->ObjPersonalData->updateLampiran($paramkk);
+            } else {
+                // echo 'masuk add'; exit;
+                $paramkk = array (
+                    $data['id'],
+                    '287', // id syarat dokumen kartu keluarga
+                    $post['lam_kk_file'],
+                    $post['lam_kk_file_origin'],
+                    $post['lam_kk_file_path'],
+                    $post['lam_kk_file_type'],
+                    $post['lam_kk_file_size'],
+                    'N', // verivikator status NO
+                    $this->user
+                );
+                $result = $result && $this->ObjPersonalData->insertLampiran($paramkk);
+            }
+
+        }
+
+        $this->ObjPersonalData->EndTrans($result);
+        if ($result) {
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('applicant.personal.data', 'DetailPersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            Messenger::Instance()->Send('applicant.personal.data', 'inputPersonalData', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }        
+        return $result;
+    }
+
+    function delete($id)
+    {
+        $result = $this->ObjPersonalData->deletePersonalData($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.personal.data', 'PersonalData', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+
+    function uploadFile($name, $config) {
+        if($_FILES[$name]['name'] != ''){
+            $errors         = array();
+            $file_name      = $_FILES[$name]['name'];
+            $file_size      = $_FILES[$name]['size'];
+            $file_tmp       = $_FILES[$name]['tmp_name'];
+            $file_type      = $_FILES[$name]['type'];
+            $file_ext       = strtolower(end(explode('.',$_FILES[$name]['name'])));
+            $destination    = Configuration::Instance()->GetValue('application', 'docroot').$config['dest'];
+            $listconfig     = explode(',', $config['ext']);
+
+            $randfilename = md5(uniqid(mt_rand())) . '.' . $file_ext;
+            $bad = array(
+                "<!--",
+                "-->",
+                "'",
+                "<",
+                ">",
+                '"',
+                '&',
+                '$',
+                '=',
+                ';',
+                '?',
+                '/',
+                "%20",
+                "%22",
+                "%3c", // <
+                "%253c", // <
+                "%3e", // >
+                "%0e", // >
+                "%28", // (
+                "%29", // )
+                "%2528", // (
+                "%26", // &
+                "%24", // $
+                "%3f", // ?
+                "%3b", // ;
+                "%3d"  // =
+            );
+
+            $randfilename = str_replace($bad, '', $randfilename);
+
+            if(in_array($file_ext, $listconfig, true) === false){
+                $errors[]="Upload File Error : Extension not allowed.";
+            }
+            
+            if($file_size > $config['maxsize']){
+                $errors[]='Upload File Error : Not Allowed Filesize';
+            }
+            
+            if(empty($errors)==true){
+                move_uploaded_file($file_tmp, $destination.$randfilename);
+                // echo $destination;echo "<br>";
+                // echo "Success";
+            }else{
+                $data[$name]['error'] = true;
+                $data[$name]['msg']   = $errors;
+                return $data;
+            }
+            $data[$name]['error'] = false;
+            $data[$name]['name_enc'] = $randfilename;
+            $data[$name]['name_ori'] = $file_name;
+            $data[$name]['file_ext'] = $file_ext;
+            $data[$name]['file_size'] = $file_size;
+            $data[$name]['full_path'] = $destenc;
+            $data[$name]['file_path'] = $destination;
+            return $data;
+        }
+    }
+}
+
+?>

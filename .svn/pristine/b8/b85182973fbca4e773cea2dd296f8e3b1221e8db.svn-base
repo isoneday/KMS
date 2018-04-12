@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class DoAddSalutation extends JsonResponse {
+
+    function ProcessRequest() {
+        $proses = GtfwDispt()->load->process('ProcessSalutation', 'ref.salutation');
+
+        $post = $_POST->AsArray();
+
+        $result = $proses->input();
+
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+        if ($result) {
+            if (!empty($elmId)) {
+                $url = GtfwDispt()->GetUrl('ref.salutation', 'comboSalutation', 'view', 'html') . '&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('div_$elmId', '" . $url . "');closeGtPopup(popup$elmId);");
+            } else {
+                $url = GtfwDispt()->GetUrl('ref.salutation', 'salutation', 'view', 'html') . '&display&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('subcontent-element', '" . $url . "');closeGtPopup(popupSalutation);");
+            }
+        } else {
+            return array('exec' => "replaceContentWithUrl('popup-subcontent', '" . GtfwDispt()->GetUrl('ref.salutation', (empty($post['dataId']) ? 'addSalutation' : 'updateSalutation'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+        }
+    }
+
+}
+
+?>

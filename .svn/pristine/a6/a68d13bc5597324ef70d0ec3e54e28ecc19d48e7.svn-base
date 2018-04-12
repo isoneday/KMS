@@ -1,0 +1,149 @@
+<?php
+
+$sql['cek_currency'] = "
+SELECT curr_id 
+FROM ref_currency 
+WHERE curr_id = '%s'    
+";
+
+$sql["count_currency"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_currency"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.curr_id AS `id`,
+    c.country_id AS `country_id`,
+    c.`country_name` AS country,
+    a.curr_code AS `code`,
+    a.curr_name AS `name`,
+    a.curr_symbol AS `symbol`,
+    a.curr_status AS `status`,
+    a.curr_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.`user_real_name`, CONCAT( u1.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_currency a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+LEFT JOIN ref_country c ON c.`country_curr_id` = a.`curr_id`
+WHERE
+    1 = 1
+    --search--
+ORDER BY a.curr_status, a.curr_id
+--limit--    
+";
+$sql["get_detail_currency"] = "
+SELECT 
+    a.curr_id AS `id`,
+    c.country_id AS `country_id`,
+    c.`country_name` AS country,
+    a.curr_code AS `code`,
+    a.curr_name AS `name`,
+    a.curr_symbol AS `symbol`,
+    a.curr_status AS `status`,
+    a.curr_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    IF((a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), u1.user_real_name, CONCAT(u1.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert ,
+    IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), u2.user_real_name, CONCAT(u2.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update 
+FROM ref_currency a
+LEFT JOIN gtfw_user u1 ON u1.`user_id` = a.`insert_user_id`    
+LEFT JOIN gtfw_user u2 ON u2.`user_id` = a.`update_user_id`
+LEFT JOIN ref_country c ON c.`country_curr_id` = a.`curr_id`
+WHERE curr_id = %d
+";
+$sql["insert_currency"] = "
+INSERT INTO ref_currency
+(
+    curr_code,
+    curr_name,
+    curr_symbol,
+    curr_status,
+    curr_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_currency"] = "
+UPDATE ref_currency
+SET 
+    curr_code = %s,
+    curr_name = %s,
+    curr_symbol = %s,
+    curr_status = %s,
+    curr_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE curr_id = %d
+";
+$sql["delete_currency"] = "
+DELETE FROM ref_currency
+WHERE curr_id = %d
+";
+$sql["list_currency"] = "
+SELECT
+    a.curr_id AS `id`,
+    CONCAT(a.`curr_code`,' (',a.`curr_symbol`,')') AS `name`
+FROM
+    ref_currency a
+WHERE curr_status = 1
+ORDER BY a.curr_code
+";
+$sql["list_currency_ga"] = "
+SELECT
+    CONCAT(a.curr_id,'|',a.`curr_code`) AS `id`,
+    a.`curr_code` AS `name`
+FROM
+    ref_currency a
+WHERE curr_status = 1
+ORDER BY a.curr_code
+";
+$sql["list_currency_ga_code"] = "
+SELECT
+    CONCAT(a.curr_id,'|',a.`curr_code`) AS `id`,
+    a.`curr_code` AS `name`
+FROM
+    ref_currency a
+WHERE curr_status = 1
+ORDER BY a.curr_code
+";
+$sql["list_currency_with_rate"] = "
+SELECT 
+  curr_id AS `id`,
+  curr_name AS `name`,
+  excrate_buy AS buy 
+FROM
+  ref_currency c 
+  LEFT JOIN ref_exchange_rate e 
+    ON excrate_curr_id = curr_id 
+  LEFT JOIN ref_exchange_period p 
+    ON e.`excrate_excper_id` = p.`excper_id` 
+WHERE NOW() BETWEEN p.`excper_start` 
+  AND p.`excper_end` 
+AND curr_status = 1
+ORDER BY curr_name 
+";
+
+$sql['check_currency_name'] = "
+SELECT
+    curr_id AS `id`
+FROM
+    ref_currency
+WHERE
+    LOWER(curr_name) = LOWER(%s)
+    --FILTER--
+	";

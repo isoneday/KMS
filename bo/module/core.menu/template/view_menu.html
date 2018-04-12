@@ -1,0 +1,110 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+    <table class="table-search">
+        <tbody>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="parent"/ --></th>
+                <td>
+                    <!-- patTemplate:gtfwrendermodule name="parent" module="core.menu" submodule="comboMenu" action="view" type="html" params="" / -->
+                </td>
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="name"/ --></th>
+                <td><input type="text" name="name" value="{NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="name"/ -->" tabindex="2" /></td>        
+            </tr>
+            <tr>
+                <th style="width:20%;">&nbsp;</th>
+                <td>
+                    <button class="btn" title="<!-- patTemplate:gtfwgetlang key="search"/ -->" tabindex="3"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="data_pesan" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{CLASS}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+    <div class="pageBar">
+        <div class="pageNav">
+            <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+            <a class="popup btn-add" href="{URL_ADD}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="menu" / -->" tabindex="4"><!-- patTemplate:gtfwgetlang key="add" / --></a>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+        </div>
+    </div>
+    <table class="table-common">
+        <thead>    
+            <tr>
+                <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+                <th style="width: 70px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="name" / --></th>
+                <th><!-- patTemplate:gtfwgetlang key="parent" / --></th>        
+            </tr>
+        </thead>
+        <tbody>
+            <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr>
+                <td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="item" -->
+            <tr class="{ROW_CLASS}">
+                <td style="text-align: center;">{NO}</td>
+                <td class="links" style="text-align: center;">
+                    <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+                    <a class="popup btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="menu" / -->"></a>
+                    <!-- /patTemplate:tmpl -->
+                    <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+                    <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / --> title="Delete" data-name="{NAME}"></a>
+                    <!-- /patTemplate:tmpl -->            
+                </td>
+                <td>{MENU_NAME}</td>
+                <td>{PARENT_NAME}</td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </tbody>
+    </table>
+    <div class="pageBar">
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+        </div>
+    </div>
+</div>
+<br />
+<script type="text/javascript">
+    $(function(){
+        $('.confirm_delete').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' menu?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' Menu',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+    });
+    var gtpopup;
+    $('.popup').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        gtpopup = showGtPopup(url, title, 900, null, 320, true);
+        return false;
+    })
+</script>
+<!-- /patTemplate:tmpl -->

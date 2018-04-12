@@ -1,0 +1,41 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+    <tbody>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="purpose" / --></th>
+            <td>{PURPOSE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+            <td>{SUBJECT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+            <td>{PARAM}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="url" / --></th>
+            <td>{URL_NOTIF}</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="body" / --></th>
+            <td>
+                <!-- patTemplate:tmpl name="item_body" -->
+                <img src="assets/images/btn/{CODE}.png"><p></p>
+                <pre>{TEXT}</pre><br />
+                <!-- /patTemplate:tmpl -->
+
+            </td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="submitted"/ --></th>
+            <td>{LAST_INSERT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="modified"/ --></th>
+            <td>{LAST_UPDATE}</td>
+        </tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

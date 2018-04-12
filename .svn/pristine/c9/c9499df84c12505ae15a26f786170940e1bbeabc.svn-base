@@ -1,0 +1,242 @@
+<?php
+
+$sql["count_applicantranking"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_applicantranking"] = "
+SELECT 
+  b.`beasiswa_id`,
+  b.`beasiswa_name`,
+  b.`beasiswa_periode_mulai`,
+  b.`beasiswa_periode_selesai`,
+  j.jenisbeasiswa_name
+FROM 
+  beasiswa b
+LEFT JOIN ref_jenis_beasiswa j 
+  ON b.beasiswa_jenisbeasiswa_id=j.jenisbeasiswa_id
+WHERE    
+  1 = 1
+  --search--
+  --limit--    
+";
+$sql["get_jumlahpelamar"] = "
+SELECT 
+   COUNT(aplikanbeasiswa_id) AS jml
+FROM 
+   aplikan_beasiswa
+WHERE	
+   aplikanbeasiswa_beasiswa_id = %d AND aplikanbeasiswa_statuspendaftaran_id = '1'
+";
+$sql["get_jumlah_pelamar_universitas"] = "
+SELECT
+   COUNT(aplikanbeasiswa_id) AS jml
+FROM
+   aplikan_beasiswa a
+LEFT JOIN aplikan_register b
+   ON a.`aplikanbeasiswa_aplikan_id`=b.`aplikan_id`
+LEFT JOIN ref_universitas c 
+   ON c.`universitas_id`=b.`aplikan_univ_id`
+WHERE 
+  `universitas_id`=%d AND aplikanbeasiswa_statuspendaftaran_id = '1'
+";
+$sql["get_detail_applicant"] = "
+SELECT
+  aplikan_nama,
+  aplikan_nim,
+  universitas_name,
+  fakultas_name,
+  prodi_name,
+  jurusan_name
+FROM
+  aplikan_beasiswa a
+LEFT JOIN aplikan_register b
+  ON a.`aplikanbeasiswa_aplikan_id`=b.`aplikan_id`
+LEFT JOIN ref_universitas c
+  ON c.`universitas_id`=b.`aplikan_univ_id`
+LEFT JOIN ref_fakultas f
+  ON f.`fakultas_id`=b.`aplikan_fakultas_id`
+LEFT JOIN ref_program_studi ps
+  ON ps.`prodi_id`=b.`aplikan_prodi_id`
+LEFT JOIN ref_jurusan j
+  ON j.`jurusan_id`=b.`aplikan_jurusan_id`
+WHERE 
+  `aplikan_id`=%s
+";
+$sql["get_detail_applicantranking"] = "
+SELECT
+  universitas_id, universitas_name, aplikanbeasiswa_statuspendaftaran_id
+FROM 
+  aplikan_beasiswa a
+LEFT JOIN aplikan_register b 
+  ON a.`aplikanbeasiswa_aplikan_id`=b.`aplikan_id`
+LEFT JOIN ref_universitas c 
+  ON c.`universitas_id`=b.`aplikan_univ_id`
+WHERE 
+  1=1
+  AND aplikanbeasiswa_statuspendaftaran_id = '1'
+  --search--
+GROUP BY 
+  `universitas_id`
+  --limit--
+";
+$sql["get_verification_applicantranking"] = "
+SELECT
+  aplikandokumen_aplikan_id,
+  aplikan_id,
+  aplikandokumen_beasiswadokumen_id,
+  dokumen_id,
+  dokumen_name,
+  aplikan_nim,
+  aplikan_nama,
+  aplikandokumen_file,
+  aplikandokumen_file_origin,
+  aplikandokumen_verifikator_status
+FROM 
+  aplikan_beasiswa ab
+LEFT JOIN beasiswa b 
+  ON b.`beasiswa_id`=ab.`aplikanbeasiswa_beasiswa_id`
+LEFT JOIN aplikan_register r 
+  ON ab.`aplikanbeasiswa_aplikan_id`=r.`aplikan_id`
+LEFT JOIN beasiswa_dokumen bd 
+  ON bd.`beasiswadokumen_beasiswa_id`=ab.`aplikanbeasiswa_beasiswa_id`
+LEFT JOIN aplikan_dokumen ad
+  ON ad.`aplikandokumen_beasiswadokumen_id`=bd.`beasiswadokumen_id`
+LEFT JOIN ref_syarat_dokumen sd
+  ON bd.`beasiswadokumen_syaratdokumen_id`=sd.`dokumen_id`
+WHERE
+  aplikan_id=%d AND aplikanbeasiswa_beasiswa_id=%s AND aplikandokumen_beasiswadokumen_id != ''
+";
+$sql["get_detail_universitas_applicantranking"] = "
+SELECT 
+  b.aplikan_id,
+  b.aplikan_univ_id AS iduniv,
+  a.aplikanbeasiswa_beasiswa_id AS idbea,
+  b.aplikan_nama, 
+  b.aplikan_nim, 
+  aplikanbeasiswa_beasiswa_id, 
+  fakultas_name, 
+  prodi_name, 
+  jurusan_name, 
+  (SELECT @nilai_ipk_akhir := 
+     aplikanakademik_ipk 
+   FROM aplikan_akademik 
+   WHERE aplikanakademik_aplikan_id = b.aplikan_id 
+   ORDER BY aplikanakademik_periode DESC, aplikanakademik_semester DESC 
+   LIMIT 1) AS nilai_ipk, 
+  statuspendaftaran_name, 
+  ukt_name, 
+  ukt_bobot, 
+  (((@nilai_ipk_akhir - 2.99) * 60) + ukt_bobot) AS nilai_total 
+FROM aplikan_beasiswa a 
+  LEFT JOIN aplikan_register b 
+    ON a.`aplikanbeasiswa_aplikan_id` = b.`aplikan_id` 
+  LEFT JOIN ref_fakultas f 
+    ON f.`fakultas_id` = b.`aplikan_fakultas_id` 
+  LEFT JOIN ref_program_studi ps 
+    ON ps.`prodi_id` = b.`aplikan_prodi_id` 
+  LEFT JOIN ref_jurusan j 
+    ON j.`jurusan_id` = b.`aplikan_jurusan_id` 
+  LEFT JOIN aplikan_akademik ak 
+    ON ak.`aplikanakademik_aplikan_id` = b.`aplikan_id` 
+  LEFT JOIN ref_status_pendaftaran sp 
+    ON sp.`statuspendaftaran_id` = a.aplikanbeasiswa_statuspendaftaran_id 
+  LEFT JOIN ref_ukt u 
+    ON u.ukt_id = b.ukt_id 
+WHERE 
+	1=1
+	AND a.aplikanbeasiswa_statuspendaftaran_id = '1'
+	--search--
+GROUP BY b.aplikan_id 
+ORDER BY nilai_total DESC 
+	--limit-- 
+";
+
+$sql["sukses_applicantranking"] = "
+UPDATE aplikan_beasiswa
+SET 
+    aplikanbeasiswa_statuspendaftaran_id = '3'
+WHERE aplikanbeasiswa_aplikan_id = '%s'
+";
+
+$sql["failed_applicantranking"] = "
+UPDATE aplikan_beasiswa
+SET 
+    aplikanbeasiswa_statuspendaftaran_id = '7'
+WHERE aplikanbeasiswa_aplikan_id = '%s'
+";
+
+$sql["update_verificationranking"] = "
+UPDATE 
+  aplikan_dokumen 
+SET 
+  aplikandokumen_verifikator_status=%s 
+WHERE 
+  aplikandokumen_aplikan_id=%d AND aplikandokumen_beasiswadokumen_id=%s
+";
+$sql["update_applicantranking"] = "
+UPDATE kemahasiswaan_pendaftar
+SET 
+    kmhsPdrNim = %s,
+    kmhsPdrNiu = %s,
+    kmhsPdrAngk = %s,
+    kmhsPdrNif = %s,
+    kmhsPdrFakId = %s,
+    kmhsPdrProdiId = %s,
+    kmhsPdrJurId = %s,
+    kmhsPdrJenPdkId = %s,
+    kmhsPdrIsLulus = %s,
+    kmhsPdrBlnLulus = %s,
+    kmhsPdrThnLulus = %s,
+    kmhsPdrNama = %s,
+    kmhsPdrTmpLahir = %s,
+    kmhsPdrTglLahir = %s,
+    kmhsPdrJenisKelamin = %s,
+    kmhsPdrAlamatAsal = %s,
+    kmhsPdrAlamatJogja = %s,
+    kmhsPdrNoTelp = %s,
+    kmhsPdrJmlTanggKel = %s,
+    kmhsPdrKetTanggKel = %s,
+    kmhsPdrJmlSaudara = %s,
+    kmhsPdrBank = %s,
+    kmhsPdrRekening = %s,
+    kmhsPdrJalurMasuk = %s,
+    kmhsPdrAgama = %s,
+    kmhsPdrNoKtp = %s,
+    kmhsPdrStatTptTgl = %s,
+    kmhsPdrRmhSaudara = %s,
+    kmhsPdrBiayaKuliah = %s,
+    kmhsPdrBiayaSaudara = %s,
+    kmhsPdrAktifitas = %s,
+    kmhsPdrTptKerja = %s,
+    kmhsPdrGajiKerja = %s,
+    kmhsPdrJamKerja = %s,
+    kmhsPdrUkt = %s,
+    kmhsPdrShowDaftar = %s,
+    kmhsPdrLastUpdate = %s,
+    kmhsUnitId = %s,
+    kmhsPdrTidakMampuFile = %s,
+    kmhsPdrTidakBeasiswaLainFile = %s,
+    kmhsPdrFotoFile = %s,
+    kmhsPdrKartuKeluargaFile = %s,
+    kmhsPdrRekomendasiFakultasFile = %s,
+    kmhsPdrJumlahSaudara = %s,
+    kmhsPdrJumlahSaudaraDitanggung = %s,
+    kmhsPdrJumlahSaudaraBekerja = %s,
+    kmhsPdrEmail = %s,
+    kmhsPdrSumberInformasiBeasiswa = %s,
+    kmhsPdrSatkerId = %s,
+    kmhsPdrTanggal = %s
+WHERE kmhsPdrNim_id = %d
+";
+$sql["delete_applicantranking"] = "
+DELETE FROM kemahasiswaan_pendaftar
+WHERE kmhsPdrNim_id = %d
+";
+$sql["list_applicantranking"] = "
+SELECT
+    kmhsPdrNim_id AS `id`,
+    kmhsPdrNim_name AS `name`
+FROM
+    kemahasiswaan_pendaftar
+ORDER BY kmhsPdrNim_name
+";

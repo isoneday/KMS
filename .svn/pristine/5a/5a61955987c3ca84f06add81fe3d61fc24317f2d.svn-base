@@ -1,0 +1,62 @@
+<!-- patTemplate:tmpl name="content" -->
+<script type="text/javascript">
+    $(function(){
+        //show hide search
+        showSearch();
+        $('#button-adv-search').click(function(){
+            $('input[name="search_mode"]').val('adv');
+            $('#simple-search input, #simple-search select, #simple-search textarea').each(function(){
+                var elm = $(this);
+                var name = elm.attr('name').split("_");
+                if($('input[name="'+name[1]+'"]').length == 0){
+                    $(this).val('all');$(this).val('');
+                }                
+            });
+            showSearch();
+        });
+        $('#button-simple-search').click(function(){
+            $('input[name="search_mode"]').val('simple');
+            $('#adv-search input, #adv-search select, #adv-search textarea').each(function(){
+                var elm = $(this);
+                if($('input[name="s_'+elm.attr('name')+'"]').length == 0){
+                    //console.log($('input[name="s_'+elm.attr('name')+'"]'));
+                    $(this).val('all');$(this).val('');
+                }                
+            });
+            showSearch();
+        });
+        //copy value to sibling input
+        $('#simple-search input, #simple-search textarea').each(function(){
+            var elm = $(this);
+            elm.keyup(function(){
+                var name = elm.attr('name').split("_");
+                $('input[name="'+name[1]+'"]').val(elm.val());
+            });
+        });
+        $('#adv-search input, #adv-search textarea').each(function(){
+            var elm = $(this);
+            elm.keyup(function(){
+                $('input[name="s_'+elm.attr('name')+'"]').val(elm.val());
+            });
+        });
+        
+        $('.button-change-display').click(function(){
+            $('#mode').val('detail');
+            $('#form_search').submit();
+        });
+        
+    });
+          
+    function showSearch(){
+        var search_mode = $('input[name="search_mode"]').val();
+    
+        if (search_mode == 'adv'){
+            $('#simple-search').hide();
+            $('#adv-search').show();
+        } else {
+            $('#simple-search').show();
+            $('#adv-search').hide();
+        }
+    } 
+</script>
+<!-- /patTemplate:tmpl -->

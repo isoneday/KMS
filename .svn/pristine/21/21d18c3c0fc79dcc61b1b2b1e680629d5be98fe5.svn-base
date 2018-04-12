@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @author Prima Noor
+ */
+class ProcessType {
+
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct() {
+        $this->Obj = GtfwDispt()->load->business('StructPositionType');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        $Val->set_rules('code', GtfwLangText('code'), 'required|callback_external_callbacks[ProcessType,ref.structural.position.type,isCodeAvailable]');
+        $Val->set_rules('name', GtfwLangText('name'), 'required|callback_external_callbacks[ProcessType,ref.structural.position.type,isNameAvailable]');
+        $Val->set_rules('order', GtfwLangText('order'), 'required');
+        $Val->set_rules('status', GtfwLangText('status'), 'required');
+
+        $result = $Val->run();
+        if ($result) {
+            if (empty($_SESSION['ref.structural.position.type']['data_id'])) {
+                $this->Obj->StartTrans();
+                $params = array(
+                    $post['parent_id'],
+                    $post['code'],
+                    $post['name'],
+                    $post['order'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user
+                );
+                $result = $result && $this->Obj->insertType($params);
+                $this->Obj->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->Obj->StartTrans();
+                $params = array(
+                    $post['parent_id'],
+                    $post['code'],
+                    $post['name'],
+                    $post['order'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user,
+                    $_SESSION['ref.structural.position.type']['data_id']
+                );
+                $result = $result && $this->Obj->updateType($params);
+                $this->Obj->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result) {
+			unset($_SESSION['ref.structural.position.type']['data_id']);
+            Messenger::Instance()->Send('ref.structural.position.type', 'type', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.structural.position.type', 'type', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.structural.position.type', 'inputType', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.structural.position.type', (empty($post['id'])?'add':'update').'Type', 'view', 'html');
+        }
+        return $result;
+    }
+
+    function delete($id) {
+        $result = $this->Obj->deleteType($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;
+        }
+        Messenger::Instance()->Send('ref.structural.position.type', 'type', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+
+        return $result;
+    }
+
+    /**
+     * custom validation
+     * check if name available
+     * @param mixed value from post
+     * @param array(mixed) optional
+     * @return array of 'message' dan 'result'
+     */
+    function isNameAvailable($value) {
+		$return['message'] = '';
+        $return['result'] = false;
+        
+        $param['name'] = $value;        
+        if (!empty($_SESSION['ref.structural.position.type']['data_id'])) $param['id'] = $_SESSION['ref.structural.position.type']['data_id'];
+        
+        if ($this->Obj->checkName($param)) {
+            $return['message'] = GtfwLangText('custom_validation_name_already_exists');
+        } else {
+            $return['result'] = true;
+        }
+        
+        return $return;       
+    }
+
+    function isCodeAvailable($value) {
+		$return['message'] = '';
+        $return['result'] = false;
+        
+        $param['code'] = $value;        
+        if (!empty($_SESSION['ref.structural.position.type']['data_id'])) $param['id'] = $_SESSION['ref.structural.position.type']['data_id'];
+        
+        if ($this->Obj->checkName($param)) {
+            $return['message'] = GtfwLangText('custom_validation_structural_position_code_not_available');
+        } else {
+            $return['result'] = true;
+        }
+        
+        return $return;        
+    }
+}
+
+?>

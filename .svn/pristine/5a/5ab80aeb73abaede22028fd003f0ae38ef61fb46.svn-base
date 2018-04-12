@@ -1,0 +1,39 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+   
+class ViewDetailTempatTinggal extends HtmlResponse
+{
+   	function TemplateModule()
+   	{
+      	$this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+      	$this->SetTemplateFile('view_detail_tempattinggal.html');
+   	}
+   
+   	function ProcessRequest()
+   	{	
+   	    $ObjTempatTinggal = GtfwDispt()->load->business('TempatTinggal', 'ref.tempat.tinggal');
+        
+        $id = $_GET['id']->Integer()->Raw();
+        
+        $detail = $ObjTempatTinggal->getDetailTempatTinggal($id);
+        
+		$nav[0]['url'] = GtfwDispt()->GetUrl('ref.tempat.tinggal', 'TempatTinggal', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'TempatTinggal';
+        $title = GtfwLangText('detail');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+        
+      	return compact('detail');
+   	}
+   
+   	function ParseTemplate($rdata = NULL)
+   	{
+		extract($rdata);
+        
+        if (!empty($detail)) {
+            $this->mrTemplate->addVars('content', $detail);
+        }
+   	}
+}
+?>

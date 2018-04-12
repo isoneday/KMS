@@ -1,0 +1,162 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input_table_docs" class="xhr dest_subcontent-element" method="post" action="{URL}">
+	<div class="content-box-form">
+		<input type="hidden" name="id" value="{ID}" />
+		<table class="table-edit">   
+			<tr class="subhead">
+				<th colspan="2">
+					<strong><!-- patTemplate:gtfwgetlang key="table_documentation_data" / --></strong>
+				</th>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+				<td>
+					<input type="text" name="name" value="{NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="1" />            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="table" / --></th>
+				<td>
+					<!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="table"  / -->           
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="dependency_source" / --></th>
+				<td id="col_souce">
+					<div id="source_table"><!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="source"  / --></div>
+					<div id="source_fields"></div>
+					<button type="button" class="btn" id="add_source"><!-- patTemplate:gtfwgetlang key="add" / --></button>
+					<table class="table-common" id="table-source" style="width: 50%;">
+						<tr>
+							<th><!-- patTemplate:gtfwgetlang key="table" / --></th>
+							<th><!-- patTemplate:gtfwgetlang key="column" / --></th>
+							<th style="width: 30px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+						</tr>
+						<!-- patTemplate:tmpl name="source" type="condition" conditionvar="IS_EMPTY" -->
+						<!-- patTemplate:sub condition="NO" -->
+						<!-- patTemplate:tmpl name="source_item" -->
+						<tr>
+							<td>{TABLE}<input type="hidden" name="source_tables[]" value="{TABLE}" /></td>
+							<td>{FIELD}<input type="hidden" name="source_fields[]" value="{FIELD}" /></td>
+							<td class="center"><a class="delete btn-delete-icon"></a></td>
+						</tr>
+						<!-- /patTemplate:tmpl -->
+						<!-- /patTemplate:sub -->                
+						<!-- /patTemplate:tmpl -->
+					</table>        
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="dependency_target" / --></th>
+				<td id="col_souce">
+					<div id="target_table"><!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="target"  / --></div>
+					<div id="target_fields"></div>
+					<button type="button" class="btn" id="add_target"><!-- patTemplate:gtfwgetlang key="add" / --></button>
+					<table class="table-common" id="table-target" style="width: 50%;">
+						<tr>
+							<th><!-- patTemplate:gtfwgetlang key="table" / --></th>
+							<th><!-- patTemplate:gtfwgetlang key="column" / --></th>
+							<th style="width: 30px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+						</tr>
+						<!-- patTemplate:tmpl name="target" type="condition" conditionvar="IS_EMPTY" -->
+						<!-- patTemplate:sub condition="NO" -->
+						<!-- patTemplate:tmpl name="target_item" -->
+						<tr>
+							<td>{TABLE}<input type="hidden" name="target_tables[]" value="{TABLE}" /></td>
+							<td>{FIELD}<input type="hidden" name="target_fields[]" value="{FIELD}" /></td>
+							<td class="center"><a class="delete btn-delete-icon"></a></td>
+						</tr>
+						<!-- /patTemplate:tmpl -->
+						<!-- /patTemplate:sub -->                
+						<!-- /patTemplate:tmpl -->
+					</table>        
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+				<td>
+					<textarea name="desc" cols="50" rows="2" title="<!-- patTemplate:gtfwgetlang key="desc" / -->" tabindex="5" >{DESC}</textarea>            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="sample_data" / --></th>
+				<td>
+					<textarea name="sample_data" id="sample_data" cols="50" rows="10" title="<!-- patTemplate:gtfwgetlang key="sample_data" / -->" tabindex="6" >{SAMPLE_DATA}</textarea>            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="menu_name" / --></th>
+				<td>
+					<input type="text" name="menu_name" value="{MENU_NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="menu_name" / -->" tabindex="7"  />            
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px;"><!-- patTemplate:gtfwgetlang key="module_name" / --></th>
+				<td>
+					<input type="text" name="module_name" value="{MODULE_NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="module_name" / -->" tabindex="8" />            
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="form-footer" style="padding:14px 230px 15px!important">
+		<button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="9"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+		<button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="10"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+		<a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="11"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>         
+	</div>
+</form>
+<script type="text/javascript">
+$(function(){
+    $('#table').on('change', function(){
+        $('#sample_data').load('{URL_SAMPLE_DATA}&table='+$(this).val());
+    });
+    $('#source').off('change').on('change', function(){
+        $('#source_fields').load('{URL_FIELDS}&table='+$(this).val());
+    });
+    $('#add_source').on('click', function(){
+        var table = $('#source_table').children('select').val();
+        var field = $('#source_fields').children('select').val();
+        if (!table) { alert('Please select source table'); return false;}
+        if (!fields) { alert('Please select source fields'); return false;}
+        var row = '<tr>\
+                    <td>'+table+'<input type="hidden" name="source_tables[]" value="'+table+'"</td>\
+                    <td>'+field+'<input type="hidden" name="source_fields[]" value="'+field+'"</td>\
+                    <td class="center"><a class="delete btn-delete-icon"></a></td>\
+                    </tr>';
+        $('#table-source').append(row);
+        return false;
+    });
+    $('#table-source').on('click', '.delete', function(){
+        $(this).parent().parent().remove();
+    });
+    
+    $('#target').off('change').on('change', function(){
+        $('#target_fields').load('{URL_FIELDS}&table='+$(this).val());
+    });
+    $('#add_target').on('click', function(){
+        var table = $('#target_table').children('select').val();
+        var field = $('#target_fields').children('select').val();
+        if (!table) { alert('Please select target table'); return false;}
+        if (!fields) { alert('Please select target fields'); return false;}
+        var row = '<tr>\
+                    <td>'+table+'<input type="hidden" name="target_tables[]" value="'+table+'"</td>\
+                    <td>'+field+'<input type="hidden" name="target_fields[]" value="'+field+'"</td>\
+                    <td class="center"><a class="delete btn-delete-icon"></a></td>\
+                    </tr>';
+        $('#table-target').append(row);
+        return false;
+    });
+    $('#table-target').on('click', '.delete', function(){
+        $(this).parent().parent().remove();
+    });
+});
+</script>
+<style>
+.center {
+    text-align: center !important;
+}
+</style>
+<!-- /patTemplate:tmpl -->

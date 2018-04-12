@@ -1,0 +1,39 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+   
+class ViewDetailResourcesScholarships extends HtmlResponse
+{
+   	function TemplateModule()
+   	{
+      	$this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+      	$this->SetTemplateFile('view_detail_resourcesscholarships.html');
+   	}
+   
+   	function ProcessRequest()
+   	{	
+   	    $ObjResourcesScholarships = GtfwDispt()->load->business('ResourcesScholarships', 'ref.resources.scholarships');
+        
+        $id = $_GET['id']->Integer()->Raw();
+        
+        $detail = $ObjResourcesScholarships->getDetailResourcesScholarships($id);
+        
+		$nav[0]['url'] = GtfwDispt()->GetUrl('ref.resources.scholarships', 'ResourcesScholarships', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'ResourcesScholarships';
+        $title = GtfwLangText('detail');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+        
+      	return compact('detail');
+   	}
+   
+   	function ParseTemplate($rdata = NULL)
+   	{
+		extract($rdata);
+        
+        if (!empty($detail)) {
+            $this->mrTemplate->addVars('content', $detail);
+        }
+   	}
+}
+?>

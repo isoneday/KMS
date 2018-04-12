@@ -1,0 +1,61 @@
+<?php
+
+$sql["count_fanancingstudy"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_fanancingstudy"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.pembiayaankuliah_id AS `pembiayaanKuliahId`,
+    a.pembiayaankuliah_id AS `id`,
+    a.pembiayaankuliah_name AS `pembiayaanKuliahNama`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_pembiayaan_kuliah a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_fanancingstudy"] = "
+SELECT 
+    a.pembiayaankuliah_id AS `pembiayaanKuliahId`,
+    a.pembiayaankuliah_id AS `id`,
+    a.pembiayaankuliah_name AS `pembiayaanKuliahNama`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_pembiayaan_kuliah a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE pembiayaankuliah_id = %d
+";
+$sql["insert_fanancingstudy"] = "
+INSERT INTO ref_pembiayaan_kuliah
+(
+    pembiayaankuliah_name,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_fanancingstudy"] = "
+UPDATE ref_pembiayaan_kuliah
+SET 
+    pembiayaankuliah_name = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE pembiayaankuliah_id = %d
+";
+$sql["delete_fanancingstudy"] = "
+DELETE FROM ref_pembiayaan_kuliah
+WHERE pembiayaankuliah_id = %d
+";
+$sql["list_fanancingstudy"] = "
+SELECT
+    pembiayaankuliah_id AS `id`,
+    pembiayaankuliah_name AS `name`
+FROM
+    ref_pembiayaan_kuliah
+ORDER BY pembiayaankuliah_name
+";

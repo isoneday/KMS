@@ -1,0 +1,73 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class InterviewCategory extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/setup.interview.category/business/mysqlt/interviewcategory.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countInterviewCategory()
+    {
+        $query = $this->mSqlQueries['count_interviewcategory'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getInterviewCategory($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($name)) {
+            $str .= " AND LOWER(kategoriwawancara_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_interviewcategory'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailInterviewCategory($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_interviewcategory'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertInterviewCategory($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_interviewcategory'], $params);
+    }
+    
+    public function updateInterviewCategory($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_interviewcategory'], $params);
+    }
+    
+    public function deleteInterviewCategory($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_interviewcategory'], array($id));
+    }
+    
+    public function listInterviewCategory()
+    {
+        return $this->Open($this->mSqlQueries['list_interviewcategory'], array());
+    }
+}
+
+// End of file InterviewCategory.class.php

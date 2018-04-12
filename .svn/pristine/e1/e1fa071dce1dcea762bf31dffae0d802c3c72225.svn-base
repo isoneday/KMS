@@ -1,0 +1,77 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class InterviewAspect extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/setup.interview.aspect/business/mysqlt/interviewaspect.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countInterviewAspect($filter)
+    {
+        $query = $this->mSqlQueries['count_interviewaspect'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getInterviewAspect($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($desc)) {
+            $str .= " AND LOWER(aspekwawancara_desc) LIKE('%$desc%')";
+        }
+        
+        if (!empty($kategoriwawancara_id)) {
+            $str .= " AND LOWER(a.kategoriwawancara_id) = '$kategoriwawancara_id'";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_interviewaspect'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailInterviewAspect($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_interviewaspect'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertInterviewAspect($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_interviewaspect'], $params);
+    }
+    
+    public function updateInterviewAspect($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_interviewaspect'], $params);
+    }
+    
+    public function deleteInterviewAspect($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_interviewaspect'], array($id));
+    }
+    
+    public function listInterviewAspect()
+    {
+        return $this->Open($this->mSqlQueries['list_interviewaspect'], array());
+    }
+}
+
+// End of file InterviewAspect.class.php

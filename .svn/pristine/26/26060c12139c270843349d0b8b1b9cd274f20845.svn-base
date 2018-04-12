@@ -1,0 +1,24 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoUpdateCity extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessCity', 'ref.city');
+        $id = NULL;
+        if (!empty($_SESSION['ref.city']['data_id'])) $id = Dispatcher::Instance()->Encrypt($_SESSION['ref.city']['data_id']);
+        
+        $result = $proses->input();
+        
+        if ($result) {
+            return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.city', 'City', 'view', 'html').'&display' . '&ascomponent=1"); ;closeGtPopup(popupCity);');  
+        } else {  
+            return array('exec' => 'replaceContentWithUrl("popup-subcontent","' . GtfwDispt()->GetUrl('ref.city', 'updateCity', 'view', 'html').'&id='. $id . '&ascomponent=1")');
+        }        
+    }
+}
+
+?>

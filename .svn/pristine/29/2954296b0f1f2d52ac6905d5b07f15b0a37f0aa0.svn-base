@@ -1,0 +1,10 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputRegistrasiUlang
+class ViewRegistasiUlang extends ViewInputPersonalData
+{
+    
+}
+?>

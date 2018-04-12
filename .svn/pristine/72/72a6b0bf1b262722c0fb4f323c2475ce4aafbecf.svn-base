@@ -1,0 +1,48 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsAsramaId" / --></th>
+        <td>
+            <input type="number" name="kmhsasramaid" value="{KMHSASRAMAID}" required="required" />*            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsAsramaNama" / --></th>
+        <td>
+            <input type="text" name="kmhsasramanama" value="{KMHSASRAMANAMA}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsAsramaAlamat" / --></th>
+        <td>
+            <textarea name="kmhsasramaalamat" cols="50" rows="2" >{KMHSASRAMAALAMAT}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsAsramaTelp" / --></th>
+        <td>
+            <input type="text" name="kmhsasramatelp" value="{KMHSASRAMATELP}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="kmhsAsramaKonPerson" / --></th>
+        <td>
+            <input type="text" name="kmhsasramakonperson" value="{KMHSASRAMAKONPERSON}"  />            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+        </td>            
+    </tr>    
+</table>
+</form>
+<!-- /patTemplate:tmpl -->

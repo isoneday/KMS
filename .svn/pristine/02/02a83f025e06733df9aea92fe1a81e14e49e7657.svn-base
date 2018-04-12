@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class Country extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.country/business/mysqlt/country.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countCountry() {
+        $query = $this->mSqlQueries['count_country'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getCountry($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($code)) {
+            $str .= " AND LOWER(country_code) LIKE('%$code%')";
+        }
+        if (!empty($name)) {
+            $str .= " AND LOWER(country_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+        $order_by = '';
+        if (!empty($sort) AND !empty($order)) {
+            $order_by = "ORDER BY $sort $order";
+        }
+        $query = $this->mSqlQueries['get_country'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $query = str_replace('--order--', $order_by, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+
+    public function getDetailCountry($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_country'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function getDetailCountryByCode($code) {
+        $result = $this->Open($this->mSqlQueries['get_detail_country_by_code'], array($code));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function insertCountry($params) {
+        return $this->Execute($this->mSqlQueries['insert_country'], $params);
+    }
+
+    public function updateCountry($params) {
+        return $this->Execute($this->mSqlQueries['update_country'], $params);
+    }
+
+    public function deleteCountry($id) {
+        return $this->Execute($this->mSqlQueries['delete_country'], array($id));
+    }
+
+    public function listCountry() {
+        return $this->Open($this->mSqlQueries['list_country'], array());
+    }
+
+    public function listCitizenship() {
+        return $this->Open($this->mSqlQueries['list_citizenship'], array());
+    }
+
+    /**
+     * check name if exist
+     * @param array of name, id
+     * @return boolean, true if exist, false otherwise
+     */
+    public function checkName($param) {
+        if (is_array($param))
+            extract($param);
+
+        $str = '';
+        $limit = '';
+
+        if (!empty($code))
+            $str .= " AND LOWER(country_code) = LOWER('$code')";
+        if (!empty($name))
+            $str .= " AND LOWER(country_name) = LOWER('$name')";
+        if (!empty($id))
+            $str .= " AND country_id != $id";
+
+        $query = $this->mSqlQueries['get_country'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
+// End of file Country.class.php

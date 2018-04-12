@@ -1,0 +1,118 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewlistPencairan extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_list_pencairan.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantPencairan = GtfwDispt()->load->business('ApplicantPencairan', 'applicant.pencairan');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+
+        $universitas_id = $_GET['id']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+
+        $listPencairan = $ObjApplicantPencairan->listPencairan($universitas_id);
+	
+        $listGroup = $ObjApplicantPencairan->listGroup($this->user);
+		
+        $i = 0;
+		foreach($listPencairan as $var)
+			{
+			if($var['aplikanbeasiswa_beasiswa_id'] == $id_beasiswa)
+				{
+				$data[$i]['aplikan_id'] = $var['aplikan_id'];
+                $data[$i]['aplikan_nim'] = $var['aplikan_nim'];
+				$data[$i]['aplikan_nama'] = $var['aplikan_nama'];
+				$data[$i]['aplikan_angkatan'] = $var['aplikan_angkatan'];
+				$data[$i]['aplikan_tanggal_lahir'] = $var['aplikan_tanggal_lahir'];
+				$data[$i]['aplikan_telepon'] = $var['aplikan_telepon'];
+				$data[$i]['aplikan_tanggal_registrasi'] = $var['aplikan_tanggal_registrasi'];
+                $data[$i]['statuspendaftaran_name'] = $var['statuspendaftaran_name'];
+				$i++;
+				}
+			}
+				 
+        return compact('data', 'id_beasiswa','universitas_id','listGroup');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+       $no = 1;
+        if (!empty($data) AND count($data) > 0) {
+			$this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            foreach ($data as $val) {
+                $val['no'] = $no;
+				
+                
+                if($listGroup['usergroup_group_id'] == "1" OR $listGroup['usergroup_group_id'] == "3" ){
+                    $this->mrTemplate->addVar('dataurl', 'LIST_GROUP_EMPTY', 'NO');
+                    $group['url_detail'] = GtfwDispt()->GetUrl('applicant.data', 'detailApplicantData', 'view', 'html') . 
+                    '&id=' . $val['aplikan_nim']
+                    ;
+
+                    $group['url'] = GtfwDispt()->GetUrl('applicant.pencairan', 'approvePencairan', 'view', 'html') . 
+                    '&id=' . $val['aplikan_id'] .
+                    '&nim=' . $val['aplikan_nim'] .
+                    '&id_beasiswa=' . $id_beasiswa
+                    ;
+
+                    
+                } else {
+                    $this->mrTemplate->addVar('dataurl', 'LIST_GROUP_EMPTY', 'YES');
+                    $group['url_detail'] = GtfwDispt()->GetUrl('applicant.data', 'detailApplicantData', 'view', 'html') . 
+                    '&id=' . $val['aplikan_nim']
+                    ;
+                }
+				
+				$val['aplikan_tanggal_lahir'] = $this->date2stirng($val['aplikan_tanggal_lahir']);
+
+                $this->mrTemplate->addVars('dataurl', $group);
+                
+                $this->mrTemplate->addVars('item', $val);
+                $this->mrTemplate->parseTemplate('item', 'a');
+                $no++;
+                
+            }
+
+
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+                
+		
+    }
+	
+	function date2stirng($date){
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrd = explode('-', $date);
+        $dateString = $arrd[2].' '.$bln[(int)$arrd[1]].' '.$arrd[0];
+
+        return $dateString;
+    }
+
+}
+
+?>

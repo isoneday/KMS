@@ -1,0 +1,32 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <input type="hidden" name="id" value="{ID}" />
+    <table class="table-edit">
+
+        <tr>
+            <th style="width: 150px;"><!-- patTemplate:gtfwgetlang key="kategoriwawancara"/ --></th>
+            <td>
+                <div id="div_country_id">
+                    <!-- patTemplate:gtfwrendermodule module="setup.interview.category" submodule="comboInterviewCategory" action="view" name="kategoriwawancara_id"  / -->
+                    &nbsp;*</div>       
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+            <td>
+                <textarea name="desc" cols="50" rows="2" >{DESC}</textarea>            
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>   
+                <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+                <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+            </td>            
+        </tr>    
+    </table>
+</form>
+<!-- /patTemplate:tmpl -->

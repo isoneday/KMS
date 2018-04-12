@@ -1,0 +1,68 @@
+<!-- patTemplate:tmpl name="content" -->
+<div id="another-sample">
+
+<form id="form_select_year" method="post" class="xhr dest_another-sample" action="{ACTION}" style="">
+<!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="tahun"  / -->
+</form>
+<div id="container" style="min-width: 590px; height: 200px; margin: 0 auto">
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: '{TAHUN}',
+                margin: 5
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Jumlah'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y;
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [
+            <!-- patTemplate:tmpl name="series" type="simplecondition" requiredvars="DATA" -->
+            {
+                name: '{NAME}',
+                data: [{DATA}]
+            },
+            <!-- /patTemplate:tmpl -->
+            ]
+        });
+    });
+    
+    $('#tahun').change(function(){
+        $('#form_select_year').submit();
+    })
+});
+</script>
+</div>
+<!-- /patTemplate:tmpl -->

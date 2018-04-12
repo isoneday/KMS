@@ -1,0 +1,95 @@
+<!-- patTemplate:tmpl name="document" -->
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+
+        <!-- Basic Page Needs
+    ================================================== -->
+        <title><!-- patTemplate:gtfwgetconfig config="organization" name="application_name" / --></title>
+		<!-- metadata for seo -->
+		<meta charset="utf-8"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="-1"/>
+		<meta http-equiv="CACHE-CONTROL" content="PUBLIC" />
+		<meta name="Title" content="<!-- patTemplate:gtfwgetconfig config="organization" name="title" / -->" />
+		<meta name="Keywords" content="<!-- patTemplate:gtfwgetconfig config="organization" name="keywords" / -->" />
+		<meta name="Description" content="<!-- patTemplate:gtfwgetconfig config="organization" name="description" / -->" />
+		<meta name="Geography" content="<!-- patTemplate:gtfwgetconfig config="organization" name="geography" / -->" />
+		<meta name="Language" content="<!-- patTemplate:gtfwgetconfig config="organization" name="language" / -->" />
+		<meta name="Owner" content="<!-- patTemplate:gtfwgetconfig config="organization" name="owner" / -->" />
+		<meta name="Author" content="<!-- patTemplate:gtfwgetconfig config="organization" name="author" / -->" />
+		<meta name="Designer" content="<!-- patTemplate:gtfwgetconfig config="organization" name="designer" / -->" />
+		<meta name="Copyright" content="<!-- patTemplate:gtfwgetconfig config="organization" name="copyright" / -->" />
+		<meta name="Robots" content="<!-- patTemplate:gtfwgetconfig config="organization" name="robots" / -->" />
+		<meta name="City" content="<!-- patTemplate:gtfwgetconfig config="organization" name="city" / -->" />
+		<!-- end metadata for seo -->
+		
+        <!-- Mobile Specific Metas
+    ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		
+		<!-- favicon -->
+		<link rel="shortcut icon" href="assets/images/coporate.ico" />
+		<!-- end favicon -->
+		
+        <!-- CSS
+    ================================================== -->
+	    <link href="assets/css/loader-login.css" rel="stylesheet">
+		<!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="assets/css/iestyles.css" />
+        <![endif]-->
+        
+        <!-- JS
+	================================================== -->
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/libs/jquery.flexslider-min.js"></script>
+		<script>
+		  $(document).ready(function() {
+		     //background switcher
+                $('#bg_switcher a').click(function() {
+                    var link = $(this).attr('href');
+                    var cssLink = ('url(' + link + ')');
+                    $('body').css('background', cssLink);
+                    return false;
+                });
+			});
+		</script>
+        <!-- Hook up the FlexSlider -->
+        <script type="text/javascript">
+            $(window).load(function() {
+                $('.flexslider').flexslider({
+				animation: "fade",         
+				//easing: "easeOutCubic",   //{NEW} String: Determines the easing method used in jQuery transitions. jQuery easing plugin is supported!
+				direction: "vertical"
+				});
+                //$('.flex-direction-nav').remove();
+            });
+        </script>
+        <script type="text/javascript">
+            $(window).load(function() {
+                $(".email-input").focus();
+                $("#lang").click(function(l){
+                    l.preventDefault();
+                    if($(this).hasClass("show")){
+                        $("#menuProfile").hide();
+			
+                        $(this).removeClass('show');
+                    }else{
+                        $("#menuProfile").show();
+                        $(this).addClass('show');
+
+                    }
+			
+                });
+            });
+        </script>
+    </head>
+    <body>
+    <!-- patTemplate:link src="body" / -->
+    </body>
+</html>
+<!-- /patTemplate:tmpl -->

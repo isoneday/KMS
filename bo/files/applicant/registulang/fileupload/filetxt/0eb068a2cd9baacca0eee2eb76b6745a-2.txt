@@ -1,0 +1,73 @@
+                                       
+                              MINUTES OF MEETING
+                          eCampuz Saint Mary College
+
+Place :
+Laboratorium Lt.4 Saint Mary
+Date :
+10-12 Agustus 2016
+
+
+Subject : Pelatihan eCampuz
+Attendees : Bagian Keuangan, Bagian Akademik (Mahasiswa), Puket 1, Kaprodi Manajemen, Bagian Akademik (Kurikulum), Marketing
+CC : Tim Teknis Gamatechno
+
+                                    Item #
+                              Discussion Summary
+                                   Action by
+                              Due date / Remarks
+Note :
+                                       A
+Agenda pertemuan :
+1) Pelatihan eCampuz
+                              Application Support
+                                  (Ajengmas)
+
+                                       B
+Bahasan pertemuan :
+1) Pelatihan eCampuz
+
+
+                                       C
+Summary Umum :
+1) Masukan untuk portal mahasiswa diinginkan mahasiswa bisa melihat prosentase kehadiran di kelas.
+2) Yayasan Saint Mary ternyata mengampu lebih dari 1 institusi, salah satunya ada Akademi Pariwisata.
+3) Setelah pelatihan admisi, diambil kesimpulan bahwa sepertinya Saint Mary akan men-skip proses admisi dari eCampuz, sehingga pengelolaan admisi akan dilakukan manual seperti biasa saja. Hanya nanti tinggal import-kan data calon mahasiswa baru via app Registrasi.
+
+
+
+                                       D
+Bug Admisi :
+1) Logo Saint Mary masih pakai BG merah ecampuz, sehingga di cetakan" jadi tidak sesuai.
+Bug Pembayaran :
+1) Logo Saint Mary masih pakai BG merah ecampuz, sehingga di cetakan" jadi tidak sesuai.
+2) Gagal set tarif angkatan.
+Bug Registrasi :
+1) Logo Saint Mary masih pakai BG merah ecampuz, sehingga di cetakan" jadi tidak sesuai.
+2) Pada saat import data mahasiswa, yg diimport sebanyak 8 data, namun di sistem terdeteksi 9 data. saat diimport, 8 data berhasil masuk.
+Bug Akademik :
+  1)   Logo Saint Mary masih pakai BG merah ecampuz, sehingga di cetakan" jadi tidak sesuai.
+  2)   Logo Saint Mary di printout KRS masih belum tampil.
+  3)   Dilakukan KRS massal ke kelas 1102-1 Bahasa Indonesia untuk 6 orang mahasiswa dengan kapasitas kelas 5 orang. setelah persetujuan KRS, dicek di peserta kelas, kelas yg lain malah terisi juga dengan nama mahasiswa yg sama dengan yg di-KRS-kan tadi. kelas lainnya yg terisi mahasiswa yg sama adalah kelas 1102-2 & 1102-3.
+  4)   Lanjutan dari poin nomor 3 : 
+Setelah dicoba dibatalkan persetujuan KRS-nya, di menu peserta kelas masih tampil terdapat 6 orang mahasiswa yg tadi KRS-nya dibatalkan (semacam masih nge-cache), meskipun saat dicek isi peserta kelasnya null/kosong.
+  5)   Saat simpan jadwal kelas yg bentrok, di menu : jadwal kelas > kolom status bentrok masih kosong, bukankah terisi keterangan bahwa kelas tersebut bentrok dengan yg lain?
+  6)   Check all mahasiswa di input nilai kelas masih belum bisa.
+  7)   Data dosen di pilih dosen pembimbing TA masih belum tampil.
+Bug Portal :
+  1)   Portal mahasiswa, menu matakuliah ditawarkan, tombol cetak daftar matkul tidak sesuai, isinya malah KRS mahasiswa.
+  2)   Logo Saint Mary di printout KRS masih belum tampil.
+
+
+
+                                        
+                           Yogyakarta, Agustus 2016
+                                     Pihak
+                           PT. Gamatechno Indonesia
+                                     Pihak
+                              Saint Mary College
+
+                                       
+                          ( Ajengmas Restia Kumara )
+                          (                        )
+

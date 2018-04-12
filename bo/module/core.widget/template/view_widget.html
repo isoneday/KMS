@@ -1,0 +1,139 @@
+<!-- patTemplate:tmpl name="content" -->
+	
+	<div class="row">	
+		<div class="span12"> 	  
+		<a id="popup-widget" class="pull-left" href="{URL_WIDGETS}" title="Widgets"><button class="btn btn-mini btn-inverse" type="button"><i class="icon-cog icon-white"></i> Add Widget</button></a>	
+		</div> 
+    </div>
+	<div class="gridster-row">	
+			
+			<ul class="layouts_grid" id="layouts_grid" data-menu_id={MENU_ID} >
+				<!-- patTemplate:tmpl name="widget" type="simplecondition" requiredvars="ID" -->
+				<li class="layout_block nest-bg" data-row="{ROW}" data-col="{COL}" data-sizex="{SIZEX}" data-sizey="{SIZEY}" data-url="{URL}" data-id="{ID}" data-resize="{RESIZE}" data-name="{NAME}">
+					
+					<div class="title"><h6>{NAME}</h6></div>
+					
+					<div class="widget-title"></div>
+					<div class="remove_element"><i class="icon-remove"></i></div>
+					<div class="layout_content"></div>
+				</li>
+				<!-- /patTemplate:tmpl -->
+			</ul>
+		
+    </div>
+
+<script type="text/javascript">
+var layout;
+var grid_size = 140;
+var grid_margin = 5;
+var block_params = {
+    max_width: 8,
+    max_height: 8
+};
+$(function() {
+
+    layout = $('.layouts_grid').gridster({
+        widget_margins: [grid_margin, grid_margin],
+        widget_base_dimensions: [grid_size, grid_size],
+        serialize_params: function($w, wgd) {
+            return {
+                col: wgd.col,
+                row: wgd.row,
+                size_x: wgd.size_x,
+                size_y: wgd.size_y,
+                id: $($w).data('id')
+            }
+        },
+        draggable: {
+            stop: function(event, ui){
+                setTimeout(function() {
+                    saveWidget();
+                }, 300);
+            }
+        },
+        min_rows: block_params.max_height,
+        min_cols: block_params.max_width
+    }).data('gridster');
+
+    $('.layout_block[data-resize="1"]').resizable({
+        grid: [grid_size + (grid_margin * 2), grid_size + (grid_margin * 2)],
+        animate: false,
+        minWidth: grid_size,
+        minHeight: grid_size,
+        containment: '#layouts_grid',
+        autoHide: false,
+        stop: function(event, ui) {
+            var resized = $(this);
+            setTimeout(function() {
+                resizeBlock(resized);
+                saveWidget();
+            }, 300);
+        }
+    });
+
+    $('.ui-resizable-handle, .remove_element').hover(function() {
+        layout.disable();
+    }, function() {
+        layout.enable();
+    });
+    
+    $('#layouts_grid').on('click', '.remove_element', function(){
+        var elm = $(this).parent();
+        if ($('#widget_list')){
+            var tpl = '<li><a class="add_widget" data-row="'+elm.data('row')+'" data-col="'+elm.data('col')+'" data-sizex="'+elm.data('sizex')+'" data-sizey="'+elm.data('sizey')+'" data-id="'+elm.data('id')+'" data-url="'+elm.data('url')+'" data-resize="'+elm.data('resize')+'" data-name="'+elm.data('name')+'">'+elm.data('name')+'</a></li>';
+            
+            $('#widget_list').append(tpl);
+        }
+        layout.remove_widget(elm);        
+        saveWidget();
+    });
+    
+    $('.layouts_grid').find('li').each(function(){
+        var elm = $(this);
+        loadContent(elm);
+    });
+        
+    var gtpopup;
+    $('#popup-widget').click(function(){
+        var url = $(this).attr('href')+'&mId='+$('#layouts_grid').data('menu_id')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        gtpopup = showGtPopup(url, title, 300, null, null, false);
+        return false;
+    })
+});
+
+function resizeBlock(elmObj) {
+
+    var elmObj = $(elmObj);
+    var w = elmObj.width() - grid_size;
+    var h = elmObj.height() - grid_size;
+
+    for (var grid_w = 1; w > 0; w -= (grid_size + (grid_margin * 2))) {
+        grid_w++;
+    }
+
+    for (var grid_h = 1; h > 0; h -= (grid_size + (grid_margin * 2))) {
+        grid_h++;
+    }
+
+    layout.resize_widget(elmObj, grid_w, grid_h);
+};
+    
+function saveWidget()
+{
+    $.post('{URL_SAVE_WIDGET}', {data: JSON.stringify(layout.serialize()), menu_id: $('#layouts_grid').data('menu_id')});
+};
+    
+function loadContent(elm)
+{	
+    img = '<img class="loader-widget" alt="" src="assets/images/loader.gif">';
+    elm.children('.layout_content').html(img).load(elm.data('url')+'&ascomponent=1');
+}
+</script>
+
+
+
+
+
+<!-- /patTemplate:tmpl -->

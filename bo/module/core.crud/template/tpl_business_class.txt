@@ -1,0 +1,75 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class {CLASS} extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/{MODULE}/business/{DB_TYPE}{LCLASS}.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function count{CLASS}($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        {FILTER}
+        $query = $this->mSqlQueries['count_{LCLASS}'];
+        $query = str_replace('--search--', $str, $query);
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function get{CLASS}($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        {FILTER}
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_{LCLASS}'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetail{CLASS}($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_{LCLASS}'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insert{CLASS}($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_{LCLASS}'], $params);
+    }
+    
+    public function update{CLASS}($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_{LCLASS}'], $params);
+    }
+    
+    public function delete{CLASS}($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_{LCLASS}'], array($id));
+    }
+    
+    public function list{CLASS}()
+    {
+        return $this->Open($this->mSqlQueries['list_{LCLASS}'], array());
+    }
+}
+
+// End of file {CLASS}.class.php

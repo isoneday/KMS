@@ -1,0 +1,11 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputInterviewCategory');
+   
+class ViewUpdateInterviewCategory extends ViewInputInterviewCategory
+{
+    
+}
+?>

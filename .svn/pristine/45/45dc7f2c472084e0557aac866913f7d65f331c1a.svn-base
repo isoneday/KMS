@@ -1,0 +1,73 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessVerificationDokumen 
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjApplicantRanking = GtfwDispt()->load->business('ApplicantRanking');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        $count = $post['count_pertanyaan'];
+        $sum_yes = $post['yes_result'];
+                
+        $result = $Val->run();
+        if ($result) {
+            if ($count == $sum_yes) {
+                $this->ObjApplicantRanking->StartTrans();
+                $params = array(
+                    $post['aplikan_id']
+                );
+                $result = $result && $this->ObjApplicantRanking->suksesApplicantRanking($params);
+                $this->ObjApplicantRanking->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('Selamat, lolos seleksi. Data Berhasil disimpan');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjApplicantRanking->StartTrans();
+                $params = array(
+                    $post['aplikan_id']
+                );
+                $result = $result && $this->ObjApplicantRanking->failedApplicantRanking($params);
+                $this->ObjApplicantRanking->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('Maaf, tidak lolos seleksi. Data Berhasil disimpan');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('applicant.ranking', 'ApplicantRanking', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.ranking', 'applicantranking', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('applicant.ranking', 'inputApplicantRanking', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.ranking', (empty($post['id'])?'add':'update').'ApplicantRanking', 'view', 'html');
+        }
+        return $result;  
+    }
+}
+?>

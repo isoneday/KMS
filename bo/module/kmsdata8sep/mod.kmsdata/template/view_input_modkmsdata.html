@@ -1,0 +1,42 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" style="margin: 0;" enctype="multipart/form-data">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 20%;"><!-- patTemplate:gtfwgetlang key="kmsdata_keyword" / --></th>
+        <td>
+            <textarea name="kmsdata_keyword" cols="50" rows="3" required="required">{KMSDATA_KEYWORD}</textarea>*            
+        </td>
+    </tr>
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="idmasdok" / --></th>
+        <td>
+      <div id="div_country_id">
+           <!-- patTemplate:gtfwrendermodule module="mod.kmsdata" submodule="comboModKmsdata" 
+           action="view" name="idmasdok"  / -->          
+              &nbsp;*</div>       
+                </td>
+    </tr>
+    
+    <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="lam_filedata" / --></th>
+                <td>
+                    <input type="file" name="lam_filedata" data-ext="png,jpg,gif,PNG,pdf" title="" tabindex="17"  />
+                     <br><i>* format file (jpg, png, jpeg, pdf)</i>
+                 <br>Status : {LAM_FILEDATA}
+
+                </td>
+            </tr>
+        
+</table>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+    <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+</div>
+</form>
+<!-- /patTemplate:tmpl -->

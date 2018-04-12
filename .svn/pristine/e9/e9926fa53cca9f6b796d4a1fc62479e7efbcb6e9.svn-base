@@ -1,0 +1,105 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+    <table class="table-search">
+        <tbody>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="code" / --></th>
+                <td><input type="text" name="code" value="{CODE}" size="50" title="<!-- patTemplate:gtfwgetlang key="code" / -->" tabindex="1" />&nbsp;<button class="btn" title="<!-- patTemplate:gtfwgetlang key="search" / -->" tabindex="2"><!-- patTemplate:gtfwgetlang key="search"/ --></button></td>        
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+    <div class="pageBar">	
+        <div class="pageNav">
+            <ul class="action-btn">
+                <!-- patTemplate:tmpl name="button_add" visibility="show" -->
+                <li>
+                    <a class="popup_lang_key btn-add" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="language" / -->"><!-- patTemplate:gtfwgetlang key="add" / --></a>
+                </li>
+                <!-- /patTemplate:tmpl -->
+            </ul>
+        </div>
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+        </div>
+    </div>
+    <table class="table-common">
+        <tr>
+            <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+            <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+            <th><!-- patTemplate:gtfwgetlang key="code" / --></th>
+            <!-- patTemplate:tmpl name="lang" -->
+            <th>{NAMA}</th>
+            <!-- /patTemplate:tmpl -->
+        </tr>
+        <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+        <!-- patTemplate:sub condition="YES" -->
+        <tr>
+            <td colspan="9" style="text-align: center;">-- <!-- patTemplate:gtfwgetlang key="data_not_found" / --> --</td>
+        </tr>
+        <!-- /patTemplate:sub -->
+        <!-- patTemplate:sub condition="NO" -->
+        <!-- patTemplate:tmpl name="item" -->
+        <tr class="{ROW_CLASS}">
+            <td style="text-align: center;">{NO}</td>        
+            <td class="links" style="text-align: center;">
+                <a class="popup_lang_key btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="language"/ -->"></a>
+                <!-- patTemplate:tmpl name="button_update" visibility="show" -->
+                <a class="popup_lang_key btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="language"/ -->"></a>
+                <!-- /patTemplate:tmpl -->
+                <!-- patTemplate:tmpl name="button_delete" visibility="show" -->
+                <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / --> <!-- patTemplate:gtfwgetlang key="language"/ -->" data-name="{NAME}" ></a>
+                <!-- /patTemplate:tmpl -->
+            </td>
+
+            <td>{CODE}</td>
+            <!-- patTemplate:tmpl name="lang_key" -->
+            <td>{TRANSLATE}</td>
+            <!-- /patTemplate:tmpl -->
+        </tr>
+        <!-- /patTemplate:tmpl -->
+        <!-- /patTemplate:sub -->
+        <!-- /patTemplate:tmpl -->
+    </table>
+    <div class="pageBar">
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.confirm_delete').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + '  <!-- patTemplate:gtfwgetlang key="language"/ -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + '  <!-- patTemplate:gtfwgetlang key="language"/ -->',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+    });
+
+
+    var popupLangKey;
+    $('.popup_lang_key').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupLangKey = showGtPopup(url, title, 640, null, 320, true);
+        return false;
+    });
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

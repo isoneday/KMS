@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class RefReligion extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.religion/business/mysqlt/refreligion.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefReligion() {
+        $query = $this->mSqlQueries['count_refreligion'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefReligion($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($name)) {
+            $str .= " AND LOWER(religion_name) LIKE('%$name%')";
+        }
+        if (!empty($status)) {
+            $str .= " AND LOWER(religion_status) LIKE('%$status%')";
+        }
+        if (!empty($desc)) {
+            $str .= " AND LOWER(religion_desc) LIKE('%$desc%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+        $query = $this->mSqlQueries['get_refreligion'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+
+    public function getDetailRefReligion($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_refreligion'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function insertRefReligion($params) {
+        return $this->Execute($this->mSqlQueries['insert_refreligion'], $params);
+    }
+
+    public function updateRefReligion($params) {
+        return $this->Execute($this->mSqlQueries['update_refreligion'], $params);
+    }
+
+    public function deleteRefReligion($id) {
+        return $this->Execute($this->mSqlQueries['delete_refreligion'], array($id));
+    }
+
+    public function listRefReligion() {
+        return $this->Open($this->mSqlQueries['list_refreligion'], array());
+    }
+
+}
+
+// End of file RefReligion.class.php

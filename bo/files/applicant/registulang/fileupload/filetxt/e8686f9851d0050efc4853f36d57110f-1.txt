@@ -1,0 +1,341 @@
+
+                                    HANDOUT
+                               PANDUAN OPERATOR
+                          SISTEM INFORMASIREGISTRASI
+                   PENDAFTARAN DAN PENERIMAAN MAHASISWA BARU
+                                DISUSUN OLEH :
+                             Tim Academic Software
+                                       
+                                       
+                             SAINT MARY'S COLLEGE
+                                     2015
+                                       
+Daftar Isi
+Daftar Isi	2
+Pendahuluan	3
+A.	Tentang Portal Akademik	3
+B.	Tentang Dokumen	3
+Arsitektur	4
+A.	Arsitektur Sistem	4
+B.	Arsitektur Aplikasi	4
+Pengguna	6
+Alur Aplikasi	7
+Bisnis Proses	8
+A.	Bisnis Proses Aplikasi	8
+B.	Proses Persiapan	8
+1.	Cek Data Fakultas	9
+2.	Cek Data Jurusan	9
+3.	Cek Data Program Studi	10
+4.	Cek Data Jenjang Akademik	11
+5.	Cek Data Jenis Semester	11
+6.	Cek Jalur Masuk yang Berlaku	12
+7.	Cek Gelombang Masuk yang Berlaku	12
+8.	Setting Periode Pendaftaran	13
+9.	Setting Jalur Pendaftaran	14
+10.	Setting Kelompok Ujian	15
+11.	Setting Gedung dan Ruang Ujian Masuk	16
+12.	Setting  Syarat Pendaftaran	18
+13.	Setting Pengumuman	19
+14.	Persiapan File Panduan	20
+C.	Proses Persiapan Token Pendaftaran	21
+1.	Setting Tarif Pendaftaran	21
+2.	Export Token Pendaftaran Per-Jalur	22
+D.	Proses Penjualan Token Pendaftaran	23
+E.	Proses Penerimaan Mahasiswa Baru	24
+1.	Melihat Data Pendaftar yang Masuk	24
+2.	Melakukan Input Nilai Ujian Masuk	25
+3.	Melakukan Penerimaan	26
+
+Pendahuluan
+Tentang Portal Akademik
+Proses Admisi merupakan serangkaian proses penerimaan mahasiswa baru yang di dalamnya terdapat beberapa aplikasi yang saling berhubungan, yaitu : 
+  * gtRegistrasi : berperan sebagai aplikasi back office dari proses admisi & proses registrasi mahasiswa baru ataupun herregistrasi mahasiswa yang belum lulus, meliputi pengelolaan data program studi yang ditawarkan dan gelombang-gelombang pendaftaran, pengelolaan status diterima/tidaknya para pendaftar.
+  * gtPembayaran : berperan sebagai aplikasi back office dari proses pembayaran, baik admisi ataupun pembayaran bagi mahasiswa (SPP, Uang Gedung, dll.).
+  * gtAdmisi : merupakan aplikasi portal yang akan diakses oleh para pendaftar untuk mengisikan biodata dan program studi yang dipilih, serta sebagai portal untuk melihat apakah diterima atau tidak.
+Proses admisi ini akan melibatkan ketiga aplikasi tersebut secara terpadu. Aplikasi tersebut akan digunakan oleh beberapa pengguna sesuai dengan peran masisng-masing. Contoh: para Pendaftar akan hanya bisa mengakses aplikasi gtAdmisi saja.
+Tentang Dokumen
+Dokumen ini diharapkan dapat berfungsi sebagai panduan bagi operator dalam mengoperasionalkan aplikasi-aplikasi yang nantinya bisa untuk men-support proses Admisi. Panduan ini dimulai dari penyiapan-penyiapan yang perlu dilakukan agar aplikasi gtAdmisi bisa digunakan oleh para Pendaftar, antara lain: panduan pengelolaan data program studi, jalur pendaftaran lengkap dengan program studi yang ditawarkan, dan seterusnya.
+Ada pun tujuan dari dokumen ini, antara lain :
+  1) Melatih para operator untuk dapat menggunakan aplikasi.
+  2) Membiasakan operator menggunakan alat bantu berupa aplikasi dalam menyelesaikan masalah yang dihadapainya dilapangan.
+Arsitektur
+A. Arsitektur Sistem
+Arsitektur sistem yang ada tercakup di eCampuz secara garis besar adalah sebagai berikut :
+                                       
+Arsitektur Aplikasi
+Aplikasi yang terlibat dalam proses Admisi yang dijelaskan dalam dokumen ini melibatkan beberapa aplikasi, diantaranya : gtAdmisi, gtRegistrasi, gtPembayaran.
+Setiap aplikasi ini mempunyai alamat tersendiri dan halaman utama yang berbeda pula, yaitu seperti yang terlihat dibawah ini :
+  * gtAdmisi
+   Aplikasi gtAdmisi bisa diakses dengan format alamat sebagai berikut : [nama singkat campus.ecampuz.com]. Nama singkat campus silahkan diganti dengan domain yang telah disepakati. 
+   Contoh URL :http://NamaSingkatCampus.ecampuz.com/gtadmisi/
+                                       
+  * gtRegistrasi
+   Aplikasi gtRegistrasi bisa di akses dengan format alamat sebagai berikut : [nama singkat campus.ecampuz.com]. Nama singkat campus silahkan diganti dengan domain yang telah disepakati.
+   Contoh Alamat :http://NamaSingkatCampus.ecampuz.com/gtregistrasi/
+                                       
+  * gtPembayaran
+   Aplikasi gtPembayaran bisa di akses dengan format alamat sebagai berikut : [nama singkat campus.ecampuz.com]. Nama singkat kampus silahkan diganti dengan domain yang telah disepakati.
+   Contoh alamat :http://NamaSingkatCampus.ecampuz.com/gtpembayaran/
+                                       
+Pengguna
+  * gtAdmisi: Pendaftar
+  * gtRegistrasi: Petugas PMB
+  * gtPembayaran: Bag. Pembayaran Mahasiswa/Keuangan 
+Alur Aplikasi
+                                       
+Bisnis Proses
+B. Bisnis Proses Aplikasi
+
+Proses Persiapan
+                                       
+Cek Data Fakultas
+Sebelum implementasi, data-data master termasuk data fakultas yang tersimpan di sistem harus dicek terlebih dahulu apakah sudah benar. Langkah-langkah untuk mengecek data fakultas adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi.
+     2.   Pilih menu ReferensiAkademik  Fakultas.
+     3.   Pada data-data fakultas yang tertampil, cek satu-persatu, apakah terdapat data fakultas yang masih kurang, atau tidak tepat, atau bahkan terdapat data yang tidak dipakai.
+
+                                        
+     4.   Jika terdapat data fakultas yang masih kurang, silahkan ditambahkan dengan klik ke tombol , isikan data-data, kemudian klik pada tombol Simpan.
+     5.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+     6.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol  (Hapus).
+Cek Data Jurusan
+Sebelum implementasi, data-data master termasuk data jurusan, yang berhubungan dengan data fakultas yang tersimpan di sistem harus dicek terlebih dahulu apakah sudah benar. Langkah-langkah untuk mengecek data jurusan adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu ReferensiAkademik  Jurusan
+     3.   Pada data-data jurusan yang tertampil, cek satu-persatu, apakah terdapat data jurusan yang masih kurang, atau tidak tepat, atau bahkan terdapat data yang tidak dipakai.
+     4.   Jika terdapat data jurusan yang masih kurang, silahkan ditambahkan dengan klik ke tombol , isikan data-data, kemudian klik pada tombol Simpan.
+     5.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+     6.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol  (Hapus).
+                                       
+Cek Data Program Studi
+Sebelum implementasi, data-data master termasuk data prodi, yang berhubungan dengan data jurusan dan  fakultas yang tersimpan di sistem harus dicek terlebih dahulu apakah sudah benar. Langkah-langkah untuk mengecek data program studi adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu ReferensiAkademik Program studi
+     3.   Pada data-data program studi yang tertampil, cek satu-persatu, apakah terdapat data program studi yang masih kurang, atau tidak tepat, atau bahkan terdapat data yang tidak dipakai.
+                                       
+     4.   Jika terdapat data program studi yang masih kurang, silahkan ditambahkan dengan klik ke tombol, isikan data-data, kemudian klik pada tombol Simpan.
+     5.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+     6.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol  (Hapus).
+Cek Data Jenjang Akademik
+Sebelum implementasi, data-data master termasuk jenjang akademik yang tersimpan di sistem harus dicek terlebih dahulu apakah sudah benar. Langkah-langkah untuk mengecek data jenjang akademik adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu ReferensiAkademik Jenjang akademik
+     3.   Pada data-data jenjang akademik yang tertampil, cek satu-persatu, apakah terdapat data jenjang akademik yang masih kurang, atau tidak tepat, atau bahkan terdapat data yang tidak dipakai.
+
+     4.   Jika terdapat data jenjang akademik yang masih kurang, silahkan ditambahkan dengan klik ke tombol , isikan data-data, kemudian klik pada tombol Simpan.
+     5.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+     6.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut.
+Cek Data Jenis Semester
+Data Jenis Semester adalah data yang juga berhubungan di Sistem Informasi Akademik karena menentukan jenis-jenis semester yang berlaku di Akademik. Langkah-langkah untuk mengecek data Jenis Semester adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu ReferensiAkademik  Jenis Semester
+     3.   Data jenis semester ini tidak dapat diubah, ditambah, ataupun dikurangi.
+                                       
+Cek Jalur Masuk yang Berlaku
+Langkah-langkah untuk mengecek data Jalur Masuk adalah sebagai berikut: 
+               1.   Masuk ke Aplikasi gtRegistrasi
+               2.   Pilih menu ReferensiAkademik  Jalur Masuk
+               3.   Pada data-data Jalur Masuk yang tertampil, cek satu-persatu, apakah terdapat data Jalur Masuk yang masih kurang, atau tidak tepat, atau bahkan terdapat data yang tidak dipakai.
+
+               4.   Jika terdapat data Jalur Masuk yang masih kurang, silahkan ditambahkan dengan klik ke tombol , isikan data-data, kemudian klik pada tombol Simpan.
+               5.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+               6.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol  (Hapus).
+Cek Gelombang Masuk yang Berlaku
+Langkah-langkah untuk mengecek data Gelombang Masuk adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu ReferensiAkademik  Gelombang
+     3.   Pada data Gelombang Masuk yang tampil, cek satu-persatu, apakah terdapat data Gelombang Masuk yang masih kurang, atau tidak tepat, atau bahkan terdapat data yang tidak dipakai.
+
+     4.   Jika terdapat data Gelombang Masuk yang masih kurang, silahkan ditambahkan dengan klik ke tombol , isikan data-data, kemudian klik pada tombol Simpan.
+     5.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+     6.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol  (Hapus).
+Setting Periode Pendaftaran
+Setelah memastikan data referensi telah sesuai, langkah selanjutnya yang perlu dilakukan adalah setting periode pendaftaran. Setting periode pendaftaran ini dapat dilakukan menjelang hari H pembukaan pendaftaran mahasiswa baru. Langkah-langkah untuk melakukan setting pendaftaran adalah sebagai berikut :
+      1.   Masuk ke Aplikasi gtRegistrasi
+      2.   Pilih menu Registrasi  Periode
+      3.   Periksa kembali apakah periode yang ingin diaktifkan sudah tersedia.
+
+      4.   Jika terdapat data periode yang masih kurang, silahkan ditambahkan dengan klik ke tombol , isikan data-data, kemudian klik pada tombol Simpan.
+      5.   Jika ingin mengaktifkan periode, pada periode yang ingin diaktifkan, klik tombol Aktifkan. Maka tombol akan berubah menjadi .
+      6.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol Ubah, lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+      7.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol Hapus.
+Setting Jalur Pendaftaran
+Fungsi dari setting jalur pendaftaran ini adalah untuk mendefinisikan pada sistem, jalur dan gelombang apakah yang dibuka pendaftarannya pada waktu penerimaan mahasiswa baru. Portal admisi yang diakses oleh pendaftar akan mengambil data ini, sehingga pilihan jalur yang ditawarkan akan disesuaikan dengan setting jalur yang periode pendaftarannya masih aktif. Jika periode pendaftaran sudah selesai atau belum mulai, jalur pendaftaran tidak akan ditampilkan pada portal. Langkah-langkah untuk setting Jalur Pendaftaran adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Admisi  Manajemen Jalur
+     3.   Untuk menambahkan data Jalur Pendaftaran, klik tombol  sehingga akan tampil halaman form penambahan Jalur Pendaftaran.
+     4.   Isikan data-data jalur pendaftaran sebagai berikut :
+         a.     Gelombang : pilih gelombang pendaftaran yang sesuai
+         b.     Jalur : pilih jalur masuk yang sesuai, misalnya Ujian Masuk Lokal (UML)
+         c.     Kelompok Ujian : Pilih kelompok ujian untuk jalur ujian ini, apakah IPA, IPS, atau IPC. Jika pada satu Jalur pendaftaran ditawarkan ketiga kelompok ujian tersebut, maka masing-masing harus disetting.
+         d.     Waktu Mulai dan Waktu Selesai : isikan dengan tanggal mulai pendaftaran dan tanggal selesai pendaftaran. Di luar periode pendaftaran, jalur ini tidak akan tampil di portal pendaftaran.
+                                       
+     5.   Setelah mengecek kembali data-data dan memastikan benar, klik pada tombol Simpan untuk menyimpan data.
+Setting Kelompok Ujian
+Setting Kelompok Ujian ini adalah untuk mendefinisikan di dalam sistem, jalur masuk pendaftaran yang sudah disetting akan menawarkan program studi apa saja (misalkan untuk kelompok Ujian IPA hanya menawarkan prodi-prodi eksakta). Selain itu, jenis ujian yang akan dilaksanakan untuk masing-masing jalur akan disetting di sini. Materi ujian yang disetting dan waktu ujiannya akan ditampilkan pada Kartu Bukti Daftar bagi pendaftar yang sudah menyelesaikan langkah-langkah pendaftaran di portal. Langkah-langkah untuk mengecek data kelompok ujian adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Referensi Admisi  Manajemen Kelompok Ujian
+     3.   Pada halaman daftar Manajemen Kelompok Ujian, klik pada tombol  sehingga akan tampil halaman form penambahan Kelompok Ujian.
+Setting Kelompok Ujian ini adalah untuk mendefinisikan di dalam sistem, jalur masuk pendaftaran yang sudah disetting akan menawarkan program studi apa saja (misalkan untuk kelompok Ujian IPA hanya menawarkan prodi-prodi eksakta). Selain itu, jenis ujian yang akan dilaksanakan untuk masing-masing jalur akan disetting di sini. Materi ujian yang disetting dan waktu ujiannya akan ditampilkan pada Kartu Bukti Daftar bagi pendaftar yang sudah menyelesaikan langkah-langkah pendaftaran di portal. Langkah-langkah untuk mengecek data kelompok ujian adalah sebagai berikut: 
+     4.   Masuk ke Aplikasi gtRegistrasi
+     5.   Pilih menu Referensi Admisi  Manajemen Kelompok Ujian
+     6.   Pada halaman daftar Manajemen Kelompok Ujian, klik pada tombol  sehingga akan tampil halaman form penambahan Kelompok Ujian.
+  
+     7.   Pada Form tersebut, isikan data-data sebagai berikut :
+      a.     Jalur yang ditawarkan : pilih data jalur Ujian yang sesuai. 
+      b.     Program Studi : pilih program studi yang akan ditawarkan pada kelompok ujian ini dengan klik pada tombol . Pada popup daftar prodi yang muncul, pilih prodi-prodi yang diinginkan kemudian klik pada tombol Pilih.
+     8.   Setelah mengecek kembali data-data yang diisikan dan memastikan semua benar, klik pada tombol Simpan.
+                                        
+     9.   Pada Form tersebut, isikan data-data sebagai berikut :
+      a.     Jalur yang ditawarkan : pilih data jalur Ujian yang sesuai. 
+      b.     Program Studi : pilih program studi yang akan ditawarkan pada kelompok ujian ini dengan klik pada tombol . Pada popup daftar prodi yang muncul, pilih prodi-prodi yang diinginkan kemudian klik pada tombol Pilih.
+     10.   Setelah mengecek kembali data-data yang diisikan dan memastikan semua benar, klik pada tombol Simpan.
+Setting Gedung dan Ruang Ujian Masuk
+Gedung dan Ruang Ujian akan diakses oleh Portal admisi untuk menempatkan peserta ujian sesuai dengan Kelompok Ujian dan Ruangannya. Setting ruangan ujian harus dilakukan urut dari setting gedung terlebih dahulu.
+Langkah-langkah untuk mensetting Gedung adalah sebagai berikut :
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Referensi Admisi Gedung
+     3.   Untuk menambah data Gedung, klik pada tombol , kemudian akan tertampil halaman form penambahan data ruang.
+     4.   Isikan data kode dan Nama Gedung, kemudian klik pada tombol Simpan.
+                                        
+  
+Langkah-langkah untuk menyetting Ruang adalah sebagai berikut :
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Referensi Admisi Ruang
+     3.   Pada halaman Ruang, pilih data Gedung yang ruangannya ingin ditampilkan, kemudian klik pada tombol Tampilkan.
+     4.   Untuk menambah data Ruang, klik pada tombol , kemudian akan tertampil halaman form penambahan data ruang.
+     5.   Isikan data-data sebagai berikut :
+      a.     Gedung : pilih kode gedung yang sesuai
+      b.     Kode Ruang : isikan kode ruang
+      c.     Nama Ruang : isikan nama Ruang
+      d.     Kelompok Ujian : pilih kelompok ujian yang akan ditempatkan pada ruangan tersebut
+      e.     Kapasitas : isikan kapasitas ruangan untuk ujian masuk
+      f.     Prioritas Pengisian : isikan prioritas pengisian ruangan untuk peserta ujian
+    	
+    Keterangan : 
+    Mohon berhati-hati untuk mengisikan kelompok ujian, kapasitas, dan prioritas pengisian karena data-data tersebut akan dipakai oleh portal pendaftaran untuk menempatkan peserta ujian secara otomatis ke ruang-ruang ujian yang sesuai. Pada contoh data di atas, ruang  tersebut adalah yang pertama kali diisi untuk kelompok ujian IPA sampai pendaftar IPA berjumlah 60 orang.
+     6.   Setelah memeriksa kembali data yang diinputkan dan yakin bahwa data benar, klik pada tombol Simpan untuk menyimpan data.
+Setting  Syarat Pendaftaran
+Syarat pendaftaran harus disetting terlebih dahulu sebelum periode pendaftaran dimulai. Data-data syarat pendaftaran akan ditampilkan di portal pendaftar sesuai dengan program studi yang dipilih oleh pendaftar. Langkah-langkah untuk mensetting Syarat Pendaftaran adalah sebagai berikut: 
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Referensi AkademikSyarat Pendaftaran
+     3.   Untuk menambahkan syarat pendaftaran, klik tombol  sehingga tertampil halaman form penambahan syarat pendaftaran.
+
+     4.   Isikan data-data yang diperlukan sebagai berikut :
+  a.     Syarat Pendaftaran : isikan syarat pendaftaran 
+  b.     Status aktif : pilih status aktif syarat, jika tidak aktif maka syarat tidak akan ditampilkan di portal
+  c.     Program Studi : pilih "Semua Program Studi" jika syarat berlaku untuk semua program studi, dan pilih salah satu prodi yang sesuai jika syarat hanya berlaku untuk program studi tertentu.
+     1.   Setelah memeriksa kembali data yang diinputkan dan yakin bahwa data benar, klik pada tombol Simpan untuk menyimpan data.
+Setting Pengumuman
+Setting pengumuman adalah mekanisme yang digunakan kampus untuk memberitahu pendaftar bahwa pendaftar tersebut diterima atau tidak. 
+Adapun langkah-langkah untuk menyetting pengumuman adalah sebagai berikut :
+     1.   Masuk ke Aplikasi gtRegistrasi	
+     2.   Pilih menu : Admisi Setting Pengumuman
+     3.   Kemudian klik tombol edit untuk mengedit setting pengumuman.
+     4.   Pada halaman edit setting pengumuman, edit data sebagai berikut :
+      a.     Status aktif : pilih status aktif pengumuman.
+      b.     Periode : pilih dengan periode yang akan disetting pengumuman.
+      c.     Jalur : pilih dengan jalur pendaftaran yang akan disetting pengumuman.
+     5.   Kemudian pilih tombol simpan untuk menyimpan data edit pengumuman.
+   
+                                       
+     6.   Hasil pengumuman, dapat dilihat melalui portal admisi seperti gambar di bawah ini :
+
+Persiapan File Panduan
+File panduan adalah file yang berisi panduan pendaftaran yang diunggah melalui BO dan dapat diunduh oleh pendaftar melalui portal admisi.
+Adapun langkah-langkah untuk menambah file panduan adalah :
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Admisi  File Panduan
+     3.   Pada menu file panduan, pilih tombol tambah sehingga tertampil halaman di upload file panduan.
+     4.   Isikan data sebagai berikut :
+      a.     Nama File, isikan dengan nama file panduan yang akan diunggah.
+      b.     File Panduan, browse file panduan yang akan diunggah. Ukuran maksimal adalah 2 MB.
+     5.   Kemudian klik tombol Simpan untuk menyimpan data file panduan.
+     6.   Jika ingin file panduan aktif dan bisa diunduh oleh calon pendaftar, maka klik tombol pada kolom Status, seperti berikut :
+     7.   Jika terdapat data yang kurang tepat, silahkan memperbaiki data tersebut dengan klik ke tombol  (Ubah), lengkapi data menjadi benar, kemudian klik pada tombol Ubah.
+     8.   Jika terdapat data yang tidak dipakai, silahkan menghapus data tersebut dengan klik pada tombol  (Hapus).
+                                       
+     9.   File panduan tersebut dapat dilihat di menu Informasi pada portal admisi. Untuk mengunduhnya, dapat mengeklik tombol Download	pada menu informasi panduan.
+
+Proses Persiapan Token Pendaftaran
+Setting Tarif Pendaftaran
+Setting tarif pendaftaran digunakan untuk membuat tarif pendaftaran berupa biaya harga formulir pendaftaran per gelombang per periode per jalur dan per kelompok ujian. 
+Untuk mengatur  tarif pendaftaran, langkah-langkahnya adalah sebagai berikut :
+     1.   Masuk ke Aplikasi gtPembayaran
+     2.   Pilih menu Referensi Pembayaran  Setting Tarif Pendaftaran.
+     3.   Kemudian pilih tombol Tambah.
+     4.   Pada menu manajemen setting tarif pendaftaran, isikan data-data berikut :
+      a.     Jenis Pembayaran, pilih jenis pembayaran pendaftaran.
+      b.     Periode, pilih jenis pembayaran.
+      c.     Gelombang, pilih gelombang pendaftaran.
+      d.     Jalur Masuk, pilih jalur masuk.
+      e.     Kelompok Ujian, pilih kelompok ujian.
+      f.     Pembayaran awal, pembayaran akhir, isikan dengan tanggal pembayaran.
+      g.     Detail pembayaran, isikan dengan detail pembayaran dan jumlah nominal biaya.
+     5.   Kemudian pilih tombol Simpan untuk melakukan penyimpanan data.
+                                       
+Export Token Pendaftaran Per-Jalur
+Setelah proses setting tarif pendaftaran, hal yang berikut dilakukan adalah mengexport tarif pendaftaran agar token pendaftaran dapat dibeli oleh pendaftar. Mekanisme ini secara otomatis akan menyimpan tagihan pendaftaran ke Bank mitra. Setelah proses ini berlangsung, pendaftar dapat membeli token pendaftaran yang telah digenerate oleh sistem melalui loket di Bank mitra.
+Untuk melakukan export tarif pendaftaran by jalur dapat melakukan langkah-langkah sebagai berikut :
+     1.   Masuk ke Aplikasi gtPembayaran 
+     2.   Pilih menu Referensi Tagihan  Export Token Pendaftaran.
+     3.   Pada halaman tersebut, isikan data-data sebagai berikut :
+      a.     Periode, pilih dengan periode.
+      b.     Gelombang, pilih dengan gelompang pendaftaran.
+      c.     Jalur Masuk, pilih dengan nama Jalur.
+      d.     Kelompok ujian, pilih dengan kelompok ujian.
+      e.     Range, isikan dengan sejumlah angka yang menyatakan jumlah token yang akan digunakan.
+     4.   Kemudian pilih tombol Generate Nomor Pendaftaran.
+     5.   Setelah muncul sejumlah bill number sesuai range token, pilih tombol simpan untuk menyimpan generate nomor token sekaligus mengirim ke data Bank mitra.
+
+Proses Penjualan Token Pendaftaran
+Token pendaftaran dapat dibeli melalui BO pada aplikasi gtFinansi Pembayaran. Adapun langkah-langkah untuk membeli token adalah sebagai berikut :
+  1.   Masuk ke Aplikasi gtPembayaran
+  2.   Pilih menu Pembayaran Tagihan  Pembelian Token Pendaftaran
+  3. Pada menu tersebut, terdapat beberapa jalur pendaftaran beserta ketersediaan token pendaftaran. Pilih salah satu jalur, kemudian klik AksiBeli.
+                                       
+  4. Kemudian pada form pembelian token, isikan dengan nama dan nomor telepon calon pendaftar. Pengisian ini bersifat optional, artinya pembelian token tetap dapat dilakukan tanpa diisi.
+  5. Kemudian akan muncul cetak bukti pembelian token yang berisi username dan password token pendaftaran. Bukti ini dapat dicetak dan diserahkan ke pendaftar.
+  6.   Jika diperlukan print ulang, klik Cetak Kuitansi pada halaman pembelian token.
+
+Proses Penerimaan Mahasiswa Baru
+Melihat Data Pendaftar yang Masuk
+Untuk melihat data-data pendaftar yang sudah masuk ke database sistem, langkah-langkahnya adalah sebagai berikut :
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Admisi  Pendaftar
+     3.   Pendaftar yang sudah masuk akan muncul pada halaman Pendaftar ini.
+     4.   Pada data pendaftar ini, dapat dilakukan pencarian berdasarkan periode masuk, jurusan, ruang ujian masuk pendaftar, No Test, No.Pendaftaran, dan nama pendaftar
+
+     5.   Pada halaman ini, terdapat beberapa tombol aksi, yaitu :
+      a.     Tombol  : untuk melakukan pengubahan data pendaftar
+      b.     Tombol  : untuk melihat data detil pendaftar
+      c.     Tombol   : untuk menghapus data pendaftar
+      d.     Tombol   : untuk mencetak bukti pendaftaran
+      e.     Tombol   : untuk mencetak bukti hadir  pendaftar pada test ujian masuk.
+      f.     Tombol   : untuk meng-eksport data pendaftar ke dalam format excel untuk diolah lebih lanjut.
+Melakukan Input Nilai Ujian Masuk
+Untuk melakukan input nilai ujian masuk pendaftar, langkah-langkahnya adalah sebagai berikut:
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Admisi  Nilai Ujian
+     3.   Pilih Gelombang Pendaftaran Peserta, Jalur Masuk Peserta, dan Kelompok Ujian peserta, kemudian klik pada tombol tampilkan.
+     4.   Sistem akan menampilkan data-data peserta dengan filter tersebut di atas.
+                                        
+     5.   Untuk mengisikan nilai test masuk peserta secara satu-persatu, klik pada tombol  (edit) pada data peserta yang dipilih. Sistem akan menampilkan data peserta tersebut beserta form penilaian.
+                                       
+     6.   Untuk mengubah nilai secara kolektif, klik pada tombol Ubah Nilai Kolektif. Sistem akan menampilkan data semua data peserta test berikut form input nilai.
+
+     7.  Isikan nilai test peserta sesuai dengan test nya, kemudian klik pada tombol simpan untuk menyimpan nilai.
+Melakukan Penerimaan
+Pada tahap penerimaan ini, peserta yang lulus seleksi berhak untuk menjadi calon mahasiswa. Untuk mengeset peserta test yang lulus seleksi untuk menjadi calon mahasiswa, langkah-langkahnya adalah sebagai berikut :
+     1.   Masuk ke Aplikasi gtRegistrasi
+     2.   Pilih menu Admisi  Penerimaan
+     3.   Pada bagian filter pencarian peserta test, pilih gelombang pendaftaran peserta, jalur masuk, dan program studi yang akan disetting kemudian klik pada tombol tampilkan.
+
+     4.   Sistem akan menampilkan semua peserta pada gelombang dan jalur pendaftaran tersebut dan yang memilih prodi tersebut, baik untuk pilihan pertama, kedua, maupun ketiga.
+     5.   Untuk melakukan proses penerimaan secara satu-persatu, pilih data peserta yang akan diterima, kemudian klik pada tombol  (Terima)
+
+     6.   Untuk melakukan proses penerimaan secara kolektif, berikan tanda cek pada peserta-peserta test yang akan diterima, kemudian klik pada tombol Terima Kolektif.
+
+Note :
+Apabila terdapat kesalahan penerimaan peserta, dapat dibatalkan secara satu-persatu dengan klik pada tombol  (Batalkan Penerimaan), atau secara kolektif dengan memberikan tanda cek pada peserta yang akan dibatalkan penerimaannya, kemudian klik pada tombol Batalkan Kolektif.
+

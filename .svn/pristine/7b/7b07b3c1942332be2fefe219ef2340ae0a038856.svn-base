@@ -1,0 +1,72 @@
+<?php
+
+$sql["count_referensiagama"] = "
+SELECT 
+    COUNT(agama_id) AS total
+FROM ref_agama
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_referensiagama"] = "
+SELECT 
+    a.agama_id AS `id`,
+    a.agama_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_agama a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_referensiagama"] = "
+SELECT 
+    a.agama_id AS `id`,
+    a.agama_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_agama a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE agama_id = %d
+";
+$sql["insert_referensiagama"] = "
+INSERT INTO ref_agama
+(
+    agama_name,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_referensiagama"] = "
+UPDATE ref_agama
+SET 
+    agama_name = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE agama_id = %d
+";
+$sql["delete_referensiagama"] = "
+DELETE FROM ref_agama
+WHERE agama_id = %d
+";
+$sql["list_referensiagama"] = "
+SELECT
+    agama_id AS `id`,
+    agama_name AS `name`
+FROM
+    ref_agama
+ORDER BY agama_name
+";

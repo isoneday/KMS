@@ -1,0 +1,11 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputFanancingStudy');
+   
+class ViewUpdateFanancingStudy extends ViewInputFanancingStudy
+{
+    
+}
+?>

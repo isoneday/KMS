@@ -1,0 +1,118 @@
+<?php
+
+$sql["count_scholarshipsdata"] = "
+SELECT 
+    COUNT(beasiswa_id) AS total
+FROM beasiswa
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_scholarshipsdata"] = "
+SELECT 
+    a.beasiswa_id AS `id`,
+    a.beasiswa_sumberbeasiswa_id AS `sumberid`,
+    a.beasiswa_jenisbeasiswa_id AS `jenisid`,
+    a.beasiswa_name AS `name`,
+    a.beasiswa_desc AS `desc`,
+    a.beasiswa_enddate AS `enddate`,
+    a.beasiswa_jumlah_penerima AS `jumlah_penerima`,
+    a.beasiswa_minimum_ipk AS `minimum_ipk`,
+    a.beasiswa_maksimal_sks AS `maksimal_sks`,
+    a.beasiswa_minimum_penghasilan_ortu AS `minimum_penghasilan_ortu`,
+    a.beasiswa_minimum_tanggungan_ortu AS `minimum_tanggungan_ortu`,
+    a.beasiswa_is_aktif AS `is_aktif`,
+    a.beasiswa_periode_mulai AS `periode_mulai`,
+    a.beasiswa_periode_selesai AS `periode_selesai`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM beasiswa a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_scholarshipsdata"] = "
+SELECT 
+    a.beasiswa_id AS `id`,
+    a.beasiswa_sumberbeasiswa_id AS `sumberid`,
+    a.beasiswa_jenisbeasiswa_id AS `jenisid`,
+    a.beasiswa_name AS `name`,
+    a.beasiswa_desc AS `desc`,
+    a.beasiswa_enddate AS `enddate`,
+    a.beasiswa_jumlah_penerima AS `jumlah_penerima`,
+    a.beasiswa_minimum_ipk AS `minimum_ipk`,
+    a.beasiswa_maksimal_sks AS `maksimal_sks`,
+    a.beasiswa_minimum_penghasilan_ortu AS `minimum_penghasilan_ortu`,
+    a.beasiswa_minimum_tanggungan_ortu AS `minimum_tanggungan_ortu`,
+    a.beasiswa_is_aktif AS `is_aktif`,
+    a.beasiswa_periode_mulai AS `periode_mulai`,
+    a.beasiswa_periode_selesai AS `periode_selesai`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM beasiswa a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE beasiswa_id = %d
+";
+$sql["insert_scholarshipsdata"] = "
+INSERT INTO beasiswa
+(
+    beasiswa_sumberbeasiswa_id,
+    beasiswa_jenisbeasiswa_id,
+    beasiswa_name,
+    beasiswa_desc,
+    beasiswa_enddate,
+    beasiswa_jumlah_penerima,
+    beasiswa_minimum_ipk,
+    beasiswa_maksimal_sks,
+    beasiswa_minimum_penghasilan_ortu,
+    beasiswa_minimum_tanggungan_ortu,
+    beasiswa_is_aktif,
+    beasiswa_periode_mulai,
+    beasiswa_periode_selesai
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_scholarshipsdata"] = "
+UPDATE beasiswa
+SET 
+    beasiswa_sumberbeasiswa_id = %s,
+    beasiswa_jenisbeasiswa_id = %s,
+    beasiswa_name = %s,
+    beasiswa_desc = %s,
+    beasiswa_enddate = %s,
+    beasiswa_jumlah_penerima = %s,
+    beasiswa_minimum_ipk = %s,
+    beasiswa_maksimal_sks = %s,
+    beasiswa_minimum_penghasilan_ortu = %s,
+    beasiswa_minimum_tanggungan_ortu = %s,
+    beasiswa_is_aktif = %s,
+    beasiswa_periode_mulai = %s,
+    beasiswa_periode_selesai = %s
+WHERE beasiswa_id = %d
+";
+$sql["delete_scholarshipsdata"] = "
+DELETE FROM beasiswa
+WHERE beasiswa_id = %d
+";
+$sql["list_scholarshipsdata"] = "
+SELECT
+    beasiswa_id AS `id`,
+    beasiswa_name AS `name`
+FROM
+    beasiswa
+ORDER BY beasiswa_name
+";

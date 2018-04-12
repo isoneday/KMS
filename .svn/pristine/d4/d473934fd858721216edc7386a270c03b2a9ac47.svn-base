@@ -1,0 +1,11 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputRefOccupation');
+   
+class ViewAddRefOccupation extends ViewInputRefOccupation
+{
+    
+}
+?>

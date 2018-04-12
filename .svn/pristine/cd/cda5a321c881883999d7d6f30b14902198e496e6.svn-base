@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoDeleteCity extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessCity', 'ref.city');
+        
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());                
+        
+        $proses->delete($id);
+
+        return array('exec' => 'replaceContentWithUrl("subcontent-element","' . GtfwDispt()->GetUrl('ref.city', 'city', 'view', 'html') .'&display' . '&ascomponent=1")');
+    }
+}
+
+?>

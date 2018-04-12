@@ -1,0 +1,59 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+    <tbody>
+
+        <tr>
+            <th style="width:200px">Title</th>
+            <td>{TITLE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px">Content</th>
+            <td>{CONTENT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px">Snippet</th>
+            <td>{SNIPPET}</td>
+        </tr>
+        <!-- patTemplate:tmpl name="current_photo" visibility="" -->
+        <tr id="div_photo">
+            <th><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+            <td>{PHOTO_FILE}
+                <input type="hidden" name="photo" value="{PHOTO}"/>
+                <input type="hidden" name="photo_enc" value="{PHOTO}"/>
+                <input type="hidden" name="photo_origin" value="{PHOTO_ORIGIN}"/>
+                <input type="hidden" name="photo_path" value="{PHOTO_PATH}"/>
+                <input type="hidden" name="photo_type" value="{PHOTO_TYPE}"/>
+                <input type="hidden" name="photo_size" value="{PHOTO_SIZE}"/>
+            </td>
+        </tr>
+        <!-- patTemplate:tmpl name="photo_preview" visibility="" -->
+        <tr id="div_preview">
+            <th><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+            <td>{PHOTOP}
+            </td>
+        </tr>
+        <!-- /patTemplate:tmpl -->
+        <!-- /patTemplate:tmpl -->
+        <tr>
+            <th style="width:200px">Photo Origin</th>
+            <td>{PHOTO_ORIGIN}</td>
+        </tr>
+        <tr>
+            <th style="width:200px">Photo Path</th>
+            <td>{PHOTO_PATH}</td>
+        </tr>
+        <tr>
+            <th style="width:200px">Photo Type</th>
+            <td>{PHOTO_TYPE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px">Photo Size</th>
+            <td>{PHOTO_SIZE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px">Status</th>
+            <td>{STATUS}</td>
+        </tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

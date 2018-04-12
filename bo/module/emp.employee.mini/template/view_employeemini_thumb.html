@@ -1,0 +1,211 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+    <input type="hidden" id="mode" name="mode" value="{MODE}" />
+    <input type="hidden" name="search_mode" value="{SEARCH_MODE}" />
+    <table class="table-search" id="simple-search">
+        <tr>
+            <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="keyword" / --></th>
+            <td> 
+                <input type="text" name="s_number" value="{S_NUMBER}" size="50" title="<!-- patTemplate:gtfwgetlang key="keyword" / -->" tabindex="1" />
+
+                       <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+                <a href="#" id="button-adv-search"><!-- patTemplate:gtfwgetlang key="advance_search" / --></a>
+            </td>
+        </tr>
+    </table>
+    <table class="table-search" id="adv-search">
+        <tbody>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="number" / --> / <!-- patTemplate:gtfwgetlang key="employee_name" / --></th>
+                <td><input type="text" name="number" value="{NUMBER}" size="50" /></td>        
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="employee_type" / --></th>
+                <td>
+                    <div id="div_type_id">
+                        <!-- patTemplate:gtfwrendermodule module="emp.ref.employee.type" submodule="comboRefEmpType" action="view" name="type_id"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="employee_status" / --></th>
+                <td>
+                    <div id="div_status_id">
+                        <!-- patTemplate:gtfwrendermodule module="emp.ref.employee.status" submodule="comboRefEmpStatus" action="view" name="status_id"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="position" / --></th>
+                <td>
+                    <div id="div_position_id">
+                        <!-- patTemplate:gtfwrendermodule module="ref.structural.position.type" submodule="comboStructPositionType" action="view" name="position_id"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="work_unit" / --></th>
+                <td>
+                    <div id="div_unit_id">
+                        <!-- patTemplate:gtfwrendermodule module="core.unit" submodule="comboUnit" action="view" name="unit_id"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+                    <a href="#" id="button-simple-search"><!-- patTemplate:gtfwgetlang key="simple_search" / --></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+    <div class="pageBar">
+        <div class="pageNav">
+            <a id="display-detail" class="xhr dest_subcontent-element button-change-display-thumb btn-table" style="cursor:pointer;" title="List"></a>
+            <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+            <a class="xhr dest_subcontent-element btn-add" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="employee" / -->"><!-- patTemplate:gtfwgetlang key="add" / --></a>
+            <!-- /patTemplate:tmpl -->
+        </div>
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+        </div>
+    </div>
+    <br>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+
+    <p>No Data!</p>
+
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" --> 
+    <table class="table-details">
+        <tr>
+            <td style="width: 120px;" rowspan="8">{ATTACHMENT}</td>    
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_number" / --></th>
+            <td>
+                {PARENT_NUMBER}
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="full_name" / --></th>
+            <td>
+                {FULL_NAME}
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_type" / --></th>
+            <td>
+                {EMP_TYPE}
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_status" / --></th>
+            <td>
+                {EMP_STATUS}
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="position" / --></th>
+            <td>
+                {EMP_POSITION}
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="work_unit" / --></th>
+            <td>
+                {EMP_UNIT}
+            </td>
+        </tr>
+        <tr style="text-align:right;">
+            <td class="links" colspan="3">
+                <a class="devider-action"></a>
+                <a class="xhr dest_subcontent-element btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="employee" / -->"></a>
+                <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+                <a class="devider-action"></a>
+                <a class="xhr dest_subcontent-element btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="employee" / -->"></a>
+                <!-- /patTemplate:tmpl -->
+                <!-- patTemplate:tmpl name="button_create_officer" visibility="hidden" -->
+                <a class="devider-action"></a>
+                <a class="xhr dest_subcontent-element btn-create-officer" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="officer" / -->"></a>
+                <!-- /patTemplate:tmpl -->
+                <!-- patTemplate:tmpl name="button_create_user" visibility="hidden" -->
+                <a class="devider-action"></a>
+                <a class="xhr dest_subcontent-element btn-user" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="user" / -->"></a>
+                <!-- /patTemplate:tmpl -->
+                <!-- patTemplate:tmpl name="button_update_user" visibility="hidden" -->
+                <a class="devider-action"></a>
+                <a class="xhr dest_subcontent-element btn-edit-user" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="user" / -->"></a>
+                <!-- /patTemplate:tmpl -->
+                <!-- patTemplate:tmpl name="button_reset_password" visibility="hidden" -->
+                <a class="devider-action"></a>
+                <a class="confirm_reset btn-reset-password" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="reset" / --> <!-- patTemplate:gtfwgetlang key="user" / -->" data-name="{NAME}" ></a>
+                <!-- /patTemplate:tmpl -->
+                <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+                <a class="devider-action"></a>
+                <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{NAME}" ></a>
+                <!-- /patTemplate:tmpl -->            
+                </ul>
+            </td>                
+        </tr>
+    </table>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+    <div class="pageBar">
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+        </div>
+    </div>
+</div>
+<!-- patTemplate:gtfwrendermodule module="core.home" submodule="filterAdvanceJs" action="view" name="js" / -->
+<script type="text/javascript">
+    $(function(){
+        $('.confirm_delete').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="employee" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="employee" / -->',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+        
+        $('.confirm_reset').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_reset" / -->" + ' <!-- patTemplate:gtfwgetlang key="employee_password" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_reset" / -->" + ' <!-- patTemplate:gtfwgetlang key="employee_password" / -->',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+        
+        $('.button-change-display-thumb').click(function(){
+            $('#mode').val('list');
+            $('#form_search').submit();
+        })        
+    });
+
+</script>
+<!-- /patTemplate:tmpl -->

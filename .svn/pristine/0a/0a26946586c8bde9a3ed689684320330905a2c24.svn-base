@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @author GTFW CRUD Generator 
+ */
+class State extends Database {
+
+    public function __construct($connectionNumber = 0) {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.state/business/mysqlt/state.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countState() {
+        $query = $this->mSqlQueries['count_state'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getState($filter) {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+
+        if (!empty($country_id)) {
+            $str .= " AND LOWER(a.state_country_id) = ('$country_id')";
+        }
+        if (!empty($code)) {
+            $str .= " AND LOWER(a.state_code) LIKE('%$code%')";
+        }
+        if (!empty($name)) {
+            $str .= " AND LOWER(a.state_name) LIKE('%$name%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";
+        }
+        $query = $this->mSqlQueries['get_state'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+
+    public function getDetailState($id) {
+        $result = $this->Open($this->mSqlQueries['get_detail_state'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function insertState($params) {
+        return $this->Execute($this->mSqlQueries['insert_state'], $params);
+    }
+
+    public function updateState($params) {
+        return $this->Execute($this->mSqlQueries['update_state'], $params);
+    }
+
+    public function deleteState($id) {
+        return $this->Execute($this->mSqlQueries['delete_state'], array($id));
+    }
+
+    public function listState($country = NULL) {
+        return $this->Open($this->mSqlQueries['list_state'], array($country));
+    }
+
+    /**
+     * check name if exist
+     * @param array of name, id
+     * @return boolean, true if exist, false otherwise
+     */
+    public function checkName($param) {
+        if (is_array($param))
+            extract($param);
+
+        $str = '';
+        $limit = '';
+
+        if (!empty($code))
+            $str .= " AND LOWER(a.state_code) = LOWER('$code')";
+        if (!empty($name))
+            $str .= " AND LOWER(a.state_name) = LOWER('$name')";
+        if (!empty($id))
+            $str .= " AND a.state_id != $id";
+
+        $query = $this->mSqlQueries['get_state'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
+// End of file State.class.php

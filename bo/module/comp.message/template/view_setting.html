@@ -1,0 +1,119 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="warning_box" visibility="hidden" -->
+   <div class="{CLASS_PESAN}">
+      <div style="float: right" onclick="javascript: $(this.parentNode).hide('slow')"><img src="images/icon-warning-16x16.gif"></div>
+      {ISI_PESAN}
+   </div>
+<!-- /patTemplate:tmpl -->
+
+<div id="settingContainer">
+   <ul>
+      <li><a href="#settingFolder"><!-- patTemplate:gtfwgetlang key="folder" / --></a></li>
+      <li><a href="#settingBlackList"><!-- patTemplate:gtfwgetlang key="blacklist" / --></a></li>
+   </ul>
+   <div id="settingFolder">
+      <div class="pageBar">
+         <div class="pageNav"> 
+            <a class="btn-add" onclick="document.forms['settingForm'].folderAdd()" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="folder" / -->"> <!-- patTemplate:gtfwgetlang key="add" / --></a>
+         </div>
+      </div>
+      <table class="table-common" width="100%">
+         <thead>
+            <tr>
+               <th style="width:20px">No</th>
+               <th><!-- patTemplate:gtfwgetlang key="name" / --></th>
+               <th style="width:50px"><!-- patTemplate:gtfwgetlang key="messages" / --></th>
+               <th style="width:50px"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+            </tr>
+         </thead>
+         <tbody>
+         <!-- patTemplate:tmpl name="folder_list" -->
+            <tr class="{CLASS_NAME}">
+               <td style="text-align:center">{NUMBER}</td>
+               <td>{FOLDER_NAME}</td>
+               <td style="text-align:center">{MSGCOUNT}</td>
+               <td class='links' style="text-align:center">
+                  <a onclick="document.forms['settingForm'].folderEdit({FOLDER_ID},'{FLDRNAME_JS}')" class="btn-edit" title="<!-- patTemplate:gtfwgetlang key="edit" / -->"></a>
+                  <a onclick="document.forms['settingForm'].folderDelete({FOLDER_ID},'{FLDRNAME_JS}')" class="btn-delete-icon" title="<!-- patTemplate:gtfwgetlang key="delete" / -->"></a>
+               </td>
+            </tr>
+         <!-- /patTemplate:tmpl -->
+         </tbody>
+      </table>
+   </div>
+   <div id="settingBlackList">
+    <form name="blacklistUpdate" method="post" action="{URL_SUBMIT}" class="std_form">
+		<div class="content-box-form" style="max-height:300px">
+			<table class="table-edit-popup" width="100%">
+				<tbody>
+					<tr>
+						<td valign='top'><!-- patTemplate:gtfwgetlang key="backlisted_user" / --></td>
+						<td><input type='text' name='blacklistUserId' size='40' id='blacklistUserId'></td>
+					</tr>
+					<tr class="buttons">
+						<td width="150px">&nbsp;</td>
+						<td>
+							<input type="hidden" name="operation" value="updateBlacklist">
+							<input type="submit" value="<!-- patTemplate:gtfwgetlang key="update" / -->" class="btn btn-primary">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	</div>
+</div>
+
+<form name="settingForm" method="post" action="{URL_SUBMIT}" class="std_form">
+   <input type='hidden' name='operation'>
+   <input type='hidden' name='fldrId'>
+   <input type='hidden' name='fldrName'>
+</form>
+
+<script type="text/javascript">
+$("#settingContainer").tabs({selected:'{FOCUS}'});
+
+(function (){
+   var a = document.forms['settingForm'];
+   a.folderAdd = function ()
+   {
+      var name = prompt('<!-- patTemplate:gtfwgetlang key="input_folder_name" / -->');
+      if (!name) return;
+      this.operation.value = 'add';
+      this.fldrName.value = name;
+      $(this).submit();
+   }
+   a.folderEdit = function (id, name)
+   {
+      var name = prompt('<!-- patTemplate:gtfwgetlang key="input_folder_name" / -->',name);
+      if (!name) return;
+      this.operation.value = 'edit';
+      this.fldrId.value = id;
+      this.fldrName.value = name;
+      $(this).submit();
+   }
+   a.folderDelete = function (id, name)
+   {
+      if (!confirm("<!-- patTemplate:gtfwgetlang key="message_folder_delete_confirm" / -->")) return;
+      this.operation.value = 'delete';
+      this.fldrId.value = id;
+      this.fldrName.value = name;
+      $(this).submit();
+   }
+})()
+
+$('#blacklistUserId').tokenInput(
+   {JSON_USERLIST},
+   {
+      theme: 'facebook',
+      preventDuplicates: true,
+      propertyToSearch: "complete",
+      hintText: "<!-- patTemplate:gtfwgetlang key="input_user_name" / -->",
+      noResultsText: "<!-- patTemplate:gtfwgetlang key="user_not_found" / -->",
+      searchingText: "<!-- patTemplate:gtfwgetlang key="searching" / -->",
+      tokenFormatter: function(item) { return "<li>" + item.name + "</li>" },
+      prePopulate: {JSON_BLACKLIST}
+   }
+);
+</script>
+<!-- /patTemplate:tmpl -->

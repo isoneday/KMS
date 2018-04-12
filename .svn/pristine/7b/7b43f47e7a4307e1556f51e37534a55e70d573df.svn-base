@@ -1,0 +1,23 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">RefJenPdkKode</th>
+        <td>{REFJENPDKKODE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">RefJenPdkKodeDikti</th>
+        <td>{REFJENPDKKODEDIKTI}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">RefJenPdkNama</th>
+        <td>{REFJENPDKNAMA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">RefJenPdkDesc</th>
+        <td>{REFJENPDKDESC}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,101 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessStudyProgram
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjStudyProgram = GtfwDispt()->load->business('StudyProgram');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        $Val->set_rules('is_eksakta', GtfwLangText('is_eksakta'), 'required');
+        $Val->set_rules('jurusan_id', GtfwLangText('jurusan_id'), 'required');
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjStudyProgram->StartTrans();
+                $params = array(
+                    $post['kode_univ'],
+                    $post['name'],
+                    $post['jenjangpendidikan_id'],
+                    $post['is_eksakta'],
+                    $post['jurusan_id'],
+                    $this->user
+                );
+                $result = $result && $this->ObjStudyProgram->insertStudyProgram($params);
+                $this->ObjStudyProgram->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjStudyProgram->StartTrans();
+                $params = array(
+                    $post['kode_univ'],
+                    $post['name'],
+                    $post['jenjangpendidikan_id'],
+                    $post['is_eksakta'],
+                    $post['jurusan_id'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjStudyProgram->updateStudyProgram($params);
+                $this->ObjStudyProgram->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('ref.study.program', 'StudyProgram', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.study.program', 'studyprogram', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.study.program', 'inputStudyProgram', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.study.program', (empty($post['id'])?'add':'update').'StudyProgram', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjStudyProgram->deleteStudyProgram($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('ref.study.program', 'StudyProgram', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

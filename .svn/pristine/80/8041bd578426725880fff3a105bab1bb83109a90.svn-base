@@ -1,0 +1,159 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+    <table class="table-search">
+        <tbody>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="code"/ --></th>
+                <td><input type="text" name="code" value="{CODE}" /></td>        
+            </tr>
+            <tr>
+                <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="name"/ --></th>
+                <td><input type="text" name="name" value="{NAME}" /></td>        
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+    <div class="pageBar">
+        <div class="pageNav">
+            <ul class="action-btn">
+                <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+                <li>
+                    <a class="popup_country btn-add" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> {LANG_MODULE}"><!-- patTemplate:gtfwgetlang key="add" / --></a>
+                </li>
+                <!-- /patTemplate:tmpl -->
+            </ul>
+        </div>
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+        </div>
+    </div>
+    <table class="table-common">
+        <form id="form_sort" class="xhr dest_subcontent-element" method="post" action="{CURL}">
+        <thead>
+            <tr>
+                <th style="width: 40px;">No</th>
+                <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+
+                <th><span class="sort_field {COUNTRY_CODE}" data-field="country_code"><!-- patTemplate:gtfwgetlang key="code" / --></span></th>
+                <th><span class="sort_field {COUNTRY_NAME}" data-field="country_name"><!-- patTemplate:gtfwgetlang key="name" / --></span></th>
+                <th><!-- patTemplate:gtfwgetlang key="status" / --></th>
+                <th style="width: 220px;"><!-- patTemplate:gtfwgetlang key="last_modified"/ --></th>
+            </tr>
+        </thead>
+        <script type="text/javascript">
+        $('.sort_field').on('click', function(){
+            var elm = $(this);
+            var form = $('#form_sort');
+            if (elm.hasClass('DESC') != '') {order = 'DESC'} else if (elm.hasClass('ASC') != '') {order = 'ASC'} else {order = 'ASC'; elm.addClass('NOSHORT');} 
+            
+            url = form.attr('action')+'&display&sort='+elm.data('field')+'&order='+order;
+            form.attr('action', url);
+            form.submit();
+        });
+        </script>
+        </form>
+        <tbody>
+            <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr>
+                <td colspan="12" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+            </tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="item" -->
+            <tr class="{ROW_CLASS}">
+                <td style="text-align: center;">{NO}</td>        
+                <td class="links">
+                    <a class="popup_country btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> {LANG_MODULE}"></a>
+                    <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+                    <a class="popup_country btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> {LANG_MODULE}"></a>
+                    <!-- /patTemplate:tmpl -->
+                    <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+                    <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{NAME}" ></a>
+                    <!-- /patTemplate:tmpl -->            
+                    </ul>
+                </td>
+
+                <td>{CODE}</td>
+                <td>{NAME}</td>
+                <td>{STATUS}</td>
+                <td>{LAST_MODIFIED}</td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:sub -->
+            <!-- /patTemplate:tmpl -->
+        </tbody>
+    </table>
+    <div class="pageBar">
+        <div class="toolbar">
+            <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.confirm_delete').on('click', function(event){
+            var elm = $(this);
+            var href = elm.attr('href')+'&ascomponent=1';
+            var name = elm.data('name');
+            gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' {LANG_MODULE}?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' {LANG_MODULE}',function(status){
+                if (status) {
+                    replaceContentWithUrl('subcontent-element', href);
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        })
+    });
+
+    {SCRIPT}
+
+    var popupCountry;
+    $('.popup_country').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupCountry = showGtPopup(url, title, null, null, null, true);
+        return false;
+    });
+</script>
+<style>
+.table-common span.sort_field {
+    float: right;
+    width: 20px;
+    height: 10px;
+    margin-top: 4px;
+    background-image: url("assets/images/bg.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+    cursor: pointer;  
+}
+.table-common span.ASC {
+    background-image: url("assets/images/desc.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.table-common span.DESC {
+    background-image: url("assets/images/asc.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+</style>
+<!-- /patTemplate:tmpl -->

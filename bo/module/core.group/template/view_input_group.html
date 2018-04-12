@@ -1,0 +1,117 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+    <div class="{STYLE}">
+        {CONTENT}
+    </div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+	<div class="content-box-form">
+		<input type="hidden" name="id" value="{ID}" />
+		<input type="hidden" id="access" name="access" />
+		<table class="table-edit" style="width: 100%;">    
+			<tr class="subhead">
+				<th colspan="2">
+					<strong><!-- patTemplate:gtfwgetlang key="group_data" / --></strong>
+				</th>
+			</tr>
+			<tr>
+				<th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+				<td>
+					<input type="text" name="name" value="{NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="1" />*
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="description" / --></th>
+				<td>
+					<textarea name="description" cols="50" rows="2" title="<!-- patTemplate:gtfwgetlang key="description" / -->" tabindex="2">{DESCRIPTION}</textarea>            
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="access_right" / --></th>
+				<td id="menu_list">
+				{MENU}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="form-footer" style="padding:14px 230px 15px!important">
+		<button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="4"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+		<button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="5"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+		<a class="xhr dest_subcontent-element" href="{URL_BACK}"><button type="reset" class="btn btn-success" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="6"><!-- patTemplate:gtfwgetlang key="cancel" / --></button></a>
+	</div>
+</form>
+<script type="text/javascript">
+$(function () {    
+    $('.check_action').off('change');
+    $('.check_action').on('change', function(){
+        var ids = $(this).attr('id').split('_');
+        console.log(ids);
+        $('#label_'+ids[1]+'_'+ids[2]).toggleClass('label-disabled');
+    });
+    
+	$("#menu_list").jstree({
+		"plugins" : [ "themes", "html_data", "checkbox", "ui" ],
+        "themes" : { "theme" : "classic" }
+	}).unbind('check_node.jstree').bind('check_node.jstree', function(e, data) {
+        parent = $(data.args[0].parentElement.parentElement);
+        parent.find('input[type="checkbox"]').attr('checked', 'checked');
+        parent.find('[id^="label_"]').removeClass('label-disabled');
+//        if (menuid) {
+//            $('[id^="check_'+menuid+'_"]').attr('checked', 'checked');
+//            $('[id^="label_'+menuid+'_"]').removeClass('label-disabled');
+//        }
+    }).unbind('uncheck_node.jstree').bind('uncheck_node.jstree', function(e, data) {
+        parent = $(data.args[0].parentElement.parentElement);
+        parent.find('input[type="checkbox"]').removeAttr('checked', 'checked');
+        parent.find('[id^="label_"]').addClass('label-disabled');
+//        menuid = $(data.args[0].parentElement.parentElement);
+//        if (menuid) {
+//            $('[id^="check_'+menuid+'_"]').removeAttr('checked');
+//            $('[id^="label_'+menuid+'_"]').addClass('label-disabled');
+//        }
+    });
+    
+    $('#form_input').submit(function(){
+        var checked_ids = []; 
+        $("#menu_list").find(".jstree-undetermined").each(function(i,element){            
+            checked_ids.push($(element).attr("id"));
+        
+            if ($(this).find(".jstree-undetermined").length == 0) {  
+                $(this).find(".jstree-checked").each(function(i, element){          
+                    checked_ids.push($(element).attr("id"));
+                });         
+            }
+        });
+
+        $("#menu_list").find(".jstree-checked").each(function(i, element){ //also includes the ones below 'undetermined' parent
+            var id = $(element).attr("id");
+            if (!inArray(id, checked_ids)) {
+                checked_ids.push(id);
+            }        
+        }); 
+
+        //console.log(checked_ids);
+        $('#access').val(checked_ids);
+    });
+});
+
+function inArray(needle, haystack) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}
+</script>
+<style>
+.my-modal {
+    width : 200px;
+    margin : -100px 0 0 -100px;
+}
+.modal-backdrop {background: none;}
+.label-disabled {
+    color : gray;
+}
+</style>
+<!-- /patTemplate:tmpl -->

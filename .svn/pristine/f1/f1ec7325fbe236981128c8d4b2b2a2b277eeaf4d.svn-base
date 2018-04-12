@@ -1,0 +1,140 @@
+<!-- patTemplate:tmpl name="document" -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><!-- patTemplate:gtfwgetconfig config="organization" name="application_name" / --></title>
+		<!-- metadata for seo -->
+		<meta charset="utf-8"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="-1"/>
+		<meta http-equiv="CACHE-CONTROL" content="PUBLIC" />
+		<meta name="Title" content="<!-- patTemplate:gtfwgetconfig config="organization" name="title" / -->" />
+		<meta name="Keywords" content="<!-- patTemplate:gtfwgetconfig config="organization" name="keywords" / -->" />
+		<meta name="Description" content="<!-- patTemplate:gtfwgetconfig config="organization" name="description" / -->" />
+		<meta name="Geography" content="<!-- patTemplate:gtfwgetconfig config="organization" name="geography" / -->" />
+		<meta name="Language" content="<!-- patTemplate:gtfwgetconfig config="organization" name="language" / -->" />
+		<meta name="Owner" content="<!-- patTemplate:gtfwgetconfig config="organization" name="owner" / -->" />
+		<meta name="Author" content="<!-- patTemplate:gtfwgetconfig config="organization" name="author" / -->" />
+		<meta name="Designer" content="<!-- patTemplate:gtfwgetconfig config="organization" name="designer" / -->" />
+		<meta name="Copyright" content="<!-- patTemplate:gtfwgetconfig config="organization" name="copyright" / -->" />
+		<meta name="Robots" content="<!-- patTemplate:gtfwgetconfig config="organization" name="robots" / -->" />
+		<meta name="City" content="<!-- patTemplate:gtfwgetconfig config="organization" name="city" / -->" />
+		<!-- end metadata for seo -->
+		
+		<!-- Mobile Specific Metas
+    ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <!-- Le styles -->
+        <link href="assets/css/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <!-- <link href="assets/css/styles.css" rel="stylesheet"/> -->
+        <link href="assets/css/styles-landing.css" rel="stylesheet"/>
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!--[if IE]>
+    	<link rel="stylesheet" type="text/css" href="assets/css/iestyles.css" />
+    	<![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="assets/images/coporate.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+        
+        <script src="assets/js/jquery.js"></script>
+        <script type="text/javascript">
+        lang = {
+            "cancel"    : "<!-- patTemplate:gtfwgetlang key="cancel" / -->",
+            "ok"        : "<!-- patTemplate:gtfwgetlang key="ok" / -->",
+            "confirm_delete"    : "<!-- patTemplate:gtfwgetlang key="confirm_delete" / -->",
+            "message_delete"    : "<!-- patTemplate:gtfwgetlang key="message_delete" / -->",
+            "alert"     : "<!-- patTemplate:gtfwgetlang key="alert" / -->",
+            "confirm"   : "<!-- patTemplate:gtfwgetlang key="confirm" / -->",
+            "prompt"    : "<!-- patTemplate:gtfwgetlang key="prompt" / -->",
+            "wrong_url" : "<!-- patTemplate:gtfwgetlang key="wrong_url" / -->",
+            "maximum_file_size" : "<!-- patTemplate:gtfwgetlang key="maximum_file_size" / -->",
+            "forbidden_filetype": "<!-- patTemplate:gtfwgetlang key="forbidden_filetype" / -->",
+            "progress"  : "<!-- patTemplate:gtfwgetlang key="progress" / -->",
+            "remove"    : "<!-- patTemplate:gtfwgetlang key="remove" / -->",
+            "upload_canceled"   : "<!-- patTemplate:gtfwgetlang key="upload_canceled" / -->",
+            "aborting"  : "<!-- patTemplate:gtfwgetlang key="aborting" / -->",
+            "image_preview"     : "<!-- patTemplate:gtfwgetlang key="image_preview" / -->",
+            "select_file"       : "<!-- patTemplate:gtfwgetlang key="select_file" / -->",
+            "unable_to_compute" : "<!-- patTemplate:gtfwgetlang key="unable_to_compute" / -->",
+        }
+        </script>
+    </head>
+
+    <body>
+        <!-- patTemplate:link src="body" / -->
+    </body>
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="assets/js/loader-landing.js"></script>
+        <script src="assets/js/greyScale.js"></script>
+		
+		
+<!-- 		<script type='text/javascript'>
+		jQuery(function($){
+					$(".tweet").tweet({
+					  join_text: "auto",
+					  username: "gamatechno",
+					  avatar_size: 0,
+					  count: 3,
+					  auto_join_text_default: " we said, ",
+					  auto_join_text_ed: " we ",
+					  auto_join_text_ing: " we were ",
+					  auto_join_text_reply: " we replied ",
+					  auto_join_text_url: " we were checking out ",
+					  loading_text: "Loading News..."
+					});
+		});
+		
+		 </script> -->
+        <script type='text/javascript'>
+            $(document).ready(function(){
+                $(".colorScale").fadeTo("fast", 0.9);
+                $(".colorScale").hover(function(){
+                    $(this).fadeTo("fast", 1.0);
+                },function(){
+                    $(this).fadeTo("fast", 0.9);
+                });
+    	
+                // hides the slickbox as soon as the DOM is ready
+                $('.sidebar').show();
+                // shows the slickbox on clicking the noted link  
+                $('#slick-show').click(function() {
+                    $('.sidebar').show('slow');
+                    return false;
+                });
+                // hides the slickbox on clicking the noted link  
+                $('#slick-hide').click(function() {
+                    $('.sidebar').hide('fast');
+                    return false;
+                });
+              
+                $('#slick-toggle').toggle(function() {
+                    cur = $(this);
+                    cur.addClass('slick-icon');
+    
+                    $('.sidebar').find('.menu-label').hide();
+                    $('.sidebar').animate({width:50}, 300);
+                    $(".container3").width('96%').animate({left:'54px'}, 300);
+                },function(){
+    
+                    $('.sidebar').find('.menu-label').show();
+                    $('.sidebar').animate({width:220}, 300);
+                    $(".container3").width('83.5%').animate({left:'220px'},300, function(){
+                      
+                        cur.removeClass('slick-icon');
+                    });
+                });
+            });
+        </script>
+</html>
+<!-- /patTemplate:tmpl -->

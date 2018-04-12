@@ -1,0 +1,142 @@
+<?php
+
+$sql["count_type"] = "
+SELECT FOUND_ROWS() AS total
+";
+
+$sql["get_type"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.emailtype_id AS `id`,
+    a.emailtype_name AS `name`,
+    a.`emailtype_msttype_id` AS mst_id,
+    c.`msttype_name` AS mst_name,
+    a.emailtype_status AS `status`,
+    a.emailtype_desc AS `desc`,
+    a.emailtype_is_locked AS is_locked,
+    a.emailtype_last_option AS `last_option`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), b.`user_real_name`, CONCAT( b.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%d %b %Y %H:%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i'))) AS last_modified   
+FROM ref_email_type a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_master_type c ON c.`msttype_id` = a.`emailtype_msttype_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+
+$sql["get_detail_type"] = "
+SELECT 
+    a.emailtype_id AS `id`,
+    a.emailtype_name AS `name`,
+    a.`emailtype_msttype_id` AS mst_id,
+    c.`msttype_name` AS mst_name,
+    a.emailtype_status AS `status`,
+    a.emailtype_desc AS `desc`,
+    a.emailtype_is_locked AS is_locked,
+    a.emailtype_last_option AS `last_option`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+	IF((d.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), b.`user_real_name`, CONCAT( b.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_update,
+	IF((a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00'), IF ( (a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00'), b.`user_real_name`, CONCAT( b.`user_real_name`, ', ', DATE_FORMAT( a.insert_timestamp, '%%d %%b %%Y %%H:%%i' ))),CONCAT(d.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i'))) AS last_insert                
+FROM ref_email_type a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+LEFT JOIN ref_master_type c ON c.`msttype_id` = a.`emailtype_msttype_id`
+LEFT JOIN gtfw_user d ON d.`user_id` = a.`update_user_id`
+WHERE a.emailtype_id = %d
+";
+
+$sql["insert_type"] = "
+INSERT INTO ref_email_type
+(
+    emailtype_msttype_id,
+    emailtype_name,
+    emailtype_status,
+    emailtype_desc,
+    emailtype_last_option,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_type"] = "
+UPDATE ref_email_type
+SET 
+    emailtype_msttype_id = %s,
+    emailtype_name = %s,
+    emailtype_status = %s,
+    emailtype_desc = %s,
+    emailtype_last_option = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE emailtype_id = %d
+";
+$sql["delete_type"] = "
+DELETE FROM ref_email_type
+WHERE emailtype_id = %d
+";
+$sql["list_type"] = "
+SELECT
+    emailtype_id AS `id`,
+    emailtype_name AS `name`
+FROM
+    ref_email_type
+ORDER BY emailtype_name
+";
+$sql["list_type_to_employee"] = "
+SELECT
+    emailtype_id AS `id`,
+    emailtype_name AS `name`
+FROM
+    ref_email_type
+WHERE emailtype_msttype_id = '3'
+AND emailtype_status = '1'
+ORDER BY emailtype_last_option ASC
+";
+$sql['list_type_to_account'] = "
+SELECT
+    emailtype_id AS `id`,
+    emailtype_name AS `name`
+FROM
+    ref_email_type
+WHERE emailtype_msttype_id = '1'
+AND emailtype_status = '1'
+ORDER BY emailtype_last_option ASC    
+";
+$sql['get_email_type_to_vendor'] = "
+SELECT 
+	emailtype_id AS email_type_id,
+	emailtype_msttype_id AS mst_type_id,
+	emailtype_name AS email_type_name
+FROM
+    ref_email_type
+WHERE emailtype_msttype_id = '1'
+AND emailtype_status = '1'
+ORDER BY emailtype_last_option ASC
+";
+$sql['get_email_type_to_contact'] = "
+SELECT 
+	emailtype_id AS email_type_id,
+	emailtype_msttype_id AS mst_type_id,
+	emailtype_name AS email_type_name
+FROM ref_email_type
+WHERE emailtype_msttype_id = '2' 
+AND emailtype_status = 1
+ORDER BY emailtype_id    
+";
+

@@ -1,0 +1,19 @@
+/* 
+    Document   : loader-style
+    Created on : Jul 25, 2012, 12:30:16 PM
+    Author     : Agus GD
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+@import "custom-theme/jquery-ui-1.8.16.custom.css";
+@import "styles.css";
+@import "bootstrap.css";
+@import "side_nav.css";
+@import "accordion.css";
+@import "bootstrap-responsive.css";
+@import "demo_table.css";

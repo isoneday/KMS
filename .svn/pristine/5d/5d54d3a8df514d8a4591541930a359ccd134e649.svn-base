@@ -1,0 +1,84 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="warning_box" visibility="hidden" -->
+	<div class="{CLASS_PESAN}">
+      <div style="float: right" onclick="javascript: $(this.parentNode).hide('slow')"><img src="images/icon-warning-16x16.gif"></div>
+	   {ISI_PESAN}
+	</div>
+<!-- /patTemplate:tmpl -->
+
+	<div class="pageBar">
+		<div class="toolbar">
+			<!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+		</div>
+	</div>
+
+   <form method="post" name="formFolder-{FOLDERID}" action="{URL_SUBMIT}"  class="std_form">
+      <table class="table-form" style="margin:15px 0 10px;width: 100%;">
+         <thead>
+            <tr>
+               <th style="width:30px">No</th>
+               <th style="width:5px;">&nbsp;</th>
+               <th style="width:75px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+			   <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="from" / --></th>
+               <th><!-- patTemplate:gtfwgetlang key="subject" / --></th>
+               <th style="width:150px;"><!-- patTemplate:gtfwgetlang key="received" / --></th>
+            </tr>
+         </thead>
+         <tbody>
+         <!-- patTemplate:tmpl name="message_list_in" type="condition" conditionvar="IS_EMPTY" -->
+            <!-- patTemplate:sub condition="YES" -->
+            <tr><td colspan="6" style="text-align: center;"><em>-- <!-- patTemplate:gtfwgetlang key="data_not_found" / --> --</em></td></tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <tr class="{CLASS_NAME}" style="font-weight: {FONT_WEIGHT}">
+               <td style="text-align: center;">{NUMBER}</td>
+               <td><input type="checkbox" name="ctrlId[]" value="{CTRL_ID}"></td>
+               <td class="links" style="text-align:center">
+                  <a class="btn-read" onclick="popup_message = showGtPopup('{URL_READ}','<!-- patTemplate:gtfwgetlang key="read" / -->',640,null,null,false);if('{CTRL_IS_READ}'=='0')$('#msgContainer')[0].messageSetRead(this,{CTRL_ID})" title="<!-- patTemplate:gtfwgetlang key="read" / -->"></a>
+                  <a class="btn-reply" onclick="popup_message = showGtPopup('{URL_REPLY}','<!-- patTemplate:gtfwgetlang key="reply" / -->',650,null,null,false);if('{CTRL_IS_READ}'=='0')$('#msgContainer')[0].messageSetRead(this,{CTRL_ID})" title="<!-- patTemplate:gtfwgetlang key="reply" / -->"></a>
+                  <a class="btn-forward" onclick="popup_message = showGtPopup('{URL_REPLY}&forward','<!-- patTemplate:gtfwgetlang key="forward" / -->',720,null,null,false);if('{CTRL_IS_READ}'=='0')$('#msgContainer')[0].messageSetRead(this,{CTRL_ID})" title="<!-- patTemplate:gtfwgetlang key="forward" / -->"></a>
+               </td>
+			   <td>{SENDERNAME}</td>
+               <td><a style="cursor:pointer" onclick="popup_message = showGtPopup('{URL_READ}','<!-- patTemplate:gtfwgetlang key="read" / -->',640,null,null,false);if('{CTRL_IS_READ}'=='0')$('#msgContainer')[0].messageSetRead(this,{CTRL_ID})" title="<!-- patTemplate:gtfwgetlang key="read" / -->">
+                  {MSG_SUBJECT}</a></td>
+               <td style="text-align: center;">{CTRLSENTDATELABEL}</td>
+               
+            </tr>
+            <!-- /patTemplate:sub -->
+         <!-- /patTemplate:tmpl -->
+         </tbody>
+      </table>
+      <table class="table-edit" width="100%">
+         <tbody>
+            <tr>
+               <td colspan='2' class="links">
+                  <a onclick="javascript: $('#folder-{FOLDERID} input[name=&quot;ctrlId[]&quot;]').each(function(){this.checked = true;}); void(0);" style="float: left"><button type="button" class="btn"><!-- patTemplate:gtfwgetlang key="select_all" / --></button></a>
+                  <a onclick="javascript: $('#folder-{FOLDERID} input[name=&quot;ctrlId[]&quot;]').each(function(){this.checked = false;}); void(0);" style="float: left"><button type="button" class="btn"><!-- patTemplate:gtfwgetlang key="un_select_all" / --></button></a>
+                  <a onclick="javascript: $('#folder-{FOLDERID} input[name=&quot;ctrlId[]&quot;]').each(function(){this.checked = !this.checked;}); void(0);" style="float: left"><button type="button" class="btn"><!-- patTemplate:gtfwgetlang key="select_inverse" / --></button></a>
+               </td>
+            </tr>
+            <tr><td colspan='2'><label><input type="radio" name="operation" value="delete"/> <!-- patTemplate:gtfwgetlang key="delete" / --></label></td></tr>
+            <tr><td colspan='2'><label style="display: inline;"><input type="radio" name="operation" value="move"/> <!-- patTemplate:gtfwgetlang key="move_to" / --></label>&nbsp;&nbsp;:&nbsp;&nbsp;<!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="ctrlFolderId"  / --></td></tr>
+            <tr><td colspan='2'><label><input type="radio" name="operation" value="unread"/> <!-- patTemplate:gtfwgetlang key="mark_as_unread" / --></label></td></tr>
+            <tr><td colspan='2'><label><input type="radio" name="operation" value="email"/> <!-- patTemplate:gtfwgetlang key="sent_to_email" / --></label></td></tr>
+            <tr class="buttons">
+               <!--<td width="150px">&nbsp;</td>-->
+               <td colspan='2'>
+                  <input type="hidden" name="folderId" value="{FOLDERID}">
+                  <input type="submit" value="<!-- patTemplate:gtfwgetlang key="save_change" / -->" class="btn btn-primary">
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </form>
+   <script>
+   (function(count){
+      var tmp = $('#msgContainer')
+      tmp[0].newMessageCount = count;
+      if (!(count&&tmp.tabs('option','selected'))) return;
+      var tmp = $('#msgContainer .ui-tabs-nav a[href="#folder-{FOLDER_ID}"]');
+      if ($('b',tmp).length) $('b',tmp).eq(1).text("("+count+")");
+      else tmp.html("<b>"+tmp.text()+"</b> <b>("+count+")</b>");
+   })({NEW_MESSAGE_COUNT})
+   </script>
+<!-- /patTemplate:tmpl -->

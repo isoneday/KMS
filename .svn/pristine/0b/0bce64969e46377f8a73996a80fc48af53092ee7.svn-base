@@ -1,0 +1,176 @@
+<?php
+
+/**
+ * @author Prima Noor
+ */
+class ProcessCurrency {
+
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct() {
+        $this->Obj = GtfwDispt()->load->business('Currency');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+		$conn = Configuration::Instance()->GetValue('application', 'db_conn');
+		$this->is_fin = isset($conn[1]) ? true : false;
+		if($this->is_fin) $this->ObjFin = GtfwDispt()->load->business('CurrencyFin','ref.currency','1');
+    }
+
+    function input() {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+
+        //$Val->set_rules('country_id', GtfwLangText('country'), 'required');
+        $Val->set_rules('name', GtfwLangText('name'), 'required');
+        $Val->set_rules('code', GtfwLangText('code'), 'required|callback_external_callbacks[ProcessCurrency,ref.currency,isCodeAvailable]');
+        $Val->set_rules('symbol', GtfwLangText('symbol'), 'required');
+
+        $result = $Val->run();
+        if ($result) {
+            if (empty($_SESSION['ref.currency']['data_id'])) {
+                $this->Obj->StartTrans();
+                $params = array(
+                    $post['code'],
+                    $post['name'],
+                    $post['symbol'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user
+                );
+                $result = $result && $this->Obj->insertCurrency($params);
+
+				$id = $this->Obj->LastInsertId();
+				if($this->is_fin) {
+					$this->ObjFin->StartTrans();
+					$result = $result && $this->addCurrencyFin($id,$post);
+					$this->ObjFin->EndTrans($result);
+				}
+
+                $this->Obj->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->Obj->StartTrans();
+                $params = array(
+                    $post['code'],
+                    $post['name'],
+                    $post['symbol'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user,
+                    $_SESSION['ref.currency']['data_id']
+                );
+                $result = $result && $this->Obj->updateCurrency($params);
+				if($this->is_fin) {
+					$this->ObjFin->StartTrans();
+					$result = $result && $this->updateCurrencyFin($_SESSION['ref.currency']['data_id'],$post);
+					$this->ObjFin->EndTrans($result);
+				}
+                $this->Obj->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }
+        if ($result) {
+            unset($_SESSION['ref.currency']['data_id']);
+            Messenger::Instance()->Send('ref.currency', 'currency', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.currency', 'currency', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.currency', 'inputCurrency', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.currency', (empty($_SESSION['ref.currency']['data_id'])?'add':'update').'Currency', 'view', 'html');
+        }
+        return $result;
+    }
+
+    function delete($id) {
+        $this->Obj->StartTrans();
+        $result = $this->Obj->deleteCurrency($id);
+		if($this->is_fin) {
+			$this->ObjFin->StartTrans();
+			$result = $result && $this->deleteCurrencyFin($id);
+			$this->ObjFin->EndTrans($result);
+		}
+        $this->Obj->EndTrans($result);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;
+        }
+        Messenger::Instance()->Send('ref.currency', 'currency', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+
+        return $result;
+    }
+
+    function isCodeAvailable($code) {
+        $post = $_POST->AsArray();
+        $result['message'] = '';
+        $result['result'] = false;
+
+        $param['code'] = $code;
+        if (!empty($_SESSION['ref.currency']['data_id']))
+            $param['id'] = $_SESSION['ref.currency']['data_id'];
+
+        if ($this->Obj->checkField($param)) {
+            $result['message'] = GtfwLangText('custom_validation_code_already_exists');
+        } else {
+            $result['result'] = true;
+        }
+        
+        return $result;
+    }
+	
+	/*
+	 * Finance Code
+	 */
+	function addCurrencyFin($id,$post){
+		$params = array(
+			$id,
+			$post['code'],
+            $post['name'],
+            $post['symbol'],
+            $post['status'],
+			''
+		);
+		$result = $this->ObjFin->addCurrency($params);
+		return $result;
+	}
+	
+	function updateCurrencyFin($id,$post){
+		$params = array(			
+			$post['code'],
+            $post['name'],
+            $post['symbol'],
+            $post['status'],
+			'',
+			$id
+		);
+		$result = $this->ObjFin->updateCurrency($params);
+		return $result;
+	}
+	
+	function deleteCurrencyFin($id){
+		$result = $this->ObjFin->deleteCurrency($id);
+		return $result;
+	}
+
+}
+
+?>

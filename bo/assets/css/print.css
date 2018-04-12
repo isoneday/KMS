@@ -1,0 +1,105 @@
+/* TABLE PRINT */
+.warp-bg{
+    background:#ccc;
+}
+.wrap-print{
+    background:#fff;
+    padding: 15px;
+    width: 780px!important;
+    /*border:1px solid #e9e9e9; */
+    margin:0px auto!important;
+}
+.wrap-print h1{
+    color: #000000;
+    font-size: 20px;
+    font-weight: normal;
+    /*padding-left:8px;*/
+    padding-bottom:4px;
+    margin-bottom:2px;
+    font-family: arial;
+    /*border-bottom:1px solid #ddd;*/
+}
+
+
+
+.wrap-print h2{
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: arial;
+    /*border-bottom:1px solid #ddd;*/
+}
+
+.wrap-print h3{
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: arial;
+    /*border-bottom:1px solid #ddd;*/
+}
+
+.print-click a{
+text-decoration:none;
+}
+.print-click {
+color:#000;
+float:right;
+}
+
+.text-right{
+    text-align: right!important;
+}
+.text-left{
+    text-align: left!important;
+}
+.text-center{
+    text-align: center!important;
+}
+.text-justify{
+    text-align:justify!important;
+}
+.text-bold{
+    font-weight: bold!important;
+}
+.text-italic{
+    font-style: italic!important;
+}
+.text-underline{
+    text-decoration:underline!important;  
+}
+
+.table_head {
+    font-size:12px !important;
+    font-family:arial;
+}
+
+.table_head td, .table_head th {
+    border: none;
+    font-weight: normal;
+}
+
+.table-print {
+      width: 100%;
+      margin-bottom: 18px;
+}
+
+.table-print th,
+.table-print td {
+  padding: 8px;
+  line-height: 18px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+
+.table-print th {
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+    background-color: #FFFFFF;
+}
+
+.table-print td {
+   vertical-align: top;
+   background-color: #FFFFFF;
+}

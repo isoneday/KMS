@@ -1,0 +1,86 @@
+<?php
+
+$sql["count_type"] = "
+SELECT 
+    COUNT(msttype_id) AS total
+FROM ref_master_type
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_type"] = "
+SELECT 
+    a.msttype_id AS `id`,
+    a.msttype_name AS `name`,
+    a.msttype_status AS `status`,
+    a.msttype_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+	IF(( a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00' ), IF (( a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00' ), '', x.user_real_name ), y.user_real_name ) AS last_modified_by,
+	IF(( a.update_timestamp = NULL OR a.update_timestamp = '1900-01-01 00:00:00' OR a.update_timestamp = '0000-00-00 00:00:00' ), IF (( a.insert_timestamp = NULL OR a.insert_timestamp = '1900-01-01 00:00:00' OR a.insert_timestamp = '0000-00-0 00:00:00' ), '', a.insert_timestamp ), a.update_timestamp ) AS last_modified_time
+FROM ref_master_type a
+LEFT JOIN gtfw_user x ON x.`user_id` = a.`insert_user_id`
+LEFT JOIN gtfw_user y ON y.`user_id` = a.update_user_id
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_type"] = "
+SELECT 
+    a.msttype_id AS `id`,
+    a.msttype_name AS `name`,
+    a.msttype_status AS `status`,
+    a.msttype_desc AS `desc`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    a.unit_id AS `unit_id`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_master_type a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE msttype_id = %d
+";
+$sql["insert_type"] = "
+INSERT INTO ref_master_type
+(
+    msttype_name,
+    msttype_status,
+    msttype_desc,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_type"] = "
+UPDATE ref_master_type
+SET 
+    msttype_name = %s,
+    msttype_status = %s,
+    msttype_desc = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE msttype_id = %d
+";
+$sql["delete_type"] = "
+DELETE FROM ref_master_type
+WHERE msttype_id = %d
+";
+$sql["list_type"] = "
+SELECT
+    msttype_id AS `id`,
+    msttype_name AS `name`
+FROM
+    ref_master_type
+ORDER BY msttype_name
+";

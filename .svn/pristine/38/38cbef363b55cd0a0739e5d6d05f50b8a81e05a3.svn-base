@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewlistInterview extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_list_interview.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+
+        $universitas_id = $_GET['id']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+
+        $listInterview = $ObjApplicantInterview->listInterview($universitas_id);
+		$i = 0;
+		foreach($listInterview as $var)
+			{
+			if($var['aplikanbeasiswa_beasiswa_id'] == $id_beasiswa)
+				{
+				$data[$i]['aplikan_id'] = $var['aplikan_id'];
+				$data[$i]['aplikan_nama'] = $var['aplikan_nama'];
+				$data[$i]['aplikan_angkatan'] = $var['aplikan_angkatan'];
+				$data[$i]['aplikan_tanggal_lahir'] = $var['aplikan_tanggal_lahir'];
+				$data[$i]['aplikan_telepon'] = $var['aplikan_telepon'];
+				$data[$i]['aplikan_tanggal_registrasi'] = $var['aplikan_tanggal_registrasi'];
+				$i++;
+				}
+			}
+				 
+        return compact('data', 'id_beasiswa','universitas_id');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+       $no = 1;
+        if (!empty($data) AND count($data) > 0) {
+			$this->mrTemplate->addVar('data', 'IS_EMPTY', 'NO');
+            foreach ($data as $val) {
+                $val['no'] = $no;
+                $val['url_detail'] = GtfwDispt()->GetUrl('applicant.interview', 'detailApplicant', 'view', 'html') . 
+				'&id=' . $val['aplikan_id'] .
+				'&id_beasiswa=' . $id_beasiswa
+				;
+
+                $this->mrTemplate->addVars('item', $val);
+                $this->mrTemplate->parseTemplate('item', 'a');
+                $no++;
+            }
+        } else {
+            $this->mrTemplate->addVar('data', 'IS_EMPTY', 'YES');
+        }
+		
+    }
+
+}
+
+?>

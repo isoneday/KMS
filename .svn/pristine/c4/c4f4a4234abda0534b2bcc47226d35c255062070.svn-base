@@ -1,0 +1,70 @@
+<!-- patTemplate:tmpl name="content" -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="multipart/form-data">
+    <div class="content-box-form" style="height:270px">
+        <!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+        <div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+        <!-- /patTemplate:tmpl -->
+        <input type="hidden" name="id" value="{ID}" />
+        <table class="table-edit-popup">
+			
+			<tr>
+                <th style="width: 150px;">Nama Bank Pengirim</th>
+                <td>
+                    <input type="text" name="bankpengirim" value="{BANKPENGIRIM}" size="40" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="1" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;">Nomor Rekening Pengirim</th>
+                <td>
+                    <input type="text" name="nobankpengirim" value="{NOBANKPENGIRIM}" size="20" title="<!-- patTemplate:gtfwgetlang key="buku rekening" / -->" tabindex="2" />            
+                </td>
+            </tr>
+			<tr>
+                <th style="width: 150px;">Nama Bank Penerima</th>
+                <td>
+                    <input type="text" name="bankpenerima" value="{BANKPENERIMA}" size="40" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="3" />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px;">Nomor Rekening Penerima</th>
+                <td>
+                    <input type="text" name="nobankpenerima" value="{NOBANKPENERIMA}" size="20" title="<!-- patTemplate:gtfwgetlang key="buku rekening" / -->" tabindex="4" />            
+                </td>
+            </tr>
+			<tr>
+				<th style="width: 200px;">Semester</th>
+				<td>
+					<select name="semesterkrs" >" tabindex="5" /> 
+						<option value="">-- Select --</option>
+						<!-- patTemplate:tmpl name="semester" -->
+							<option value="{ID}" {SELECTED}>{SEMESTER}</option>
+						<!-- /patTemplate:tmpl -->
+					</select>
+				</td>
+			</tr>
+            <tr>
+                <th style="width: 150px;">Tanggal Transfer</th>
+                <td>
+                    <input type="date" name="tanggal" value="{TANGGAL}" size="20" title="<!-- patTemplate:gtfwgetlang key="buku rekening" / -->" tabindex="6" />            
+                </td>
+            </tr>
+			<tr>
+                <th style="width: 150px;">Keterangan</th>
+                <td>
+                    <textarea name="keterangan"  size="40" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="7" />            
+					{KETERANGAN}
+					</textarea>
+				</td>
+            </tr>
+			
+            
+        </table>
+    </div>
+
+    <div class="modal-footer">    
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="8"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="9"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+    </div>
+
+</form>
+<!-- /patTemplate:tmpl -->

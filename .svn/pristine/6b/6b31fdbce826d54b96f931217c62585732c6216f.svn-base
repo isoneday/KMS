@@ -1,0 +1,11 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+GtfwDispt()->load->response('ViewInputCountry');
+   
+class ViewAddCountry extends ViewInputCountry
+{
+    
+}
+?>

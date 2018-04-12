@@ -1,0 +1,61 @@
+<?php
+
+$sql["count_resourcesscholarships"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_resourcesscholarships"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.sumberinfo_id AS `sumberInfoId`,
+    a.sumberinfo_id AS `id`,
+    a.sumberinfo_nama AS `sumberInfoNama`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_sumber_info_beasiswa a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_resourcesscholarships"] = "
+SELECT 
+    a.sumberinfo_id AS `sumberInfoId`,
+    a.sumberinfo_id AS `id`,
+    a.sumberinfo_nama AS `sumberInfoNama`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_sumber_info_beasiswa a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE sumberInfoId = %d
+";
+$sql["insert_resourcesscholarships"] = "
+INSERT INTO ref_sumber_info_beasiswa
+(
+    sumberinfo_nama,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_resourcesscholarships"] = "
+UPDATE ref_sumber_info_beasiswa
+SET 
+    sumberinfo_nama = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()    
+WHERE sumberinfo_id = %d
+";
+$sql["delete_resourcesscholarships"] = "
+DELETE FROM ref_sumber_info_beasiswa
+WHERE sumberinfo_id = %d
+";
+$sql["list_resourcesscholarships"] = "
+SELECT
+    sumberinfo_id AS `id`,
+    sumberinfo_name AS `name`
+FROM
+    ref_sumber_info_beasiswa
+ORDER BY sumberinfo_name
+";

@@ -1,0 +1,136 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<div id="tabs-emp-detail">
+    <ul>
+        <li><a href="#tabs-emp-detail-1"><!-- patTemplate:gtfwgetlang key="main_information"/ --></a></li>
+        <li><a href="#tabs-emp-detail-2"><!-- patTemplate:gtfwgetlang key="officer_data"/ --></a></li>
+    </ul>
+    <div id="tabs-emp-detail-1">
+        <table class="table-details">
+            <tr class="subhead">
+                <th colspan="2" ><strong><!-- patTemplate:gtfwgetlang key="personal_information" / --></strong></th>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="full_name" / --></th>
+                <td>{FULL_NAME}</td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="nick_name" / --></th>
+                <td>{NICK_NAME}</td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="salutation" / --></th>
+                <td>{SALUTATION_NAME}</td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_number" / --></th>
+                <td>{PARENT_NUMBER}</td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="gender"/ --></th>
+                <td>{GENDER}</td>
+            </tr>
+            <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="employee_transfer" / --></th>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_type" / --></th>
+                <td>
+                    {EMP_TYPE}
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_status" / --></th>
+                <td>
+                    {EMP_STATUS}
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="work_unit" / --></th>
+                <td>
+                    {EMP_UNIT_NAME}
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="structural_position" / --></th>
+                <td>
+                    {EMP_POSITION_NAME}
+                </td>
+            </tr>
+            <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="employee_photo" / --></th>
+            </tr>
+            <!-- patTemplate:tmpl name="current_photo" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+                <td>
+                    {PHOTO_FILE}
+                </td>
+            </tr>
+            <!-- patTemplate:tmpl name="photo_preview" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+                <td>{PHOTOP}
+                </td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:tmpl -->
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="submitted" / --></th>
+                <td>{LAST_INSERT}</td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="updated" / --></th>
+                <td>{LAST_UPDATE}</td>
+            </tr>
+        </table>
+    </div>
+    <div id="tabs-emp-detail-2">
+        <table class="table-details">
+            <tr>
+                <td>
+
+                    <table class="table-common">
+                        <thead>
+                            <tr>
+                                <th style="width: 10px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+                                <th><!-- patTemplate:gtfwgetlang key="name" / --></th>
+                                <th><!-- patTemplate:gtfwgetlang key="status" / --></th>
+                                <th><!-- patTemplate:gtfwgetlang key="parent" / --> / <!-- patTemplate:gtfwgetlang key="assignor" / --></th>
+                                <th><!-- patTemplate:gtfwgetlang key="view_all_data" / --></th>
+                                <th><!-- patTemplate:gtfwgetlang key="officer_is_admin" / --></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+                            <!-- patTemplate:sub condition="YES" -->
+                            <tr>
+                                <td colspan="5" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+                            </tr>
+                            <!-- /patTemplate:sub -->
+                            <!-- patTemplate:sub condition="NO" -->
+                            <!-- patTemplate:tmpl name="item" -->
+                            <tr class="{ROW_CLASS}">
+                                <td style="text-align: center;">{NO}</td> 
+                                <td>{NAME}</td>
+                                <td style="text-align: center;">{ACTIVE}</td>
+                                <td>{PARENT}</td>
+                                <td style="text-align: center;">{IS_ALL}</td>
+                                <td style="text-align: center;">{IS_ADMIN}</td>
+                            </tr>
+                            <!-- /patTemplate:tmpl -->
+                            <!-- /patTemplate:sub -->
+                            <!-- /patTemplate:tmpl -->
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#tabs-emp-detail").tabs();
+</script>
+<!-- /patTemplate:tmpl -->

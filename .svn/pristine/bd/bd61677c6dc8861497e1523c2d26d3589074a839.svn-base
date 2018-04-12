@@ -1,0 +1,578 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+   
+class ViewInputPersonalData extends HtmlResponse
+{
+    function TemplateModule()
+    {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+        $this->SetTemplateFile('view_input_personaldata.html');
+    }
+
+    function ProcessRequest()
+    {   
+        $ObjPersonalData = GtfwDispt()->load->business('PersonalData', 'applicant.personal.data');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+
+        $id = $_GET['id']->Integer()->Raw();
+        // $elmId = $_GET['elmId']->SqlString()->Raw(); >> NGGAK KEPAKE ?
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0])?$msg[0][0]:NULL;
+        $message['content'] = isset($msg[0][1])?$msg[0][1]:NULL;
+        $message['style'] = isset($msg[0][2])?$msg[0][2]:NULL;
+
+        $nav[0]['url'] = GtfwDispt()->GetUrl('applicant.personal.data', 'DetailPersonalData', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'Personal Data';
+        $title = empty($id)?GtfwLangText('add'):GtfwLangText('Edit');
+        Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+
+        $inputBiodata = $ObjPersonalData->getDetailPersonalData($this->user);
+
+        $inputWali = $ObjPersonalData->getDetailWali($this->user);
+        $idWali = $_GET['idWali']->Integer()->Raw();
+        if (!empty($idWali)) {
+            $inputWaliShow = $ObjPersonalData->getDetailWali($this->user, $idWali)[0];
+        } else {
+            $inputWaliShow = null;
+        }
+
+        $inputSaudara = $ObjPersonalData->getDetailSaudara($this->user);
+
+        $inputAktifitas = $ObjPersonalData->getAktivitasOrganisasi($this->user);
+        $idAktifitas = $_GET['idAktifitas']->Integer()->Raw();
+        if (!empty($idAktifitas)) {
+            $inputAktifitasShow = $ObjPersonalData->getAktivitasOrganisasi($this->user, $idAktifitas)[0];
+        } else {
+            $inputAktifitasShow = null;
+        }
+
+        $inputPrestasi = $ObjPersonalData->getPrestasiNonAkademik($this->user);
+        $idPrestasi = $_GET['idPrestasi']->Integer()->Raw();
+        if (!empty($idPrestasi)) {
+            $inputPrestasiShow = $ObjPersonalData->getPrestasiNonAkademik($this->user, $idPrestasi)[0];
+        } else {
+            $inputPrestasiShow = null;
+        }
+
+        $inputAkademik = $ObjPersonalData->getAkademik($this->user);
+        $idAkademik = $_GET['idAkademik']->Integer()->Raw();
+        if (!empty($idAkademik)) {
+            $inputAkademikShow = $ObjPersonalData->getAkademik($this->user, $idAkademik)[0];
+        } else {
+            $inputAkademikShow = null;
+        }
+        $inputBeasiswa = $ObjPersonalData->getBeasiswa($this->user);
+        $inputAplikanId = $ObjPersonalData->getAplikanId($this->user);
+        $user = $this->user;
+        
+        /*=== Pengembalian Input Jika Validasi Gagal ===*/
+        if (!empty($post)) {
+            $input = $post;
+            //var_dump($input);
+            if(!empty($post['submitted'])){
+                $prefix_list = array('biodata', 'wali', 'saudara', 'akademik', 'aktifitas', 'prestasi', 'beasiswa');
+                if(in_array($post['submitted'], $prefix_list)) {
+                    if($post['submitted'] == 'biodata'){
+                        $prefix = '';
+                        $inputName = 'input'.ucfirst($post['submitted']);
+                    } else {
+                        $prefix = '';
+                        $inputName = 'input'.ucfirst($post['submitted']).'Show';
+                        //$prefix = $post['submitted'].'_';
+                    }
+                    if(!isset($$inputName)) $$inputName = array();
+                    foreach ($input as $key => $value) {
+                        if(strpos($key, $prefix) === 0) {
+                            $name = substr($key, strlen($prefix));
+                            ${$inputName}[$name] = $value;
+                        } elseif($prefix == '') {
+                            $name = $key;
+                            ${$inputName}[$name] = $value;
+                        }
+                    }
+                   // var_dump($inputName, $$inputName);
+                }
+                
+            }
+        } 
+
+
+        /*===BIODATA COMBO===*/
+        Messenger::Instance()->SendToComponent('ref.university', 'ComboRefUniversity', 'view', 'html', 'univ_id', array(
+            'dataId' => (!empty($inputBiodata['univ_id']) ? $inputBiodata['univ_id'] : null),
+            'elmId' => 'univ_id',
+            'first' => 'select',
+            'name' => 'univ_id',
+            'style' => '',
+            'script' => 'onChange="updateInputFakultas();"'), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.faculty', 'ComboRefFaculty', 'view', 'html', 'fakultas_id', array(
+            'dataId' => (!empty($inputBiodata['fakultas_id']) ? $inputBiodata['fakultas_id'] : null),
+            'elmId' => 'fakultas_id',
+            'first' => 'select',
+            'univ_id' => (!empty($inputBiodata['univ_id']) ? $inputBiodata['univ_id'] : null),
+            'name' => 'fakultas_id',
+            'style' => '',
+            'script' => 'onChange="updateInputJurusan();"'), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.department', 'ComboRefDepartment', 'view', 'html', 'jurusan_id', array(
+            'dataId' => (!empty($inputBiodata['jurusan_id']) ? $inputBiodata['jurusan_id'] : null),
+            'elmId' => 'jurusan_id',
+            'first' => 'select',
+            'fakultas_id' => (!empty($inputBiodata['fakultas_id']) ? $inputBiodata['fakultas_id'] : null),
+            'name' => 'jurusan_id',
+            'style' => '',
+            'script' => 'onChange="updateInputProdi();"'), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.study.program', 'ComboStudyProgram', 'view', 'html', 'prodi_id', array(
+            'dataId' => (!empty($inputBiodata['prodi_id']) ? $inputBiodata['prodi_id'] : null),
+            'elmId' => 'prodi_id',
+            'first' => 'select',
+            'jurusan_id' => (!empty($inputBiodata['jurusan_id']) ? $inputBiodata['jurusan_id'] : null),
+            'name' => 'prodi_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.education', 'ComboRefEducation', 'view', 'html', 'jenjangpendidikan_id', array(
+            'dataId' => (!empty($inputBiodata['jenjangpendidikan_id']) ? $inputBiodata['jenjangpendidikan_id'] : null),
+            'elmId' => 'jenjangpendidikan_id',
+            'first' => 'select',
+            'name' => 'jenjangpendidikan_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('referensi.agama', 'ComboReferensiAgama', 'view', 'html', 'agama_id', array(
+            'dataId' => (!empty($inputBiodata['agama_id']) ? $inputBiodata['agama_id'] : null),
+            'elmId' => 'agama_id',
+            'first' => 'select',
+            'name' => 'agama_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.tempat.tinggal', 'ComboTempatTinggal', 'view', 'html', 'tempattinggal_id', array(
+            'dataId' => (!empty($inputBiodata['tempattinggal_id']) ? $inputBiodata['tempattinggal_id'] : null),
+            'elmId' => 'tempattinggal_id',
+            'first' => 'select',
+            'name' => 'tempattinggal_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.fanancing.study', 'ComboFanancingStudy', 'view', 'html', 'pembiayaankuliah_id', array(
+            'dataId' => (!empty($inputBiodata['pembiayaankuliah_id']) ? $inputBiodata['pembiayaankuliah_id'] : null),
+            'elmId' => 'pembiayaankuliah_id',
+            'first' => 'select',
+            'name' => 'pembiayaankuliah_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.resources.scholarships', 'ComboResourcesScholarships', 'view', 'html', 'sumber_info_id', array(
+            'dataId' => (!empty($inputBiodata['sumber_info_id']) ? $inputBiodata['sumber_info_id'] : null),
+            'elmId' => 'sumber_info_id',
+            'first' => 'select',
+            'name' => 'sumber_info_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        /*===ORANG TUA/WALI COMBO===*/
+        Messenger::Instance()->SendToComponent('ref.wali', 'ComboRefWali', 'view', 'html', 'aplikanwali_wali_id', array(
+            'dataId' => (!empty($inputWaliShow['aplikanwali_wali_id']) ? $inputWaliShow['aplikanwali_wali_id'] : null),
+            'elmId' => 'aplikanwali_wali_id',
+            'first' => 'select',
+            'name' => 'aplikanwali_wali_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+         Messenger::Instance()->SendToComponent('ref.education', 'ComboRefEducation', 'view', 'html', 'ortu_pendidikan_id', array(
+            'dataId' => (!empty($inputWaliShow['ortu_pendidikan_id']) ? $inputWaliShow['ortu_pendidikan_id'] : null),
+            'elmId' => 'ortu_pendidikan_id',
+            'first' => 'select',
+            'name' => 'ortu_pendidikan_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+         Messenger::Instance()->SendToComponent('ref.employee', 'ComboRefEmployee', 'view', 'html', 'ortu_pekerjaan_id', array(
+            'dataId' => (!empty($inputWaliShow['ortu_pekerjaan_id']) ? $inputWaliShow['ortu_pekerjaan_id'] : null),
+            'elmId' => 'ortu_pekerjaan_id',
+            'first' => 'select',
+            'name' => 'ortu_pekerjaan_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        /*===AKTIFITAS ORGANISASI COMBO===*/
+        Messenger::Instance()->SendToComponent('ref.jenis.aktifitas', 'ComboJenisAktifitas', 'view', 'html', 'org_jenisaktifitas_id', array(
+           'dataId' => (!empty($inputAktifitasShow['org_jenisaktifitas_id']) ? $inputAktifitasShow['org_jenisaktifitas_id'] : null),
+           'elmId' => 'org_jenisaktifitas_id',
+           'name' => 'org_jenisaktifitas_id',
+           'first' => 'select',
+           'showAdd' => false), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.lingkup.prestasi', 'ComboLingkupPrestasi', 'view', 'html', 'org_lingkup_id', array(
+           'dataId' => (!empty($inputAktifitasShow['org_lingkup_id']) ? $inputAktifitasShow['org_lingkup_id'] : null),
+           'elmId' => 'org_lingkup_id',
+           'name' => 'org_lingkup_id',
+           'first' => 'select',
+           'showAdd' => false), Messenger::CurrentRequest);
+
+        Messenger::Instance()->SendToComponent('ref.jabatan.organisasi', 'comboJabatanOrganisasi', 'view', 'html', 'org_jabatan_id', array(
+            'dataId' => (!empty($inputAktifitasShow['org_jabatan_id']) ? $inputAktifitasShow['org_jabatan_id'] : null),
+            'elmId' => 'org_jabatan_id',
+            'first' => 'select',
+            'name' => 'org_jabatan_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+
+        /*===PRESTASI NON AKADEMIK COMBO===*/
+        Messenger::Instance()->SendToComponent('ref.lingkup.prestasi', 'ComboLingkupPrestasi', 'view', 'html', 'prestasi_lingkup_id', array(
+            'dataId' => (!empty($inputPrestasiShow['prestasi_lingkup_id']) ? $inputPrestasiShow['prestasi_lingkup_id'] : null),
+            'elmId' => 'prestasi_lingkup_id',
+            'name' => 'prestasi_lingkup_id',
+            'first' => 'select',
+            'showAdd' => false), Messenger::CurrentRequest);
+
+        /* Upload File Messenger */
+        // $config_aktifitas = array(
+        //     "form" => "#form_input_aktifitas", //id form atau class form
+        //     "wlext" => "jpg,gif,PNG,png,jpeg,pdf", //white list ext untuk diupload. optional, default : jpg,png,jpeg,gif,pdf
+        //     "maxsize" => 2097152, //max ukuran yang diperbolehkan. dalam byte. optional, default : mengambil dari ukuran di php.ini. jika maxsize melebihi nilai di php.ini maka nilai ini yang dipakai
+        //     "multi" => false,
+        //     "preview" => true
+        // );
+        // Messenger::Instance()->SendToComponent('comp.upload', 'upload', 'do', 'html', 'a1', $config_aktifitas, Messenger::CurrentRequest);  
+
+        $config_ipk = array(
+            "form" => "#form_input_ipk", //id form atau class form
+            "wlext" => "pdf,doc,docx,PDF,DOC,DOCX", //white list ext untuk diupload. optional, default : jpg,png,jpeg,gif,pdf
+            "maxsize" => 12097152, //max ukuran yang diperbolehkan. dalam byte. optional, default : mengambil dari ukuran di php.ini. jika maxsize melebihi nilai di php.ini maka nilai ini yang dipakai
+            "multi" => false,
+            "preview" => true
+        );
+        Messenger::Instance()->SendToComponent('comp.upload', 'upload', 'do', 'html', '', $config_ipk, Messenger::CurrentRequest);  
+
+        $config_lampiran = array(
+            "form" => "#form_lampiran", //id form atau class form
+            "wlext" => "jpg,gif,PNG,png,jpeg,pdf", //white list ext untuk diupload. optional, default : jpg,png,jpeg,gif,pdf
+            "maxsize" => 2097152, //max ukuran yang diperbolehkan. dalam byte. optional, default : mengambil dari ukuran di php.ini. jika maxsize melebihi nilai di php.ini maka nilai ini yang dipakai
+            "multi" => false,
+            "preview" => true
+        );
+        Messenger::Instance()->SendToComponent('comp.upload', 'upload', 'do', 'html', '', $config_lampiran, Messenger::CurrentRequest);  
+
+        /*===BEASISWA COMBO===*/
+        Messenger::Instance()->SendToComponent('ref.employee', 'comboBeasiswa', 'view', 'html', 'beasiswa_sumberbeasiswa_id', array(
+            'dataId' => (!empty($inputBeasiswa['beasiswa_sumberbeasiswa_id']) ? $inputBeasiswa['beasiswa_sumberbeasiswa_id'] : null),
+            'elmId' => 'beasiswa_sumberbeasiswa_id',
+            'first' => 'select',
+            'name' => 'beasiswa_sumberbeasiswa_id',
+            'style' => '',
+            'script' => ''), Messenger::CurrentRequest);
+        
+        return compact('inputBiodata', 'inputWali', 'inputWaliShow', 'inputSaudara', 'inputAktifitas', 'inputAktifitasShow', 'inputPrestasi', 'inputPrestasiShow', 'inputAkademik', 'inputAkademikShow', 'inputBeasiswa', 'inputAplikanId', 'user', 'id', 'message', 'elmId');
+    }
+
+    function ParseTemplate($rdata = NULL)
+    {
+        extract($rdata);
+
+        $tabActive = $_GET['tabActive']->mrVariable;
+        $this->mrTemplate->addVar('content', 'TAB_ACTIVE', $tabActive);
+
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+        
+        /*===INPUT BIODATA===*/
+        if (!empty($inputBiodata)) {
+            $inputBiodata['tanggal_lahir'] = $this->date2stirng($inputBiodata['tanggal_lahir']);
+            $inputBiodata['tanggal_registrasi'] = $this->date2stirng($inputBiodata['tanggal_registrasi']);
+            $this->mrTemplate->addVars('detail', $inputBiodata);
+            
+            $periode = $this->periodeTahun(2014 , date('Y'));
+            foreach ($periode as $key => $val) {
+                if (!empty($inputBiodata['angkatan']) AND $val['id'] == $inputBiodata['angkatan']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('angkatan', $val);
+                $this->mrTemplate->parseTemplate('angkatan', 'a');
+            }
+
+            $gender    = $inputBiodata['jenis_kelamin'];
+
+            $this->mrTemplate->AddVar('detail', 'APL_GENDER_LAKI', $gender == 'L' ? 'checked' : '');
+            $this->mrTemplate->AddVar('detail', 'APL_GENDER_PEREMPUAN', $gender == 'P' ? 'checked' : '');
+
+        }
+        $this->mrTemplate->addVar('detail', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($detail['id'])?'add':'update').'PersonalData', 'do', 'json') . '&elmId=' . $elmId);
+
+        /*===INPUT ORANG TUA/WALI===*/
+        if (!empty($inputWali)) {
+            if (!empty($inputWaliShow)) {
+                $this->mrTemplate->addVars('orangtua', $inputWaliShow);
+                $this->mrTemplate->addVar('orangtua', 'TITLE', 'Edit Orangtua/Wali');
+
+                $status    = $inputWaliShow['ortu_status'];
+                $this->mrTemplate->AddVar('orangtua', 'STATUS_MENINGGAL', $status == 'Y' ? 'checked' : '');
+                $this->mrTemplate->AddVar('orangtua', 'STATUS_HIDUP', $status == 'N' ? 'checked' : '');
+            } else {
+                $this->mrTemplate->addVar('orangtua', 'TITLE', 'Tambah Orangtua/Wali');
+            }
+            $jumwali = count($inputWali);
+            for ($i=0; $i < $jumwali ; $i++) { 
+                if ($inputWali[$i]['ortu_status'] == 'N') {
+                    $inputWali[$i]['ortu_status'] = 'Hidup';
+                } else {
+                    $inputWali[$i]['ortu_status'] = 'Meninggal';
+                }
+                $this->mrTemplate->addVar('dataorangtuawali', 'URL_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$inputBiodata['id'].'&idWali='.$inputWali[$i]['ortu_id'].'&tabActive=ortu');
+                $this->mrTemplate->addVars('dataorangtuawali', $inputWali[$i]);
+                $this->mrTemplate->parseTemplate('dataorangtuawali', 'a');
+            }
+        }
+        $this->mrTemplate->addVar('orangtua', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputWaliShow['ortu_id'])?'add':'update').'Ortu', 'do', 'json') . '&elmId=' . $elmId);
+
+        /*===INPUT SAUDARA===*/
+        if (!empty($inputSaudara)) {
+            $this->mrTemplate->addVars('saudara', $inputSaudara);
+        }
+        $this->mrTemplate->addVar('saudara', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputSaudara['saudara_id'])?'add':'update').'Saudara', 'do', 'json') . '&elmId=' . $elmId);
+
+        /*===INPUT AKTIFITAS ORGANISASI===*/
+        if (!empty($inputAktifitas)) {
+            if (!empty($inputAktifitasShow)) {
+                $this->mrTemplate->addVars('aktifitas', $inputAktifitasShow);
+                $this->mrTemplate->addVar('aktifitas', 'TITLE', 'Edit Aktifitas Organisasi');
+            } else {
+                $this->mrTemplate->addVar('aktifitas', 'TITLE', 'Tambah Aktifitas Organisasi');
+            }
+            $periode = $this->periodeTahun(2000 , date('Y'));
+            foreach ($periode as $key => $val) {
+                if (!empty($inputAktifitasShow['org_periode']) AND $val['id'] == $inputAktifitasShow['org_periode']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('org_periode', $val);
+                $this->mrTemplate->parseTemplate('org_periode', 'a');
+            }
+            $jumAktifitas = count($inputAktifitas);
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_aktifitas');
+            for ($i=0; $i < $jumAktifitas ; $i++) { 
+                $this->mrTemplate->addVar('dataaktifitas', 'URL_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$inputBiodata['id'].'&idAktifitas='.$inputAktifitas[$i]['org_id'].'&tabActive=aktifitas');
+                $this->mrTemplate->addVar('dataaktifitas', 'FILE_ORGANISASI', GtfwDispt()->GetUrl('applicant.personal.data', 'Lampiran', 'view', 'html').'&id='.$inputBiodata['id'].'&file='.$file_path.$inputAktifitas[$i]['file'].'&download='.$inputAktifitas[$i]['file_origin']);
+                $this->mrTemplate->addVars('dataaktifitas', $inputAktifitas[$i]);
+                $this->mrTemplate->parseTemplate('dataaktifitas', 'a');
+            }
+        }else {
+            $periode = $this->periodeTahun(2000 , date('Y'));
+            foreach ($periode as $key => $val) {
+                if (!empty($inputAktifitasShow['org_periode']) AND $val['id'] == $inputAktifitasShow['org_periode']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('org_periode', $val);
+                $this->mrTemplate->parseTemplate('org_periode', 'a');
+            }   
+            $jumAktifitas = count($inputAktifitas);
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_aktifitas');
+            for ($i=0; $i < $jumAktifitas ; $i++) { 
+                $this->mrTemplate->addVar('dataaktifitas', 'URL_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$inputBiodata['id'].'&idAktifitas='.$inputAktifitas[$i]['org_id'].'&tabActive=aktifitas');
+                $this->mrTemplate->addVar('dataaktifitas', 'FILE_ORGANISASI', GtfwDispt()->GetUrl('applicant.personal.data', 'Lampiran', 'view', 'html').'&id='.$inputBiodata['id'].'&file='.$file_path.$inputAktifitas[$i]['file'].'&download='.$inputAktifitas[$i]['file_origin']);
+                $this->mrTemplate->addVars('dataaktifitas', $inputAktifitas[$i]);
+                $this->mrTemplate->parseTemplate('dataaktifitas', 'a');
+            }
+        }
+
+        $this->mrTemplate->addVar('aktifitas', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputAktifitasShow['org_id'])?'add':'update').'Aktifitas', 'do', 'json') . '&elmId=' . $elmId);
+
+        /*===INPUT PRESTASI NON AKADEMIK===*/
+        if (!empty($inputPrestasi)) {
+            if (!empty($inputPrestasiShow)) {
+                $this->mrTemplate->addVars('nonakademik', $inputPrestasiShow);
+                $this->mrTemplate->addVar('nonakademik', 'TITLE', 'Edit Prestasi Non Akademik');
+            } else {
+                $this->mrTemplate->addVar('nonakademik', 'TITLE', 'Tambah Prestasi Non Akademik');
+            }
+
+            $periode = $this->periodeTahun(2012 , date('Y'));
+            foreach ($periode as $key => $val) {
+                if (!empty($inputPrestasiShow['prestasi_periode']) AND $val['id'] == $inputPrestasiShow['prestasi_periode']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('prestasi_periode', $val);
+                $this->mrTemplate->parseTemplate('prestasi_periode', 'a');
+            }
+
+            $jumInputPrestasi = count($inputPrestasi);
+            for ($i=0; $i < $jumInputPrestasi ; $i++) { 
+                $this->mrTemplate->addVar('dataprestasinonakademik', 'URL_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$inputBiodata['id'].'&idPrestasi='.$inputPrestasi[$i]['prestasi_id'].'&tabActive=prestasi');
+                $this->mrTemplate->addVars('dataprestasinonakademik', $inputPrestasi[$i]);
+                $this->mrTemplate->parseTemplate('dataprestasinonakademik', 'a');
+            }
+        }
+        $this->mrTemplate->addVar('nonakademik', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputPrestasiShow['prestasi_id'])?'add':'update').'Prestasi', 'do', 'json') . '&elmId=' . $elmId);
+
+        /*===INPUT DATA AKADEMIK - IPS DAN IPK===*/
+        if (!empty($inputAkademik)) {
+            if (!empty($inputAkademikShow)) {
+                $this->mrTemplate->addVars('ipk', $inputAkademikShow);
+                $this->mrTemplate->addVar('ipk', 'TITLE', 'Edit Histori Akademik');
+
+                $cuti    = $inputAkademikShow['akademik_is_cuti'];
+                $this->mrTemplate->AddVar('ipk', 'CUTI_YA', $cuti == 'Y' ? 'checked' : '');
+                $this->mrTemplate->AddVar('ipk', 'CUTI_NO', $cuti == 'N' ? 'checked' : '');
+            } else {
+                $this->mrTemplate->addVar('ipk', 'TITLE', 'Tambah Histori Akademik');
+            }
+
+            $smt = array(
+                array('id'=>'GANJIL','semester'=>'GANJIL'),
+                array('id'=>'GENAP','semester'=>'GENAP')
+            );
+
+            foreach ($smt as $key => $val) {
+                if (!empty($inputAkademikShow['akademik_semester_nama']) AND $val['id'] == $inputAkademikShow['akademik_semester_nama']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('akademik_semester', $val);
+                $this->mrTemplate->parseTemplate('akademik_semester', 'a');
+            }
+
+            $periode = $this->periodeTahun(2012 , date('Y'));
+            foreach ($periode as $key => $val) {
+                if (!empty($inputAkademikShow['akademik_periode']) AND $val['id'] == $inputAkademikShow['akademik_periode']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('akademik_periode', $val);
+                $this->mrTemplate->parseTemplate('akademik_periode', 'a');
+            }
+
+            $jumAkademik = count($inputAkademik);
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_akademik');
+            for ($i=0; $i < $jumAkademik ; $i++) { 
+                if ($inputAkademik[$i]['akademik_is_cuti'] == 'Y') {
+                    $inputAkademik[$i]['akademik_is_cuti'] = 'Ya';
+                } elseif ($inputAkademik[$i]['akademik_is_cuti'] == 'N') {
+                    $inputAkademik[$i]['akademik_is_cuti'] = 'Tidak';
+                }
+                
+                $this->mrTemplate->addVar('dataakademik', 'URL_UPDATE', GtfwDispt()->GetUrl('applicant.personal.data', 'updatePersonalData', 'view', 'html').'&id='.$inputBiodata['id'].'&idAkademik='.$inputAkademik[$i]['akademik_id']);
+                $this->mrTemplate->addVar('dataakademik', 'FILE_AKADEMIK', GtfwDispt()->GetUrl('applicant.personal.data', 'Lampiran', 'view', 'html').'&id='.$inputBiodata['id'].'&file='.$file_path.$inputAkademik[$i]['file'].'&download='.$inputAkademik[$i]['file_origin']);
+                $this->mrTemplate->addVars('dataakademik', $inputAkademik[$i]);
+                $this->mrTemplate->parseTemplate('dataakademik', 'a');
+            }
+        }else{
+            $smt = array(
+                array('id'=>'GANJIL','semester'=>'GANJIL'),
+                array('id'=>'GENAP','semester'=>'GENAP')
+            );
+
+            foreach ($smt as $key => $val) {
+                if (!empty($inputAkademikShow['akademik_semester_nama']) AND $val['id'] == $inputAkademikShow['akademik_semester_nama']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('akademik_semester', $val);
+                $this->mrTemplate->parseTemplate('akademik_semester', 'a');
+            }
+
+            $periode = $this->periodeTahun(2012 , date('Y'));
+            foreach ($periode as $key => $val) {
+                if (!empty($inputAkademikShow['akademik_periode']) AND $val['id'] == $inputAkademikShow['akademik_periode']) {
+                    $val['selected'] = 'selected=""';
+                } else {
+                    $val['selected'] = '';
+                }
+                $this->mrTemplate->addVars('akademik_periode', $val);
+                $this->mrTemplate->parseTemplate('akademik_periode', 'a');
+            }
+        }
+        $this->mrTemplate->addVar('ipk', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputAkademikShow['aplikanbeasiswa_id'])?'add':'update').'Akademik', 'do', 'json'));
+
+        /*===INPUT DATA BEASISWA===*/
+        if (!empty($inputAplikanId)) {
+            $this->mrTemplate->addVar('beasiswa','APLIKAN_ID', $inputAplikanId);
+        }
+            $this->mrTemplate->addVar('beasiswa', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputAplikanId['aplikan_id'])?'add':'update').'Beasiswa', 'do', 'json'));
+        
+
+        /*
+        *  LAMPIRAN UPLOAD FILE
+        */
+        if ((!empty($inputlampiran['lampiran1'])) && is_readable(Configuration::Instance()->GetValue('application', 'aplikan_lampiran') . $inputlampiran['photo'])) {
+            $path = Configuration::Instance()->GetValue('application', 'aplikan_lampiran') . $inputlampiran['photo'];
+            if (($inputlampiran['file_type'] == 'jpg') || ($inputlampiran['file_type'] == 'jpeg') || ($inputlampiran['file_type'] == 'PNG') || ($inputlampiran['file_type'] == 'png') || ($inputlampiran['file_type'] == 'pdf')) {
+               
+                $inputlampiran['lampiran_file']  = "<b><a href=" . $path . " target=_blank> " . $inputlampiran['photo'] . "</a></b>";
+                $inputlampiran['lampiran_f']     = "<img src=" . $path . " width=200px alt='" . $inputlampiran['photo_origin'] . "' title='" . $inputlampiran['photo_origin'] . "'>";                    
+            } else {
+                $inputlampiran['lampiran_file'] = "<b><a href=" . $path . " target=_blank> " . $inputlampiran['photo_origin'] . "</a></b>";
+                $inputlampiran['lampiran_f'] = '';
+            }
+            $this->mrTemplate->SetAttribute('lampiran1', 'visibility', 'visible');
+            $this->mrTemplate->addVar('lampiran1', 'LAMPIRAN_FILE', $inputlampiran['lampiran1']);
+            $this->mrTemplate->addVar('lampiran1', 'LAMPIRAN_F', $inputlampiran['lampiran1']);
+            /*$this->mrTemplate->addVar('current_photo', 'IMAGE_ID', $inputlampiran['photo_id']);*/
+        } else {
+            $inputlampiran['note'] = GtfwLangText('there_is_no_current_file');
+        }
+
+        $this->mrTemplate->addVar('lam_tdk_mpu', 'FILE', $input['lampiran1']);
+        $this->mrTemplate->addVar('lam_tdk_mpu', 'FILE_ORI', $input['lampiran1_origin']);
+        $this->mrTemplate->addVar('lam_tdk_mpu', 'FILE_PATH', $input['lampiran1_path']);
+        $this->mrTemplate->addVar('lam_tdk_mpu', 'FILE_TYPE', $input['lampiran1_type']);
+        $this->mrTemplate->addVar('lam_tdk_mpu', 'FILE_SIZE', $input['lampiran1_size']);
+
+
+        $this->mrTemplate->addVar('lampiran', 'URL', GtfwDispt()->GetUrl('applicant.personal.data', (empty($inputAkademikShow['akademik_id'])?'add':'update').'Lampiran', 'do', 'json'));
+
+        
+        $this->mrTemplate->addVar('button_add', 'URL', GtfwDispt()->GetUrl('ref.lingkup.prestasi', 'addLingkupPrestasi', 'view', 'html'));
+        $this->mrTemplate->addVar('content', 'URL_BACK', GtfwDispt()->GetUrl('applicant.personal.data', 'PersonalData', 'view', 'html').'&display');
+    }
+
+    function date2stirng($date){
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrd = explode('-', $date);
+        $dateString = $arrd[2].' '.$bln[(int)$arrd[1]].' '.$arrd[0];
+
+        return $dateString;
+    }
+
+    function periodeTahun($start, $end) {
+        $startYear= $start;
+        $endYear = $end;
+        $periode= array();
+        $i = 0;
+        for ($startYear; $startYear <= $endYear; $startYear++) {
+            $periode[$i]['id']     = $startYear;
+            $periode[$i]['year']   = $startYear;
+            $i++;
+        }
+        return $periode;
+    }
+}
+?>

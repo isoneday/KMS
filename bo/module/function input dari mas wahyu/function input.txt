@@ -1,0 +1,179 @@
+function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        $Val->set_rules('location_asset', GtfwLangText('location_asset'), 'required');
+        $Val->set_rules('category_activa', GtfwLangText('category_activa'), 'required');
+        $Val->set_rules('code_account', GtfwLangText('code_account'), 'required');
+        $Val->set_rules('target_hyperion', GtfwLangText('target_hyperion'), 'required');
+        $Val->set_rules('project_code', GtfwLangText('project_code'), 'required');
+        $Val->set_rules('lob', GtfwLangText('lob'), 'required');
+        
+        $result = $Val->run();
+		// var_dump($result);die;
+        if ($result) {
+			$target_hyperion = $post['category_activa'];
+			$payment_cpx     = $post['payment'];
+			$purchase_cpx    = $post['purchase'];
+			
+			$project_id_val     = $this->ObjCapexPlanning->getProjectName($post['description_project']);
+			$transactionCapexId = $this->ObjCapexPlanning->gettransactionCapexId($post['lob']); 
+			
+			$creator = $_SESSION['userId'];
+			$locked = $this->isLocked($transactionCapexId['transactioncapexId'], $_SESSION['userId'], $creator);
+			
+			// var_dump($locked);
+			// die;
+			if(!$locked){
+				$this->ObjCapexPlanning->StartTrans();
+			
+				//header information capex 
+				$params = array(
+					$transactionCapexId,
+					$post['finance_by'],
+					$post['location_asset'],
+					$post['category_activa'],
+					$post['code_account'],
+					$post['target_hyperion'],
+					$post['project_code'],
+					$post['hyperion_code'],
+					$project_id_val['name'],
+					$post['description_item'],
+					$post['number'],
+					$post['fui_number'],					
+					$post['user_id'],
+					0,
+					$this->activeYear
+				);
+			
+							
+				$result    = $this->ObjCapexPlanning->insertCapexPlanning($params);
+				$capex_id  = $this->ObjCapexPlanning->getLastAddCapex();
+				
+				//detail capex item
+				$IsBudget = 0;
+				$IsYtd    = 0;
+				$payment_act_val = $purchase_act_val = 0;
+				for($i=0;$i<count($payment_cpx);$i++){		
+					if($this->activeYear == $post['year_capex'][$i]){
+						$IsBudget = 1;
+						$IsYtd    = 0;
+					} else {
+						$IsBudget = 0;
+						$IsYtd    = 1;
+					}
+							
+					if(!empty($post['payment'][$i]) OR !empty($post['purchase'][$i])){	
+						$post['purchase'][$i] = (float)str_replace(".","", $post['purchase'][$i]);
+						$post['payment'][$i] = (float)str_replace(".","", $post['payment'][$i]);
+						$payment_act_val  += $post['payment'][$i];
+						$purchase_act_val += $post['purchase'][$i];
+						
+						$params_detail = array(
+							$capex_id,
+							$post['year_capex'][$i],
+							$post['month_capex'][$i],
+							$post['qty'][$i],
+							$post['purchase'][$i],
+							$post['payment'][$i],
+							0,
+							$IsYtd,
+							$IsBudget,
+							$post['user_id']
+						);							
+						
+						$result   = $this->ObjCapexPlanning->insertCapexPlanningDetail($params_detail); 						
+					}					
+				}
+				
+				
+				$total_payment    = $payment_act_val;
+				$total_purchase   = $purchase_act_val;
+				//$cek_save         = $post['finish_val'];
+				
+					
+				//if($cek_save != 1){
+					if($total_payment == $total_purchase){
+						$capitalized = $total_payment; 
+					
+						$tahun_penyusutan = $this->ObjCapexPlanning->getTahunPenyusutan($target_hyperion); 
+
+						$dep_val = $capitalized/($tahun_penyusutan*12);
+						
+						$get_last_act    = $this->ObjCapexPlanning->getLastActToCapitelized($capex_id);
+						
+						$IsBudget = 0;
+						if($IsBudget == 0 AND $get_last_act['month'] == 1){
+							$IsBudget = 1;
+						} else {
+							$IsBudget = 0;
+						}
+						
+						//cek company jika sama dengan finance by maka simpan depresiasi dengan lob sendiri jika berbeda ambil lob penampung
+						$companyLob = $this->ObjCapexPlanning->getCompanyLob($post['lob']);
+						$finance    = $post['finance_by'];
+						
+						if($companyLob == $finance){
+							$lobDep = $post['lob'];
+						} else {
+							$lobDepValue = $this->ObjCapexPlanning->getSetupLobDepreciation($companyLob, $finance);
+							$lobDep      = $this->ObjCapexPlanning->getLobIdByCode($lobDepValue);
+						}
+						
+						$depresiasi = array(
+							$capex_id,
+							$get_last_act['month'],
+							$dep_val,
+							$IsBudget,
+							$get_last_act['year'],
+							$lobDep,
+							$dep_val
+						);
+						
+						$result = $this->ObjCapexPlanning->insertDepresiasi($depresiasi);
+						
+						$params_detail = array(
+							$capitalized,
+							$get_last_act['month'],
+							$capex_id,
+							$get_last_act['year']
+						);
+					
+						$result =  $this->ObjCapexPlanning->updateCapitalized($params_detail);
+					} 
+					
+					if($total_payment > $total_purchase){
+						Messenger::Instance()->Send('capex.planning', 'inputCapexPlanning', 'view', 'html', array($post, 'Payment Not Equal To Purchase', $this->cssFail), Messenger::NextRequest);
+						return false;
+					}
+				//} 
+				
+					
+				$this->ObjCapexPlanning->EndTrans($result);
+			
+				if ($result) {
+					$msg = GtfwLangText('msg_add_success');
+					$css = $this->cssDone;					
+				} else {
+					$msg = GtfwLangText('msg_add_fail');
+					$css = $this->cssFail;
+				}
+			}else{
+				$result = false;
+				$msg = GtfwLangText('msg_add_fail') . ', this transactions have been locked';
+				$css = $this->cssFail;
+			}
+		}
+		else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('capex.planning', 'CapexPlanning', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        } else {
+            Messenger::Instance()->Send('capex.planning', 'inputCapexPlanning', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+        }
+        return $result;  
+			
+    }

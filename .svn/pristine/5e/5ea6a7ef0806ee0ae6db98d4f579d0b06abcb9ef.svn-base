@@ -1,0 +1,126 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="aplikannim" / --></th>
+        <td><input type="text" name="AplikanNim" value="{APLIKANNIM}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="aplikanangkatan" / --></th>
+        <td><input type="text" name="AplikanAngkatan" value="{APLIKANANGKATAN}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+            <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+        <!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+           <!-- <a class="xhr dest_subcontent-element btn-add" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="applicantdata" / -->"></a>-->
+        <!-- /patTemplate:tmpl -->
+    </div>
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+<table class="table-common">
+<thead>
+    <tr>
+        <th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+        <th style="width: 105px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+        
+        <th><!-- patTemplate:gtfwgetlang key="AplikanNim" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="AplikanAngkatan" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="AplikanNama" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="AplikanJenisKelamin" / --></th>
+        <th><!-- patTemplate:gtfwgetlang key="AplikanTanggalRegistrasi" / --></th>
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="8" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+        <td style="text-align: center;">{NO}</td>        
+        <td class="links">
+            <a class="xhr dest_subcontent-element btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="applicantdata" / -->"></a>
+            <!-- patTemplate:tmpl name="button_update" visibility="hidden" -->
+           <!-- <a class="xhr dest_subcontent-element btn-edit" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="applicantdata" / -->"></a> -->
+            <!-- /patTemplate:tmpl -->
+            <!-- patTemplate:tmpl name="button_delete" visibility="hidden" -->
+            <a class="confirm_delete btn-delete-icon" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="delete" / -->" data-name="{NAME}" ></a>
+            <!-- /patTemplate:tmpl -->            
+            </ul>
+        </td>
+        
+        <td>{APLIKANNIM}</td>
+        <td>{APLIKANANGKATAN}</td>
+        <td>{APLIKANNAMA}</td>
+        <td>{APLIKANJENISKELAMIN}</td>
+        <td>{APLIKANTANGGALREGISTRASI}</td>
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantdata" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantdata" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupApplicantData;
+    $('.popup_applicantdata').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupApplicantData = showGtPopup(url, title);
+        return false;
+    });
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

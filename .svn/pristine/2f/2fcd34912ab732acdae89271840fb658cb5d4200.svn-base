@@ -1,0 +1,124 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RegistrasiUlang extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/applicant.regist.ulang/business/mysqlt/registrasiulang.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function getAplikanId($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_aplikan_id'], array($id));
+        if ($result) {
+            return $result[0]['aplikan_id'];
+        }
+    }
+	
+	public function insertRegistrasiUlang($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_registrasiulang'], $params);
+		/*$result = $this->Execute($this->mSqlQueries['insert_transkrip'], $params);
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+	
+    public function getDetailRegistrasiUlang($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_registrasiulang'], array($id));
+         if ($result) {
+            return $result[0];
+        } 
+		/*
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+	
+	public function countDetailTranskrip() {
+        $query = $this->mSqlQueries['count_detailtranskrip'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+	
+	public function getDetailTranskrip($id)
+    {
+        $query = $this->mSqlQueries['get_detail_transkrip'];
+        $result = $this->Open(stripslashes($query), array($id));
+        //$result = $this->Open($this->mSqlQueries['get_detail_transkrip'], array($id));
+		    return $result;
+        
+		/*
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+	
+	public function getDetailKrs($id, $num = null)
+    {
+        //$result = $this->Open($this->mSqlQueries['get_detail_krs'], array($id));
+        //    return $result;
+        
+		$str = '';
+        if (!empty($num)) {
+            $str .= "AND a.aplikannilai_aplikanid = $num";
+        }
+        $query = $this->mSqlQueries['get_detail_krs'];
+        $query = str_replace('--where--', $str, $query);
+        $result = $this->Open(stripslashes($query), array($id));
+        return $result;
+		
+    }
+
+	public function insertTranskrip($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_transkrip'], $params);
+		/*$result = $this->Execute($this->mSqlQueries['insert_transkrip'], $params);
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+	public function deleteTranskrip($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_aplikannilai'], array($id));
+		
+    }
+	
+	public function insertKrs($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_krs'], $params);
+		/*$result = $this->Execute($this->mSqlQueries['insert_krs'], $params);
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+	
+	public function deleteKrs($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_aplikannilai'], array($id));
+    }
+    
+    public function updateRegistrasiUlang($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_registrasiulang'], $params);
+    }
+    
+    public function deleteRegistrasiUlang($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_personaldata'], array($id));
+    }
+
+    public function listRegistrasiUlang()
+    {
+        return $this->Open($this->mSqlQueries['list_personaldata'], array());
+    }
+}
+
+// End of file RegistrasiUlang.class.php

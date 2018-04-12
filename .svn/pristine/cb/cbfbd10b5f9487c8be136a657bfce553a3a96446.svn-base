@@ -1,0 +1,123 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+	<tr>
+		<th style="width:20%;"><!-- patTemplate:gtfwgetlang key="nim" / --></th>
+		<td><input type="text" name="aplikan_nim" value="{APLIKAN_NIM}" /></td>
+	</tr>
+	<tr>
+		<th style="width:20%;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+		<td><input type="text" name="aplikan_nama" value="{APLIKAN_NAMA}" /></td>        
+	</tr>
+	<tr>
+		<th style="width:20%;">&nbsp;</th>
+		<td>
+			<button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+		</td>
+	</tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+	<div class="toolbar">
+		<!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+	</div>
+</div>
+<table class="table-common">
+	<thead>
+		<tr>
+			<th style="width: 40px;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+			<th style="width: 50px;"><!-- patTemplate:gtfwgetlang key="action" / --></th>
+
+			<th><!-- patTemplate:gtfwgetlang key="kmhsPdrNim" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="kmhsPdrNama" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="fakultas" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="prodi" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="jurusan" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="ipk" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="ukt" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="nilai" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="status" / --></th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+		<!-- patTemplate:sub condition="YES" -->
+		<tr>
+			<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+		</tr>
+		<!-- /patTemplate:sub -->
+		<!-- patTemplate:sub condition="NO" -->
+		<!-- patTemplate:tmpl name="item" -->
+		<tr class="{ROW_CLASS}">
+			<td style="text-align: center;">{NO}</td>        
+			<td class="links">
+				<a class="xhr dest_subcontent-element btn-detail" href="{URL_DETAIL}" title="<!-- patTemplate:gtfwgetlang key="detail" / --> <!-- patTemplate:gtfwgetlang key="applicantranking" / -->"></a>
+				<a class="xhr dest_subcontent-element btn-approve-document" href="{URL_APPROVE}" title="<!-- patTemplate:gtfwgetlang key="approve" / --> <!-- patTemplate:gtfwgetlang key="applicantranking" / -->"></a>
+			</td>
+
+			<td>{APLIKAN_NIM}</td>
+			<td>{APLIKAN_NAMA}</td>
+			<td>{FAKULTAS_NAME}</td>
+			<td>{PRODI_NAME}</td>
+			<td>{JURUSAN_NAME}</td>
+			<td>{NILAI_IPK}</td>
+			<td>{UKT_NAME}</td>
+			<td>{NILAI_TOTAL}</td>
+			<td>{STATUSPENDAFTARAN_NAME}</td>
+			<!--td>{STATUS_VERIFIKASI_DOKUMEN}</td-->
+		</tr>
+		<!-- /patTemplate:tmpl -->
+		<!-- /patTemplate:sub -->
+		<!-- /patTemplate:tmpl -->
+	</tbody>
+</table>
+<div class="pageBar">
+	<div class="toolbar">
+		<!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('.confirm_delete').on('click', function(event){
+			var elm = $(this);
+			var href = elm.attr('href')+'&ascomponent=1';
+			var name = elm.data('name');
+			gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantranking" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="applicantranking" / -->',function(status){
+				if (status) {
+					$.post(href, function(data){
+						$.globalEval("result = " + data + ";");
+						if (result['exec']) {
+							$.globalEval(result['exec'] + ";");
+						}
+					  }
+					);
+				} else {
+					return false;
+				}
+			});
+			return false;
+		})
+	});
+
+    var popupApplicantRanking;
+    $('.popup_applicantranking').click(function() {
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+
+        popupApplicantRanking = showGtPopup(url, title);
+        return false;
+    });
+
+</script>
+<!-- /patTemplate:tmpl -->

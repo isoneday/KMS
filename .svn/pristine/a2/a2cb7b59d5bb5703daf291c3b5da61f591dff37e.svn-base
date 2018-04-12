@@ -1,0 +1,125 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form">
+        <input type="hidden" name="id" value="{ID}" />
+        <table class="table-edit">
+            <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="personal_information" / --></th>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="full_name" / --></th>
+                <td>
+                    <input type="text" name="full_name" value="{FULL_NAME}" size="60"/>&nbsp;*
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="nick_name" / --></th>
+                <td>
+                    <input type="text" name="nick_name" value="{NICK_NAME}" class="input_midlarge" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="salutation" / --></th>
+                <td>
+                    <div id="div_salutation_id">
+                        <!-- patTemplate:gtfwrendermodule module="ref.salutation" submodule="comboSalutation" action="view" name="salutation_id"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="parent_number" / --></th>
+                <td>
+                    <input type="text" name="parent_number" value="{PARENT_NUMBER}" class="input_large"  />&nbsp;*            
+                </td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="gender"/ --></th>
+                <td><input type="radio" name="gender" value="m" {GENDER}/> <!-- patTemplate:gtfwgetlang key="male"/ --> 
+                           <input type="radio" name="gender" value="f" {NGENDER}/> <!-- patTemplate:gtfwgetlang key="female"/ --></td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="email" / --></th>
+                <td>
+                    <input type="email" name="email" value="{EMAIL}" class="input_large"  />       
+                </td>
+            </tr>
+            <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="employee_transfer" / --></th>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_type" / --></th>
+                <td colspan="4">
+                    <div id="div_type_id">
+                        <!-- patTemplate:gtfwrendermodule module="emp.ref.employee.type" submodule="comboRefEmpType" action="view" name="emp_type_id" / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="employee_status" / --></th>
+                <td colspan="4">
+                    <div id="div_emp_status_id">
+                        <!-- patTemplate:gtfwrendermodule module="emp.ref.employee.status" submodule="comboRefEmpStatus" action="view" name="emp_status_id" / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="work_unit" / --></th>
+                <td colspan="4">
+                    <div id="div_work_unit_id">
+                        <!-- patTemplate:gtfwrendermodule module="core.unit" submodule="comboUnit" action="view" name="emp_unit_id" / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="structural_position" / --></th>
+                <td colspan="4">
+                    <div id="div_position_id">
+                        <!-- patTemplate:gtfwrendermodule module="ref.structural.position.type" submodule="comboStructPositionType" action="view" name="emp_position_id" / -->
+                        &nbsp;*</div>
+                </td>
+            </tr>
+            <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="employee_photo" / --></th>
+            </tr>
+            <!-- patTemplate:tmpl name="current_photo" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+                <td>{PHOTO_FILE}
+                    <input type="hidden" name="photo_id" value="{PHOTO_ID}"/>
+                    <input type="hidden" name="photo" value="{PHOTO}"/>
+                    <input type="hidden" name="photo_enc" value="{PHOTO}"/>
+                    <input type="hidden" name="photo_origin" value="{PHOTO_ORIGIN}"/>
+                    <input type="hidden" name="photo_path" value="{PHOTO_PATH}"/>
+                    <input type="hidden" name="photo_type" value="{PHOTO_TYPE}"/>
+                    <input type="hidden" name="photo_size" value="{PHOTO_SIZE}"/>
+                </td>
+            </tr>
+            <!-- patTemplate:tmpl name="photo_preview" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+                <td>{PHOTOP}
+                </td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:tmpl -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo" / --></th>
+                <td>
+                    <input type="file" name="photo" data-ext="png,jpg,gif,PNG" title="<!-- patTemplate:gtfwgetlang key="photo" / -->" tabindex="17"  />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-footer" style="padding:14px 230px 15px!important">  
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="1"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="2"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="3"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>         
+    </div>
+</form>
+<!-- patTemplate:gtfwrendermodule module="comp.upload" submodule="upload" action="do" name="" / -->
+
+<!-- /patTemplate:tmpl -->

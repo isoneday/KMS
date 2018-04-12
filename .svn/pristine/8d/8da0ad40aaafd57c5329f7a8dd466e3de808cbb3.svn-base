@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoAddRefFaculty extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessRefFaculty', 'ref.faculty');
+        
+        $post = $_POST->AsArray();
+        
+        $result = $proses->input();
+        
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+        if ($result) {
+            if (!empty($elmId)) {
+                $url = GtfwDispt()->GetUrl('ref.faculty', 'comboRefFaculty', 'view', 'html').'&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('div_$elmId', '".$url."');closeGtPopup(popup$elmId);");
+            } else {
+                $url = GtfwDispt()->GetUrl('ref.faculty', 'RefFaculty', 'view', 'html').'&display&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popupRefFaculty);");
+            }
+        } else {
+            if (!empty($elmId)) {
+                return array('exec' => "replaceContentWithUrl('popup-$elmId', '" . GtfwDispt()->GetUrl('ref.faculty', (empty($post['dataId']) ? 'addRefFaculty' : 'updateRefFaculty'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+            } else {
+                return array('exec' => "replaceContentWithUrl('popup-subcontent', '" . GtfwDispt()->GetUrl('ref.faculty', (empty($post['dataId']) ? 'addRefFaculty' : 'updateRefFaculty'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+            }
+        }       
+    }
+}
+
+?>

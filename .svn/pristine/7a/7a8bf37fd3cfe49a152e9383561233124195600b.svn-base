@@ -1,0 +1,19 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">Code</th>
+        <td>{CODE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Name</th>
+        <td>{NAME}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Is Active</th>
+        <td>{IS_ACTIVE}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,104 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<table class="table-details">
+<tbody>
+
+    <tr>
+        <th style="width:150px">User id</th>
+        <td>{ID}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:150px">personal id</th>
+        <td>{PERSONAL_ID}</td>
+    </tr>
+    <tr>
+        <th style="width:150px">id_photo</th>
+        <td>{ID_PHO}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:150px"><!-- patTemplate:gtfwgetlang key="real_name" / --></th>
+        <td>{REAL_NAME}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:150px"><!-- patTemplate:gtfwgetlang key="username" / --></th>
+        <td>{NAME}</td>
+    </tr>
+
+    <tr>
+        <th style="width:150px">Jenis kelamin</th>
+        <td>{JENIS_KELAMIN}</td>
+    </tr>
+    <tr>
+        <th style="width:150px">agama</th>
+        <td>{AGAMA}</td>
+    </tr>
+    <tr>
+        <th style="width:150px">tahun masuk</th>
+        <td>{TAHUN_MASUK}</td>
+    </tr>
+    <tr>
+        <th style="width:150px">kode pos</th>
+        <td>{KODE_POS}</td>
+    </tr>
+    <tr>
+        <th style="width:150px">tempat lahir</th>
+        <td>{TEMPAT_LAHIR}</td>
+    </tr>
+    <tr>
+        <th style="width:150px">alamat</th>
+        <td>{ALAMAT}</td>
+    </tr>
+    <tr>        
+        <th style="width:150px">no hp</th>     
+        <td>+{NO_HP}</td>
+    </tr>
+    
+    <tr>
+        <th style="width:150px"><!-- patTemplate:gtfwgetlang key="email" / --></th>
+        <td>{EMAIL}</td>
+    </tr>
+    
+    
+    <tr>
+        <th style="width:150px"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+        <td>{DESC}</td>
+    </tr>
+    <tr>
+        <th style="width:150px"><!-- patTemplate:gtfwgetlang key="lang" / --></th>
+        <td>{LANG_NAME}</td>
+    </tr>
+     <tr class="subhead">
+                <th colspan="2"><!-- patTemplate:gtfwgetlang key="employee_photo" / --></th>
+            </tr>
+            <!-- patTemplate:tmpl name="current_photo" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="current_photo"/ --></th>
+                <td>
+                    {PHOTO_FILE}
+                </td>
+            </tr>
+            <!-- patTemplate:tmpl name="photo_preview" visibility="hidden" -->
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="photo_preview"/ --></th>
+                <td>{PHOTO}
+                </td>
+            </tr>
+            <!-- /patTemplate:tmpl -->
+            <!-- /patTemplate:tmpl -->
+             <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="submitted" / --></th>
+                <td>{LAST_INSERT}</td>
+            </tr>
+            <tr>
+                <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="updated" / --></th>
+                <td>{LAST_UPDATE}</td>
+            </tr>
+           
+
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

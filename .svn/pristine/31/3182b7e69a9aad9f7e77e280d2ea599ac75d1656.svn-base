@@ -1,0 +1,43 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">SatkerId</th>
+        <td>{SATKERID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerLevel</th>
+        <td>{SATKERLEVEL}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerParentId</th>
+        <td>{SATKERPARENTID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerUnitId</th>
+        <td>{SATKERUNITID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerNama</th>
+        <td>{SATKERNAMA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerStruktural</th>
+        <td>{SATKERSTRUKTURAL}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerCreationDate</th>
+        <td>{SATKERCREATIONDATE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerLastUpdate</th>
+        <td>{SATKERLASTUPDATE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">SatkerUserId</th>
+        <td>{SATKERUSERID}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

@@ -1,0 +1,79 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefEmployee extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.Employee/business/mysqlt/refEmployee.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefEmployee()
+    {
+        $query = $this->mSqlQueries['count_refemployee'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefEmployee($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($refjenpdknama)) {
+            $str .= " AND LOWER(refJenPdkNama) LIKE('%$refjenpdknama%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refemployee'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefEmployee($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refemployee'], array($id));
+
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefEmployee($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refemployee'], $params);
+    }
+    
+    public function updateRefEmployee($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refemployee'], $params);
+    }
+    
+    public function deleteRefEmployee($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refemployee'], array($id));
+    }
+    
+    public function listRefEmployee()
+    {
+        return $this->Open($this->mSqlQueries['list_refemployee'], array());
+    }
+	
+	public function listBeasiswa()
+    {
+        return $this->Open($this->mSqlQueries['list_beasiswa'], array());
+    }
+}
+
+// End of file RefEmployee.class.php

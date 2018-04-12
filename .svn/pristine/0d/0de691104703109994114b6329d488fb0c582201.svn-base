@@ -1,0 +1,157 @@
+<?php
+/**
+ * @author Prima Noor
+ */
+ 
+class ProcessApplicantPencairan
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'notebox-done';
+    var $cssFail = 'notebox-warning';
+    var $cssAlert = 'notebox-alert';
+
+    function __construct()
+    {
+        $this->ObjApplicantPencarian = GtfwDispt()->load->business('ApplicantPencairan');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+		
+	
+			$this->ObjApplicantPencarian->StartTrans();
+			$params = array(
+				$post['id'],
+                $this->user,
+				$post['bankpengirim'],
+				$post['nobankpengirim'],
+				$post['bankpenerima'],
+				$post['nobankpenerima'],
+				$post['semesterkrs'],
+				$post['tanggal'],
+				$post['keterangan']
+			);
+			$result =  $this->ObjApplicantPencarian->insertPembayaran($params);
+				
+			
+			$this->ObjApplicantPencarian->EndTrans($result); 
+		
+		  
+		if ($result) {
+			$msg = GtfwLangText('msg_update_success');
+			$css = $this->cssDone;
+		} else {
+			$msg = GtfwLangText('msg_update_fail');
+			$css = $this->cssFail;
+		} 
+			
+        if ($result) {
+            Messenger::Instance()->Send('applicant.pencairan', 'applicantPencairan', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.interview', 'applicantinterview', 'view', 'html');
+			return true;
+		} else {
+            Messenger::Instance()->Send('applicant.pencairan', 'applicantPencairan', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('applicant.interview', (empty($post['id'])?'add':'update').'ApplicantInterview', 'view', 'html');
+			return false;
+		}
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjApplicantPencarian->deleteApplicantInterview($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	function updateStatus($id)
+    {
+		$result = $this->ObjApplicantPencarian->updateStatus($id);
+		if ($result) {
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.pencairan', 'applicantPencairan', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+	}
+	
+	function updateStatusReject($id)
+    {
+		$result = $this->ObjApplicantPencarian->updateStatusReject($id);
+		if ($result) {
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.pencairan', 'applicantPencairan', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+	}
+	
+	function updateLolos($id,$name,$mail)
+    {
+        $result = $this->ObjApplicantPencarian->updateApplicantInterviewLolos($id);
+
+        //$result = 1;
+		
+        if ($result) {
+            /*$this->ObjMail = GtfwDispt()->load->process('ProcessEmailTemplate', 'applicant.interview');
+
+            $email      = $mail;
+            $subject    = 'Discount Request';
+            $message    = 'Hello, '. $name . '<br />';
+            $message    .= 'Anda mendapatkan permintaan persetujuan untuk memasukan discount .<br />';
+            $message    .= 'Mohon cek <b>Discount Request</b> pada halaman admin.<br />';
+            $message    .= 'Terimakasih.';
+
+            $this->ObjMail->send_mail_notification($email, $message, $subject);*/
+
+
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	function updateTidakLolos($id)
+    {
+        $result =  $this->ObjApplicantPencarian->updateApplicantInterviewTidakLolos($id);
+		
+        if ($result) {
+            $msg = GtfwLangText('msg_update_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_update_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('applicant.interview', 'ApplicantInterview', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+	
+	
+}
+
+?>

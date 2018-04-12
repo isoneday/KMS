@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewApplicantInterview extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_applicantinterview.html');
+    }
+
+    function ProcessRequest() {
+        $ObjApplicantInterview = GtfwDispt()->load->business('ApplicantInterview', 'applicant.interview');
+        $ObjApplicantRanking = GtfwDispt()->load->business('ApplicantRanking', 'applicant.ranking');
+        $ObjSetting = GtfwDispt()->load->business('Setting', 'core.setting');
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $filter_data = isset($msg[0][0]) ? $msg[0][0] : NULL;
+        $message['content'] = isset($msg[1][1]) ? $msg[1][1] : NULL;
+        $message['style'] = isset($msg[1][2]) ? $msg[1][2] : NULL;
+
+        if (!isset($_GET['display']) || empty($filter_data)) {
+            $page = 1;
+            $start = 0;
+            $display = $ObjSetting->getValue('view_per_page');
+            $filter = compact('page', 'display', 'start');
+        } elseif ($_GET['display']->Raw() != '') {
+            $page = (int) $_GET['page']->SqlString()->Raw();
+            $display = (int) $_GET['display']->SqlString()->Raw();
+
+            if ($page < 1)
+                $page = 1;
+            if ($display < 1)
+                $display = $ObjSetting->getValue('view_per_page');
+            $start = ($page - 1) * $display;
+
+            $filter = compact('page', 'display', 'start');
+            $filter += $filter_data;
+        } else {
+            $filter = $filter_data;
+            $page = $filter['page'];
+            $display = $filter['display'];
+            $start = $filter['start'];
+        }
+
+        $post_data = $_POST->AsArray();
+        if (isset($post_data))
+			{
+            foreach ($post_data as $key => $value)
+				{
+                $filter[$key] = $value;
+				}
+			}
+			
+        Messenger::Instance()->Send(Dispatcher::Instance()->mModule, Dispatcher::Instance()->mSubModule, Dispatcher::Instance()->mAction, Dispatcher::Instance()->mType, array($filter), Messenger::UntilFetched);
+
+        $listBeasiswa = $ObjApplicantInterview->listBeasiswa();
+		$i = 0;
+		foreach($listBeasiswa as $var)
+			{
+			$beasiswa[$i]['jumlah'] = $ObjApplicantInterview->getJumlahPelamar($var['beasiswa_id']);
+			$beasiswa[$i]['beasiswa_id'] = $var['beasiswa_id'];
+			$beasiswa[$i]['beasiswa_name'] = $var['beasiswa_name'];
+			$beasiswa[$i]['jenisbeasiswa_name'] = $var['jenisbeasiswa_name'];
+			$beasiswa[$i]['beasiswa_periode_mulai'] = $var['beasiswa_periode_mulai'];
+			$beasiswa[$i]['beasiswa_periode_selesai'] = $var['beasiswa_periode_selesai'];
+			$i++;
+			}
+			
+        $url = Dispatcher::Instance()->GetUrl(Dispatcher::Instance()->mModule, Dispatcher::Instance()->mSubModule, Dispatcher::Instance()->mAction, Dispatcher::Instance()->mType);
+        Messenger::Instance()->SendToComponent('comp.paging', 'Paging', 'view', 'html', 'paging_top', array($display, $total, $url, $page), Messenger::CurrentRequest);
+        Messenger::Instance()->SendToComponent('comp.paging', 'Paging', 'view', 'html', 'paging_bottom', array($display, $total, $url, $page), Messenger::CurrentRequest);
+
+        return compact('message', 'beasiswa');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        $this->ButtonRendering();
+        extract($rdata);
+
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }	
+    
+
+        if (!empty($beasiswa) AND count($beasiswa) > 0) {
+            $this->mrTemplate->addVar('list_beasiswa', 'IS_EMPTY', 'NO');
+            $no = $filter['start'] + 1;
+            foreach ($beasiswa as $val) {
+                $val['no'] = $no;
+                $val['url_detail'] = GtfwDispt()->GetUrl('applicant.interview', 'detailBeasiswa', 'view', 'html') . '&id=' . $val['beasiswa_id'];
+
+                $this->mrTemplate->addVars('item', $val);
+                $this->mrTemplate->parseTemplate('item', 'a');
+                $no++;
+            }
+        } else {
+            $this->mrTemplate->addVar('list_beasiswa', 'IS_EMPTY', 'YES');
+        }
+
+        $this->mrTemplate->addVar('button_add', 'URL', GtfwDispt()->GetUrl('applicant.interview', 'addApplicantInterview', 'view', 'html'));
+    }
+
+}
+
+?>

@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewInputSalutation extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_input_salutation.html');
+    }
+
+    function ProcessRequest() {
+        $ObjSalutation = GtfwDispt()->load->business('Salutation', 'ref.salutation');
+
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());
+        unset($_SESSION['ref.salutation']['data_id']);
+        if (!empty($id)) $_SESSION['ref.salutation']['data_id'] = $id;
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0]) ? $msg[0][0] : NULL;
+        $message['content'] = isset($msg[0][1]) ? $msg[0][1] : NULL;
+        $message['style'] = isset($msg[0][2]) ? $msg[0][2] : NULL;
+
+        if (!empty($post)) {
+            $input = $post;
+        } elseif (!empty($id)) {
+            $input = $ObjSalutation->getDetailSalutation($id);
+        }
+
+        return compact('input', 'id', 'message', 'elmId');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        $status = 'checked="checked"';
+        $nstatus = '';
+
+        if (isset($input['status']) && $input['status'] != '1') {
+            $status = '';
+            $nstatus = 'checked="checked"';
+        }
+
+        if (!empty($input)) {
+            $this->mrTemplate->addVars('content', $input);
+        }
+
+        $this->mrTemplate->AddVar('content', 'STATUS', $status);
+        $this->mrTemplate->AddVar('content', 'NSTATUS', $nstatus);
+
+        $this->mrTemplate->addVar('content', 'URL_BACK', GtfwDispt()->GetUrl('ref.salutation', 'salutation', 'view', 'html') . '&display');
+        $this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('ref.salutation', (empty($id) ? 'add' : 'update') . 'Salutation', 'do', 'json') . '&elmId=' . $elmId);
+    }
+
+}
+
+?>

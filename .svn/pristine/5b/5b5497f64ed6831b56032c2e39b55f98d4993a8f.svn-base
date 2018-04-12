@@ -1,0 +1,22 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:tmpl name="combobox" -->
+<select name="{NAME}" id="{ELMID}" style="{STYLE}" {SCRIPT}>
+        <!-- patTemplate:tmpl name="combolist" -->
+        <option value="{ID}" {SELECTED}>{NAME}</option>
+    <!-- /patTemplate:tmpl -->       
+</select>
+<!-- patTemplate:tmpl name="button_add" visibility="hidden" -->
+<button id="button_add_currency" value="new" ><img src="assets/images/buttons/button-add.gif" /></button>
+<script type="text/javascript">
+    var popup{ELMID};
+    
+    $(document).ready(function(){    
+        $('#button_add_currency').click(function(){
+            popup{ELMID} = showGtPopup('{URL}', '<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="currency" / -->');
+            return false;
+        })
+    });
+</script>        
+<!-- /patTemplate:tmpl -->
+<!-- /patTemplate:tmpl -->
+<!-- /patTemplate:tmpl -->

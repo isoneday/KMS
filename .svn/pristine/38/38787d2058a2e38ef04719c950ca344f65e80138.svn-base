@@ -1,0 +1,70 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_upload" name="form_upload" class="xhr dest_subcontent-element" method="post" action="{URL}" enctype="mutlipart/form-data">
+<table class="table-edit">
+    <tr>
+        <th style="width: 200px;">File 1</th>
+        <td>
+            <input type="file" name="file1"/>
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;">File 2</th>
+        <td>
+            <input type="file" name="file2"/>
+        </td>
+    </tr>
+    <tr>
+        <th>Files</th>
+        <td>
+            <table class="table-common" id="table-files" style="width: 50% !important;">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th style="width: 50px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="file" name="files[]"/></td>
+                        <td class="action" style="text-align: center;"><button type="button" id="button_add_files" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="add" / --></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>        
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>             
+        </td>
+    </tr>
+</table>
+</form>
+<!-- patTemplate:gtfwrendermodule module="comp.upload" submodule="upload" action="do" name="" / -->
+<script type="text/javascript">
+var cloned;
+$(function(){
+    $('#button_add_files').each(function(){
+        cloned = $(this).parent().parent().clone(true);
+        var button = '<button type="button" class="btn button_delete_files" id="button_delete_files"><!-- patTemplate:gtfwgetlang key="delete" / --></button>';
+        cloned.children('.action').html(button);
+    });
+    $('#button_add_files').on('click', function(){        
+        // console.log(cloned);
+        var duplicate = cloned.clone(true);
+        $('#table-files').append(duplicate);
+    })
+    $('#table-files').on('click', '.button_delete_files', function(){
+        // $(this).parent().siblings('td').find('.gt-btn-upd-remove').click();
+        $(this).parent().siblings().find('.gt-btn-upd-remove').click()
+        //$(this).parents('form').gtupload.removefile($(this).parent().parent().find('input'));
+        $(this).parent().parent().remove();
+    })
+})
+</script>
+<!-- /patTemplate:tmpl -->

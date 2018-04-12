@@ -1,0 +1,73 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefResidence extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.residence/business/mysqlt/refresidence.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefResidence($filter)
+    {
+        $query = $this->mSqlQueries['count_refresidence'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefResidence($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($tempattinggalnama)) {
+            $str .= " AND LOWER(tempatTinggalNama) LIKE('%$tempattinggalnama%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refresidence'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefResidence($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refresidence'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefResidence($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refresidence'], $params);
+    }
+    
+    public function updateRefResidence($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refresidence'], $params);
+    }
+    
+    public function deleteRefResidence($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refresidence'], array($id));
+    }
+    
+    public function listRefResidence()
+    {
+        return $this->Open($this->mSqlQueries['list_refresidence'], array());
+    }
+}
+
+// End of file RefResidence.class.php

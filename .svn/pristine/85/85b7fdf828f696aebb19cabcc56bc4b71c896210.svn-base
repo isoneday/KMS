@@ -1,0 +1,107 @@
+<?php
+
+$sql["count_reffaculty"] = "
+SELECT 
+    COUNT(fakultas_id) AS total
+FROM ref_fakultas
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_reffaculty"] = "
+SELECT 
+    a.fakultas_id AS `id`,
+    a.fakultas_kode_univ AS `kode_univ`,
+    a.fakultas_name AS `name`,
+    a.fakultas_singkatan AS `fakultas_singkatan`,
+    a.fakultas_univ_id AS `fakultas_univ_id`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_fakultas a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_reffaculty"] = "
+SELECT 
+    a.fakultas_id AS `fakultas_id`,
+    a.fakultas_kode_unit AS `fakultas_kode_unit`,
+    a.fakultas_name AS `fakultas_name`,
+    a.fakultas_singkatan AS `fakultas_singkatan`,
+    a.fakultas_univ_id AS `fakultas_univ_id`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_fakultas a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE fakultas_id = %d
+";
+$sql["insert_reffaculty"] = "
+INSERT INTO ref_fakultas
+(
+    fakultas_id,
+    fakultas_kode_unit,
+    fakultas_name,
+    fakultas_singkatan,
+    fakNamaAsing,
+    fakIsEksakta,
+    fakAlamat,
+    fakTelp,
+    fakFax,
+    fakEmail,
+    fakKontakPerson,
+    fakultas_univ_id
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_reffaculty"] = "
+UPDATE ref_fakultas
+SET 
+    fakultas_id = %s,
+    fakultas_kode_unit = %s,
+    fakultas_name = %s,
+    fakultas_singkatan = %s,
+    fakNamaAsing = %s,
+    fakIsEksakta = %s,
+    fakAlamat = %s,
+    fakTelp = %s,
+    fakFax = %s,
+    fakEmail = %s,
+    fakKontakPerson = %s,
+    fakultas_univ_id = %s
+WHERE fakultas_id = %d
+";
+$sql["delete_reffaculty"] = "
+DELETE FROM ref_fakultas
+WHERE fakultas_id = %d
+";
+$sql["list_reffaculty"] = "
+SELECT
+    fakultas_id AS `id`,
+    fakultas_name AS `name`
+FROM
+    ref_fakultas
+ORDER BY fakultas_name
+";
+
+$sql["list_reffaculty_by_univ"] = "
+SELECT
+    fakultas_id AS `id`,
+    fakultas_name AS `name`
+FROM
+    ref_fakultas
+WHERE fakultas_univ_id = %d
+ORDER BY fakultas_name
+";

@@ -1,0 +1,74 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class RefEducation extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/ref.education/business/mysqlt/refeducation.sql.php');
+        $this->SetDebugOn();
+    }
+
+    public function countRefEducation()
+    {
+        $query = $this->mSqlQueries['count_refeducation'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getRefEducation($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($refjenpdknama)) {
+            $str .= " AND LOWER(refJenPdkNama) LIKE('%$refjenpdknama%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_refeducation'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+
+    public function getDetailRefEducation($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_refeducation'], array($id));
+
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+    public function insertRefEducation($params)
+    {
+        return $this->Execute($this->mSqlQueries['insert_refeducation'], $params);
+    }
+    
+    public function updateRefEducation($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_refeducation'], $params);
+    }
+    
+    public function deleteRefEducation($id)
+    {
+        return $this->Execute($this->mSqlQueries['delete_refeducation'], array($id));
+    }
+    
+    public function listRefEducation()
+    {
+        return $this->Open($this->mSqlQueries['list_refeducation'], array());
+    }
+}
+
+// End of file RefEducation.class.php

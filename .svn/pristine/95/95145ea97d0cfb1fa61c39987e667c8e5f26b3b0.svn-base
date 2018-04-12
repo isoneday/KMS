@@ -1,0 +1,24 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+<tbody>
+    <tr>
+    	<td colspan="2">
+	        <!-- patTemplate:tmpl name="button_update" visibility="visible" -->
+            <a class="xhr dest_subcontent-element btn-edit-has-title" href="{URL}" title="<!-- patTemplate:gtfwgetlang key="edit" / --> <!-- patTemplate:gtfwgetlang key="companyprofile" / -->">
+				Edit Company Profile
+            </a>
+	        <!-- /patTemplate:tmpl -->
+    	</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Title</th>
+        <td><h3>{TITLE}</h3></td>
+    </tr>
+    <tr>
+        <th style="width:200px">Content</th>
+        <td>{CONTENT}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

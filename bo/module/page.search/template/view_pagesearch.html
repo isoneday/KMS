@@ -1,0 +1,119 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form   id="form_search"  class="xhr dest_subcontent-element dataquest" method="post" action="{URL}" width="48" height="800" >
+
+
+<table  width="33%" class="table-search">
+<tbody>
+
+
+
+    <tr>
+        <th style="width:20%;"></th>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <th style="width:20%;"height="200"></th>
+        <td><img src="assets/images/export (1).png" width="640" height="226" />
+        <center><input placeholder="input your search in here" width="30" size="80" hight="90" type="text" font color="red" name="cari" id="cari" />
+           <!-- patTemplate:gtfwrendermodule module="mod.kmsdata" submodule="comboModKmsdata" 
+           action="view" name="idmasdok" id="idmasdok"  / -->          
+              &nbsp;
+          <button class="btn">
+          <!-- patTemplate:gtfwgetlang key="search"/ -->
+          </button>
+         
+        </center>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<script type="text/javascript">
+padding="100px 0";
+</script>
+
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<table class="table-search">
+<thead>
+    <tr>
+        <br>
+    
+      </tr>
+</thead>
+
+<tbody>
+    {CHECK}
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr style="font-size:125px" class="{ROW_CLASS}"    height="50">
+        <p style="font-size:15px"; style="line-height: 4px;">tanggal upload : {TIMEE}</p>        
+        <p style="font-size:15px"; style="line-height: 4px;">judul dokumentasi : {JUDUL}</p>        
+        <p style="font-size:15px"; style="line-height: 4px;">jenis dokumentasi : {JENIS_DOKUMENTASI}</p>        
+       <p style="font-size:15px"; style="font-size:125px;"><font color="red">{CARI}</p>  </font>      
+        
+        <p style="font-size:16px";><font color="red">{CARI}</font>{FILECARI}   ( pada baris ke <font color="RedOrange">{LINE} </font>)</h4>
+     </p>            
+        <p style="font-size:15px"; style="line-height: 4px;">upload by : {UPLOADBY}</p>        
+
+       <!--  <p style="font-size:15px";><strong><u><font color="RedOrange">nama file : {NAMA_FILE}</font></u></strong></a>
+ -->
+
+</p>  
+        <p >
+
+		<a href="{FILEPATH}{FILE_DOWNLOAD}"  target="_blank"  class="" title=""><b style="font-size:15px";><strong><u><font color="RedOrange">Open File</b></font></u></strong></a>
+
+</p>
+    
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+
+
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="pagesearch" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="pagesearch" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+{SCRIPT}
+</script>
+<!-- /patTemplate:tmpl -->

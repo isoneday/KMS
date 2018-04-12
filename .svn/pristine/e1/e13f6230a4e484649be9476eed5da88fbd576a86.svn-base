@@ -1,0 +1,96 @@
+<?php
+/** 
+* @copyright Copyright (c) 2014, PT Gamatechno Indonesia
+* @license http://gtfw.gamatechno.com/#license
+*/
+ 
+class ProcessRefReligion
+{
+    var $Obj;
+    var $user;
+    var $cssDone = 'alert alert-success';
+    var $cssFail = 'alert alert-error';
+    var $cssAlert = 'alert';
+
+    function __construct()
+    {
+        $this->ObjRefReligion = GtfwDispt()->load->business('RefReligion');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+    }
+
+    function input()
+    {
+        $post = $_POST->AsArray();
+        $Val = GtfwDispt()->load->library('Validation');
+        
+        
+        
+        $result = $Val->run();
+        if ($result) {
+            if (!$post['id']) {
+                $this->ObjRefReligion->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user
+                );
+                $result = $result && $this->ObjRefReligion->insertRefReligion($params);
+                $this->ObjRefReligion->EndTrans($result);
+                if ($result) {
+                    $msg = GtfwLangText('msg_add_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_add_fail');
+                    $css = $this->cssFail;
+                }
+            } else {
+                $this->ObjRefReligion->StartTrans();
+                $params = array(
+                    $post['name'],
+                    $post['status'],
+                    $post['desc'],
+                    $this->user,
+                    $post['id']
+                );
+                $result = $result && $this->ObjRefReligion->updateRefReligion($params);
+                $this->ObjRefReligion->EndTrans($result);   
+                if ($result) {
+                    $msg = GtfwLangText('msg_update_success');
+                    $css = $this->cssDone;
+                } else {
+                    $msg = GtfwLangText('msg_update_fail');
+                    $css = $this->cssFail;
+                }             
+            }
+        } else {
+            $msg = $Val->error_string('', '<br />');
+            $css = $this->cssFail;
+        }     
+        if ($result) {
+            Messenger::Instance()->Send('ref.religion', 'RefReligion', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.religion', 'refreligion', 'view', 'html');
+        } else {
+            Messenger::Instance()->Send('ref.religion', 'inputRefReligion', 'view', 'html', array($post, $msg, $css), Messenger::NextRequest);
+            //return Dispatcher::Instance()->GetUrl('ref.religion', (empty($post['id'])?'add':'update').'RefReligion', 'view', 'html');
+        }
+        return $result;     
+    }
+    
+    function delete($id)
+    {
+        $result = $this->ObjRefReligion->deleteRefReligion($id);
+        if ($result) {
+            $msg = GtfwLangText('msg_delete_success');
+            $css = $this->cssDone;
+        } else {
+            $msg = GtfwLangText('msg_delete_fail');
+            $css = $this->cssFail;            
+        }
+        Messenger::Instance()->Send('ref.religion', 'RefReligion', 'view', 'html', array(NULL, $msg, $css), Messenger::NextRequest);
+        
+        return $result;
+    }
+}
+
+?>

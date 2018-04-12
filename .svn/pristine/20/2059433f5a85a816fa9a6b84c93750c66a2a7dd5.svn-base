@@ -1,0 +1,10 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    <tr>
+        <th style="width:200px">Pekerjaan</th>
+        <td>{PKJRNAMA}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

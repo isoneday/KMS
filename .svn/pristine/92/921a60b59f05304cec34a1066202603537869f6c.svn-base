@@ -1,0 +1,299 @@
+<?php
+/**
+ * @author GTFW CRUD Generator 
+ */
+ 
+class ApplicantPencairan extends Database
+{
+
+    public function __construct($connectionNumber = 0)
+    {
+        parent::__construct($connectionNumber);
+        $this->LoadSql('module/applicant.pencairan/business/mysqlt/applicantpencairan.sql.php');
+        $this->SetDebugOn();
+    }
+	
+	public function getAplikanId($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_aplikan_id'], array($id));
+        if ($result) {
+            return $result[0]['aplikan_id'];
+        } 
+		
+		/* echo "<pre>".$this->GetLastError();
+		echo "\n";
+		print_r($result); */
+    }
+
+    public function countApplicantInterview()
+    {
+
+        $query = $this->mSqlQueries['count_applicantinterview'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+	public function countAplikanBeasiswa($filter)
+    {
+		if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($beasiswa_id)) {
+            $str .= " AND aplikanbeasiswa_beasiswa_id ='". $beasiswa_id ."' ";
+        }
+		
+        $query = $this->mSqlQueries['count_aplikanbeasiswa'];
+        $result = $this->Open($query, array());
+        return $result[0]['total'];
+    }
+
+    public function getApplicantInterview($filter)
+    {
+        if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($kmhsasramanama)) {
+            $str .= " AND LOWER(kmhsAsramaNama) LIKE('%$kmhsasramanama%')";
+        }
+        if (!empty($kmhsasramaalamat)) {
+            $str .= " AND LOWER(kmhsAsramaAlamat) LIKE('%$kmhsasramaalamat%')";
+        }
+        $limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+        $query = $this->mSqlQueries['get_applicantinterview'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+
+    }
+	
+
+    public function getDetailApplicantInterview($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_applicantinterview'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+	public function getJumlahPelamar($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_jumlahpelamar'], array($id));
+        if ($result) {
+            return $result[0]['jml'];
+        }
+    }
+    
+    
+	public function getBeasiswa($id)
+    {
+        $result = $this->Open($this->mSqlQueries['getbeasiswa'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+    }
+    
+	public function getDetailAplikan($id)
+    {
+        $result = $this->Open($this->mSqlQueries['getDetailAplikan'], array($id));
+        if ($result) {
+            return $result[0];
+        }
+
+    }
+
+    public function getDetailAllAplikan($id, $id_beasiswa)
+    {
+        $result = $this->Open($this->mSqlQueries['getDetailAllAplikan'], array($id, $id_beasiswa));
+        if ($result) {
+            return $result[0];
+        }
+    }
+
+    public function getDetailWawancara()
+    {
+        $result = $this->Open($this->mSqlQueries['getDetailWawancara'], array());
+            return $result;
+    }
+
+    public function getDataPemeriksa($id, $id_beasiswa)
+    {
+        $result = $this->Open($this->mSqlQueries['getDataPemeriksa'], array($id, $id_beasiswa));
+            return $result;
+            /*echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+
+    public function getDataNilai($id, $id_beasiswa,$user_id)
+    {
+        $result = $this->Open($this->mSqlQueries['getDataNilai'], array($id, $id_beasiswa,$user_id));
+
+            return $result;
+
+            /*echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+
+    //public function getDataAll($datap1, $id, $datap1, $id, $datap2, $id, $datap2, $id, $datap3, $id, $datap3, $id)
+    public function getDataAll($id, $datap1,$datap2,$datap3)
+    {
+        $result = $this->Open($this->mSqlQueries['getDataALL'], array($datap1, $id, $datap1, $id,$datap2, $id, $datap2, $id,$datap3, $id, $datap3, $id));
+        //$result = $this->Open($this->mSqlQueries['getDetailWawancara'], array());
+
+            return $result;
+
+            /*echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+
+    }
+    
+	public function listUniversitas($id)
+    {
+         return $this->Open($this->mSqlQueries['list_universitas'], array($id));
+    }
+    
+	public function listPencairan($id_univ)
+    {
+         return $this->Open($this->mSqlQueries['listPencairan'], array($id_univ));
+    }
+	
+	public function listPencairanApplicant($id)
+    {
+        $result = $this->Open($this->mSqlQueries['listPencairanapplicant'], array($id));
+		//$query = $this->mSqlQueries['listPencairanApplicant'];
+        //$result = $this->Open(stripslashes($query), array($id));
+        return $result;
+		/* echo "<pre>".$this->GetLastError();
+		echo "\n";
+		print_r($result); */
+	}
+
+    public function listGroup($id)
+    {
+         $result = $this->Open($this->mSqlQueries['listGroup'], array($id));
+         if ($result) {
+            return $result[0];
+        }
+    }
+    
+	public function listKategoriwawancara()
+    {
+         return $this->Open($this->mSqlQueries['list_kategoriwawancara'], array());
+    }
+    
+	public function listBeasiswa()
+    {
+         return $this->Open($this->mSqlQueries['listBeasiswa'], array());
+    }
+    
+	public function listKategori()
+    {
+         return $this->Open($this->mSqlQueries['listKategori'], array());
+    }
+    
+	public function listAspek($id)
+    {
+         return $this->Open($this->mSqlQueries['listaspek'], array($id));
+    }
+    
+    public function insertPembayaran($params)
+    {
+        $result = $this->Execute($this->mSqlQueries['insertPembayaran'], $params);
+		//echo "<pre>".$this->GetLastError();
+		//echo "\n";
+		//print_r($result);
+		return $result;
+	}
+    
+	public function updateStatusWawancara($id)
+    {
+        $return = $this->Execute($this->mSqlQueries['update_statuswawancara'], array($id));
+    return $return;
+	}
+    
+    public function updateApplicantInterview($params)
+    {
+        return $this->Execute($this->mSqlQueries['update_applicantinterview'], $params);
+    }
+	
+	public function updateApplicantInterviewLolos($id)
+    {
+        return $this->Execute($this->mSqlQueries['update_applicantinterviewLolos'], array($id));
+		/*$result = $this->Execute($this->mSqlQueries['update_applicantinterviewLolos'], $id);
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+	
+	public function updateApplicantInterviewTidakLolos($id)
+    {
+        return $this->Execute($this->mSqlQueries['update_applicantinterviewTidakLolos'], array($id));
+		/*$result = $this->Execute($this->mSqlQueries['update_applicantinterviewTidakLolos'], array($id));
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);*/
+    }
+    
+    public function deleteApplicantInterview($id)
+    {
+        //return $this->Execute($this->mSqlQueries['delete_applicantinterview'], array($id));
+		$result = $this->Execute($this->mSqlQueries['delete_applicantinterview'], array($id));
+		echo "<pre>".$this->GetLastError();
+            echo "\n";
+            print_r($result);
+	}
+    
+    public function listApplicantInterview()
+    {
+        return $this->Open($this->mSqlQueries['list_applicantinterview'], array());
+    }
+	
+	public function listAplikanBeasiswa($filter)
+    {
+		if (is_array($filter))
+            extract($filter);
+        $str = '';
+        
+        if (!empty($beasiswa_id)) {
+            $str .= " AND aplikanbeasiswa_beasiswa_id ='". $beasiswa_id ."' ";
+        }
+		$limit = '';
+        if (!empty($display)) {
+            $limit = "LIMIT $start, $display";   
+        }
+		
+		$query = $this->mSqlQueries['list_aplikanbeasiswa'];
+        $query = str_replace('--search--', $str, $query);
+        $query = str_replace('--limit--', $limit, $query);
+        $result = $this->Open(stripslashes($query), array());
+        return $result;
+    }
+
+    function GetListFoto($id) {
+        $result = $this->Open($this->mSqlQueries['get_foto'], array($id));
+        return $result;
+    }
+    function GetListPendaftar($id) {
+        $result = $this->Open($this->mSqlQueries['get_pendaftar_by_nim'], array($id));
+        return $result;
+        
+    }
+	
+	public function getDetailKrs($id)
+    {
+        $result = $this->Open($this->mSqlQueries['get_detail_krs'], array($id));
+            return $result;	
+    }
+	
+	
+}
+
+// End of file ApplicantInterview.class.php

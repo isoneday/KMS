@@ -1,0 +1,98 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <input type="hidden" name="emp_id" value="{EMP_ID}" />
+    <input type="hidden" name="data_id" value="{DATA_ID}" />
+    <table class="table-edit">
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="real_name" / --></th>
+            <td>
+                {REAL_NAME}
+                <input type="hidden" name="real_name" value="{REAL_NAME}" class="input_large"/>      
+                <input type="hidden" name="full_name" value="{FULL_NAME}"/>          
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="username" / --></th>
+            <td>
+                <input type="text" name="name" value="{NAME}" />           
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="password" / --></th>
+            <td>
+                <input type="password" name="password" value="{PASSWORD}" />            
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="confirm_password" / --></th>
+            <td>
+                <input type="password" name="confirm_password" value="{CONFIRM_PASSWORD}"/>          
+            </td>
+        </tr>    
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="email" / --></th>
+            <td>
+                {EMAIL}
+                <input type="hidden" name="email" value="{EMAIL}" class="input_large"/>           
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="desc" / --></th>
+            <td>
+                <textarea name="desc" cols="50" rows="1">{DESC}</textarea>            
+            </td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="status"/ --></th>
+            <td><input type="radio" name="status" value="1" {STATUS}/> <!-- patTemplate:gtfwgetlang key="active"/ --> 
+                       <input type="radio" name="status" value="0" {NSTATUS}/> <!-- patTemplate:gtfwgetlang key="not_active"/ --></td>
+        </tr>
+        <tr>
+            <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="language" / --></th>
+            <td>
+                <!-- patTemplate:gtfwrendermodule module="comp.combobox" submodule="combobox" action="view" name="lang"  / -->
+                &nbsp;*</td>
+        </tr>
+        <tr>
+            <th><!-- patTemplate:gtfwgetlang key="application" / --></th>
+            <td>
+                <!-- patTemplate:tmpl name="application" type="condition" conditionvar="IS_EMPTY" -->
+                <!-- patTemplate:sub condition="YES" -->
+                <!-- patTemplate:gtfwgetlang key="no_data" / -->
+                <!-- /patTemplate:sub -->
+                <!-- patTemplate:sub condition="NO" -->
+                <!-- patTemplate:tmpl name="app_item" -->
+                <label><b>{NAME}</b></label>
+                <!-- patTemplate:tmpl name="group_item" -->
+                <label style="padding-left:20px;"><a title="<!-- patTemplate:gtfwgetlang key="group" / -->"><input type="checkbox" name="group[]" id="{ID}" value="{ID}" {CHECKED} /></a> <a class="popup_group" href="{URL}" title="{TITLE}">{NAME}</a></label>
+                <!-- /patTemplate:tmpl -->
+                &nbsp;
+                <!-- /patTemplate:tmpl -->
+                <!-- /patTemplate:sub -->
+                <!-- /patTemplate:tmpl -->
+            </td>
+        </tr>
+    </table>
+    <div style="padding:14px 230px 15px!important" class="form-footer">  
+        <button type="submit" class="btn" role="button" aria-disabled="false"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="save" / --></span></button>
+        <button type="reset" class="btn btn-primary" role="button" aria-disabled="false"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="reset" / --></span></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="btn btn-success" role="button" aria-disabled="false"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>
+    </div>
+</form>
+<script type="text/javascript">
+    var popupGroup;
+    $(function(){    
+        $('.popup_group').click(function(){
+            var url = $(this).attr('href')+'&ascomponent=1';
+            var title = $(this).attr('title');
+    
+            popupGroup = showGtPopup(url, title, 800, null, null, true);
+            return false;
+        });
+    })
+</script>
+<!-- /patTemplate:tmpl -->

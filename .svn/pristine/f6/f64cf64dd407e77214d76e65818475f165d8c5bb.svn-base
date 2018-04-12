@@ -1,0 +1,72 @@
+<?php
+
+$sql["count_jabatanorganisasi"] = "
+SELECT 
+    COUNT(jabatanorganisasi_id) AS total
+FROM ref_jabatan_organisasi
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_jabatanorganisasi"] = "
+SELECT 
+    a.jabatanorganisasi_id AS `id`,
+    a.jabatanorganisasi_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_jabatan_organisasi a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_jabatanorganisasi"] = "
+SELECT 
+    a.jabatanorganisasi_id AS `id`,
+    a.jabatanorganisasi_name AS `name`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_jabatan_organisasi a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE jabatanorganisasi_id = %d
+";
+$sql["insert_jabatanorganisasi"] = "
+INSERT INTO ref_jabatan_organisasi
+(
+    jabatanorganisasi_name,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_jabatanorganisasi"] = "
+UPDATE ref_jabatan_organisasi
+SET 
+    jabatanorganisasi_name = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE jabatanorganisasi_id = %d
+";
+$sql["delete_jabatanorganisasi"] = "
+DELETE FROM ref_jabatan_organisasi
+WHERE jabatanorganisasi_id = %d
+";
+$sql["list_jabatanorganisasi"] = "
+SELECT
+    jabatanorganisasi_id AS `id`,
+    jabatanorganisasi_name AS `name`
+FROM
+    ref_jabatan_organisasi
+ORDER BY jabatanorganisasi_name
+";

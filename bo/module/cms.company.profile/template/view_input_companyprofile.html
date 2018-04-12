@@ -1,0 +1,40 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+<input type="hidden" name="id" value="{ID}" />
+<table class="table-edit">
+    
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="title" / --></th>
+        <td>
+            <input type="text" name="title" value="{TITLE}" width="100%"  />            
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 200px;"><!-- patTemplate:gtfwgetlang key="content" / --></th>
+        <td>
+            <textarea name="content" id="desc" cols="50" rows="10" >{CONTENT}</textarea>            
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>   
+            <button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+            <button type="reset" class="btn"><!-- patTemplate:gtfwgetlang key="reset" / --></button>       
+            <a class="xhr dest_subcontent-element btn btn-danger" href="{URL_BACK}" title="<!-- patTemplate:gtfwgetlang key="Back" / --> <!-- patTemplate:gtfwgetlang key="companyprofile" / -->">
+                Back
+            </a>
+        </td>            
+    </tr>    
+</table>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        setTinyMce('#desc');
+    });
+
+</script>
+<!-- /patTemplate:tmpl -->

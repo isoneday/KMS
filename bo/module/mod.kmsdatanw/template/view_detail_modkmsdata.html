@@ -1,0 +1,43 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+    <tbody>
+
+        <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+        <!-- patTemplate:sub condition="YES" -->
+        <tr>
+            <!--tidak ada data-->
+        </tr>
+            <!-- /patTemplate:sub -->
+            <!-- patTemplate:sub condition="NO" -->
+            <!-- patTemplate:tmpl name="foto" -->
+    
+        <tr>
+            <td>{GAMBAR}</td>
+             <td>{GAMBAR}</td>
+             <th style="width: 150px;" rowspan="6"><img width="150px" height="120px" src={FILEPATH}{FILE}></th>
+       
+        </tr>
+        <!-- /patTemplate:tmpl -->
+        <!-- /patTemplate:sub -->
+        <!-- /patTemplate:tmpl -->
+        <tr>
+            <th style="width:20%">Data</th>
+            <td>{DATA}</td>
+        </tr>
+        <tr>
+            <th style="width:20%">Kmsdata Userid</th>
+            <td>{KMSDATA_USERID}</td>
+        </tr>
+        <tr>
+            <th style="width:20%">Kmsdata masdok id</th>
+            <td>{IDMASDOK}</td>
+        </tr>
+        
+        <tr>
+            <th style="width:20%">Kmsdata Keyword</th>
+            <td>{KMSDATA_KEYWORD}</td>
+        </tr>
+    
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

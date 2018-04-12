@@ -1,0 +1,59 @@
+<!-- patTemplate:tmpl name="content" -->
+<table class="table-details">
+<tbody>
+    
+    <tr>
+        <th style="width:200px">Sumberid</th>
+        <td>{SUMBERID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Jenisid</th>
+        <td>{JENISID}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Name</th>
+        <td>{NAME}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Desc</th>
+        <td>{DESC}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Enddate</th>
+        <td>{ENDDATE}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Jumlah Penerima</th>
+        <td>{JUMLAH_PENERIMA}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Minimum Ipk</th>
+        <td>{MINIMUM_IPK}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Maksimal Sks</th>
+        <td>{MAKSIMAL_SKS}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Minimum Penghasilan Ortu</th>
+        <td>{MINIMUM_PENGHASILAN_ORTU}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Minimum Tanggungan Ortu</th>
+        <td>{MINIMUM_TANGGUNGAN_ORTU}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Is Aktif</th>
+        <td>{IS_AKTIF}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Periode Mulai</th>
+        <td>{PERIODE_MULAI}</td>
+    </tr>
+    <tr>
+        <th style="width:200px">Periode Selesai</th>
+        <td>{PERIODE_SELESAI}</td>
+    </tr>
+</tbody>
+</table>
+<!-- /patTemplate:tmpl -->

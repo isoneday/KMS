@@ -1,0 +1,71 @@
+<?php
+
+$sql["count_refukt"] = "
+SELECT FOUND_ROWS() AS total
+";
+$sql["get_refukt"] = "
+SELECT SQL_CALC_FOUND_ROWS
+    a.uktId AS `uktId`,
+    a.uktId AS `id`,
+    a.uktNama AS `uktNama`,
+    a.uktBobot AS `uktBobot`,
+    a.uktNilaiPenyetaraan AS `uktNilaiPenyetaraan`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_ukt a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_refukt"] = "
+SELECT 
+    a.uktId AS `uktId`,
+    a.uktId AS `id`,
+    a.uktNama AS `uktNama`,
+    a.uktBobot AS `uktBobot`,
+    a.uktNilaiPenyetaraan AS `uktNilaiPenyetaraan`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_ukt a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE uktId = %d
+";
+$sql["insert_refukt"] = "
+INSERT INTO ref_ukt
+(
+    uktNama,
+    uktBobot,
+    uktNilaiPenyetaraan,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_refukt"] = "
+UPDATE ref_ukt
+SET 
+    uktNama = %s,
+    uktBobot = %s,
+    uktNilaiPenyetaraan = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE uktId = %d
+";
+$sql["delete_refukt"] = "
+DELETE FROM ref_ukt
+WHERE uktId = %d
+";
+$sql["list_refukt"] = "
+SELECT
+    uktId AS `id`,
+    uktNama AS `name`
+FROM
+    ref_ukt
+ORDER BY uktNama
+";

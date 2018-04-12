@@ -1,0 +1,198 @@
+<!-- patTemplate:tmpl name="document" -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><!-- patTemplate:gtfwgetconfig config="organization" name="application_name" / --></title>
+        <!-- metadata for seo -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <meta http-equiv="Expires" content="-1"/>
+        <meta http-equiv="CACHE-CONTROL" content="PUBLIC" />
+        <meta name="Title" content="<!-- patTemplate:gtfwgetconfig config="organization" name="title" / -->" />
+              <meta name="Keywords" content="<!-- patTemplate:gtfwgetconfig config="organization" name="keywords" / -->" />
+              <meta name="Description" content="<!-- patTemplate:gtfwgetconfig config="organization" name="description" / -->" />
+              <meta name="Geography" content="<!-- patTemplate:gtfwgetconfig config="organization" name="geography" / -->" />
+              <meta name="Language" content="<!-- patTemplate:gtfwgetconfig config="organization" name="language" / -->" />
+              <meta name="Owner" content="<!-- patTemplate:gtfwgetconfig config="organization" name="owner" / -->" />
+              <meta name="Author" content="<!-- patTemplate:gtfwgetconfig config="organization" name="author" / -->" />
+              <meta name="Designer" content="<!-- patTemplate:gtfwgetconfig config="organization" name="designer" / -->" />
+              <meta name="Copyright" content="<!-- patTemplate:gtfwgetconfig config="organization" name="copyright" / -->" />
+              <meta name="Robots" content="<!-- patTemplate:gtfwgetconfig config="organization" name="robots" / -->" />
+              <meta name="City" content="<!-- patTemplate:gtfwgetconfig config="organization" name="city" / -->" />
+              <!-- end metadata for seo -->
+
+              <!-- favicon -->
+              <link rel="shortcut icon" href="assets/images/coporate.ico" />
+        <!-- end favicon -->
+
+        <!-- Le styles -->
+        <link href="assets/css/loader-common.css" rel="stylesheet">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="assets/css/iestyles.css" />
+        <![endif]-->
+        <script type="text/javascript">
+            lang = {
+                "cancel"            : "<!-- patTemplate:gtfwgetlang key="cancel" / -->",
+                "ok"                : "<!-- patTemplate:gtfwgetlang key="ok" / -->",
+                "confirm_delete"    : "<!-- patTemplate:gtfwgetlang key="confirm_delete" / -->",
+                "message_delete"    : "<!-- patTemplate:gtfwgetlang key="message_delete" / -->",
+                "alert"             : "<!-- patTemplate:gtfwgetlang key="alert" / -->",
+                "confirm"           : "<!-- patTemplate:gtfwgetlang key="confirm" / -->",
+                "prompt"            : "<!-- patTemplate:gtfwgetlang key="prompt" / -->",
+                "wrong_url"         : "<!-- patTemplate:gtfwgetlang key="wrong_url" / -->",
+                "maximum_file_size" : "<!-- patTemplate:gtfwgetlang key="maximum_file_size" / -->",
+                "forbidden_filetype": "<!-- patTemplate:gtfwgetlang key="forbidden_filetype" / -->",
+                "progress"          : "<!-- patTemplate:gtfwgetlang key="progress" / -->",
+                "remove"            : "<!-- patTemplate:gtfwgetlang key="remove" / -->",
+                "upload_canceled"   : "<!-- patTemplate:gtfwgetlang key="upload_canceled" / -->",
+                "aborting"          : "<!-- patTemplate:gtfwgetlang key="aborting" / -->",
+                "image_preview"     : "<!-- patTemplate:gtfwgetlang key="image_preview" / -->",
+                "select_file"       : "<!-- patTemplate:gtfwgetlang key="select_file" / -->",
+                "unable_to_compute" : "<!-- patTemplate:gtfwgetlang key="unable_to_compute" / -->",
+            };
+
+            // Untuk redirect jika session habis 
+            var url_login = "<!-- patTemplate:gtfwgeturl module="core.login" sub="login" action="view" type="html" params=""   / -->";
+            // var googlemap = false;
+            // var geochart = false;
+        </script>
+        <script src="assets/js/jquery.min.js"></script>
+        <!-- <script src="assets/js/loader-google-local.js"></script>-->
+        <script type="text/javascript">
+            function ping(ip, callback) {
+
+				if (!this.inUse) {
+					this.status = 'unchecked';
+					this.inUse = true;
+					this.callback = callback;
+					this.ip = ip;
+					var _that = this;
+					this.img = new Image();
+					this.img.onload = function () {
+						_that.inUse = false;
+						_that.callback('responded');
+
+					};
+					this.img.onerror = function (e) {
+						if (_that.inUse) {
+							_that.inUse = false;
+							_that.callback('responded', e);
+						}
+
+					};
+					this.start = new Date().getTime();
+					this.img.src = "http://" + ip;
+					this.timer = setTimeout(function () {
+						if (_that.inUse) {
+							_that.inUse = false;
+							_that.callback('timeout');
+						}
+					}, 1500);
+				}
+			}
+
+			// if (typeof google == 'object' && typeof google.maps == 'object') {
+   //              googlemap = true;
+   //          }
+   //          if (typeof google == 'object' && typeof google.load == 'function') {
+   //              geochart = true;
+   //          }
+        </script>
+
+    </head>
+
+    <body id="gtfw_3_5_body">
+        <!-- patTemplate:link src="body" / -->
+    </body>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="assets/js/loader.js"></script>
+	
+    <script type="text/javascript">
+        var body_height;
+        // if(navigator.onLine){
+        //     google.load('visualization', '1', {'packages': ['geochart']});
+        // }
+        $(function() {
+            body_height = $('#gtfw_3_5_body').height();
+        
+            var $elem = $('.container3');
+			
+            $('#nav_up').fadeIn('slow');
+            $('#nav_down').fadeIn('slow');  
+			
+            $(window).bind('scrollstart', function(){
+                $('#nav_up,#nav_down').stop().animate({'opacity':'1'});
+            });
+            $(window).bind('scrollstop', function(){
+                $('#nav_up,#nav_down').stop().animate({'opacity':'1'});
+            });
+			
+            $('#nav_down').click(
+            function (e) {
+                $('html, body').animate({scrollTop: $elem.height()}, 1000);
+            }
+        );
+            $('#nav_up').click(
+            function (e) {
+                $('html, body').animate({scrollTop: '0px'}, 1000);
+            }
+        );
+            
+            hideMenu();
+            $('#slick-toggle').toggle(function(){hideMenu()}, function(){showMenu()});
+ 
+            $('.header-btn2 > li > a').click(function(e){
+                var isActive = $(this).hasClass('btn-active');
+                if(isActive){
+                    e.preventDefault();
+                    return false;
+                }
+                else{
+                    $('.header-btn2 > li > a').each(function(){
+                        $(this).removeClass('btn-active');
+                    });
+                    $(this).addClass('btn-active');
+                }
+            });
+            
+            //$(".collapse").collapse();
+            
+            $('.notebox-done, .notebox-warning, .notebox-alert').alert();
+        });
+        
+        function hideMenu(){
+            cur = $('#slick-toggle');
+            cur.addClass('slick-icon');
+
+            $('#side_menu .clearfix').children('li').children('a').children('.menu-label').hide();
+            $('.sidebar').animate({width:50}, 300);
+            $(".container3").width('96%').animate({left:'50px'}, 300);
+            
+        }
+        
+        function showMenu(){
+            cur = $('#slick-toggle');
+            $('.sidebar').animate({width:220}, 300);
+            $(".container3").width('83.5%').animate({left:'220px'},300, function(){              
+                cur.removeClass('slick-icon');
+                $('#side_menu .clearfix').children('li').children('a').children('.menu-label').show();
+            });            
+        }
+               
+    </script>
+    <!-- sliding submenu -->
+
+
+</html>
+<!-- /patTemplate:tmpl -->

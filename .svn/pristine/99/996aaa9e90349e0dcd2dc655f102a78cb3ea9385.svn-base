@@ -1,0 +1,68 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+
+<!-- patTemplate:gtfwrendermodule module="applicant.ranking" submodule="detailApplicant" action="view" name="" / -->
+
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+
+<div class="content-box">
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL_SAVE}">
+<input type="hidden" name="appid" value="{APPID}" />
+<table class="table-common">
+	<thead>
+		<tr>
+			<th><!-- patTemplate:gtfwgetlang key="Document" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="File" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="Parameter" / --></th>
+			<th><!-- patTemplate:gtfwgetlang key="Action" / --></th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+		<!-- patTemplate:sub condition="YES" -->
+		<tr>
+			<td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+		</tr>
+		<!-- /patTemplate:sub -->
+		<!-- patTemplate:sub condition="NO" -->
+		<!-- patTemplate:tmpl name="item" -->
+		<tr class="{ROW_CLASS}">
+			<td>{DOKUMEN_NAME}</td>
+			<td><center><a STYLE="{STYLE_DOWNLOAD}" href="{URL_DOWNLOAD}" target="_blank"><img src="assets/images/Tombol - Tutup.ico" alt="Download"/></a></center></td>
+			<td>{PARAMETER_DOKUMEN}</td>
+			<td>
+				<input type="radio" name="data[{APLIKANDOKUMEN_BEASISWADOKUMEN_ID}]" value="Y" {CHECKEDSESUAI}>Sesuai<br/> 
+				<input type="radio" name="data[{APLIKANDOKUMEN_BEASISWADOKUMEN_ID}]" value="N" {CHECKEDTIDAKSESUAI}>Tidak Sesuai
+			</td>
+		</tr>
+		<!-- /patTemplate:tmpl -->
+		<!-- /patTemplate:sub -->
+		<!-- /patTemplate:tmpl -->
+	</tbody>
+</table>
+
+<div class="table-edit">
+	<tr>
+		<td>   
+			<button type="submit" class="btn btn-primary"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+			<button type="button" class="btn btn-primary" OnClick="window.history.back()"><!-- patTemplate:gtfwgetlang key="cancel" / --></button>       
+		</td>            
+	</tr>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+
+    var popupApplicantRanking;
+    $('.popup_applicantranking').click(function() {
+        var url = $(this).attr('href') + '&ascomponent=1';
+        var title = $(this).attr('title');
+
+        popupApplicantRanking = showGtPopup(url, title);
+        return false;
+    });
+
+</script>
+<!-- /patTemplate:tmpl -->

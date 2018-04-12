@@ -1,0 +1,204 @@
+<?php
+
+$sql["count_applicantinterview"] = "
+SELECT 
+    COUNT(kmhsAsramaId) AS total
+FROM kemahasiswaan_asrama
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_applicantinterview"] = "
+SELECT 
+    a.kmhsAsramaId AS `kmhsAsramaId`,
+    a.kmhsAsramaNama AS `kmhsAsramaNama`,
+    a.kmhsAsramaAlamat AS `kmhsAsramaAlamat`,
+    a.kmhsAsramaTelp AS `kmhsAsramaTelp`,
+    a.kmhsAsramaKonPerson AS `kmhsAsramaKonPerson`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM kemahasiswaan_asrama a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_applicantinterview"] = "
+SELECT 
+    a.*,
+    b.*
+	
+FROM 
+	aplikan_beasiswa a
+LEFT JOIN 
+	aplikan_register b ON b.`aplikan_id` = a.`aplikanbeasiswa_aplikan_id`
+WHERE 
+	a.`aplikanbeasiswa_id` = %d
+";
+$sql["insertNilai"] = "
+INSERT INTO aplikan_wawancara
+(
+    aplikanwawancara_beasiswa_id,
+    aplikanwawancara_aplikan_id,
+    aspekwawancara_id,
+    aspekwawancara_nilai
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s
+)
+";
+$sql["update_applicantinterview"] = "
+UPDATE kemahasiswaan_asrama
+SET 
+    kmhsAsramaId = %s,
+    kmhsAsramaNama = %s,
+    kmhsAsramaAlamat = %s,
+    kmhsAsramaTelp = %s,
+    kmhsAsramaKonPerson = %s
+WHERE kmhsAsramaId_id = %d
+";
+$sql["delete_applicantinterview"] = "
+DELETE FROM kemahasiswaan_asrama
+WHERE kmhsAsramaId_id = %d
+";
+$sql["list_applicantinterview"] = "
+SELECT
+    kmhsAsramaId_id AS `id`,
+    kmhsAsramaId_name AS `name`
+FROM
+    kemahasiswaan_asrama
+ORDER BY kmhsAsramaId_name
+";
+$sql["listUniversitas"] = "
+SELECT 
+	universitas_name as nama_universitas,
+	universitas_id as id_universitas
+FROM
+	ref_universitas
+ORDER BY
+	universitas_name asc 
+";
+$sql["listBeasiswa"] = "
+SELECT 
+	beasiswa.*,
+	ref_jenis_beasiswa.jenisbeasiswa_name
+FROM
+	beasiswa
+LEFT JOIN
+	ref_jenis_beasiswa ON ref_jenis_beasiswa.jenisbeasiswa_id=beasiswa.beasiswa_jenisbeasiswa_id
+ORDER BY
+	beasiswa.beasiswa_name asc 
+";
+$sql["list_kategoriwawancara"] = "
+SELECT 
+	*
+FROM
+	ref_kategori_wawancara
+";
+$sql["list_aplikanbeasiswa"] = "
+SELECT 
+	*
+FROM
+	aplikan_beasiswa
+WHERE
+    aplikanbeasiswa_statuspendaftaran_id = '3'
+    --search--
+	--limit--  
+";
+$sql["count_aplikanbeasiswa"] = "
+SELECT 
+    COUNT(aplikanbeasiswa) AS total
+FROM aplikan_beasiswa
+WHERE
+    aplikanbeasiswa_statuspendaftaran_id = '3'
+    --search--
+";
+$sql["getbeasiswa"] = "
+SELECT 
+    beasiswa.*,
+	ref_jenis_beasiswa.jenisbeasiswa_name
+FROM 
+	beasiswa 
+LEFT JOIN
+	ref_jenis_beasiswa on ref_jenis_beasiswa.jenisbeasiswa_id = beasiswa.beasiswa_id
+WHERE 
+	beasiswa_id = %d
+";
+$sql["get_jumlahpelamar"] = "
+SELECT 
+    count(aplikanbeasiswa_id) as jml
+FROM 
+	aplikan_beasiswa
+WHERE 
+	aplikanbeasiswa_statuspendaftaran_id = '3'
+AND	
+	aplikanbeasiswa_beasiswa_id = %d
+";
+
+
+$sql["listKategori"] = "
+SELECT 
+	*
+FROM 
+	ref_kategori_wawancara 
+";
+
+$sql["listaspek"] = "
+SELECT 
+	*
+FROM 
+	ref_aspek_wawancara 
+WHERE
+	kategoriwawancara_id = %d	
+";
+
+$sql["list_universitas"] = "
+SELECT 
+	universitas_id, 
+	universitas_name 
+FROM 
+	aplikan_beasiswa a
+LEFT JOIN 
+	aplikan_register b ON a.`aplikanbeasiswa_aplikan_id`=b.`aplikan_id`
+LEFT JOIN 
+	ref_universitas c ON c.`universitas_id`=b.`aplikan_univ_id`
+WHERE 
+	a.`aplikanbeasiswa_beasiswa_id`=%d
+GROUP BY 
+	c.`universitas_id`
+";
+
+$sql["listInterview"] = "
+SELECT 
+	aplikan_register.*,
+	aplikan_beasiswa.aplikanbeasiswa_beasiswa_id	
+FROM 
+	aplikan_register 
+LEFT JOIN
+	aplikan_beasiswa
+ON 
+	aplikan_beasiswa.aplikanbeasiswa_aplikan_id	= aplikan_register.aplikan_id
+WHERE 
+	 aplikan_register.`aplikan_univ_id`=%d
+AND
+	aplikan_beasiswa.aplikanbeasiswa_statuspendaftaran_id='3'
+	 ";
+	 
+$sql["getDetailAplikan"] = "
+SELECT 
+	*
+FROM 
+	aplikan_register 
+WHERE 
+	 `aplikan_id`=%d";
+	 
+$sql["update_statuswawancara"] = "
+UPDATE
+	aplikan_beasiswa 
+SET
+	aplikanbeasiswa_statuspendaftaran_id='4'	
+WHERE 
+	 aplikanbeasiswa_aplikan_id = '%s'
+";

@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+   
+class ViewAddKrs extends HtmlResponse
+{
+    function TemplateModule()
+    {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application','docroot').'module/'.GtfwDispt()->mModule.'/template');
+        $this->SetTemplateFile('view_input_krs.html');
+    }
+
+    function ProcessRequest()
+    {   
+        $ObjRegistrasiUlang = GtfwDispt()->load->business('RegistrasiUlang', 'applicant.regist.ulang');
+        $this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+		$this->aplikanId = $ObjRegistrasiUlang->getAplikanId($this->user);
+
+        $id = $_GET['id']->Integer()->Raw();
+		$elmId = $_GET['elmId']->SqlString()->Raw();
+		
+		$detail = $ObjRegistrasiUlang->getDetailRegistrasiUlang($this->aplikanId);
+
+        $msg = Messenger::Instance()->Receive(__FILE__);
+        $post = isset($msg[0][0])?$msg[0][0]:NULL;
+        $message['content'] = isset($msg[0][1])?$msg[0][1]:NULL;
+        $message['style'] = isset($msg[0][2])?$msg[0][2]:NULL;
+
+        $nav[0]['url'] = GtfwDispt()->GetUrl('applicant.regist.ulang', 'DetailRegistrasiUlang', 'view', 'html').'&display';
+        $nav[0]['menu'] = 'Registrasi Ulang';
+        $title = empty($id)?GtfwLangText('add'):GtfwLangText('Edit');
+        //$title = "Input Data";
+		Messenger::Instance()->SendToComponent('comp.breadcrump', 'breadcrump', 'view', 'html', 'breadcrump', array($title, $nav, 'breadcrump', '', ''), Messenger::CurrentRequest);
+
+        
+        return compact( 'user', 'id', 'message', 'elmId','detail');
+    }
+
+    function ParseTemplate($rdata = NULL)
+    {
+		extract($rdata);
+
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        if (!empty($detail)) {
+            $this->mrTemplate->addVars('content', $detail);
+        }
+		if (!empty($id)) {
+			$this->mrTemplate->addVar('dataId', 'IS_EMPTY', 'NO');
+		}else {
+			$this->mrTemplate->addVar('dataId', 'IS_EMPTY', 'YES');
+		}
+		
+		$smt = array(
+                array('id'=>'1','semester'=>'1'),
+                array('id'=>'2','semester'=>'2'),
+				array('id'=>'3','semester'=>'3'),
+                array('id'=>'4','semester'=>'4'),
+				array('id'=>'5','semester'=>'5'),
+                array('id'=>'6','semester'=>'6'),
+				array('id'=>'7','semester'=>'7'),
+                array('id'=>'8','semester'=>'8'),
+				array('id'=>'9','semester'=>'9'),
+                array('id'=>'10','semester'=>'10')
+            );
+
+		foreach ($smt as $key => $val) {
+			$val['selected'] = '';
+			$this->mrTemplate->addVars('semester', $val);
+			$this->mrTemplate->parseTemplate('semester', 'a');
+		}
+		
+		$this->mrTemplate->addVar('content','ID', $id);
+        $this->mrTemplate->addVar('content', 'URL_BACK', GtfwDispt()->GetUrl('applicant.regist.ulang', 'RegistrasiUlang', 'view', 'html') . '&display');
+        $this->mrTemplate->addVar('content', 'URL', GtfwDispt()->GetUrl('applicant.regist.ulang', 'addKrs', 'do', 'json') . '&elmId=' . $elmId);
+    }
+}
+?>

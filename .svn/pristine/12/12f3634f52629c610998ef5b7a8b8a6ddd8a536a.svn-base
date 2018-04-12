@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author Prima Noor 
+ */
+
+class DoAddJenisAktifitas extends JsonResponse
+{
+    function ProcessRequest()
+    {
+        $proses = GtfwDispt()->load->process('ProcessJenisAktifitas', 'ref.jenis.aktifitas');
+        
+        $post = $_POST->AsArray();
+        
+        $result = $proses->input();
+        
+        $elmId = $_GET['elmId']->SqlString()->Raw();
+        if ($result) {
+            if (!empty($elmId)) {
+                $url = GtfwDispt()->GetUrl('ref.jenis.aktifitas', 'comboJenisAktifitas', 'view', 'html').'&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('div_$elmId', '".$url."');closeGtPopup(popup$elmId);");
+            } else {
+                $url = GtfwDispt()->GetUrl('ref.jenis.aktifitas', 'JenisAktifitas', 'view', 'html').'&display&ascomponent=1';
+                return array('exec' => "replaceContentWithUrl('subcontent-element', '".$url."');closeGtPopup(popupJenisAktifitas);");
+            }
+        } else {
+            if (!empty($elmId)) {
+                return array('exec' => "replaceContentWithUrl('popup-$elmId', '" . GtfwDispt()->GetUrl('ref.jenis.aktifitas', (empty($post['dataId']) ? 'addJenisAktifitas' : 'updateJenisAktifitas'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+            } else {
+                return array('exec' => "replaceContentWithUrl('popup-subcontent', '" . GtfwDispt()->GetUrl('ref.jenis.aktifitas', (empty($post['dataId']) ? 'addJenisAktifitas' : 'updateJenisAktifitas'), 'view', 'html') . (!empty($elmId) ? ('&elmId=' . $elmId) : '') . "&ascomponent=1')");
+            }
+        }       
+    }
+}
+
+?>

@@ -1,0 +1,13 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<div class="content-box">
+<table>
+    <tr>
+        <th style="width: 200px;">Input Decimal</th>
+        <td>
+            <input type="decimal" data-dec="," data-sep="." value="10000" data-min="-1000.00" data-max="1000.00" />
+        </td>
+    </tr>
+</table>
+</div>
+<!-- /patTemplate:tmpl -->

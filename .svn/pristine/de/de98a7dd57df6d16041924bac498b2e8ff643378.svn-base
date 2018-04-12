@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewDetailType extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_detail_type.html');
+    }
+
+    function ProcessRequest() {
+        $ObjType = GtfwDispt()->load->business('PhotoType', 'ref.photo.type');
+
+        $id = Dispatcher::Instance()->Decrypt($_GET['id']->Raw());
+
+        $detail = $ObjType->getDetailType($id);
+
+        return compact('detail');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+
+        if (!empty($detail)) {
+            $detail['status'] == 1 ? $detail['status'] = GtfwLangText('active') : $detail['status'] = GtfwLangText('not_active');
+            $detail['is_locked'] == 1 ? $detail['is_locked'] = GtfwLangText('locked') : $detail['is_locked'] = GtfwLangText('unlocked');
+            $this->mrTemplate->addVars('content', $detail);
+        }
+    }
+
+}
+
+?>

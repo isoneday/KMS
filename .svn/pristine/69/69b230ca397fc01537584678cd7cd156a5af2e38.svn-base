@@ -1,0 +1,82 @@
+<?php
+
+$sql["count_syaratdokumen"] = "
+SELECT 
+    COUNT(dokumen_id) AS total
+FROM ref_syarat_dokumen
+WHERE
+    1 = 1
+    --search--
+";
+$sql["get_syaratdokumen"] = "
+SELECT 
+    a.dokumen_id AS `id`,
+    a.dokumen_code AS `code`,
+    a.dokumen_name AS `name`,
+    a.dokumen_is_active AS `is_active`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    IFNULL(CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%d %b %Y %H:%i')),CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%d %b %Y %H:%i'))) AS last_modified
+FROM ref_syarat_dokumen a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE
+    1 = 1
+    --search--
+--limit--    
+";
+$sql["get_detail_syaratdokumen"] = "
+SELECT 
+    a.dokumen_id AS `id`,
+    a.dokumen_code AS `code`,
+    a.dokumen_name AS `name`,
+    a.dokumen_is_active AS `is_active`,
+    a.insert_user_id AS `insert_user_id`,
+    a.insert_timestamp AS `insert_timestamp`,
+    a.update_user_id AS `update_user_id`,
+    a.update_timestamp AS `update_timestamp`,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.update_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_update,
+    CONCAT(b.`user_real_name`,', ',DATE_FORMAT(a.insert_timestamp,'%%d %%b %%Y %%H:%%i')) AS last_insert
+FROM ref_syarat_dokumen a
+LEFT JOIN gtfw_user b ON b.`user_id` = a.`insert_user_id`
+WHERE dokumen_id = %d
+";
+$sql["insert_syaratdokumen"] = "
+INSERT INTO ref_syarat_dokumen
+(
+    dokumen_code,
+    dokumen_name,
+    dokumen_is_active,
+    insert_user_id,
+    insert_timestamp
+) VALUES (
+    %s,
+    %s,
+    %s,
+    %s,
+    NOW()
+)
+";
+$sql["update_syaratdokumen"] = "
+UPDATE ref_syarat_dokumen
+SET 
+    dokumen_code = %s,
+    dokumen_name = %s,
+    dokumen_is_active = %s,
+    update_user_id = %s,
+    update_timestamp = NOW()
+WHERE dokumen_id = %d
+";
+$sql["delete_syaratdokumen"] = "
+DELETE FROM ref_syarat_dokumen
+WHERE dokumen_id = %d
+";
+$sql["list_syaratdokumen"] = "
+SELECT
+    dokumen_id AS `id`,
+    dokumen_name AS `name`
+FROM
+    ref_syarat_dokumen
+ORDER BY dokumen_name
+";

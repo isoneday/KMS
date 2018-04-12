@@ -1,0 +1,135 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}"><a class="close" data-dismiss="alert" href="#">&times;</a>{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<form id="form_input" class="xhr dest_subcontent-element" method="post" action="{URL}">
+    <div class="content-box-form">
+        <input type="hidden" name="id" value="{ID}" />
+        <table class="table-edit">
+            <tr class="subhead">
+				<th colspan="2">
+					<strong><!-- patTemplate:gtfwgetlang key="company_data" / --></strong>
+				</th>
+			</tr>
+			<tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="name" / --></th>
+                <td>
+                    <input type="text" name="name" value="{NAME}" size="50" title="<!-- patTemplate:gtfwgetlang key="name" / -->" tabindex="1" />            
+                </td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="address" / --></th>
+                <td><textarea name="address" rows="2" cols="20" title="<!-- patTemplate:gtfwgetlang key="address" / -->" tabindex="2">{ADDRESS}</textarea></td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="country" / --></th>
+                <td>
+                    <div id="div_country" data-url="{URL_COUNTRY}">
+                        <!-- patTemplate:gtfwrendermodule module="ref.country" submodule="crmComboCountry" action="view" name="country" type="html" params="" / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="state" / --></th>
+                <td>
+                    <div id="div_state" data-url="{URL_STATE}">
+                        <!-- patTemplate:gtfwrendermodule module="ref.state" submodule="crmComboState" action="view" name="state"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><!-- patTemplate:gtfwgetlang key="city" / --></th>
+                <td>
+                    <div id="div_city" data-url="{URL_CITY}">
+                        <!-- patTemplate:gtfwrendermodule module="ref.city" submodule="crmComboCity" action="view" name="city"  / -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="postal_code" / --></th>
+                <td>
+                    <input class="input_jumlah" type="number" name="postal_code" value="{POSTAL_CODE}" size="10" title="<!-- patTemplate:gtfwgetlang key="postal_code" / -->" tabindex="6"  />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="phone" / --></th>
+                <td>
+                    <input type="number" name="phone" value="{PHONE}" size="30" title="<!-- patTemplate:gtfwgetlang key="phone" / -->" tabindex="7"  />            
+                </td>
+            </tr>
+            <tr>
+                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="fax" / --></th>
+                <td>
+                    <input type="number" name="fax" value="{FAX}" size="30" title="<!-- patTemplate:gtfwgetlang key="fax" / -->" tabindex="8"  />            
+                </td>
+            </tr> 
+            <tr>
+                <th style="width:200px;"><b><!-- patTemplate:gtfwgetlang key="company_logo" / --></b></th>
+                <td>
+                    <table class="table-form" style="width: 60%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;"><!-- patTemplate:gtfwgetlang key="number" / --></th>
+
+                                <!-- patTemplate:tmpl name="th_prev_file" visibility="hidden" -->
+                                <th style="width:200px;"><!-- patTemplate:gtfwgetlang key="preview" / --></th>
+                                <!-- /patTemplate:tmpl -->
+                                <th><!-- patTemplate:gtfwgetlang key="photo_type" / --></th>
+                                <th style="width: 30%;"><!-- patTemplate:gtfwgetlang key="attachment" / --></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- patTemplate:tmpl name="photo_type" type="condition" conditionvar="EMPTY" -->
+                            <!-- patTemplate:sub condition="YES" -->
+                            <tr>
+                                <td colspan="4" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data_photo_type" / --> --</td>
+                            </tr>
+                            <!-- /patTemplate:sub -->
+                            <!-- patTemplate:sub condition="NO" -->
+                            <!-- patTemplate:tmpl name="item_photo" -->
+
+                            <tr class="{ROW_CLASS}">
+                                <td style="text-align: center;">{NO}</td>        
+
+                                <!-- patTemplate:tmpl name="prev_file" visibility="hidden" -->
+                                <td>{PREVIEW}</td>
+                                <!-- /patTemplate:tmpl -->
+
+                                <td style="width: 25%;">{PHOTO_TYPE_NAME}</td>
+                                <td>
+                                    <input type="hidden" name="file[{KEY}][photo_type_id]" value="{PHOTO_TYPE_ID}" />
+                                    <input type="hidden" name="file[{KEY}][photo_type_name]" value="{PHOTO_TYPE_NAME}" />
+                                    <input type="file" name="{PHOTO_TYPE_ID}" value="{PHOTO}"/>
+                                </td>
+                            </tr>
+                            <!-- /patTemplate:tmpl -->
+                            <!-- /patTemplate:sub -->
+                            <!-- /patTemplate:tmpl -->
+                        </tbody>
+                    </table>
+                    <!-- patTemplate:gtfwgetlang key="max_photo_upload" / --> : 2 MB    
+                </td>                   
+            </tr>
+        </table>
+    </div>
+    <div class="form-footer" style="padding:14px 230px 15px!important">
+        <button type="submit" class="btn btn-primary" title="<!-- patTemplate:gtfwgetlang key="save" / -->" tabindex="9"><!-- patTemplate:gtfwgetlang key="save" / --></button>
+        <button type="reset" class="btn" title="<!-- patTemplate:gtfwgetlang key="reset" / -->" tabindex="10"><!-- patTemplate:gtfwgetlang key="reset" / --></button>
+        <a href="{URL_BACK}" class="xhr dest_subcontent-element"><button type="button" class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" title="<!-- patTemplate:gtfwgetlang key="cancel" / -->" tabindex="11"><span class="ui-button-text"><!-- patTemplate:gtfwgetlang key="cancel" / --></span></button></a>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function(){    
+        $('#div_country').on('change', '#country', function(event){
+            $('#div_state').fadeOut().load($('#div_state').data('url')+'&country_id='+$(this).val()).fadeIn();
+        })
+        $('#div_state').on('change', '#state', function(event){
+            $('#div_city').fadeOut().load($('#div_city').data('url')+'&state_id='+$(this).val()).fadeIn();
+        })
+
+    })
+</script>
+<!-- patTemplate:gtfwrendermodule module="comp.upload" submodule="upload" action="do" name="" / -->
+
+<!-- /patTemplate:tmpl -->

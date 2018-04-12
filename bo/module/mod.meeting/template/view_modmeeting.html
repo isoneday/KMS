@@ -1,0 +1,120 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<!-- patTemplate:tmpl name="search" -->
+
+<form id="form_search" class="xhr dest_subcontent-element dataquest" method="post" action="{URL}">
+<table class="table-search">
+<tbody>
+    <tr>
+        <th style="width:20%;"><!-- patTemplate:gtfwgetlang key="topik" / --></th>
+        <td><input type="text" name="topik" value="{TOPIK}" /></td>        
+    </tr>
+    <tr>
+        <th style="width:20%;">&nbsp;</th>
+        <td>
+            <button class="btn"><!-- patTemplate:gtfwgetlang key="search"/ --></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</form>
+<!-- /patTemplate:tmpl -->
+<!-- patTemplate:tmpl name="message" type="simplecondition" requiredvars="CONTENT" -->
+<div class="{STYLE}">{CONTENT}</div>
+<!-- /patTemplate:tmpl -->
+<div class="content-box">
+<div class="pageBar">
+    <div class="pageNav">
+        <!-- patTemplate:tmpl name="button_add" visibility="" -->
+            <a class="xhr dest_subcontent-element btn-add" href="/gtkms/index.php?mod=mod.kmsmeeting&sub=modKmsmeeting&act=view&typ=html&mId=45" title="<!-- patTemplate:gtfwgetlang key="add" / --> <!-- patTemplate:gtfwgetlang key="modmeeting" / -->">manage meeting</a>
+        <!-- /patTemplate:tmpl -->
+    </div>
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_top"  / -->
+    </div>
+</div>
+<table class="table-common">
+<thead>
+    <tr>
+        <th>tanggal</th>
+        
+        <th>topik</th>
+        <th>pembicara</th>
+        <th>agenda</th>
+ <th>notulen</th>
+  
+  
+        <th>jumlah peserta</th>
+        <th>status agenda</th>
+        <th>attachment</th>
+ 
+    </tr>
+</thead>
+<tbody>
+    <!-- patTemplate:tmpl name="data" type="condition" conditionvar="IS_EMPTY" -->
+    <!-- patTemplate:sub condition="YES" -->
+    <tr>
+        <td colspan="7" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data" / --> --</td>
+    </tr>
+    <!-- /patTemplate:sub -->
+    <!-- patTemplate:sub condition="NO" -->
+    <!-- patTemplate:tmpl name="item" -->
+    <tr class="{ROW_CLASS}">
+      
+        <td style="text-align: center;">{TANGGAL}</td>        
+        <td style="text-align: center;">{TOPIK}</td>
+        <td style="text-align: center;">{PEMBICARA}</td>
+        <td style="text-align: center;">{AGENDA}</td>
+             <td style="text-align: center;">{UPLOADBY}</td>
+  
+        <td style="text-align: center;">{JUM_PESERTA}</td>
+        <td style="text-align: center;">{STATUS_AGENDA}</td>
+        <td> <a href="{FILEPATH}{FILE_DOWNLOAD}"  target="_blank"  class="" title=""><b>DOWNLOAD</b></a></td>
+
+    </tr>
+    <!-- /patTemplate:tmpl -->
+    <!-- /patTemplate:sub -->
+    <!-- /patTemplate:tmpl -->
+</tbody>
+</table>
+<div class="pageBar">
+    <div class="toolbar">
+        <!-- patTemplate:gtfwrendermodule module="comp.paging" submodule="paging" action="view" name="paging_bottom"  / -->
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.confirm_delete').on('click', function(event){
+        var elm = $(this);
+        var href = elm.attr('href')+'&ascomponent=1';
+        var name = elm.data('name');
+        gtConfirm("<!-- patTemplate:gtfwgetlang key="msg_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modmeeting" / -->?<br/><strong>'+name+'</strong>',"<!-- patTemplate:gtfwgetlang key="title_confirm_delete" / -->" + ' <!-- patTemplate:gtfwgetlang key="modmeeting" / -->',function(status){
+            if (status) {
+                $.post(href, function(data){
+                    $.globalEval("result = " + data + ";");
+                    if (result['exec']) {
+                        $.globalEval(result['exec'] + ";");
+                    }
+                  }
+                );
+            } else {
+                return false;
+            }
+        });
+        return false;
+    })
+});
+
+
+    var popupModMeeting;
+    $('.popup_modmeeting').click(function(){
+        var url = $(this).attr('href')+'&ascomponent=1';
+        var title = $(this).attr('title');
+    
+        popupModMeeting = showGtPopup(url, title);
+        return false;
+    });
+                                        
+</script>
+<!-- /patTemplate:tmpl -->

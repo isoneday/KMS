@@ -1,0 +1,146 @@
+<?php
+
+/**
+ * @author Prima Noor 
+ */
+class ViewApprovePencairan extends HtmlResponse {
+
+    function TemplateModule() {
+        $this->SetTemplateBasedir(Configuration::Instance()->GetValue('application', 'docroot') . 'module/' . GtfwDispt()->mModule . '/template');
+        $this->SetTemplateFile('view_approve_pencairan.html');
+    }
+
+    function ProcessRequest() { 
+        $ObjApplicantPencairan = GtfwDispt()->load->business('ApplicantPencairan', 'applicant.pencairan');
+
+		$this->user = Security::Authentication()->GetCurrentUser()->GetUserId();
+		$this->aplikanId = $ObjApplicantPencairan->getAplikanId($this->user);
+		
+        $id = $_GET['id']->Integer()->Raw();
+        $nim = $_GET['nim']->Integer()->Raw();
+        $id_beasiswa = $_GET['id_beasiswa']->Integer()->Raw();
+
+        $dataPendaftar = $ObjApplicantPencairan->GetListPendaftar($nim);
+		$dataFoto = $ObjApplicantPencairan->GetListFoto($nim);
+		
+		$detailKrs = $ObjApplicantPencairan->getDetailKrs($id);
+		
+        return compact('detailKrs', 'dataFoto','dataPendaftar','id','nim','id_beasiswa','message','dataFoto');
+    }
+
+    function ParseTemplate($rdata = NULL) {
+        extract($rdata);
+		/*		
+		echo "<pre>";
+		print_r($dataAll);
+		echo "</pre>";*/
+		if (!empty($dataFoto)) {
+            $file_path = Configuration::Instance()->GetValue('application', 'aplikan_lampiran');
+            $this->mrTemplate->AddVar('foto', 'FILEPATH', $file_path);
+            $this->mrTemplate->addVars('foto', $dataFoto[0]);
+        }
+			
+        if (!empty($message)) {
+            $this->mrTemplate->addVars('message', $message);
+        }
+
+        if (!empty($data)) {
+            $this->mrTemplate->addVars('content', $data);
+        }
+
+        if (!empty($dataPendaftar)) {
+            $this->mrTemplate->addVars('biodataHead', $dataPendaftar[0]);
+		}
+		
+		if (!empty($detailKrs)) {
+			$this->mrTemplate->addVar('dataKrs', 'IS_EMPTY', 'NO');
+			$file_path = Configuration::Instance()->GetValue('application', 'aplikan_registulang');
+			//$this->mrTemplate->addVars('krs', $detailKrs);
+			$this->mrTemplate->clearTemplate('krs');
+			
+			$jumkrs = count($detailKrs);
+            for ($i=0; $i < $jumkrs ; $i++) {
+				$detailKrs[$i]['tanggal_daftar'] = $this->date2stirng($detailKrs[$i]['time']);
+                 //echo "<pre>";var_dump($detailKrs[$i]);echo "</pre>";
+				$this->mrTemplate->addVar('krs','TANGGAL_DAFTAR', $detailKrs[$i]['tanggal_daftar']);
+                $this->mrTemplate->addVar('krs','SEMESTER', $detailKrs[$i]['semester']);
+
+				$this->mrTemplate->addVar('krs', 'FILE_KRS', GtfwDispt()->GetUrl('applicant.pencairan', 'Lampiran', 'view', 'html').'&id='.$id.'&file='.$file_path.$detailKrs[$i]['file'].'&download='.$detailKrs[$i]['file_origin']);
+
+				$this->mrTemplate->addVar('krs', 'NAME', $detailKrs[$i]['file_origin']);
+				$this->mrTemplate->addVar('krs', 'URL_KRS', GtfwDispt()->GetUrl('applicant.pencairan', 'deleteKrs', 'do', 'json') . '&id=' . $detailKrs[$i]['id']);
+                $this->mrTemplate->parseTemplate('krs', 'a');
+			}
+        }else {
+            $this->mrTemplate->addVar('dataKrs', 'IS_EMPTY', 'YES');
+        }
+		
+
+		
+		
+		$this->mrTemplate->addVar('content', 'id_beasiswa', $id_beasiswa);
+		$this->mrTemplate->addVar('content', 'id', $id);
+		
+		$this->mrTemplate->addVar('content', 'user1', $user1);
+		$this->mrTemplate->addVar('content', 'user2', $user2);
+		$this->mrTemplate->addVar('content', 'user3', $user3);
+		
+		//$this->mrTemplate->addVar('content', 'URL_LOLOS', GtfwDispt()->GetUrl('applicant.interview', 'UpdateApplicantInterviewLolos','do','json').'&id='.$id.'&name='.$dataPendaftar[0]['nama'].'&mail='.$dataPendaftar[0]['email']);
+		$this->mrTemplate->addVar('content', 'URL_LOLOS', GtfwDispt()->GetUrl('applicant.pencairan', 'inputPencairan', 'view', 'html').'&id='.$id);
+		
+		$this->mrTemplate->addVar('content', 'URL_LIST', GtfwDispt()->GetUrl('applicant.pencairan', 'listPencairanApplicant', 'view', 'html').'&id='.$id);
+		
+		$this->mrTemplate->addVar('content', 'URL_REGIST', GtfwDispt()->GetUrl('applicant.pencairan', 'registApplicant', 'view', 'html').'&id='.$id.'&nim='.$nim.'&id_beasiswa='.$id_beasiswa);
+		$no = 1;
+		$arr = 0;
+        					
+		
+		$pertanyaan = '';
+		foreach ($listKategori as $val) 
+			{
+				$pertanyaan .= '<tr><td>'. $no .'</td><td colspan="3"><h4>'. $val['kategoriwawancara_name'] .'</h4></td></tr>';
+				$idktg = $val['kategoriwawancara_id'];
+				$nosub = 1;
+				
+				foreach($kategori[$idktg]['aspek'] as $ktg)
+					{
+					$pertanyaan .= '<tr>
+					<td width="20"></td>  
+					<td width="20"> '. $nosub .'</td>  
+					<td>'. $ktg['aspekwawancara_desc'] .'</td>
+					<td> : 
+					<input type="text" name="nilai['. $arr .'][nilai]" >
+					<input type="hidden" name="nilai['. $arr .'][aspekwawancara_id]" value="'. $ktg['aspekwawancara_id'] .'" >
+					</td>
+				</tr>';
+					$nosub++;
+					$arr++;
+					}
+				$no++;
+			}
+		$this->mrTemplate->addVar('content', 'pertanyaan', $pertanyaan);	
+    }
+	function date2stirng($date){
+        $bln = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        );
+        $arrd = explode('-', $date);
+        $dateString = $arrd[2].' '.$bln[(int)$arrd[1]].' '.$arrd[0];
+
+        return $dateString;
+    }
+
+}
+
+?>

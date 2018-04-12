@@ -1,0 +1,86 @@
+<!-- patTemplate:tmpl name="content" -->
+<!-- patTemplate:gtfwrendermodule module="comp.breadcrump" submodule="breadcrump" action="view" name="breadcrump" / -->
+<table class="table-details">
+    <tbody>
+        <tr class="subhead">
+			<th colspan="2">
+				<strong><!-- patTemplate:gtfwgetlang key="company_data" / --></strong>
+			</th>
+		</tr>
+		<tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="name"/ --></th>
+            <td>{NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="address"/ --></th>
+            <td>{ADDRESS}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="country"/ --></th>
+            <td>{COUNTRY_NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="state"/ --></th>
+            <td>{STATE_NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="city"/ --></th>
+            <td>{CITY_NAME}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="postal_code"/ --></th>
+            <td>{POSTAL_CODE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="phone"/ --></th>
+            <td>{PHONE}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="fax"/ --></th>
+            <td>{FAX}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="submitted"/ --></th>
+            <td>{LAST_INSERT}</td>
+        </tr>
+        <tr>
+            <th style="width:200px"><!-- patTemplate:gtfwgetlang key="modified"/ --></th>
+            <td>{LAST_UPDATE}</td>
+        </tr>
+        <tr>
+            <th style="width: 20%;"><b><!-- patTemplate:gtfwgetlang key="company_logo" / --></b></th>
+            <td>
+                <table class="table-form" style="width: 60%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 2%;"><!-- patTemplate:gtfwgetlang key="number"/ --></th>
+
+                            <th><!-- patTemplate:gtfwgetlang key="preview" / --></th>
+                            <th><!-- patTemplate:gtfwgetlang key="photo_type" / --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- patTemplate:tmpl name="photo_type" type="condition" conditionvar="EMPTY" -->
+                        <!-- patTemplate:sub condition="YES" -->
+                        <tr>
+                            <td colspan="6" style="text-align: center !important;">-- <!-- patTemplate:gtfwgetlang key="no_data_photo_type" / --> --</td>
+                        </tr>
+                        <!-- /patTemplate:sub -->
+                        <!-- patTemplate:sub condition="NO" -->
+                        <!-- patTemplate:tmpl name="item_photo" -->
+
+                        <tr class="{ROW_CLASS}">
+                            <td style="text-align: center;">{NO}</td>        
+                            <td style="width: 25%; text-align: center;">{PREVIEW}</td>
+                            <td style="width: 55%;">{PHOTO_TYPE_NAME}</td>
+                        </tr>
+                        <!-- /patTemplate:tmpl -->
+                        <!-- /patTemplate:sub -->
+                        <!-- /patTemplate:tmpl -->
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- /patTemplate:tmpl -->

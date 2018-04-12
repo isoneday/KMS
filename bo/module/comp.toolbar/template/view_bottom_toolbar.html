@@ -1,0 +1,136 @@
+<!-- patTemplate:tmpl name="content" -->
+<link type="text/css" href="assets/css/jixedbar/default/jx.stylesheet.css" rel="stylesheet" />
+<script type='text/javascript' src='assets/js/libs/jquery.jixedbar.min.js'></script>
+<script type="text/javascript">
+    $(function(){
+        $('#bottom-toolbar').show().jixedbar();
+    
+        $('#bottom-toolbar a.xhr').on('click', function(e){
+            var elm = $(this);
+            var url = elm.attr('href');
+            //        var cls = elm.attr('class');
+            //        var patt_dest = /\s*dest\_[a-z\-\_]*\s*/i;
+            //        var dest = cls.match(patt_dest);
+            //        dest = dest.replace("dest_","");
+            dest = 'subcontent-element';
+            replaceContentWithUrl(dest, url);        
+            return false;
+        });
+         
+        var maxNotification = 5;
+        var notifButton = $("#bottom-toolbar #notifications");
+        var notifList = $("#bottom-toolbar #notifications>ul");
+    
+        var url = '<!-- patTemplate:gtfwgeturl module="comp.notification" sub="notifList" action="view" type="html" / -->';
+        var notifView = $("<li><a href='"+url+"' class='xhr dest_subcontent-element'><!-- patTemplate:gtfwgetlang key="view_notification_list" / --> &raquo;</a></li>");
+        var notifEmpty = $("<li><a>Notification Empty</a></li>").css('cursor','default');
+         
+        notifList.empty();
+        notifList.append(notifEmpty);
+        notifList.newNotifCount = 0;
+    
+        notifList[0].addNewNotif = function (msg, url){
+            notifList.newNotifCount++;
+            notifList.add(msg, url, true);
+        }
+    
+        notifList[0].addOldNotif = function (msg, url){
+            notifList.add(msg, url, false);
+        }
+         
+        notifList.add = function (msg, url, isNew){
+            if (this.children().length < 2)
+            {
+                notifEmpty.remove();
+                notifView.appendTo(this);
+            }
+        
+            var notif = $('<li/>');
+            var link = $('<a/>').html(msg).appendTo(notif);
+            if (!url) link.css('cursor','default');
+            else link.attr('class','xhr dest_subcontent-element').attr('href',url);
+            if (!isNew) notif.insertBefore(notifList.children().eq(notifList.newNotifCount));
+            else notif.css('fontWeight','bold').insertBefore(notifList.children().eq(0));
+        
+            while (this.children().length > maxNotification + 1 &&
+                this.children().length > notifList.newNotifCount + 1)
+                notifView.prev().remove();
+        
+            if (notifList.newNotifCount) notifButton.sign.html(notifList.newNotifCount).fadeIn('slow');
+        }
+    
+        notifButton.sign = $('<span class="badge badge-important"/>').appendTo('#notification_link').hide();
+         
+        notifButton.find('a:first').click(function(){
+            if ($(this).parent().hasClass('jx-nav-menu-active'))
+            {
+                notifList.newNotifCount = 0;
+                notifButton.sign.fadeOut('slow');
+                notifList.children().each(function(){$(this).css('fontWeight','')});
+            }
+        });
+    });
+</script>
+<div id="bottom-toolbar" style="display: none;">
+    <ul>
+        <li title="<!-- patTemplate:gtfwgetlang key="home" / -->"><a href="<!-- patTemplate:gtfwgeturl module="core.home" sub="landingPage" action="view" type="html" params=""  / -->"> <i class="icon-home"></i></a> </li> 
+    </ul>
+    <span class="jx-separator-left"></span>
+    <ul>        
+        <li title="<!-- patTemplate:gtfwgetlang key="notification" / -->" id="notifications"><a href="#" id="notification_link"><!-- patTemplate:gtfwgetlang key="notification" / --></a>
+            <ul>
+                <li></li>
+            </ul>
+        </li>
+    </ul>
+    <span class="jx-separator-left"></span>
+    <ul>
+        <li alt="<!-- patTemplate:gtfwgetlang key="about" / -->"><a id="popup_about" href="#"><i class="icon-list-alt"></i></a></li>
+        <li alt="<!-- patTemplate:gtfwgetlang key="legal_notice" / -->"><a id="popup_legal" href="#"><i class="icon-globe"></i></a></li>
+        <!--<li alt="Message"><a href="{URL_MESSAGE}" class="xhr dest_subcontent-element"><i class="icon-envelope icon-white"></i></a></li>-->
+    </ul>
+    <span class="jx-separator-left"></span>        
+    <div class="text-container">&copy;<!-- patTemplate:gtfwgetconfig config="organization" name="release_year" / --> <!-- patTemplate:gtfwgetconfig config="organization" name="copyright" / --></div>
+    <ul class="jx-bar-button-right">
+        <li alt="<!-- patTemplate:gtfwgetlang key="scroll_up" / -->" style="display:none;" class="nav_up" id="nav_up" title="<!-- patTemplate:gtfwgetlang key="scroll_up" / -->"></li>
+        <li alt="<!-- patTemplate:gtfwgetlang key="scroll_down" / -->" style="display:none;" class="nav_down" title="<!-- patTemplate:gtfwgetlang key="scroll_down" / -->" id="nav_down"></li>
+    </ul>
+
+
+    <!--<ul class="jx-bar-button-right">
+                    <li title="Feeds"><a href="#"><i class="icon-question-sign icon-white"></i></a></a>
+            <ul>
+                        <li><a href="#"><i class="icon-retweet"></i>&nbsp;&nbsp;&nbsp;Feedback</a></li>
+                        <li><a href="#"><i class="icon-comment"></i>&nbsp;&nbsp;&nbsp;FAQ</a></li>
+                        <li><a href="#"><i class="icon-comment"></i>&nbsp;&nbsp;&nbsp;FAQ</a></li>
+            </ul>
+                    </li>
+    </ul>-->
+
+    <span class="jx-separator-right"></span>
+</div>	
+<!-- patTemplate:gtfwrendermodule module="comp.notification" submodule="notifContainer" action="view" type="html" name="notification" / -->
+<style>
+    .jx-nav-menu ul {
+        width: 300px;
+    }
+</style>   
+<script type="text/javascript">
+    $(function(){
+        $('#popup_about').click(function(){
+            var url = 'index.php?mod=core.home&sub=about&act=view&typ=html&ascomponent=1';
+            var title = "<!-- patTemplate:gtfwgetlang key="about" / -->";
+    
+            showGtPopup(url, title, null, 480, 640, true);
+            return false;
+        }); 
+        $('#popup_legal').click(function(){
+            var url = 'index.php?mod=core.home&sub=legalNotice&act=view&typ=html&ascomponent=1';
+            var title = "<!-- patTemplate:gtfwgetlang key="legal_notice" / -->";
+    
+            showGtPopup(url, title, null, 480, 640, true);
+            return false;
+        }); 
+    });
+</script>
+<!-- /patTemplate:tmpl -->

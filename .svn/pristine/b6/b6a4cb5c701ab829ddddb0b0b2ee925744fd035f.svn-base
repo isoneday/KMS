@@ -1,0 +1,19 @@
+<!-- patTemplate:tmpl name="document" -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Enterprise Corporate Suite 1.2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <!-- Le styles -->
+        <link href="assets/css/loader-print.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- patTemplate:link src="body" / -->
+    </body>
+</html>
+<!-- /patTemplate:tmpl -->
